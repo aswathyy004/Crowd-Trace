@@ -1,0 +1,972 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Criminal Case</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* ── Base ── */
+            --bg:           #f2f2f4;
+            --surface:      #ffffff;
+            --surface-2:    #f7f3f3;
+            --border-soft:  rgba(180,30,50,0.12);
+            --border-mid:   rgba(180,30,50,0.22);
+
+            /* ── Crime Palette ── */
+            --crimson:      #b41e32;
+            --crimson-d:    #8c1626;
+            --crimson-lt:   #d4253d;
+            --crimson-xs:   rgba(180,30,50,0.08);
+            --crimson-sm:   rgba(180,30,50,0.16);
+            --crimson-glow: rgba(180,30,50,0.28);
+
+            /* ── Dark accents ── */
+            --slate-dark:   #1a1f2e;
+            --slate-mid:    #2d3348;
+            --slate-lt:     #3d4562;
+            --gold:         #c8922a;
+            --gold-lt:      #e0a93a;
+            --gold-xs:      rgba(200,146,42,0.12);
+
+            /* ── Text ── */
+            --ink:          #1a1a1f;
+            --charcoal:     #3a3a42;
+            --muted:        rgba(50,50,65,0.52);
+
+            /* ── Severity colours ── */
+            --sev-low:      #2e7d32;
+            --sev-med:      #e65100;
+            --sev-high:     #b71c1c;
+            --sev-critical: #4a0010;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            font-family: 'Barlow', sans-serif;
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        /* Subtle cross-hatch background */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(180,30,50,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(180,30,50,0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .main-content {
+            position: relative; z-index: 1;
+            padding: 36px 40px 70px;
+        }
+
+        /* ══════════════════════════════════════
+           BANNER
+        ══════════════════════════════════════ */
+        .page-banner {
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 28px;
+            position: relative;
+            height: 170px;
+            background:
+                linear-gradient(125deg,
+                    var(--slate-dark) 0%,
+                    #3a0a12 45%,
+                    var(--crimson-d) 100%);
+            box-shadow:
+                0 20px 56px rgba(180,30,50,0.22),
+                0 4px 16px rgba(0,0,0,0.25);
+            animation: fadeDown 0.65s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Diagonal slash texture */
+        .page-banner::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: repeating-linear-gradient(
+                -55deg,
+                rgba(255,255,255,0.025) 0px,
+                rgba(255,255,255,0.025) 1px,
+                transparent 1px,
+                transparent 28px
+            );
+        }
+
+        /* Light flare top-right */
+        .page-banner::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 50% 70% at 85% 30%, rgba(200,146,42,0.18) 0%, transparent 65%);
+        }
+
+        .banner-left-bar {
+            position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+            background: linear-gradient(to bottom, var(--crimson-lt), var(--gold), rgba(180,30,50,0));
+        }
+
+        /* Fingerprint watermark */
+        .banner-watermark {
+            position: absolute; right: 24px; top: 50%;
+            transform: translateY(-50%);
+            width: 140px; height: 140px;
+            opacity: 0.06; z-index: 1;
+        }
+
+        .banner-shimmer {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--crimson-lt), var(--gold-lt), var(--crimson-lt), transparent);
+            background-size: 200% 100%;
+            animation: shimSlide 3.5s linear infinite;
+        }
+        @keyframes shimSlide {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .banner-content {
+            position: absolute; bottom: 24px; left: 32px; z-index: 2;
+            animation: slideInLeft 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-26px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .banner-eyebrow {
+            display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+        }
+        .banner-eyebrow .eline { width: 24px; height: 2px; background: rgba(255,255,255,0.4); border-radius: 2px; }
+        .banner-eyebrow span {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.68rem; font-weight: 600;
+            letter-spacing: 3.5px; text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .banner-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.4rem; font-weight: 700;
+            color: #fff; line-height: 1; letter-spacing: 0.5px;
+        }
+        .banner-title .accent { color: var(--gold-lt); }
+
+        .banner-sub {
+            margin-top: 8px; font-size: 0.76rem;
+            color: rgba(255,255,255,0.42);
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+
+        /* Severity tag in banner */
+        .banner-severity-tag {
+            position: absolute; top: 22px; right: 32px; z-index: 3;
+            animation: fadeInR 0.7s ease 0.4s both;
+        }
+        @keyframes fadeInR {
+            from { opacity: 0; transform: translateX(16px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        .sev-tag {
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+        }
+        .sev-icon-box {
+            width: 56px; height: 56px; border-radius: 14px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.16);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: var(--gold-lt);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .sev-tag-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: rgba(255,255,255,0.42);
+        }
+
+        /* ══════════════════════════════════════
+           CRIME TYPE SELECTOR
+        ══════════════════════════════════════ */
+        .crime-type-section {
+            margin-bottom: 26px;
+            animation: fadeUp 0.5s ease 0.2s both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .crime-type-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--crimson); margin-bottom: 12px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .crime-type-label::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(to right, var(--border-mid), transparent);
+        }
+
+        .crime-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .crime-type-card {
+            position: relative; cursor: pointer;
+        }
+        .crime-type-card input[type="radio"] {
+            position: absolute; opacity: 0; width: 0; height: 0;
+        }
+        .crime-type-card label {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 8px; padding: 14px 10px;
+            background: var(--surface);
+            border: 1.5px solid rgba(180,30,50,0.12);
+            border-radius: 12px; cursor: pointer;
+            transition: all 0.22s;
+            text-align: center;
+        }
+        .crime-type-card label .ct-icon {
+            width: 38px; height: 38px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; transition: all 0.22s;
+        }
+        .crime-type-card label .ct-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            letter-spacing: 0.3px; color: var(--charcoal);
+            transition: color 0.22s;
+        }
+
+        /* Default icon bg per type */
+        .ct-theft   .ct-icon { background: rgba(180,30,50,0.08); color: var(--crimson); }
+        .ct-assault .ct-icon { background: rgba(26,15,50,0.08); color: #6a3fa0; }
+        .ct-fraud   .ct-icon { background: rgba(200,146,42,0.10); color: var(--gold); }
+        .ct-drugs   .ct-icon { background: rgba(0,120,80,0.08); color: #007850; }
+        .ct-cyber   .ct-icon { background: rgba(22,49,96,0.10); color: rgb(22,49,96); }
+        .ct-murder  .ct-icon { background: rgba(80,0,0,0.10); color: #7a0000; }
+        .ct-robbery .ct-icon { background: rgba(150,80,0,0.10); color: #964f00; }
+        .ct-other   .ct-icon { background: rgba(60,60,80,0.08); color: #3c3c50; }
+
+        /* Selected state */
+        .crime-type-card input:checked + label {
+            border-color: var(--crimson);
+            background: linear-gradient(135deg, rgba(180,30,50,0.06), rgba(180,30,50,0.02));
+            box-shadow: 0 0 0 3px rgba(180,30,50,0.10), 0 4px 16px rgba(180,30,50,0.12);
+            transform: translateY(-2px);
+        }
+        .crime-type-card input:checked + label .ct-name { color: var(--crimson-d); font-weight: 800; }
+        .crime-type-card input:checked + label .ct-icon { transform: scale(1.15); }
+
+        .ct-theft   input:checked + label .ct-icon { background: rgba(180,30,50,0.15); }
+        .ct-assault input:checked + label .ct-icon { background: rgba(106,63,160,0.15); }
+        .ct-fraud   input:checked + label .ct-icon { background: rgba(200,146,42,0.18); }
+        .ct-drugs   input:checked + label .ct-icon { background: rgba(0,120,80,0.15); }
+        .ct-cyber   input:checked + label .ct-icon { background: rgba(22,49,96,0.18); }
+        .ct-murder  input:checked + label .ct-icon { background: rgba(120,0,0,0.16); }
+        .ct-robbery input:checked + label .ct-icon { background: rgba(150,80,0,0.16); }
+        .ct-other   input:checked + label .ct-icon { background: rgba(60,60,80,0.15); }
+
+        .crime-type-card label:hover {
+            border-color: var(--border-mid);
+            background: var(--surface-2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+        }
+
+        /* ══════════════════════════════════════
+           SEVERITY SELECTOR
+        ══════════════════════════════════════ */
+        .severity-row {
+            display: flex; gap: 10px; margin-bottom: 26px;
+            flex-wrap: wrap;
+        }
+
+        .sev-option { position: relative; flex: 1; min-width: 100px; }
+        .sev-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+        .sev-option label {
+            display: flex; align-items: center; justify-content: center;
+            gap: 7px; padding: 10px 14px;
+            border-radius: 10px; cursor: pointer;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem; font-weight: 700;
+            letter-spacing: 0.8px; text-transform: uppercase;
+            border: 1.5px solid; transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .sev-low    label { border-color: rgba(46,125,50,0.25); color: var(--sev-low); background: rgba(46,125,50,0.06); }
+        .sev-medium label { border-color: rgba(230,81,0,0.25); color: var(--sev-med); background: rgba(230,81,0,0.06); }
+        .sev-high   label { border-color: rgba(183,28,28,0.25); color: var(--sev-high); background: rgba(183,28,28,0.06); }
+        .sev-critical label { border-color: rgba(74,0,16,0.3); color: var(--sev-critical); background: rgba(74,0,16,0.07); }
+
+        .sev-low    input:checked + label { background: rgba(46,125,50,0.15); border-color: var(--sev-low); box-shadow: 0 0 0 3px rgba(46,125,50,0.10); }
+        .sev-medium input:checked + label { background: rgba(230,81,0,0.15); border-color: var(--sev-med); box-shadow: 0 0 0 3px rgba(230,81,0,0.10); }
+        .sev-high   input:checked + label { background: rgba(183,28,28,0.15); border-color: var(--sev-high); box-shadow: 0 0 0 3px rgba(183,28,28,0.12); }
+        .sev-critical input:checked + label { background: rgba(74,0,16,0.15); border-color: var(--sev-critical); box-shadow: 0 0 0 3px rgba(74,0,16,0.12); }
+
+        /* ══════════════════════════════════════
+           MAIN FORM CARD
+        ══════════════════════════════════════ */
+        .form-card {
+            background: var(--surface);
+            border-radius: 18px;
+            border: 1px solid var(--border-soft);
+            box-shadow: 0 8px 40px rgba(180,30,50,0.07), 0 2px 8px rgba(0,0,0,0.04);
+            overflow: hidden;
+            animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.25s both;
+        }
+
+        /* Card top accent */
+        .form-card-top {
+            height: 4px;
+            background: linear-gradient(90deg, var(--crimson), var(--gold), var(--crimson-lt));
+            background-size: 200%;
+            animation: shimSlide 4s linear infinite;
+        }
+
+        .card-section-header {
+            padding: 20px 32px 18px;
+            border-bottom: 1px solid var(--border-soft);
+            display: flex; align-items: center; gap: 14px;
+            background: linear-gradient(to right, rgba(180,30,50,0.04), transparent);
+        }
+        .section-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: var(--crimson-xs);
+            border: 1px solid var(--border-soft);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--crimson); font-size: 1rem; flex-shrink: 0;
+        }
+        .card-section-header h5 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem; font-weight: 700; color: var(--ink); margin: 0;
+        }
+        .card-section-header small {
+            font-size: 0.75rem; color: var(--muted); display: block; margin-top: 1px;
+        }
+
+        .form-body { padding: 32px; }
+
+        /* Field group label */
+        .field-group-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--crimson); margin-bottom: 18px; margin-top: 8px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .field-group-label::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(to right, var(--border-mid), transparent);
+        }
+
+        /* ── Fields ── */
+        .field-wrap { margin-bottom: 22px; }
+
+        .field-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+            color: var(--charcoal); margin-bottom: 8px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .field-label i { color: var(--crimson); font-size: 0.82rem; }
+        .required-dot {
+            width: 5px; height: 5px; border-radius: 50%;
+            background: var(--crimson); margin-left: 2px; flex-shrink: 0;
+        }
+
+        .field-input {
+            width: 100%; padding: 13px 16px;
+            background: var(--surface-2);
+            border: 1.5px solid rgba(180,30,50,0.15);
+            border-radius: 10px;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.97rem; color: var(--ink);
+            transition: all 0.25s; outline: none; appearance: none;
+        }
+        .field-input:focus {
+            border-color: var(--crimson);
+            background: var(--surface);
+            box-shadow: 0 0 0 4px rgba(180,30,50,0.08);
+        }
+        .field-input::placeholder { color: rgba(50,50,65,0.35); font-size: 0.9rem; }
+
+        .input-with-icon { position: relative; }
+        .input-with-icon .field-input { padding-left: 44px; }
+        .input-with-icon .input-icon {
+            position: absolute; left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--crimson); font-size: 0.85rem; pointer-events: none;
+        }
+
+        textarea.field-input { resize: none; min-height: 116px; line-height: 1.6; }
+
+        /* ── Gender selector ── */
+        .gender-group { display: flex; gap: 12px; }
+        .gender-option { flex: 1; position: relative; }
+        .gender-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+        .gender-option label {
+            display: flex; align-items: center; justify-content: center;
+            gap: 8px; padding: 13px 16px;
+            border: 1.5px solid rgba(180,30,50,0.15);
+            border-radius: 10px; background: var(--surface-2);
+            cursor: pointer; font-size: 0.9rem; font-weight: 500;
+            color: var(--charcoal); transition: all 0.2s; user-select: none;
+        }
+        .gender-option input:checked + label {
+            border-color: var(--crimson);
+            background: var(--crimson-xs);
+            color: var(--crimson-d);
+            box-shadow: 0 0 0 3px rgba(180,30,50,0.08);
+        }
+        .gender-option label:hover { border-color: var(--border-mid); background: var(--surface); }
+
+        /* ── Photo upload ── */
+        .photo-upload-zone {
+            border: 2px dashed rgba(180,30,50,0.28);
+            border-radius: 14px;
+            background: rgba(180,30,50,0.03);
+            padding: 36px 20px; text-align: center;
+            cursor: pointer; transition: all 0.25s;
+            position: relative; overflow: hidden;
+        }
+        .photo-upload-zone:hover {
+            border-color: var(--crimson);
+            background: var(--crimson-xs);
+        }
+        .photo-upload-zone input[type="file"] {
+            position: absolute; inset: 0; opacity: 0;
+            cursor: pointer; width: 100%; height: 100%;
+        }
+        .upload-icon-wrap {
+            width: 66px; height: 66px; border-radius: 50%;
+            background: var(--surface); border: 2px solid var(--border-soft);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 14px; color: var(--crimson); font-size: 1.5rem;
+            box-shadow: 0 4px 18px rgba(180,30,50,0.15);
+            transition: transform 0.2s;
+        }
+        .photo-upload-zone:hover .upload-icon-wrap { transform: scale(1.08); }
+        .upload-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 4px;
+        }
+        .upload-sub { font-size: 0.78rem; color: var(--muted); }
+        .upload-tag {
+            display: inline-block; margin-top: 12px;
+            padding: 4px 12px;
+            background: var(--crimson-xs); border: 1px solid var(--border-soft);
+            border-radius: 20px; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase; color: var(--crimson-d);
+        }
+        #photo-preview {
+            display: none; width: 100px; height: 100px;
+            border-radius: 12px; object-fit: cover;
+            margin: 14px auto 0;
+            border: 3px solid var(--crimson);
+            box-shadow: 0 4px 20px rgba(180,30,50,0.25);
+        }
+
+        /* ── Warning notice ── */
+        .case-notice {
+            background: linear-gradient(to right, rgba(180,30,50,0.07), rgba(180,30,50,0.02));
+            border: 1px solid rgba(180,30,50,0.20);
+            border-left: 3px solid var(--crimson);
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex; align-items: flex-start; gap: 12px;
+            margin-bottom: 28px;
+            animation: fadeUp 0.5s ease 0.4s both;
+        }
+        .case-notice i { color: var(--crimson); margin-top: 2px; flex-shrink: 0; }
+        .case-notice p { font-size: 0.84rem; color: var(--charcoal); margin: 0; line-height: 1.55; }
+        .case-notice strong { color: var(--crimson-d); }
+
+        /* ── Step indicator ── */
+        .step-indicator {
+            display: flex; align-items: center; margin-bottom: 26px;
+            animation: fadeUp 0.5s ease 0.3s both;
+        }
+        .step { display: flex; align-items: center; gap: 8px; flex: 1; }
+        .step-num {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: var(--crimson); color: white;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .step-num.inactive {
+            background: #e8e8ec; color: var(--muted);
+            border: 1.5px solid rgba(180,30,50,0.15);
+        }
+        .step-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.92rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.8px; color: var(--crimson-d);
+        }
+        .step-label.inactive { color: var(--muted); }
+        .step-connector {
+            flex: 1; height: 1.5px;
+            background: linear-gradient(to right, rgba(180,30,50,0.25), rgba(180,30,50,0.08));
+            margin: 0 10px;
+        }
+
+        /* ── Submit row ── */
+        .submit-row {
+            display: flex; align-items: center;
+            justify-content: flex-end; gap: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-soft);
+            margin-top: 8px;
+        }
+        .btn-cancel {
+            padding: 12px 28px; background: transparent;
+            border: 1.5px solid rgba(180,30,50,0.18);
+            border-radius: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.9rem; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--charcoal); cursor: pointer; transition: all 0.2s;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-cancel:hover { border-color: var(--charcoal); color: var(--ink); }
+
+        .btn-submit {
+            padding: 13px 36px;
+            background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-d) 100%);
+            border: none; border-radius: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.92rem; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: #fff; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 6px 24px rgba(180,30,50,0.35);
+            transition: all 0.25s; position: relative; overflow: hidden;
+        }
+        .btn-submit::before {
+            content: '';
+            position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+            transition: left 0.5s;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(180,30,50,0.45);
+        }
+        .btn-submit:hover::before { left: 100%; }
+
+        /* ── Dynamic severity indicator ── */
+        .severity-indicator {
+            display: none;
+            align-items: center; gap: 10px;
+            padding: 10px 16px; border-radius: 10px;
+            margin-bottom: 18px;
+            border: 1px solid; font-size: 0.82rem; font-weight: 600;
+            font-family: 'Barlow', sans-serif;
+            animation: fadeUp 0.3s ease both;
+        }
+        .severity-indicator.visible { display: flex; }
+        .severity-indicator i { font-size: 0.9rem; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .main-content { padding: 20px; }
+            .form-body { padding: 20px; }
+            .crime-types-grid { grid-template-columns: repeat(4, 1fr); }
+            .gender-group { flex-direction: column; }
+            .submit-row { flex-direction: column; }
+            .btn-submit, .btn-cancel { width: 100%; justify-content: center; }
+            .banner-severity-tag { display: none; }
+            .banner-title { font-size: 1.8rem; }
+            .severity-row { flex-wrap: wrap; }
+            .sev-option { min-width: calc(50% - 5px); }
+        }
+        @media (max-width: 480px) {
+            .crime-types-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+{% include 'police/police_sidebar.html' %}
+
+<main class="main-content">
+
+    <!-- BANNER -->
+    <div class="page-banner">
+        <div class="banner-left-bar"></div>
+
+        <!-- Fingerprint SVG watermark -->
+        <div class="banner-watermark">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="6"  stroke="white" stroke-width="2"/>
+                <circle cx="50" cy="50" r="13" stroke="white" stroke-width="1.5"/>
+                <circle cx="50" cy="50" r="21" stroke="white" stroke-width="1.5"/>
+                <circle cx="50" cy="50" r="30" stroke="white" stroke-width="1.2"/>
+                <circle cx="50" cy="50" r="40" stroke="white" stroke-width="1.2"/>
+                <path d="M50 10 Q65 30 50 50 Q35 70 50 90" stroke="white" stroke-width="1" fill="none"/>
+                <path d="M50 10 Q70 28 62 50 Q55 72 50 90" stroke="white" stroke-width="0.8" fill="none"/>
+                <path d="M50 10 Q75 26 74 50 Q73 74 50 90" stroke="white" stroke-width="0.6" fill="none"/>
+                <path d="M50 10 Q30 28 38 50 Q45 72 50 90" stroke="white" stroke-width="0.8" fill="none"/>
+                <path d="M50 10 Q25 26 26 50 Q27 74 50 90" stroke="white" stroke-width="0.6" fill="none"/>
+            </svg>
+        </div>
+
+        <div class="banner-content">
+            <div class="banner-eyebrow">
+                <div class="eline"></div>
+                <span>Criminal Case Management</span>
+            </div>
+            <div class="banner-title">File <span class="accent">Criminal</span> Case</div>
+            <div class="banner-sub">Criminal Cases &nbsp;/&nbsp; New Case Record</div>
+        </div>
+
+        <div class="banner-severity-tag">
+            <div class="sev-tag">
+                <div class="sev-icon-box"><i class="fas fa-gavel"></i></div>
+                <span class="sev-tag-label">New Record</span>
+            </div>
+        </div>
+
+        <div class="banner-shimmer"></div>
+    </div>
+
+    <!-- STEP INDICATOR -->
+    <div class="step-indicator">
+        <div class="step">
+            <div class="step-num">1</div>
+            <span class="step-label">Crime Classification</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <span class="step-label">Suspect Info</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+            <div class="step-num inactive">3</div>
+            <span class="step-label inactive">Evidence & Photo</span>
+        </div>
+    </div>
+
+    <!-- WARNING NOTICE -->
+    <div class="case-notice">
+        <i class="fas fa-shield-exclamation fa-sm"></i>
+        <p>
+            <strong>Classified Record:</strong> This case file will be stored in the criminal database.
+            Ensure all information is accurate and verified before submission.
+            False records are subject to disciplinary action.
+        </p>
+    </div>
+
+
+    {% if message %}
+<div class="case-notice">
+    <i class="fas fa-circle-info"></i>
+    <p>{{ message }}</p>
+</div>
+{% endif %}
+
+
+    <!-- ══ CRIME TYPE SELECTOR ══ -->
+    <div class="crime-type-section">
+        <div class="crime-type-label">
+            <i class="fas fa-tag" style="font-size:0.75rem;"></i>
+            Select Crime Category
+        </div>
+        <div class="crime-types-grid">
+            <div class="crime-type-card ct-theft">
+                <input type="radio" name="crime_type" id="ct-theft" value="Theft">
+                <label for="ct-theft">
+                    <div class="ct-icon"><i class="fas fa-mask"></i></div>
+                    <span class="ct-name">Theft</span>
+                </label>
+            </div>
+            <div class="crime-type-card ct-assault">
+                <input type="radio" name="crime_type" id="ct-assault" value="Assault">
+                <label for="ct-assault">
+                    <div class="ct-icon"><i class="fas fa-hand-fist"></i></div>
+                    <span class="ct-name">Assault</span>
+                </label>
+            </div>
+            <div class="crime-type-card ct-fraud">
+                <input type="radio" name="crime_type" id="ct-fraud" value="Fraud">
+                <label for="ct-fraud">
+                    <div class="ct-icon"><i class="fas fa-file-circle-xmark"></i></div>
+                    <span class="ct-name">Fraud</span>
+                </label>
+            </div>
+            <div class="crime-type-card ct-drugs">
+                <input type="radio" name="crime_type" id="ct-drugs" value="Drug Offence">
+                <label for="ct-drugs">
+                    <div class="ct-icon"><i class="fas fa-capsules"></i></div>
+                    <span class="ct-name">Drug Offence</span>
+                </label>
+            </div>
+            <div class="crime-type-card ct-cyber">
+                <input type="radio" name="crime_type" id="ct-cyber" value="Cybercrime">
+                <label for="ct-cyber">
+                    <div class="ct-icon"><i class="fas fa-laptop-code"></i></div>
+                    <span class="ct-name">Cybercrime</span>
+                </label>
+            </div>
+            <div class="crime-type-card ct-murder">
+                <input type="radio" name="crime_type" id="ct-murder" value="Murder">
+                <label for="ct-murder">
+                    <div class="ct-icon"><i class="fas fa-skull"></i></div>
+                    <span class="ct-name">Murder</span>
+                </label>
+            </div>
+            <div class="crime-type-card ct-robbery">
+                <input type="radio" name="crime_type" id="ct-robbery" value="Robbery">
+                <label for="ct-robbery">
+                    <div class="ct-icon"><i class="fas fa-gun"></i></div>
+                    <span class="ct-name">Robbery</span>
+                </label>
+            </div>
+            <div class="crime-type-card ct-other">
+                <input type="radio" name="crime_type" id="ct-other" value="Other">
+                <label for="ct-other">
+                    <div class="ct-icon"><i class="fas fa-ellipsis"></i></div>
+                    <span class="ct-name">Other</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ SEVERITY ══ -->
+    <div class="crime-type-label" style="margin-bottom:12px;">
+        <i class="fas fa-circle-exclamation" style="font-size:0.75rem;"></i>
+        Severity Level
+    </div>
+    <div class="severity-row">
+        <div class="sev-option sev-low">
+            <input type="radio" name="severity" id="sev-low" value="Low">
+            <label for="sev-low"><i class="fas fa-circle-minus"></i> Low</label>
+        </div>
+        <div class="sev-option sev-medium">
+            <input type="radio" name="severity" id="sev-medium" value="Medium" checked>
+            <label for="sev-medium"><i class="fas fa-circle-half-stroke"></i> Medium</label>
+        </div>
+        <div class="sev-option sev-high">
+            <input type="radio" name="severity" id="sev-high" value="High">
+            <label for="sev-high"><i class="fas fa-circle-exclamation"></i> High</label>
+        </div>
+        <div class="sev-option sev-critical">
+            <input type="radio" name="severity" id="sev-critical" value="Critical">
+            <label for="sev-critical"><i class="fas fa-skull-crossbones"></i> Critical</label>
+        </div>
+    </div>
+
+    <!-- Dynamic severity message -->
+    <div class="severity-indicator" id="severityIndicator"></div>
+
+    <!-- ══ MAIN FORM ══ -->
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        <!-- Pass crime_type and severity from outside the form too -->
+        <input type="hidden" name="crime_type" id="crimeTypeHidden" value="">
+        <input type="hidden" name="severity"   id="severityHidden"   value="Medium">
+
+        <div class="form-card">
+            <div class="form-card-top"></div>
+
+            <div class="card-section-header">
+                <div class="section-icon"><i class="fas fa-user-secret"></i></div>
+                <div>
+                    <h5>Suspect / Criminal Details</h5>
+                    <small>Enter complete and verified information about the accused</small>
+                </div>
+            </div>
+
+            <div class="form-body">
+
+                <!-- Personal Info -->
+                <div class="field-group-label">Personal Information</div>
+
+                <!-- Name -->
+                <div class="field-wrap">
+                    <div class="field-label">
+                        <i class="fas fa-user"></i> Full Name
+                        <span class="required-dot"></span>
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" name="name" class="field-input"
+                               placeholder="Enter full name of suspect / criminal" required>
+                    </div>
+                </div>
+
+                <!-- Age + Gender -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="field-label">
+                            <i class="fas fa-cake-candles"></i> Age
+                            <span class="required-dot"></span>
+                        </div>
+                        <div class="input-with-icon">
+                            <i class="fas fa-hashtag input-icon"></i>
+                            <input type="number" name="age" class="field-input"
+                                   placeholder="Age in years" min="0" max="120" required>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="field-label">
+                            <i class="fas fa-venus-mars"></i> Gender
+                            <span class="required-dot"></span>
+                        </div>
+                        <div class="gender-group">
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="g-male" value="Male" required>
+                                <label for="g-male"><i class="fas fa-mars"></i> Male</label>
+                            </div>
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="g-female" value="Female">
+                                <label for="g-female"><i class="fas fa-venus"></i> Female</label>
+                            </div>
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="g-other" value="Other">
+                                <label for="g-other"><i class="fas fa-genderless"></i> Other</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Details -->
+                <div class="field-group-label">Case Description</div>
+
+                <!-- Details -->
+                <div class="field-wrap">
+                    <div class="field-label">
+                        <i class="fas fa-file-lines"></i> Crime Details & Description
+                        <span class="required-dot"></span>
+                    </div>
+                    <textarea name="details" class="field-input"
+                        placeholder="Describe the crime committed, evidence gathered, location of incident, date and time, modus operandi, known associates, and any other relevant case details..."
+                        required></textarea>
+                </div>
+
+                <!-- Photo -->
+                <div class="field-group-label">Evidence Photo</div>
+
+                <div class="field-wrap">
+                    <div class="field-label">
+                        <i class="fas fa-camera"></i> Suspect Photograph
+                        <span class="required-dot"></span>
+                    </div>
+                    <div class="photo-upload-zone" id="upload-zone">
+                        <input type="file" name="photo" id="photo-input" accept="image/*" required>
+                        <div class="upload-icon-wrap"><i class="fas fa-cloud-arrow-up"></i></div>
+                        <div class="upload-title">Drop suspect photo or click to browse</div>
+                        <div class="upload-sub">Clear front-facing photo required for criminal identification</div>
+                        <div class="upload-tag">JPG, PNG, WEBP &nbsp;·&nbsp; Max 5MB</div>
+                        <img id="photo-preview" alt="Preview">
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="submit-row">
+                    <a href="{% url 'view_missing_criminal' %}" class="btn-cancel">
+                        <i class="fas fa-xmark"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-file-circle-plus"></i>
+                        File Criminal Record
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+
+</main>
+
+<script>
+    // ── Severity messages & styles ──
+    const severityConfig = {
+        'Low':      { bg: 'rgba(46,125,50,0.08)',  border: 'rgba(46,125,50,0.30)',  color: '#2e7d32', icon: 'fas fa-circle-minus',        msg: 'Low severity — minor offence. Standard procedure applies.' },
+        'Medium':   { bg: 'rgba(230,81,0,0.08)',   border: 'rgba(230,81,0,0.30)',   color: '#e65100', icon: 'fas fa-circle-half-stroke',   msg: 'Medium severity — notable offence. Supervisor review recommended.' },
+        'High':     { bg: 'rgba(183,28,28,0.08)',  border: 'rgba(183,28,28,0.30)',  color: '#b71c1c', icon: 'fas fa-circle-exclamation',   msg: 'High severity — serious crime. Immediate escalation required.' },
+        'Critical': { bg: 'rgba(74,0,16,0.10)',    border: 'rgba(74,0,16,0.35)',    color: '#4a0010', icon: 'fas fa-skull-crossbones',      msg: 'CRITICAL — capital offence. Contact senior officers immediately.' }
+    };
+
+    function updateSeverityIndicator(level) {
+        const el  = document.getElementById('severityIndicator');
+        const cfg = severityConfig[level];
+        if (!cfg) { el.classList.remove('visible'); return; }
+        el.style.background   = cfg.bg;
+        el.style.borderColor  = cfg.border;
+        el.style.color        = cfg.color;
+        el.innerHTML = `<i class="${cfg.icon}"></i> ${cfg.msg}`;
+        el.classList.add('visible');
+        document.getElementById('severityHidden').value = level;
+    }
+
+    // Init with default Medium
+    updateSeverityIndicator('Medium');
+
+    // Severity radio listeners
+    document.querySelectorAll('input[name="severity"]').forEach(r => {
+        r.addEventListener('change', () => updateSeverityIndicator(r.value));
+    });
+
+    // Crime type → hidden input sync
+    document.querySelectorAll('input[name="crime_type"]').forEach(r => {
+        r.addEventListener('change', () => {
+            document.getElementById('crimeTypeHidden').value = r.value;
+        });
+    });
+
+    // ── Photo preview ──
+    document.getElementById('photo-input').addEventListener('change', function () {
+        const file = this.files[0];
+        const preview = document.getElementById('photo-preview');
+        const icon  = document.querySelector('.upload-icon-wrap');
+        const title = document.querySelector('.upload-title');
+        const sub   = document.querySelector('.upload-sub');
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                icon.style.display = 'none';
+                title.textContent = file.name;
+                sub.textContent = (file.size / 1024).toFixed(1) + ' KB · Click to change photo';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // ── Drag-over ──
+    const zone = document.getElementById('upload-zone');
+    zone.addEventListener('dragover',  e => { e.preventDefault(); zone.style.borderColor = 'var(--crimson)'; zone.style.background = 'var(--crimson-xs)'; });
+    zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; zone.style.background = ''; });
+    zone.addEventListener('drop',      () => { zone.style.borderColor = ''; zone.style.background = ''; });
+</script>
+
+</body>
+</html>

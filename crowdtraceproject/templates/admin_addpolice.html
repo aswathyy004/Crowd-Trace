@@ -1,0 +1,1621 @@
+{##}
+{#    {% include 'admin_sidebar.html' %}#}
+{##}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Add Police Officer | Admin Portal</title>#}
+{##}
+{#    <!-- Bootstrap 5 -->#}
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#    <!-- Font Awesome -->#}
+{#    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">#}
+{#    <!-- Fonts -->#}
+{#    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">#}
+{##}
+{#    <style>#}
+{#        /* ═══════════════════════════════════════════════════#}
+{#           ROOT — mirrors sidebar palette exactly#}
+{#        ═══════════════════════════════════════════════════ */#}
+{#        :root {#}
+{#            --sw:        276px;#}
+{#            --sm:         76px;#}
+{#            --sd:        .34s;#}
+{#            --se:        cubic-bezier(.4,0,.2,1);#}
+{##}
+{#            --white:     #ffffff;#}
+{#            --snow:      #f5f8f8;#}
+{#            --mist:      #eaf3f2;#}
+{#            --silver:    rgba(32,33,32,.51);#}
+{#            --slate:     rgb(22,49,96);#}
+{#            --ink:       #1a2222;#}
+{##}
+{#            --teal:      #05AD98;#}
+{#            --teal-d:    #048a78;#}
+{#            --teal-lt:   #07c9b1;#}
+{#            --teal-xs:   rgba(5,173,152,.10);#}
+{#            --teal-sm:   rgba(5,173,152,.18);#}
+{#            --teal-glow: rgba(5,173,152,.30);#}
+{##}
+{#            /* Palette accent colours */#}
+{#            --c1: #cfe0e8;#}
+{#            --c2: #b7d7e8;#}
+{#            --c3: #87bdd8;#}
+{#            --c4: #daebe8;#}
+{#            --deep: #2b5f75;#}
+{#            --darker: #1a3d4f;#}
+{#            --text-muted: #5a8094;#}
+{##}
+{#            --border: rgba(183,215,232,.6);#}
+{#            --shadow: rgba(135,189,216,.25);#}
+{#        }#}
+{##}
+{#        * { box-sizing: border-box; margin: 0; padding: 0; }#}
+{##}
+{#        /* Body — sidebar sets margin-left via its own CSS */#}
+{#        body {#}
+{#            font-family: 'Nunito', sans-serif;#}
+{#            background: var(--snow);#}
+{#            color: var(--ink);#}
+{#            margin-left: var(--sw);#}
+{#            transition: margin-left var(--sd) var(--se);#}
+{#        }#}
+{#        body.sbmini { margin-left: var(--sm); }#}
+{##}
+{#        /* ── MAIN CONTENT ── */#}
+{#        .main-content {#}
+{#            min-height: 100vh;#}
+{#            padding: 2rem 2.25rem 3rem;#}
+{#            background: linear-gradient(135deg, var(--c4) 0%, var(--c1) 45%, var(--c2) 100%);#}
+{#            position: relative;#}
+{#        }#}
+{#        .main-content::before {#}
+{#            content: '';#}
+{#            position: absolute; inset: 0; pointer-events: none;#}
+{#            background:#}
+{#                radial-gradient(ellipse 700px 400px at 85% 15%, rgba(135,189,216,.25) 0%, transparent 65%),#}
+{#                radial-gradient(ellipse 500px 600px at 5%  85%, rgba(218,235,232,.35) 0%, transparent 65%);#}
+{#            z-index: 0;#}
+{#        }#}
+{#        .main-content > * { position: relative; z-index: 1; }#}
+{##}
+{#        /* ── PAGE HEADER ── */#}
+{#        .page-header {#}
+{#            display: flex;#}
+{#            flex-direction: column;#}
+{#            align-items: flex-start;#}
+{#            gap: 0.6rem;#}
+{#            margin-bottom: 2rem;#}
+{#            padding-top: 0.5rem;#}
+{#        }#}
+{#        .header-icon {#}
+{#            width: 60px; height: 60px;#}
+{#            background: var(--deep);#}
+{#            border-radius: 16px;#}
+{#            display: grid; place-items: center;#}
+{#            box-shadow: 0 8px 24px var(--shadow);#}
+{#        }#}
+{#        .header-icon i { color: var(--white); font-size: 1.6rem; }#}
+{#        .page-header h2 {#}
+{#            font-family: 'Playfair Display', serif;#}
+{#            font-size: 2.2rem;#}
+{#            color: var(--darker);#}
+{#            line-height: 1.1;#}
+{#            margin: 0;#}
+{#        }#}
+{#        .page-header p { color: var(--text-muted); font-size: 1rem; margin-top: 4px; }#}
+{##}
+{#        /* breadcrumb */#}
+{#        .breadcrumb-bar {#}
+{#            display: flex; align-items: center; gap: 0.5rem;#}
+{#            font-size: 0.8rem; color: var(--text-muted);#}
+{#            margin-bottom: 1.75rem;#}
+{#        }#}
+{#        .breadcrumb-bar a { color: var(--teal); text-decoration: none; font-weight: 700; }#}
+{#        .breadcrumb-bar a:hover { text-decoration: underline; }#}
+{#        .breadcrumb-bar i { font-size: 0.65rem; }#}
+{##}
+{#        /* ── GLASS CARD ── */#}
+{#        .glass-card {#}
+{#            background: rgba(255,255,255,.75);#}
+{#            backdrop-filter: blur(18px);#}
+{#            -webkit-backdrop-filter: blur(18px);#}
+{#            border: 1px solid var(--border);#}
+{#            border-radius: 20px;#}
+{#            box-shadow: 0 8px 32px var(--shadow);#}
+{#            overflow: hidden;#}
+{#            margin-bottom: 2rem;#}
+{#        }#}
+{#        .glass-card:hover { box-shadow: 0 12px 48px rgba(135,189,216,.35); }#}
+{##}
+{#        .card-head {#}
+{#            padding: 1.1rem 1.6rem;#}
+{#            border-bottom: 1px solid var(--border);#}
+{#            display: flex; align-items: center; gap: 0.75rem;#}
+{#            background: rgba(218,235,232,.35);#}
+{#        }#}
+{#        .card-head .ch-icon {#}
+{#            width: 38px; height: 38px;#}
+{#            background: var(--c3);#}
+{#            border-radius: 10px;#}
+{#            display: grid; place-items: center;#}
+{#        }#}
+{#        .card-head .ch-icon i { color: var(--darker); font-size: 0.95rem; }#}
+{#        .card-head h5 { font-weight: 800; font-size: 1rem; color: var(--darker); margin: 0; }#}
+{#        .card-head span {#}
+{#            margin-left: auto;#}
+{#            font-size: 0.75rem; font-weight: 700;#}
+{#            color: var(--teal);#}
+{#            background: var(--teal-xs);#}
+{#            padding: 3px 12px; border-radius: 20px;#}
+{#            border: 1px solid rgba(5,173,152,.25);#}
+{#        }#}
+{##}
+{#        .card-body-pad { padding: 2rem; }#}
+{##}
+{#        /* ── PHOTO UPLOAD ── */#}
+{#        .photo-zone {#}
+{#            border: 2px dashed var(--c3);#}
+{#            border-radius: 16px;#}
+{#            background: rgba(183,215,232,.1);#}
+{#            aspect-ratio: 3/4;#}
+{#            display: flex; flex-direction: column;#}
+{#            align-items: center; justify-content: center;#}
+{#            cursor: pointer; position: relative; overflow: hidden;#}
+{#            transition: all .25s;#}
+{#        }#}
+{#        .photo-zone:hover {#}
+{#            border-color: var(--teal);#}
+{#            background: rgba(5,173,152,.06);#}
+{#            box-shadow: 0 0 0 4px var(--teal-xs);#}
+{#        }#}
+{#        .photo-zone img {#}
+{#            position: absolute; inset: 0;#}
+{#            width: 100%; height: 100%; object-fit: cover;#}
+{#        }#}
+{#        .photo-placeholder { text-align: center; color: var(--text-muted); }#}
+{#        .photo-placeholder i { font-size: 2.5rem; color: var(--c3); margin-bottom: 0.6rem; }#}
+{#        .photo-placeholder p { font-size: 0.85rem; font-weight: 600; }#}
+{#        .photo-placeholder small { font-size: 0.72rem; opacity: .7; }#}
+{##}
+{#        .photo-label {#}
+{#            font-size: 0.78rem; font-weight: 800;#}
+{#            letter-spacing: .06em; text-transform: uppercase;#}
+{#            color: var(--text-muted); margin-bottom: 0.6rem;#}
+{#            display: block;#}
+{#        }#}
+{##}
+{#        /* ── FORM FIELDS ── */#}
+{#        .field-group { margin-bottom: 1.25rem; }#}
+{##}
+{#        .field-label {#}
+{#            display: block;#}
+{#            font-size: 0.78rem; font-weight: 800;#}
+{#            letter-spacing: .05em; text-transform: uppercase;#}
+{#            color: var(--text-muted); margin-bottom: 0.45rem;#}
+{#        }#}
+{##}
+{#        .field-wrap { position: relative; }#}
+{#        .field-icon {#}
+{#            position: absolute; left: 0.9rem; top: 50%;#}
+{#            transform: translateY(-50%);#}
+{#            color: var(--c3); font-size: 0.9rem;#}
+{#            pointer-events: none;#}
+{#        }#}
+{#        .field-icon-ta {#}
+{#            position: absolute; left: 0.9rem; top: 0.9rem;#}
+{#            color: var(--c3); font-size: 0.9rem;#}
+{#            pointer-events: none;#}
+{#        }#}
+{##}
+{#        .form-field {#}
+{#            width: 100%;#}
+{#            background: rgba(255,255,255,.85);#}
+{#            border: 1.5px solid var(--border);#}
+{#            border-radius: 12px;#}
+{#            padding: 0.75rem 0.9rem 0.75rem 2.5rem;#}
+{#            font-family: 'Nunito', sans-serif;#}
+{#            font-size: 0.9rem; font-weight: 600;#}
+{#            color: var(--ink);#}
+{#            transition: all .2s;#}
+{#        }#}
+{#        .form-field:focus {#}
+{#            outline: none;#}
+{#            border-color: var(--teal);#}
+{#            box-shadow: 0 0 0 4px var(--teal-xs);#}
+{#            background: var(--white);#}
+{#        }#}
+{#        .form-field::placeholder { color: #9bbfcc; font-weight: 500; }#}
+{##}
+{#        .form-field.readonly-field {#}
+{#            background: rgba(207,224,232,.3);#}
+{#            cursor: not-allowed;#}
+{#            color: var(--text-muted);#}
+{#        }#}
+{##}
+{#        textarea.form-field { resize: none; padding-top: 0.75rem; }#}
+{##}
+{#        /* station readonly display */#}
+{#        .station-display {#}
+{#            display: flex; align-items: center; gap: 0.75rem;#}
+{#            background: rgba(5,173,152,.07);#}
+{#            border: 1.5px solid rgba(5,173,152,.25);#}
+{#            border-radius: 12px;#}
+{#            padding: 0.75rem 1rem;#}
+{#        }#}
+{#        .station-display i { color: var(--teal); font-size: 1rem; }#}
+{#        .station-display span { font-weight: 700; color: var(--darker); font-size: 0.9rem; }#}
+{##}
+{#        /* ── SECTION DIVIDER ── */#}
+{#        .sec-divider {#}
+{#            display: flex; align-items: center; gap: 0.75rem;#}
+{#            margin: 1.5rem 0 1.25rem;#}
+{#            font-size: 0.72rem; font-weight: 800;#}
+{#            letter-spacing: .1em; text-transform: uppercase;#}
+{#            color: var(--text-muted);#}
+{#        }#}
+{#        .sec-divider::before, .sec-divider::after {#}
+{#            content: ''; flex: 1; height: 1px;#}
+{#            background: linear-gradient(90deg, transparent, var(--border));#}
+{#        }#}
+{#        .sec-divider::before { background: linear-gradient(90deg, var(--border), transparent); }#}
+{##}
+{#        /* ── BUTTONS ── */#}
+{#        .btn-register {#}
+{#            background: linear-gradient(135deg, var(--deep) 0%, var(--teal) 100%);#}
+{#            color: var(--white);#}
+{#            border: none; border-radius: 12px;#}
+{#            padding: 0.8rem 2rem;#}
+{#            font-family: 'Nunito', sans-serif;#}
+{#            font-weight: 800; font-size: 0.95rem;#}
+{#            display: inline-flex; align-items: center; gap: 0.6rem;#}
+{#            cursor: pointer; transition: all .22s;#}
+{#            box-shadow: 0 4px 18px rgba(43,95,117,.3);#}
+{#        }#}
+{#        .btn-register:hover {#}
+{#            transform: translateY(-2px);#}
+{#            box-shadow: 0 8px 28px rgba(5,173,152,.4);#}
+{#        }#}
+{#        .btn-register:active { transform: translateY(0); }#}
+{##}
+{#        .btn-back {#}
+{#            background: transparent;#}
+{#            border: 1.5px solid var(--border);#}
+{#            border-radius: 12px;#}
+{#            padding: 0.75rem 1.75rem;#}
+{#            font-family: 'Nunito', sans-serif;#}
+{#            font-weight: 700; font-size: 0.9rem;#}
+{#            color: var(--text-muted);#}
+{#            display: inline-flex; align-items: center; gap: 0.5rem;#}
+{#            cursor: pointer; transition: all .22s;#}
+{#        }#}
+{#        .btn-back:hover {#}
+{#            border-color: var(--teal);#}
+{#            color: var(--teal);#}
+{#            background: var(--teal-xs);#}
+{#        }#}
+{##}
+{#        /* ── TABLE ── */#}
+{#        .table-wrap { overflow-x: auto; }#}
+{##}
+{#        .data-table { width: 100%; border-collapse: separate; border-spacing: 0; }#}
+{##}
+{#        .data-table thead th {#}
+{#            background: rgba(207,224,232,.5);#}
+{#            color: var(--text-muted);#}
+{#            font-size: 0.72rem; font-weight: 800;#}
+{#            letter-spacing: .08em; text-transform: uppercase;#}
+{#            padding: 1rem 1.25rem;#}
+{#            border: none; white-space: nowrap;#}
+{#        }#}
+{##}
+{#        .data-table tbody tr {#}
+{#            transition: background .15s;#}
+{#        }#}
+{#        .data-table tbody tr:hover { background: rgba(183,215,232,.15); }#}
+{##}
+{#        .data-table tbody td {#}
+{#            padding: 1rem 1.25rem;#}
+{#            border-bottom: 1px solid rgba(207,224,232,.5);#}
+{#            vertical-align: middle; font-size: 0.88rem;#}
+{#        }#}
+{#        .data-table tbody tr:last-child td { border-bottom: none; }#}
+{##}
+{#        .officer-avatar {#}
+{#            width: 44px; height: 44px;#}
+{#            border-radius: 50%; object-fit: cover;#}
+{#            border: 2px solid var(--c2);#}
+{#            box-shadow: 0 2px 8px var(--shadow);#}
+{#        }#}
+{##}
+{#        .officer-name { font-weight: 700; color: var(--darker); }#}
+{#        .officer-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }#}
+{##}
+{#        .badge-rank {#}
+{#            display: inline-flex; align-items: center; gap: 4px;#}
+{#            background: var(--teal-xs);#}
+{#            color: var(--teal-d);#}
+{#            border: 1px solid rgba(5,173,152,.25);#}
+{#            padding: 0.3em 0.75em; border-radius: 20px;#}
+{#            font-size: 0.73rem; font-weight: 700;#}
+{#        }#}
+{##}
+{#        /* empty state */#}
+{#        .empty-state {#}
+{#            text-align: center; padding: 3.5rem 2rem;#}
+{#        }#}
+{#        .empty-icon {#}
+{#            width: 64px; height: 64px;#}
+{#            background: rgba(207,224,232,.4);#}
+{#            border-radius: 20px;#}
+{#            display: grid; place-items: center;#}
+{#            margin: 0 auto 1.1rem;#}
+{#        }#}
+{#        .empty-icon i { font-size: 1.6rem; color: var(--c3); }#}
+{#        .empty-state h6 { font-weight: 800; color: var(--darker); margin-bottom: .4rem; }#}
+{#        .empty-state p { font-size: 0.82rem; color: var(--text-muted); }#}
+{##}
+{#        /* ── STAT PILLS ── */#}
+{#        .stats-row {#}
+{#            display: flex; gap: 1rem; margin-bottom: 1.75rem;#}
+{#        }#}
+{#        .stat-pill {#}
+{#            flex: 1; min-width: 0;#}
+{#            background: rgba(255,255,255,.65);#}
+{#            backdrop-filter: blur(12px);#}
+{#            border: 1px solid var(--border);#}
+{#            border-radius: 14px;#}
+{#            padding: 1rem 1.25rem;#}
+{#            display: flex; align-items: center; gap: 0.85rem;#}
+{#            box-shadow: 0 4px 12px var(--shadow);#}
+{#        }#}
+{#        .sp-icon {#}
+{#            width: 42px; height: 42px;#}
+{#            border-radius: 12px;#}
+{#            display: grid; place-items: center;#}
+{#            flex-shrink: 0;#}
+{#        }#}
+{#        .sp-icon.blue { background: var(--c2); }#}
+{#        .sp-icon.teal { background: rgba(5,173,152,.15); }#}
+{#        .sp-icon.mint { background: var(--c4); }#}
+{#        .sp-icon i { color: var(--darker); font-size: 1rem; }#}
+{#        .sp-icon i.teal-ico { color: var(--teal); }#}
+{#        .sp-val { font-size: 1.45rem; font-weight: 800; color: var(--darker); line-height: 1; font-family: 'Raleway', sans-serif; }#}
+{#        .sp-lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; font-weight: 600; }#}
+{##}
+{#        /* ── ANIMATIONS ── */#}
+{#        @keyframes fadeUp {#}
+{#            from { opacity: 0; transform: translateY(12px); }#}
+{#            to   { opacity: 1; transform: translateY(0); }#}
+{#        }#}
+{#        .glass-card { animation: fadeUp .4s ease both; }#}
+{#        .glass-card:nth-child(2) { animation-delay: .08s; }#}
+{#        .glass-card:nth-child(3) { animation-delay: .16s; }#}
+{##}
+{#        /* ── MOBILE ── */#}
+{#        @media (max-width: 768px) {#}
+{#            body { margin-left: 0 !important; }#}
+{#            .main-content { padding: 1.25rem; }#}
+{#            .stats-row { flex-wrap: wrap; }#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#    <!-- ══ SIDEBAR INCLUDE ══ -->#}
+{##}
+{#    <main class="main-content">#}
+{##}
+{#        <!-- Page Header -->#}
+{#        <div class="page-header">#}
+{#            <div class="header-icon">#}
+{#                <i class="fa-solid fa-user-shield"></i>#}
+{#            </div>#}
+{#            <div>#}
+{#                <h2>Register Officer</h2>#}
+{#                <p>Add a new police officer to the force roster</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Breadcrumb -->#}
+{#        <div class="breadcrumb-bar">#}
+{#            <a href="{% url 'admin_home' %}"><i class="fa-solid fa-house"></i> Dashboard</a>#}
+{#            <i class="fa-solid fa-chevron-right"></i>#}
+{#            <a href="{% url 'manage_station' %}">Stations</a>#}
+{#            <i class="fa-solid fa-chevron-right"></i>#}
+{#            <span>{{ station.station_name }}</span>#}
+{#            <i class="fa-solid fa-chevron-right"></i>#}
+{#            <span>Add Officer</span>#}
+{#        </div>#}
+{##}
+{#        <!-- Stats -->#}
+{#        <div class="stats-row">#}
+{#            <div class="stat-pill">#}
+{#                <div class="sp-icon blue"><i class="fa-solid fa-building-columns"></i></div>#}
+{#                <div>#}
+{#                    <div class="sp-val">{{ station.station_name }}</div>#}
+{#                    <div class="sp-lbl">Assigned Station</div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="stat-pill">#}
+{#                <div class="sp-icon teal"><i class="fa-solid fa-users teal-ico"></i></div>#}
+{#                <div>#}
+{#                    <div class="sp-val">{{ police_list|length }}</div>#}
+{#                    <div class="sp-lbl">Officers Registered</div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="stat-pill">#}
+{#                <div class="sp-icon mint"><i class="fa-solid fa-location-dot"></i></div>#}
+{#                <div>#}
+{#                    <div class="sp-val">{{ station.place }}</div>#}
+{#                    <div class="sp-lbl">Station Location</div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- ── REGISTRATION FORM CARD ── -->#}
+{#        <div class="glass-card">#}
+{#            <div class="card-head">#}
+{#                <div class="ch-icon"><i class="fa-solid fa-id-card-clip"></i></div>#}
+{#                <h5>Officer Registration Form</h5>#}
+{#                <span>{{ station.station_name }}</span>#}
+{#            </div>#}
+{#            <div class="card-body-pad">#}
+{#                <form method="POST"#}
+{#                      action="{% url 'admin_add_police' station.id %}"#}
+{#                      enctype="multipart/form-data"#}
+{#                      id="officerForm">#}
+{#                    {% csrf_token %}#}
+{##}
+{#                    <div class="row g-4">#}
+{##}
+{#                        <!-- PHOTO COLUMN -->#}
+{#                        <div class="col-lg-3 col-md-4">#}
+{#                            <label class="photo-label">Officer Photo</label>#}
+{#                            <div class="photo-zone" onclick="document.getElementById('photo-upload').click()">#}
+{#                                <img id="photo-preview" src="" alt="" style="display:none;">#}
+{#                                <div class="photo-placeholder" id="photo-placeholder">#}
+{#                                    <i class="fa-solid fa-camera"></i>#}
+{#                                    <p>Upload Photo</p>#}
+{#                                    <small>JPG, PNG · Max 5MB</small>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <input type="file"#}
+{#                                   id="photo-upload"#}
+{#                                   name="photo"#}
+{#                                   accept="image/*"#}
+{#                                   class="d-none"#}
+{#                                   required#}
+{#                                   onchange="previewPhoto(this)">#}
+{#                        </div>#}
+{##}
+{#                        <!-- FIELDS COLUMN -->#}
+{#                        <div class="col-lg-9 col-md-8">#}
+{##}
+{#                            <!-- Account credentials -->#}
+{#                            <div class="sec-divider">Account Credentials</div>#}
+{##}
+{#                            <div class="row g-3">#}
+{#                                <div class="col-md-6">#}
+{#                                    <div class="field-group">#}
+{#                                        <label class="field-label">Username</label>#}
+{#                                        <div class="field-wrap">#}
+{#                                            <i class="fa-solid fa-at field-icon"></i>#}
+{#                                            <input type="text" name="username" class="form-field" placeholder="e.g. officer_raj" required>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <div class="field-group">#}
+{#                                        <label class="field-label">Password</label>#}
+{#                                        <div class="field-wrap">#}
+{#                                            <i class="fa-solid fa-lock field-icon"></i>#}
+{#                                            <input type="password" name="password" class="form-field" placeholder="Min 8 chars, A-Z, 0-9, @#$"#}
+{#                                                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).{8,}$"#}
+{#                                                   title="Min 8 chars with uppercase, lowercase, number & special character."#}
+{#                                                   required>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <!-- Personal details -->#}
+{#                            <div class="sec-divider">Personal Details</div>#}
+{##}
+{#                            <div class="row g-3">#}
+{#                                <div class="col-md-6">#}
+{#                                    <div class="field-group">#}
+{#                                        <label class="field-label">Full Name</label>#}
+{#                                        <div class="field-wrap">#}
+{#                                            <i class="fa-solid fa-user field-icon"></i>#}
+{#                                            <input type="text" name="full_name" class="form-field" placeholder="Officer's full name" required>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <div class="field-group">#}
+{#                                        <label class="field-label">Designation / Rank</label>#}
+{#                                        <div class="field-wrap">#}
+{#                                            <i class="fa-solid fa-shield-halved field-icon"></i>#}
+{#                                            <input type="text" name="designation" class="form-field" placeholder="e.g. Sub Inspector" required>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <div class="field-group">#}
+{#                                        <label class="field-label">Phone Number</label>#}
+{#                                        <div class="field-wrap">#}
+{#                                            <i class="fa-solid fa-phone field-icon"></i>#}
+{#                                            <input type="text" name="phone" class="form-field" placeholder="10-digit number"#}
+{#                                                   pattern="^\d{10}$"#}
+{#                                                   title="Phone number must be exactly 10 digits."#}
+{#                                                   required>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <div class="field-group">#}
+{#                                        <label class="field-label">Assigned Station</label>#}
+{#                                        <div class="station-display">#}
+{#                                            <i class="fa-solid fa-building-columns"></i>#}
+{#                                            <span>{{ station.station_name }}</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-12">#}
+{#                                    <div class="field-group">#}
+{#                                        <label class="field-label">Residential Address</label>#}
+{#                                        <div class="field-wrap">#}
+{#                                            <i class="fa-solid fa-map-marker-alt field-icon-ta"></i>#}
+{#                                            <textarea name="address" rows="3" class="form-field" placeholder="Full residential address..." required></textarea>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <!-- Action Buttons -->#}
+{#                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3" style="border-top: 1px solid var(--border);">#}
+{#                        <button type="button" class="btn-back" onclick="window.history.back()">#}
+{#                            <i class="fa-solid fa-arrow-left"></i> Back#}
+{#                        </button>#}
+{#                        <button type="submit" class="btn-register">#}
+{#                            <i class="fa-solid fa-user-plus"></i> Register Officer#}
+{#                        </button>#}
+{#                    </div>#}
+{##}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- ── REGISTERED OFFICERS TABLE ── -->#}
+{#        <div class="glass-card">#}
+{#            <div class="card-head">#}
+{#                <div class="ch-icon"><i class="fa-solid fa-users"></i></div>#}
+{#                <h5>Registered Officers</h5>#}
+{#                <span>{{ police_list|length }} officer{% if police_list|length != 1 %}s{% endif %}</span>#}
+{#            </div>#}
+{#            <div class="table-wrap">#}
+{#                <table class="data-table">#}
+{#                    <thead>#}
+{#                        <tr>#}
+{#                            <th>Officer</th>#}
+{#                            <th>Designation</th>#}
+{#                            <th>Phone</th>#}
+{#                            <th>Username</th>#}
+{#                            <th>Station</th>#}
+{#                        </tr>#}
+{#                    </thead>#}
+{#                    <tbody>#}
+{#                        {% for p in police_list %}#}
+{#                        <tr>#}
+{#                            <td>#}
+{#                                <div class="d-flex align-items-center gap-3">#}
+{#                                    <img src="{{ p.photo.url }}"#}
+{#                                         class="officer-avatar"#}
+{#                                         alt="{{ p.full_name }}">#}
+{#                                    <div>#}
+{#                                        <div class="officer-name">{{ p.full_name }}</div>#}
+{#                                        <div class="officer-meta">ID #{{ p.id }}</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </td>#}
+{#                            <td>#}
+{#                                <span class="badge-rank">#}
+{#                                    <i class="fa-solid fa-shield-halved" style="font-size:.65rem;"></i>#}
+{#                                    {{ p.designation }}#}
+{#                                </span>#}
+{#                            </td>#}
+{#                            <td style="color: var(--text-muted); font-weight:600;">#}
+{#                                <i class="fa-solid fa-phone" style="color:var(--c3);margin-right:5px;font-size:.8rem;"></i>#}
+{#                                {{ p.phone }}#}
+{#                            </td>#}
+{#                            <td style="color: var(--text-muted); font-weight:600; font-size:0.85rem;">#}
+{#                                <i class="fa-solid fa-at" style="color:var(--c3);margin-right:4px;font-size:.75rem;"></i>#}
+{#                                {{ p.USER.username }}#}
+{#                            </td>#}
+{#                            <td style="color: var(--text-muted); font-weight:600; font-size:0.85rem;">#}
+{#                                {{ station.station_name }}#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                        {% empty %}#}
+{#                        <tr>#}
+{#                            <td colspan="5">#}
+{#                                <div class="empty-state">#}
+{#                                    <div class="empty-icon">#}
+{#                                        <i class="fa-solid fa-users-slash"></i>#}
+{#                                    </div>#}
+{#                                    <h6>No Officers Registered Yet</h6>#}
+{#                                    <p>Use the form above to register the first officer for {{ station.station_name }}.</p>#}
+{#                                </div>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                        {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#    </main>#}
+{##}
+{#    <!-- Bootstrap JS -->#}
+{#    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>#}
+{##}
+{#    <script>#}
+{#        // Photo preview#}
+{#        function previewPhoto(input) {#}
+{#            if (input.files && input.files[0]) {#}
+{#                const reader = new FileReader();#}
+{#                reader.onload = e => {#}
+{#                    const img = document.getElementById('photo-preview');#}
+{#                    const placeholder = document.getElementById('photo-placeholder');#}
+{#                    img.src = e.target.result;#}
+{#                    img.style.display = 'block';#}
+{#                    placeholder.style.display = 'none';#}
+{#                };#}
+{#                reader.readAsDataURL(input.files[0]);#}
+{#            }#}
+{#        }#}
+{##}
+{#        // Table row entrance animation#}
+{#        document.querySelectorAll('.data-table tbody tr').forEach((row, i) => {#}
+{#            row.style.opacity = '0';#}
+{#            row.style.transform = 'translateY(6px)';#}
+{#            row.style.transition = `opacity .3s ease ${i * 0.05}s, transform .3s ease ${i * 0.05}s`;#}
+{#            setTimeout(() => {#}
+{#                row.style.opacity = '1';#}
+{#                row.style.transform = 'translateY(0)';#}
+{#            }, 100 + i * 50);#}
+{#        });#}
+{##}
+{#        // Form field focus ring reinforcement#}
+{#        document.querySelectorAll('.form-field').forEach(el => {#}
+{#            el.addEventListener('focus', () => {#}
+{#                el.closest('.field-wrap, .field-group') && el.closest('.field-wrap')?.querySelector('.field-icon, .field-icon-ta')?.style.setProperty('color', 'var(--teal)');#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+{##}
+{#</body>#}
+{#</html>#}
+{##}
+{##}
+{##}
+{##}
+
+
+{% include 'admin_sidebar.html' %}
+
+<div class="body-wrapper">
+
+  <!-- Header -->
+  <header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <ul class="navbar-nav">
+        <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">
+          <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">
+            <span class="logo-text">
+              <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />
+            </span>
+          </a>
+        </div>
+        <li class="nav-item d-block d-xl-none">
+          <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
+            <i class="ti ti-menu-2"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="body-wrapper-inner">
+    <div class="container-fluid">
+
+      <!-- ══ PAGE HEADER ══ -->
+      <div class="apo-page-header mb-4">
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <div class="apo-header-icon">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+              <br><br><br>   <br><br><br> <br><br><br>
+            <h2 class="apo-page-title">Register Officer</h2>
+            <p class="apo-page-sub">Add a new police officer to {{ station.station_name }}</p>
+          </div>
+          <div class="apo-breadcrumb ms-auto">
+            <a href="{% url 'admin_home' %}" class="apo-bread-link">
+              <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+            <i class="fa-solid fa-chevron-right apo-bread-sep"></i>
+            <a href="{% url 'manage_station' %}" class="apo-bread-link">Stations</a>
+            <i class="fa-solid fa-chevron-right apo-bread-sep"></i>
+            <span class="apo-bread-cur">{{ station.station_name }}</span>
+            <i class="fa-solid fa-chevron-right apo-bread-sep"></i>
+            <span class="apo-bread-cur">Add Officer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ STAT PILLS ══ -->
+      <div class="row g-3 mb-4">
+        <div class="col-xl-4 col-md-4 col-sm-12">
+          <div class="apo-stat-pill">
+            <div class="apo-sp-icon apo-sp-blue">
+              <i class="fa-solid fa-building-columns"></i>
+            </div>
+            <div class="apo-sp-body">
+              <div class="apo-sp-val">{{ station.station_name }}</div>
+              <div class="apo-sp-lbl">Assigned Station</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-sm-12">
+          <div class="apo-stat-pill">
+            <div class="apo-sp-icon apo-sp-teal">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="apo-sp-body">
+              <div class="apo-sp-val">{{ police_list|length }}</div>
+              <div class="apo-sp-lbl">Officers Registered</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-sm-12">
+          <div class="apo-stat-pill">
+            <div class="apo-sp-icon apo-sp-mint">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div class="apo-sp-body">
+              <div class="apo-sp-val">{{ station.place }}</div>
+              <div class="apo-sp-lbl">Station Location</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ REGISTRATION FORM CARD ══ -->
+      <div class="apo-card mb-4">
+        <div class="apo-card-head">
+          <div class="apo-ch-icon">
+            <i class="fa-solid fa-id-card-clip"></i>
+          </div>
+          <div>
+            <h5 class="apo-ch-title">Officer Registration Form</h5>
+            <p class="apo-ch-sub">Fill in all details to register a new officer</p>
+          </div>
+          <span class="apo-station-badge ms-auto">
+            <i class="fa-solid fa-buildings"></i>
+            {{ station.station_name }}
+          </span>
+        </div>
+
+        <div class="apo-card-body">
+          <form method="POST"
+                action="{% url 'admin_add_police' station.id %}"
+                enctype="multipart/form-data"
+                id="officerForm">
+            {% csrf_token %}
+
+            <div class="row g-4">
+
+              <!-- ── PHOTO COLUMN ── -->
+              <div class="col-lg-3 col-md-4">
+                <label class="apo-photo-label">Officer Photo</label>
+                <div class="apo-photo-zone" id="photoZone"
+                     onclick="document.getElementById('photo-upload').click()">
+                  <img id="photo-preview" src="" alt="" style="display:none;">
+                  <div class="apo-photo-placeholder" id="photo-placeholder">
+                    <i class="fa-solid fa-camera-retro"></i>
+                    <p>Upload Photo</p>
+                    <small>JPG · PNG · Max 5MB</small>
+                  </div>
+                  <div class="apo-photo-overlay">
+                    <i class="fa-solid fa-upload"></i>
+                    <span>Change Photo</span>
+                  </div>
+                </div>
+                <input type="file" id="photo-upload" name="photo"
+                       accept="image/*" class="d-none" required
+                       onchange="previewPhoto(this)">
+              </div>
+
+              <!-- ── FIELDS COLUMN ── -->
+              <div class="col-lg-9 col-md-8">
+
+                <!-- Section: Account Credentials -->
+                <div class="apo-sec-divider">
+                  <i class="fa-solid fa-lock"></i>
+                  Account Credentials
+                </div>
+
+                <div class="row g-3 mb-1">
+                  <div class="col-md-4">
+                    <div class="apo-field-group">
+                      <label class="apo-field-label">
+                        <i class="fa-solid fa-at"></i> Username
+                      </label>
+                      <input type="text" name="username"
+                             class="apo-input"
+                             placeholder="e.g. officer_raj" required>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="apo-field-group">
+                      <label class="apo-field-label">
+                        <i class="fa-solid fa-lock"></i> Password
+                      </label>
+                      <div class="apo-pass-wrap">
+                        <input type="password" name="password"
+                               class="apo-input"
+                               placeholder="Min 8 chars, A-Z, 0-9, @#$"
+{#                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).{8,}$"#}
+                               title="Min 8 chars with uppercase, lowercase, number & special character."
+                               required>
+                        <button type="button" class="apo-eye-btn" onclick="togglePass()">
+                          <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="apo-field-group">
+                      <label class="apo-field-label">
+                        <i class="fa-solid fa-envelope"></i> Email Address
+                      </label>
+                      <input type="email" name="email"
+                             class="apo-input"
+                             placeholder="e.g. officer@police.gov.in" required>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Section: Personal Details -->
+                <div class="apo-sec-divider">
+                  <i class="fa-solid fa-user-check"></i>
+                  Personal Details
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="apo-field-group">
+                      <label class="apo-field-label">
+                        <i class="fa-solid fa-user"></i> Full Name
+                      </label>
+                      <input type="text" name="full_name"
+                             class="apo-input"
+                             placeholder="Officer's full name" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="apo-field-group">
+                      <label class="apo-field-label">
+                        <i class="fa-solid fa-shield-halved"></i> Designation / Rank
+                      </label>
+                      <input type="text" name="designation"
+                             class="apo-input"
+                             placeholder="e.g. Sub Inspector" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="apo-field-group">
+                      <label class="apo-field-label">
+                        <i class="fa-solid fa-phone"></i> Phone Number
+                      </label>
+                      <input type="text" name="phone"
+                             class="apo-input"
+                             placeholder="10-digit number"
+                             pattern="^\d{10}$"
+                             title="Phone number must be exactly 10 digits."
+                             required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="apo-field-group">
+                      <label class="apo-field-label">
+                        <i class="fa-solid fa-building-columns"></i> Assigned Station
+                      </label>
+                      <div class="apo-station-readonly">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>{{ station.station_name }}</span>
+                        <i class="fa-solid fa-lock ms-auto apo-lock-ico"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="apo-field-group mb-0">
+                      <label class="apo-field-label">
+                        <i class="fa-solid fa-map-marker-alt"></i> Residential Address
+                      </label>
+                      <textarea name="address" rows="3"
+                                class="apo-input apo-textarea"
+                                placeholder="Full residential address..." required></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="apo-form-footer">
+              <div class="apo-footer-note">
+                <i class="fa-solid fa-circle-info"></i>
+                All fields are required. Photo max 5 MB.
+              </div>
+              <div class="d-flex gap-3 align-items-center">
+                <button type="button" class="apo-btn-back" onclick="window.history.back()">
+                  <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                <button type="submit" class="apo-btn-register">
+                  <i class="fa-solid fa-user-plus"></i> Register Officer
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- ══ REGISTERED OFFICERS TABLE ══ -->
+      <div class="apo-card mb-4">
+        <div class="apo-card-head">
+          <div class="apo-ch-icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div>
+            <h5 class="apo-ch-title">Registered Officers</h5>
+            <p class="apo-ch-sub">All officers assigned to {{ station.station_name }}</p>
+          </div>
+          <span class="apo-count-badge ms-auto">
+            <span>{{ police_list|length }}</span>
+            Officer{% if police_list|length != 1 %}s{% endif %}
+          </span>
+        </div>
+
+        <div class="apo-table-wrap">
+          <table class="apo-table">
+            <thead>
+              <tr>
+                <th>Officer</th>
+                <th>Designation</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Station</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in police_list %}
+              <tr>
+                <td>
+                  <div class="apo-officer-cell">
+                    <img src="{{ p.photo.url }}" class="apo-avatar" alt="{{ p.full_name }}">
+                    <div>
+                      <div class="apo-officer-name">{{ p.full_name }}</div>
+                      <div class="apo-officer-meta">ID #{{ p.id }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="apo-rank-badge">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    {{ p.designation }}
+                  </span>
+                </td>
+                <td>
+                  <span class="apo-data-cell">
+                    <i class="fa-solid fa-phone"></i>
+                    {{ p.phone }}
+                  </span>
+                </td>
+                <td>
+                  <a href="mailto:{{ p.USER.email }}" class="apo-email-link">
+                    <i class="fa-solid fa-envelope"></i>
+                    {{ p.USER.email }}
+                  </a>
+                </td>
+                <td>
+                  <span class="apo-data-cell">
+                    <i class="fa-solid fa-at"></i>
+                    {{ p.USER.username }}
+                  </span>
+                </td>
+                <td>
+                  <span class="apo-place-chip">
+                    <i class="fa-solid fa-map-pin"></i>
+                    {{ station.station_name }}
+                  </span>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6">
+                  <div class="apo-empty">
+                    <div class="apo-empty-icon">
+                      <i class="fa-solid fa-users-slash"></i>
+                    </div>
+                    <h6>No Officers Registered Yet</h6>
+                    <p>Use the form above to register the first officer for {{ station.station_name }}.</p>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="apo-toast" class="apo-toast apo-toast-hide">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="apo-toast-msg">Officer registered successfully!</span>
+</div>
+
+<!-- ===================================================
+     STYLES
+==================================================== -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700;800&family=Nunito:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ═══════════════════════════════════
+     ROOT TOKENS
+  ═══════════════════════════════════ */
+  :root {
+    --apo-white:      #ffffff;
+    --apo-snow:       #f4f8f8;
+    --apo-ink:        #1a2222;
+
+    --apo-teal:       #05AD98;
+    --apo-teal-d:     #048a78;
+    --apo-teal-lt:    #07c9b1;
+    --apo-teal-xs:    rgba(5,173,152,.10);
+    --apo-teal-sm:    rgba(5,173,152,.18);
+    --apo-teal-glow:  rgba(5,173,152,.28);
+
+    --apo-c1:         #cfe0e8;
+    --apo-c2:         #b7d7e8;
+    --apo-c3:         #87bdd8;
+    --apo-c4:         #daebe8;
+    --apo-deep:       #2b5f75;
+    --apo-darker:     #1a3d4f;
+    --apo-muted:      #5a8094;
+
+    --apo-border:     rgba(183,215,232,.65);
+    --apo-shadow:     rgba(135,189,216,.22);
+    --apo-shadow-md:  rgba(135,189,216,.35);
+  }
+
+  /* ═══════════════════════════════════
+     CONTENT WRAPPER
+  ═══════════════════════════════════ */
+  .body-wrapper-inner {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(145deg, var(--apo-c4) 0%, var(--apo-c1) 48%, var(--apo-c2) 100%);
+    min-height: 100vh;
+    position: relative;
+  }
+  .body-wrapper-inner::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse 680px 380px at 88% 12%, rgba(135,189,216,.22) 0%, transparent 60%),
+      radial-gradient(ellipse 480px 580px at 4%  88%, rgba(218,235,232,.30) 0%, transparent 60%);
+  }
+  .body-wrapper-inner .container-fluid {
+    position: relative; z-index: 1;
+    padding: 2rem 2.25rem 3rem;
+  }
+
+  /* ═══════════════════════════════════
+     PAGE HEADER
+  ═══════════════════════════════════ */
+  .apo-page-header { padding: 6px 0 10px; }
+
+  .apo-header-icon {
+    width: 58px; height: 58px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--apo-deep), var(--apo-teal));
+    border-radius: 16px;
+    display: grid; place-items: center;
+    box-shadow: 0 8px 22px var(--apo-teal-glow);
+    color: var(--apo-white); font-size: 1.5rem;
+  }
+
+  .apo-page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--apo-darker); margin: 0 0 3px;
+    line-height: 1.1;
+  }
+  .apo-page-sub { color: var(--apo-muted); font-size: 0.9rem; margin: 0; }
+
+  /* breadcrumb */
+  .apo-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; }
+  .apo-bread-link {
+    color: var(--apo-teal); text-decoration: none; font-weight: 700;
+    display: flex; align-items: center; gap: 4px;
+    transition: opacity .15s;
+  }
+  .apo-bread-link:hover { opacity: .7; }
+  .apo-bread-sep  { color: var(--apo-muted); font-size: 0.6rem; }
+  .apo-bread-cur  { color: var(--apo-muted); font-weight: 600; }
+
+  /* ═══════════════════════════════════
+     STAT PILLS
+  ═══════════════════════════════════ */
+  .apo-stat-pill {
+    background: rgba(255,255,255,.70);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--apo-border);
+    border-radius: 16px;
+    padding: 1.1rem 1.3rem;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 4px 16px var(--apo-shadow);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .apo-stat-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px var(--apo-shadow-md);
+  }
+  .apo-sp-icon {
+    width: 46px; height: 46px; border-radius: 13px; flex-shrink: 0;
+    display: grid; place-items: center; font-size: 1.15rem;
+  }
+  .apo-sp-blue   { background: var(--apo-c2);              color: var(--apo-deeper, var(--apo-deep)); }
+  .apo-sp-teal   { background: var(--apo-teal-sm);         color: var(--apo-teal-d); }
+  .apo-sp-mint   { background: var(--apo-c4);              color: var(--apo-deeper, var(--apo-deep)); }
+  .apo-sp-body   {}
+  .apo-sp-val    {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.3rem; font-weight: 800;
+    color: var(--apo-darker); line-height: 1;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;
+  }
+  .apo-sp-lbl    {
+    font-size: 0.71rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--apo-muted); margin-top: 3px;
+  }
+
+  /* ═══════════════════════════════════
+     GLASS CARD
+  ═══════════════════════════════════ */
+  .apo-card {
+    background: rgba(255,255,255,.78);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--apo-border);
+    border-radius: 22px;
+    box-shadow: 0 8px 36px var(--apo-shadow);
+    overflow: hidden;
+    animation: apoFadeUp .4s ease both;
+  }
+  .apo-card + .apo-card { animation-delay: .1s; }
+
+  @keyframes apoFadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .apo-card-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 1.15rem 1.75rem;
+    border-bottom: 1px solid var(--apo-border);
+    background: rgba(218,235,232,.4);
+    flex-wrap: wrap;
+  }
+  .apo-ch-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--apo-c3); border-radius: 11px;
+    display: grid; place-items: center;
+    color: var(--apo-darker); font-size: 1rem;
+  }
+  .apo-ch-title { font-weight: 800; font-size: 1rem; color: var(--apo-darker); margin: 0 0 2px; }
+  .apo-ch-sub   { font-size: 0.77rem; color: var(--apo-muted); margin: 0; }
+
+  .apo-station-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--apo-teal-xs);
+    border: 1px solid rgba(5,173,152,.28);
+    color: var(--apo-teal-d);
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+  }
+  .apo-count-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--apo-teal-xs);
+    border: 1px solid rgba(5,173,152,.25);
+    color: var(--apo-teal-d);
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 0.77rem; font-weight: 700; white-space: nowrap;
+  }
+  .apo-count-badge span { font-size: 1rem; font-weight: 800; }
+
+  /* ═══════════════════════════════════
+     FORM BODY
+  ═══════════════════════════════════ */
+  .apo-card-body { padding: 2rem 1.75rem; }
+
+  .apo-field-group { margin-bottom: 1.1rem; }
+
+  .apo-field-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.74rem; font-weight: 800;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--apo-muted); margin-bottom: 7px;
+  }
+  .apo-field-label i { color: var(--apo-teal); font-size: 0.82rem; }
+
+  .apo-input {
+    width: 100%;
+    background: rgba(255,255,255,.88);
+    border: 1.5px solid var(--apo-border);
+    border-radius: 12px;
+    padding: 0.72rem 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem; font-weight: 600;
+    color: var(--apo-ink);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+  }
+  .apo-input:focus {
+    border-color: var(--apo-teal);
+    box-shadow: 0 0 0 4px var(--apo-teal-xs);
+    background: var(--apo-white);
+  }
+  .apo-input::placeholder { color: #9bbfcc; font-weight: 500; }
+  .apo-textarea { resize: none; line-height: 1.55; }
+
+  /* password toggle */
+  .apo-pass-wrap { position: relative; }
+  .apo-pass-wrap .apo-input { padding-right: 42px; }
+  .apo-eye-btn {
+    position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
+    background: transparent; border: none; padding: 0;
+    color: var(--apo-c3); font-size: 0.95rem; cursor: pointer;
+    transition: color .15s;
+  }
+  .apo-eye-btn:hover { color: var(--apo-teal); }
+
+  /* station readonly */
+  .apo-station-readonly {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(5,173,152,.06);
+    border: 1.5px solid rgba(5,173,152,.22);
+    border-radius: 12px;
+    padding: 0.72rem 1rem;
+    font-size: 0.88rem; font-weight: 700;
+    color: var(--apo-darker);
+  }
+  .apo-station-readonly > i:first-child { color: var(--apo-teal); }
+  .apo-lock-ico { color: var(--apo-c3) !important; font-size: 0.8rem; }
+
+  /* section divider */
+  .apo-sec-divider {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.71rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--apo-muted);
+    margin: 0 0 1.1rem;
+  }
+  .apo-sec-divider i { color: var(--apo-teal); font-size: 0.85rem; flex-shrink: 0; }
+  .apo-sec-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--apo-border), transparent);
+  }
+
+  /* photo zone */
+  .apo-photo-label {
+    display: block;
+    font-size: 0.74rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: .06em;
+    color: var(--apo-muted); margin-bottom: 8px;
+  }
+  .apo-photo-zone {
+    border: 2px dashed var(--apo-c3);
+    border-radius: 16px;
+    background: rgba(183,215,232,.1);
+    aspect-ratio: 3/4;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: all .25s;
+  }
+  .apo-photo-zone:hover {
+    border-color: var(--apo-teal);
+    background: rgba(5,173,152,.06);
+    box-shadow: 0 0 0 4px var(--apo-teal-xs);
+  }
+  .apo-photo-zone img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .apo-photo-placeholder {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 6px; text-align: center;
+    color: var(--apo-muted); padding: 16px; z-index: 1;
+    transition: opacity .2s;
+  }
+  .apo-photo-placeholder i    { font-size: 2.4rem; color: var(--apo-c3); }
+  .apo-photo-placeholder p    { font-size: 0.84rem; font-weight: 700; margin: 0; }
+  .apo-photo-placeholder small{ font-size: 0.7rem; opacity: .7; }
+  .apo-photo-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: rgba(5,173,152,.75);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px;
+    color: #fff; font-size: 0.85rem; font-weight: 700;
+    opacity: 0; transition: opacity .2s;
+  }
+  .apo-photo-overlay i { font-size: 1.4rem; }
+  .apo-photo-zone:hover .apo-photo-overlay { opacity: 1; }
+
+  /* ── form footer ── */
+  .apo-form-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+    margin-top: 1.75rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--apo-border);
+  }
+  .apo-footer-note {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.78rem; color: var(--apo-muted);
+  }
+  .apo-footer-note i { color: var(--apo-teal); }
+
+  .apo-btn-back {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: transparent;
+    border: 1.5px solid var(--apo-border);
+    border-radius: 12px;
+    padding: 0.72rem 1.6rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem; font-weight: 700;
+    color: var(--apo-muted); cursor: pointer;
+    transition: all .2s;
+  }
+  .apo-btn-back:hover {
+    border-color: var(--apo-teal);
+    color: var(--apo-teal);
+    background: var(--apo-teal-xs);
+  }
+
+  .apo-btn-register {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--apo-deep) 0%, var(--apo-teal) 100%);
+    color: var(--apo-white);
+    border: none; border-radius: 12px;
+    padding: 0.78rem 2rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem; font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 18px var(--apo-teal-glow);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .apo-btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(5,173,152,.45);
+  }
+  .apo-btn-register:active { transform: translateY(0); }
+
+  /* ═══════════════════════════════════
+     TABLE
+  ═══════════════════════════════════ */
+  .apo-table-wrap { overflow-x: auto; }
+
+  .apo-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+
+  .apo-table thead th {
+    background: rgba(207,224,232,.55);
+    color: var(--apo-muted);
+    font-size: 0.69rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: .08em;
+    padding: 1rem 1.4rem;
+    border: none; white-space: nowrap;
+  }
+
+  .apo-table tbody tr { transition: background .15s; }
+  .apo-table tbody tr:hover { background: rgba(183,215,232,.18); }
+  .apo-table tbody td {
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid rgba(207,224,232,.55);
+    vertical-align: middle; font-size: 0.87rem;
+    color: var(--apo-ink);
+  }
+  .apo-table tbody tr:last-child td { border-bottom: none; }
+
+  .apo-officer-cell { display: flex; align-items: center; gap: 12px; }
+  .apo-avatar {
+    width: 44px; height: 44px; border-radius: 12px;
+    object-fit: cover; flex-shrink: 0;
+    border: 2px solid var(--apo-c2);
+    box-shadow: 0 3px 10px var(--apo-shadow);
+  }
+  .apo-officer-name { font-weight: 700; color: var(--apo-darker); font-size: 0.88rem; }
+  .apo-officer-meta { font-size: 0.72rem; color: var(--apo-muted); margin-top: 2px; }
+
+  .apo-rank-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--apo-teal-xs);
+    border: 1px solid rgba(5,173,152,.25);
+    color: var(--apo-teal-d);
+    padding: 0.28em 0.8em; border-radius: 20px;
+    font-size: 0.73rem; font-weight: 700;
+  }
+  .apo-rank-badge i { font-size: 0.65rem; }
+
+  .apo-data-cell {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--apo-muted); font-weight: 600; font-size: 0.84rem;
+  }
+  .apo-data-cell i { color: var(--apo-c3); font-size: 0.8rem; }
+
+  .apo-email-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--apo-muted); font-weight: 600; font-size: 0.84rem;
+    text-decoration: none; transition: color .15s;
+  }
+  .apo-email-link i { color: var(--apo-c3); font-size: 0.8rem; }
+  .apo-email-link:hover { color: var(--apo-teal); }
+
+  .apo-place-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(183,215,232,.25);
+    border: 1px solid var(--apo-border);
+    color: var(--apo-deep);
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700;
+  }
+  .apo-place-chip i { font-size: 0.7rem; color: var(--apo-teal); }
+
+  /* empty state */
+  .apo-empty {
+    text-align: center; padding: 3.5rem 2rem;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    color: var(--apo-muted);
+  }
+  .apo-empty-icon {
+    width: 66px; height: 66px;
+    background: rgba(207,224,232,.4);
+    border-radius: 20px;
+    display: grid; place-items: center;
+  }
+  .apo-empty-icon i { font-size: 1.65rem; color: var(--apo-c3); }
+  .apo-empty h6 { font-weight: 800; color: var(--apo-darker); margin: 0; }
+  .apo-empty p  { font-size: 0.82rem; margin: 0; max-width: 320px; }
+
+  /* ═══════════════════════════════════
+     TOAST
+  ═══════════════════════════════════ */
+  .apo-toast {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    background: linear-gradient(135deg, var(--apo-deep), var(--apo-teal));
+    color: #fff;
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.87rem; font-weight: 700;
+    box-shadow: 0 8px 28px var(--apo-teal-glow);
+    transition: opacity .3s, transform .3s;
+  }
+  .apo-toast-hide { opacity: 0; transform: translateY(20px); pointer-events: none; }
+
+  /* ═══════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════ */
+  @media (max-width: 992px) {
+    .body-wrapper-inner .container-fluid { padding: 1.5rem; }
+    .apo-breadcrumb { display: none; }
+  }
+  @media (max-width: 768px) {
+    .body-wrapper-inner .container-fluid { padding: 1.1rem; }
+    .apo-form-footer { flex-direction: column-reverse; align-items: stretch; }
+    .apo-form-footer .d-flex { flex-direction: column; }
+    .apo-btn-back, .apo-btn-register { width: 100%; justify-content: center; }
+  }
+</style>
+
+<!-- Scripts -->
+<script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../static/admin/assets/js/sidebarmenu.js"></script>
+<script src="../static/admin/assets/js/app.min.js"></script>
+<script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>
+
+<script>
+  /* ── Photo preview ── */
+  function previewPhoto(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.getElementById('photo-preview');
+        document.getElementById('photo-placeholder').style.display = 'none';
+        img.src = e.target.result;
+        img.style.display = 'block';
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  /* ── Drag & drop on photo zone ── */
+  const photoZone = document.getElementById('photoZone');
+  ['dragover','dragenter'].forEach(ev => photoZone.addEventListener(ev, e => {
+    e.preventDefault();
+    photoZone.style.borderColor = 'var(--apo-teal)';
+  }));
+  ['dragleave','drop'].forEach(ev => photoZone.addEventListener(ev, () => {
+    photoZone.style.borderColor = '';
+  }));
+  photoZone.addEventListener('drop', e => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const dt = new DataTransfer(); dt.items.add(file);
+      const inp = document.getElementById('photo-upload');
+      inp.files = dt.files; previewPhoto(inp);
+    }
+  });
+
+  /* ── Password toggle ── */
+  function togglePass() {
+    const f = document.getElementById('passField');
+    const i = document.getElementById('eyeIcon');
+    if (f.type === 'password') {
+      f.type = 'text';
+      i.className = 'fa-solid fa-eye-slash';
+    } else {
+      f.type = 'password';
+      i.className = 'fa-solid fa-eye';
+    }
+  }
+
+  /* ── Table row entrance animation ── */
+  document.querySelectorAll('.apo-table tbody tr').forEach((row, i) => {
+    row.style.opacity = '0';
+    row.style.transform = 'translateY(6px)';
+    row.style.transition = `opacity .3s ease ${i * 0.05}s, transform .3s ease ${i * 0.05}s`;
+    setTimeout(() => {
+      row.style.opacity = '1';
+      row.style.transform = 'translateY(0)';
+    }, 80 + i * 45);
+  });
+
+  /* ── Django success toast ── */
+  {% if messages %}{% for message in messages %}
+  document.addEventListener('DOMContentLoaded', function () {
+    const t = document.getElementById('apo-toast');
+    document.getElementById('apo-toast-msg').textContent = "{{ message }}";
+    t.classList.remove('apo-toast-hide');
+    setTimeout(() => t.classList.add('apo-toast-hide'), 3500);
+  });
+  {% endfor %}{% endif %}
+</script>

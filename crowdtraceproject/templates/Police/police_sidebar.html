@@ -1,0 +1,1151 @@
+{##}
+{#<style>#}
+{#    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');#}
+{##}
+{#    :root {#}
+{#        /* Premium Theme Variables */#}
+{#        --sb-bg: #0f172a;       /* Deepest Navy */#}
+{#        --sb-bg-hover: #1e293b; /* Slightly lighter for hover */#}
+{#        --sb-text: #e2e8f0;     /* High contrast text */#}
+{#        --sb-text-muted: #94a3b8;#}
+{#        --sb-accent: #f59e0b;   /* Gold/Orange Accent */#}
+{#        --sb-width: 260px;#}
+{#        --sb-collapsed: 70px;#}
+{#        --sb-transition: 0.3s ease-in-out;#}
+{#    }#}
+{##}
+{#    /* Sidebar Container */#}
+{#    .sidebar {#}
+{#        width: var(--sb-width);#}
+{#        height: 100vh;#}
+{#        background-color: var(--sb-bg);#}
+{#        color: var(--sb-text);#}
+{#        position: fixed;#}
+{#        left: 0;#}
+{#        top: 0;#}
+{#        display: flex;#}
+{#        flex-direction: column;#}
+{#        border-right: 1px solid rgba(255,255,255,0.05);#}
+{#        z-index: 1000;#}
+{#        transition: width var(--sb-transition);#}
+{#        white-space: nowrap;#}
+{#        box-shadow: 4px 0 20px rgba(0,0,0,0.3);#}
+{#        font-family: 'Inter', sans-serif;#}
+{#    }#}
+{##}
+{#    /* Header / Toggle Area */#}
+{#    .sidebar-header {#}
+{#        padding: 20px;#}
+{#        display: flex;#}
+{#        justify-content: flex-end;#}
+{#        align-items: center;#}
+{#        height: 60px;#}
+{#        border-bottom: 1px solid rgba(255,255,255,0.05);#}
+{#    }#}
+{##}
+{#    /* Toggle Button */#}
+{#    .btn-toggle {#}
+{#        background: transparent;#}
+{#        border: none;#}
+{#        color: var(--sb-text-muted);#}
+{#        width: 32px; height: 32px;#}
+{#        border-radius: 6px;#}
+{#        display: flex; align-items: center; justify-content: center;#}
+{#        cursor: pointer;#}
+{#        transition: all 0.2s;#}
+{#    }#}
+{#    .btn-toggle:hover {#}
+{#        background: var(--sb-bg-hover);#}
+{#        color: var(--sb-accent);#}
+{#    }#}
+{##}
+{#    /* Profile Section */#}
+{#    .sidebar-profile {#}
+{#        padding: 25px 20px;#}
+{#        text-align: center;#}
+{#        border-bottom: 1px solid rgba(255,255,255,0.05);#}
+{#        transition: padding 0.3s;#}
+{#    }#}
+{##}
+{#    .profile-frame {#}
+{#        width: 80px; height: 80px; margin: 0 auto 12px;#}
+{#        position: relative;#}
+{#        border-radius: 50%;#}
+{#        padding: 3px;#}
+{#        background: linear-gradient(135deg, var(--sb-accent), transparent);#}
+{#    }#}
+{##}
+{#    .profile-img {#}
+{#        width: 100%; height: 100%;#}
+{#        border-radius: 50%;#}
+{#        object-fit: cover;#}
+{#        background: var(--sb-bg);#}
+{#        border: 2px solid var(--sb-bg);#}
+{#    }#}
+{##}
+{#    /* Online Indicator */#}
+{#    .status-dot {#}
+{#        position: absolute; bottom: 5px; right: 5px;#}
+{#        width: 14px; height: 14px;#}
+{#        background: #10b981; /* Green */#}
+{#        border: 2px solid var(--sb-bg);#}
+{#        border-radius: 50%;#}
+{#    }#}
+{##}
+{#    .officer-info { transition: opacity 0.2s; }#}
+{##}
+{#    .officer-name {#}
+{#        font-family: 'Poppins', sans-serif;#}
+{#        font-size: 1rem;#}
+{#        font-weight: 600;#}
+{#        color: white;#}
+{#        margin-bottom: 2px;#}
+{#        letter-spacing: 0.3px;#}
+{#    }#}
+{#    .officer-rank {#}
+{#        font-size: 0.7rem;#}
+{#        color: var(--sb-accent);#}
+{#        text-transform: uppercase;#}
+{#        letter-spacing: 1px;#}
+{#        font-weight: 700;#}
+{#        background: rgba(245, 158, 11, 0.1);#}
+{#        padding: 2px 8px;#}
+{#        border-radius: 4px;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    /* Navigation */#}
+{#    .sidebar-nav { padding: 20px 12px; flex-grow: 1; overflow-y: auto; overflow-x: hidden; }#}
+{##}
+{#    .section-header {#}
+{#        font-size: 0.7rem; letter-spacing: 1.2px; color: var(--sb-text-muted);#}
+{#        margin: 15px 0 8px 12px; text-transform: uppercase; font-weight: 600; opacity: 0.7;#}
+{#    }#}
+{##}
+{#    .nav-link {#}
+{#        display: flex; align-items: center; padding: 12px 16px;#}
+{#        color: var(--sb-text-muted); text-decoration: none !important;#}
+{#        transition: all 0.2s ease;#}
+{#        border-radius: 8px; margin-bottom: 4px;#}
+{#        font-weight: 500; font-size: 0.9rem;#}
+{#        cursor: pointer;#}
+{#    }#}
+{##}
+{#    .nav-link:hover {#}
+{#        color: white;#}
+{#        background: var(--sb-bg-hover);#}
+{#        transform: translateX(4px);#}
+{#    }#}
+{##}
+{#    /* Active State */#}
+{#    .nav-link.active {#}
+{#        color: white;#}
+{#        background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), transparent);#}
+{#        border-left: 3px solid var(--sb-accent);#}
+{#        border-radius: 4px 8px 8px 4px;#}
+{#    }#}
+{#    .nav-link.active i { color: var(--sb-accent); }#}
+{#    .nav-link i { width: 24px; margin-right: 12px; text-align: center; font-size: 1.1rem; transition: color 0.2s; }#}
+{##}
+{#    /* Dropdown Styles */#}
+{#    .nav-dropdown-toggle {#}
+{#        justify-content: space-between;#}
+{#    }#}
+{#    .dropdown-icon {#}
+{#        transition: transform 0.3s ease;#}
+{#        margin-right: 0 !important;#}
+{#        font-size: 0.8rem !important;#}
+{#        width: auto !important;#}
+{#    }#}
+{#    .nav-dropdown-menu {#}
+{#        display: none;#}
+{#        padding-left: 20px;#}
+{#        margin-bottom: 10px;#}
+{#        background: rgba(0,0,0,0.2);#}
+{#        border-radius: 8px;#}
+{#        overflow: hidden;#}
+{#    }#}
+{#    .nav-dropdown-menu.show {#}
+{#        display: block;#}
+{#        animation: slideDown 0.3s ease;#}
+{#    }#}
+{#    @keyframes slideDown {#}
+{#        from { opacity: 0; transform: translateY(-10px); }#}
+{#        to { opacity: 1; transform: translateY(0); }#}
+{#    }#}
+{#    .dropdown-item {#}
+{#        display: flex; align-items: center; padding: 10px 16px;#}
+{#        color: var(--sb-text-muted); text-decoration: none !important;#}
+{#        font-size: 0.85rem; border-left: 2px solid transparent;#}
+{#        transition: all 0.2s;#}
+{#    }#}
+{#    .dropdown-item:hover {#}
+{#        color: white; border-left-color: var(--sb-accent);#}
+{#        background: rgba(255,255,255,0.03);#}
+{#    }#}
+{#    .dropdown-item i { font-size: 0.9rem !important; width: 20px; margin-right: 10px; text-align: center; }#}
+{##}
+{#    /* Footer */#}
+{#    .sidebar-footer { padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); }#}
+{##}
+{#    .btn-logout {#}
+{#        width: 100%; padding: 12px;#}
+{#        background: transparent; border: 1px solid rgba(255,255,255,0.1);#}
+{#        color: var(--sb-text-muted); border-radius: 8px;#}
+{#        transition: 0.2s;#}
+{#        text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; font-weight: 600;#}
+{#        display: flex; align-items: center; justify-content: center; gap: 10px;#}
+{#        cursor: pointer;#}
+{#        text-decoration: none;#}
+{#    }#}
+{#    .btn-logout:hover {#}
+{#        border-color: var(--sb-accent); color: var(--sb-accent);#}
+{#        background: rgba(245, 158, 11, 0.05);#}
+{#    }#}
+{##}
+{#    /* Collapsed State Logic */#}
+{#    .sidebar.collapsed { width: var(--sb-collapsed); }#}
+{#    .sidebar.collapsed .sidebar-header { justify-content: center; }#}
+{#    .sidebar.collapsed .officer-info,#}
+{#    .sidebar.collapsed .nav-text,#}
+{#    .sidebar.collapsed .section-header,#}
+{#    .sidebar.collapsed .btn-logout span,#}
+{#    .sidebar.collapsed .dropdown-icon {#}
+{#        opacity: 0; pointer-events: none; display: none;#}
+{#    }#}
+{##}
+{#    .sidebar.collapsed .sidebar-profile { padding: 20px 10px; border-bottom: none; }#}
+{#    .sidebar.collapsed .profile-frame { width: 40px; height: 40px; margin-bottom: 0; padding: 2px; }#}
+{#    .sidebar.collapsed .status-dot { width: 8px; height: 8px; border-width: 1px; bottom: 0; right: 0; }#}
+{##}
+{#    .sidebar.collapsed .nav-link { justify-content: center; padding: 12px 0; }#}
+{#    .sidebar.collapsed .nav-link:hover { transform: none; background: var(--sb-bg-hover); }#}
+{#    .sidebar.collapsed .nav-link i { margin-right: 0; font-size: 1.2rem; }#}
+{#    .sidebar.collapsed .nav-link.active { border-left: none; border-radius: 8px; background: rgba(245, 158, 11, 0.15); }#}
+{#    .sidebar.collapsed .btn-logout { border: none; }#}
+{#    .sidebar.collapsed .nav-dropdown-menu { display: none !important; } /* Hide dropdowns when collapsed */#}
+{##}
+{#    /* Main Content Helper */#}
+{#    .main-content {#}
+{#        margin-left: var(--sb-width);#}
+{#        transition: margin-left var(--sb-transition);#}
+{#    }#}
+{#    body.sidebar-collapsed .main-content {#}
+{#        margin-left: var(--sb-collapsed);#}
+{#    }#}
+{#</style>#}
+{##}
+{#<aside class="sidebar" id="sidebar">#}
+{#    <!-- Header / Toggle -->#}
+{#    <div class="sidebar-header">#}
+{#        <button class="btn-toggle" id="sidebarToggle" title="Toggle Menu">#}
+{#            <i class="fas fa-bars"></i>#}
+{#        </button>#}
+{#    </div>#}
+{##}
+{#    <!-- Profile Section -->#}
+{#    <div class="sidebar-profile">#}
+{#        <div class="profile-frame">#}
+{#            <img src="{% if police and police.photo %}{{ police.photo.url }}{% else %}https://ui-avatars.com/api/?name=Officer&background=0D8ABC&color=fff&size=150{% endif %}"#}
+{#                 class="profile-img"#}
+{#                 alt="Officer Profile">#}
+{#            <div class="status-dot"></div>#}
+{#        </div>#}
+{##}
+{#        <div class="officer-info">#}
+{#            <h3 class="officer-name">{% if police %}{{ police.full_name }}{% else %}Officer{% endif %}</h3>#}
+{#            <div class="officer-rank">{% if police %}{{ police.designation }}{% else %}Police Dept.{% endif %}</div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{##}
+{##}
+{#    <!-- Navigation -->#}
+{#    <nav class="sidebar-nav">#}
+{#        <div class="section-header">Dashboard</div>#}
+{##}
+{#        <a href="{% url 'police_home' %}" class="nav-link {% if request.resolver_match.url_name == 'police_home' %}active{% endif %}">#}
+{#            <i class="fas fa-th-large"></i>#}
+{#            <span class="nav-text">Dashboard</span>#}
+{#        </a>#}
+{##}
+{#        <div class="section-header">Menu</div>#}
+{##}
+{#        <a href="{% url 'view_police_profile' %}" class="nav-link {% if request.resolver_match.url_name == 'view_police_profile' %}active{% endif %}">#}
+{#            <i class="fas fa-user-shield"></i>#}
+{#            <span class="nav-text">My Profile</span>#}
+{#        </a>#}
+{##}
+{##}
+{#        <a href="{% url 'manage_casefile' %}" class="nav-link {% if request.resolver_match.url_name == 'manage_casefile' %}active{% endif %}">#}
+{#            <i class="fas fa-folder-open"></i>#}
+{#            <span class="nav-text">Manage Cases</span>#}
+{#        </a>#}
+{##}
+{#        <!-- Add Case File Dropdown -->#}
+{#        <div class="nav-item-dropdown">#}
+{#            <a href="#" class="nav-link nav-dropdown-toggle" onclick="toggleDropdown(this)">#}
+{#                <div class="d-flex align-items-center">#}
+{#                    <i class="fas fa-plus-circle"></i>#}
+{#                    <span class="nav-text">Add Case File</span>#}
+{#                </div>#}
+{#                <i class="fas fa-chevron-down dropdown-icon"></i>#}
+{#            </a>#}
+{#            <div class="nav-dropdown-menu">#}
+{#                <a href="{% url 'police_addmissingCase' %}" class="dropdown-item">#}
+{#                    <i class="fas fa-user-plus"></i> Add Missing Person#}
+{#                </a>#}
+{#                <a href="{% url 'manage_casefile' %}" class="dropdown-item">#}
+{#                    <i class="fas fa-file-invoice"></i> view missing person#}
+{#                </a>#}
+{#                <!-- Update link below when you have the URL pattern for crime case upload -->#}
+{#                <a href="{% url 'police_addCriminalCase' %}" class="dropdown-item">#}
+{#                    <i class="fas fa-file-invoice"></i> Add Criminal Case#}
+{#                </a>#}
+{#                <a href="{% url 'view_missing_criminal' %}" class="dropdown-item">#}
+{#                    <i class="fas fa-file-invoice"></i> view missing criminals#}
+{#                </a>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#    <a href="{% url 'police_send_complaint' %}" class="nav-link {% if request.resolver_match.url_name == 'police_send_complaint' %}active{% endif %}">#}
+{#            <i class="fas fa-triangle-exclamation"></i>#}
+{#            <span class="nav-text">send complaint</span>#}
+{#        </a>#}
+{##}
+{#    </nav>#}
+{##}
+{#    <!-- Footer with Logout -->#}
+{#    <div class="sidebar-footer">#}
+{#        <a href="{% url 'login' %}" class="btn-logout">#}
+{#            <i class="fas fa-sign-out-alt"></i>#}
+{#            <span>Log Out</span>#}
+{#        </a>#}
+{#    </div>#}
+{#</aside>#}
+{##}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', () => {#}
+{#        const sidebar = document.getElementById('sidebar');#}
+{#        const toggleBtn = document.getElementById('sidebarToggle');#}
+{#        const body = document.body;#}
+{##}
+{#        // 1. Restore State#}
+{#        const isCollapsed = localStorage.getItem('police-sidebar-collapsed') === 'true';#}
+{#        if (isCollapsed) {#}
+{#            sidebar.classList.add('collapsed');#}
+{#            body.classList.add('sidebar-collapsed');#}
+{#        }#}
+{##}
+{#        // 2. Toggle Handler#}
+{#        if(toggleBtn) {#}
+{#            toggleBtn.addEventListener('click', () => {#}
+{#                sidebar.classList.toggle('collapsed');#}
+{#                body.classList.toggle('sidebar-collapsed');#}
+{#                localStorage.setItem('police-sidebar-collapsed', sidebar.classList.contains('collapsed'));#}
+{#            });#}
+{#        }#}
+{#    });#}
+{##}
+{#    // Dropdown Toggle Logic#}
+{#    function toggleDropdown(element) {#}
+{#        // Prevent default anchor behavior#}
+{#        event.preventDefault();#}
+{##}
+{#        // Find the next sibling which is the dropdown menu#}
+{#        const menu = element.nextElementSibling;#}
+{#        const icon = element.querySelector('.dropdown-icon');#}
+{##}
+{#        // Toggle 'show' class#}
+{#        menu.classList.toggle('show');#}
+{##}
+{#        // Rotate icon#}
+{#        if (menu.classList.contains('show')) {#}
+{#            icon.style.transform = 'rotate(180deg)';#}
+{#        } else {#}
+{#            icon.style.transform = 'rotate(0deg)';#}
+{#        }#}
+{#    }#}
+{#</script>#}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   POLICE SIDEBAR  ·  Light Teal Palette  ·  Premium Edition
+   Palette: #FFFFFF  #BBBFBF  #878787  #05AD98
+═══════════════════════════════════════════════════════════════ */
+:root {
+  --sw:       276px;
+  --sm:       76px;
+  --sd:       .34s;
+  --se:       cubic-bezier(.4,0,.2,1);
+
+  /* Palette */
+  --white:    #ffffff;
+  --snow:     #f5f8f8;
+  --mist:     #eaf3f2;
+  --silver: rgba(32, 33, 32, 0.51);
+  --slate: rgb(22, 49, 96);
+  --charcoal: #3d4444;
+  --ink:      #1a2222;
+
+  --teal:     #05AD98;
+  --teal-d:   #048a78;
+  --teal-lt:  #07c9b1;
+  --teal-xs:  rgba(5,173,152,.10);
+  --teal-sm:  rgba(5,173,152,.18);
+  --teal-glow:rgba(5,173,152,.30);
+  --teal-soft:rgba(5,173,152,.06);
+
+  --green:    #10b981;
+  --red:      #e8344a;
+  --amber:    #f59e0b;
+
+  /* Shadows */
+  --sh-card:  0 2px 16px rgba(5,173,152,.12), 0 1px 4px rgba(41, 47, 72, 0.06);
+  --sh-hover: 0 6px 28px rgba(5,173,152,.22), 0 2px 8px rgba(41, 47, 72, 0.08);
+}
+
+/* ── BODY OFFSET ─────────────────────────────────────── */
+body {
+  margin-left: var(--sw);
+  transition: margin-left var(--sd) var(--se);
+  background: var(--snow);
+}
+body.sbmini { margin-left: var(--sm); }
+
+/* ── SIDEBAR SHELL ────────────────────────────────────── */
+.psb {
+  position: fixed; inset: 0 auto 0 0;
+  width: var(--sw);
+  background: var(--white);
+  display: flex; flex-direction: column;
+  z-index: 1060; overflow: hidden;
+  transition: width var(--sd) var(--se);
+  border-right: 1.5px solid var(--mist);
+  box-shadow:
+    4px 0 20px rgba(5,173,152,.10),
+    12px 0 48px rgba(0,0,0,.05);
+}
+.psb.mini { width: var(--sm); }
+
+/* ── TOP BAR ──────────────────────────────────────────── */
+.sb-top {
+  height: 54px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1.5px solid var(--mist);
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+/* Brand wordmark */
+.sb-brand {
+  display: flex; align-items: center; gap: 9px;
+  overflow: hidden; white-space: nowrap;
+}
+.sb-brand-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-xs);
+  flex-shrink: 0;
+  animation: brandpulse 3s ease-in-out infinite;
+}
+@keyframes brandpulse {
+  0%,100% { box-shadow: 0 0 0 3px var(--teal-xs); }
+  50%     { box-shadow: 0 0 0 6px rgba(5,173,152,0); }
+}
+.sb-brand-text {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800; font-size: .88rem;
+  color: var(--ink); letter-spacing: .5px;
+  transition: opacity var(--sd);
+  line-height: 1.1;
+}
+.sb-brand-sub {
+  display: block; font-size: .58rem; font-weight: 600;
+  color: var(--teal); letter-spacing: 1.2px;
+  text-transform: uppercase; margin-top: 1px;
+}
+
+/* Toggle button */
+.sb-tog {
+  width: 34px; height: 34px; border-radius: 9px;
+  background: var(--mist); border: 1.5px solid var(--silver);
+  color: var(--slate); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; flex-shrink: 0;
+  transition: all .22s;
+}
+.sb-tog:hover {
+  background: var(--teal-xs); border-color: var(--teal);
+  color: var(--teal); box-shadow: 0 0 0 3px var(--teal-xs);
+}
+
+/* ── HERO PROFILE ─────────────────────────────────────── */
+.sb-hero {
+  flex-shrink: 0; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 30px 18px 24px;
+  border-bottom: 1.5px solid var(--mist);
+}
+
+/* Layered teal-wash background */
+.sb-hero::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 140% 80% at 50% 0%, rgba(5,173,152,.13) 0%, transparent 60%),
+    linear-gradient(180deg, #edfaf8 0%, #fff 100%);
+}
+
+/* Decorative hexagonal pattern overlay */
+.sb-hero::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; opacity: .4;
+  background-image: radial-gradient(circle, #05AD98 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 0%, transparent 70%);
+}
+
+/* ── AVATAR ───────────────────────────────────────────── */
+.sb-avwrap {
+  position: relative; width: 96px; height: 96px;
+  margin-bottom: 18px; z-index: 1; cursor: default;
+}
+
+/* Outer decorative ring — teal solid */
+.sb-avring {
+  width: 100%; height: 100%; border-radius: 50%; padding: 3px;
+  background: conic-gradient(
+    var(--teal) 0deg,
+    var(--teal-lt) 90deg,
+    #BBBFBF 180deg,
+    var(--teal) 360deg
+  );
+  position: relative;
+  transition: all .45s var(--se);
+  /* Inset shadow for depth */
+  box-shadow: var(--sh-card);
+}
+
+/* Shimmer arc — appears on hover */
+.sb-avring::before {
+  content: '';
+  position: absolute; inset: -1px; border-radius: 50%;
+  background: linear-gradient(120deg, rgba(255,255,255,.7) 0%, transparent 45%);
+  opacity: 0; transition: opacity .4s;
+  pointer-events: none;
+}
+
+/* Outer glow ring */
+.sb-avring::after {
+  content: '';
+  position: absolute; inset: -6px; border-radius: 50%;
+  border: 2px solid transparent;
+  box-shadow: 0 0 0 0 var(--teal-glow);
+  transition: all .45s var(--se);
+  pointer-events: none;
+}
+
+/* Hover effects */
+.sb-avwrap:hover .sb-avring {
+  transform: scale(1.06);
+  box-shadow: var(--sh-hover);
+}
+.sb-avwrap:hover .sb-avring::before { opacity: 1; }
+.sb-avwrap:hover .sb-avring::after {
+  border-color: var(--teal-sm);
+  box-shadow: 0 0 0 8px rgba(5,173,152,0), 0 0 28px var(--teal-glow);
+  inset: -10px;
+}
+
+/* White gap between ring and photo */
+.sb-avfrost {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: var(--white); padding: 3px;
+  position: relative; overflow: hidden;
+}
+
+/* Glass highlight sweep on hover */
+.sb-avfrost::after {
+  content: '';
+  position: absolute; top: -50%; left: -50%;
+  width: 90%; height: 90%;
+  background: linear-gradient(130deg, rgba(255,255,255,.65), rgba(255,255,255,0));
+  border-radius: 50%; opacity: 0;
+  transition: opacity .4s; pointer-events: none;
+}
+.sb-avwrap:hover .sb-avfrost::after { opacity: 1; }
+
+.sb-avatar {
+  width: 100%; height: 100%; border-radius: 50%;
+  object-fit: cover; display: block;
+}
+
+/* Online dot */
+.sb-dot {
+  position: absolute; bottom: 5px; right: 5px;
+  width: 17px; height: 17px; border-radius: 50%;
+  background: var(--green); border: 3px solid var(--white);
+  z-index: 2;
+  box-shadow: 0 0 0 0 rgba(16,185,129,.4);
+  animation: onlinepulse 2.5s infinite;
+}
+@keyframes onlinepulse {
+  0%   { box-shadow: 0 0 0 0   rgba(16,185,129,.45); }
+  60%  { box-shadow: 0 0 0 7px rgba(16,185,129,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(16,185,129,0);   }
+}
+
+/* ── OFFICER INFO ─────────────────────────────────────── */
+.sb-info {
+  text-align: center; z-index: 1; overflow: hidden; max-width: 100%;
+  transition: opacity var(--sd);
+}
+
+.sb-name {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800; font-size: 1.08rem;
+  color: var(--ink); letter-spacing: .2px;
+  margin: 0 0 8px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Teal capsule rank badge */
+.sb-rank {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--teal);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: .68rem; font-weight: 800; letter-spacing: 1.1px;
+  text-transform: uppercase; padding: 5px 14px;
+  border-radius: 20px; margin-bottom: 10px;
+  box-shadow: 0 4px 14px var(--teal-glow);
+  transition: all .25s;
+}
+.sb-rank:hover {
+  background: var(--teal-d);
+  box-shadow: 0 6px 20px var(--teal-glow);
+  transform: translateY(-1px);
+}
+
+/* Station pill */
+.sb-stn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Nunito', sans-serif; font-size: .72rem; font-weight: 600;
+  color: var(--slate);
+  background: var(--snow); border: 1.5px solid var(--mist);
+  border-radius: 20px; padding: 4px 12px;
+}
+.sb-stn i { font-size: .62rem; color: var(--teal); }
+
+/* Phone chip */
+.sb-phone {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Nunito', sans-serif; font-size: .7rem; font-weight: 600;
+  color: var(--slate); margin-top: 6px;
+}
+.sb-phone i { color: var(--teal); font-size: .62rem; }
+
+/* ── NAV AREA ─────────────────────────────────────────── */
+.sb-nav {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 12px 12px 8px;
+}
+.sb-nav::-webkit-scrollbar { width: 3px; }
+.sb-nav::-webkit-scrollbar-track { background: transparent; }
+.sb-nav::-webkit-scrollbar-thumb { background: var(--silver); border-radius: 4px; }
+
+/* Section label */
+.sb-sec {
+  font-family: 'Nunito', sans-serif;
+  font-size: .62rem; font-weight: 800; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--silver);
+  padding: 14px 10px 5px;
+  white-space: nowrap; overflow: hidden; transition: opacity var(--sd);
+  display: flex; align-items: center; gap: 8px;
+}
+.sb-sec::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--mist), transparent);
+}
+
+/* ── NAV LINK ─────────────────────────────────────────── */
+.sb-lnk {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 12px;
+  color: var(--slate); font-family: 'Nunito', sans-serif;
+  font-size: .88rem; font-weight: 600;
+  text-decoration: none !important; cursor: pointer;
+  white-space: nowrap; margin-bottom: 3px;
+  border: 1.5px solid transparent; position: relative;
+  overflow: hidden;
+  transition: color .22s, background .22s, border-color .22s, transform .22s, box-shadow .22s;
+}
+
+/* Shimmer sweep */
+.sb-lnk::after {
+  content: '';
+  position: absolute; top: 0; left: -110%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(5,173,152,.09), transparent);
+  transition: left .55s;
+}
+.sb-lnk:hover::after { left: 150%; }
+
+.sb-lnk:hover {
+  color: var(--teal-d);
+  background: var(--teal-xs);
+  border-color: rgba(5,173,152,.2);
+  transform: translateX(4px);
+  box-shadow: 0 2px 10px rgba(5,173,152,.08);
+}
+
+/* Active */
+.sb-lnk.active {
+  color: var(--teal-d);
+  background: linear-gradient(90deg, var(--teal-sm) 0%, var(--teal-soft) 100%);
+  border-color: rgba(5,173,152,.3);
+  box-shadow: 0 2px 12px rgba(5,173,152,.12);
+}
+.sb-lnk.active .sb-ico { color: var(--teal); }
+
+/* Left bar indicator */
+.sb-lnk.active::before {
+  content: '';
+  position: absolute; left: 0; top: 18%; bottom: 18%; width: 3.5px;
+  background: var(--teal);
+  border-radius: 0 4px 4px 0;
+  box-shadow: 2px 0 8px var(--teal-glow);
+}
+
+.sb-ico {
+  width: 20px; text-align: center; font-size: 1rem; flex-shrink: 0;
+  color: var(--silver); transition: color .22s, transform .22s;
+}
+.sb-lnk:hover .sb-ico { color: var(--teal); transform: scale(1.15); }
+.sb-ltx { transition: opacity var(--sd); }
+
+/* ── DROPDOWN ─────────────────────────────────────────── */
+.sb-ddw { margin-bottom: 3px; }
+
+.sb-ddbtn {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 10px 12px; border-radius: 12px;
+  color: var(--slate); background: transparent; border: 1.5px solid transparent;
+  font-family: 'Nunito', sans-serif; font-size: .88rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  overflow: hidden; position: relative;
+  transition: all .22s;
+}
+.sb-ddbtn::after {
+  content: '';
+  position: absolute; top: 0; left: -110%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(5,173,152,.09), transparent);
+  transition: left .55s;
+}
+.sb-ddbtn:hover::after { left: 150%; }
+
+.sb-ddbtn:hover {
+  color: var(--teal-d); background: var(--teal-xs);
+  border-color: rgba(5,173,152,.2);
+}
+.sb-ddbtn.open {
+  color: var(--teal-d); background: var(--teal-xs);
+  border-color: rgba(5,173,152,.25);
+}
+.sb-ddbtn.open .sb-ico { color: var(--teal); }
+
+.sb-ddl { display: flex; align-items: center; gap: 12px; overflow: hidden; }
+
+.sb-chev {
+  font-size: .7rem; color: var(--silver); flex-shrink: 0;
+  transition: transform .32s var(--se), color .22s;
+}
+.sb-ddbtn.open .sb-chev { transform: rotate(180deg); color: var(--teal); }
+
+.sb-ddm {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height .38s var(--se), opacity .28s;
+  margin: 3px 6px 0; border-radius: 10px;
+  background: var(--snow); border: 1.5px solid transparent;
+}
+.sb-ddm.open {
+  max-height: 260px; opacity: 1;
+  border-color: var(--mist);
+  box-shadow: 0 2px 10px rgba(5,173,152,.07);
+}
+
+.sb-ddi {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 14px 9px 14px;
+  color: var(--slate); font-family: 'Nunito', sans-serif;
+  font-size: .83rem; font-weight: 600;
+  text-decoration: none !important;
+  border-left: 3px solid transparent;
+  transition: all .2s; white-space: nowrap;
+}
+.sb-ddi:hover {
+  color: var(--teal-d); border-left-color: var(--teal);
+  background: var(--teal-xs); padding-left: 17px;
+}
+.sb-ddi.active { color: var(--teal); border-left-color: var(--teal); font-weight: 700; }
+.sb-si { font-size: .8rem; width: 16px; text-align: center; flex-shrink: 0; color: var(--silver); }
+.sb-ddi:hover .sb-si, .sb-ddi.active .sb-si { color: var(--teal); }
+
+/* ── DIVIDER ──────────────────────────────────────────── */
+.sb-div { height: 1.5px; background: var(--mist); margin: 8px 10px; border-radius: 2px; }
+
+/* ── FOOTER ───────────────────────────────────────────── */
+.sb-foot {
+  flex-shrink: 0; padding: 14px 12px;
+  border-top: 1.5px solid var(--mist);
+  background: var(--snow);
+}
+
+/* Version + logout */
+.sb-foot-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; overflow: hidden;
+  transition: opacity var(--sd);
+}
+.sb-ver {
+  font-family: 'Nunito', sans-serif;
+  font-size: .65rem; font-weight: 700;
+  color: var(--silver); letter-spacing: .5px;
+  background: var(--mist); border-radius: 6px;
+  padding: 2px 8px;
+}
+.sb-status-row {
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .65rem; font-weight: 700; color: var(--green);
+}
+.sb-status-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  animation: onlinepulse 2.5s infinite;
+}
+
+.sb-out {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  width: 100%; padding: 11px 14px;
+  background: linear-gradient(135deg, rgba(232, 9, 4, 0.06), rgba(232, 9, 4, 0.08));
+  border: 1.5px solid rgb(255, 40, 60);
+  color: var(--slate); border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .82rem; font-weight: 700; letter-spacing: .5px;
+  text-transform: uppercase; text-decoration: none !important;
+  cursor: pointer; overflow: hidden; white-space: nowrap;
+  transition: all .25s;
+}
+.sb-out:hover {
+  background: linear-gradient(135deg, rgba(232, 52, 74, 0.5), rgba(222, 12, 4, 0.24));
+  border-color: var(--red); color: var(--red);
+  box-shadow: 0 4px 16px rgba(232, 52, 74, 0.89);
+  transform: translateY(-1px);
+}
+.sb-out i { font-size: .9rem; }
+.sb-otx { transition: opacity var(--sd); }
+
+/* ── MINI MODE ────────────────────────────────────────── */
+.psb.mini .sb-brand-text,
+.psb.mini .sb-info,
+.psb.mini .sb-sec,
+.psb.mini .sb-ltx,
+.psb.mini .sb-ddl .sb-ltx,
+.psb.mini .sb-chev,
+.psb.mini .sb-otx,
+.psb.mini .sb-foot-row {
+  opacity: 0; width: 0; overflow: hidden; pointer-events: none;
+}
+
+.psb.mini .sb-top   { justify-content: center; }
+.psb.mini .sb-hero  { padding: 16px 8px 14px; }
+.psb.mini .sb-hero::after { opacity: 0; }
+.psb.mini .sb-avwrap { width: 46px; height: 46px; margin-bottom: 0; }
+.psb.mini .sb-dot   { width: 11px; height: 11px; border-width: 2px; bottom: 2px; right: 2px; }
+.psb.mini .sb-lnk   { justify-content: center; padding: 11px 0; transform: none; }
+.psb.mini .sb-lnk.active::before { top: 14%; bottom: 14%; }
+.psb.mini .sb-lnk:hover { transform: none; }
+.psb.mini .sb-ddbtn { justify-content: center; padding: 11px 0; }
+.psb.mini .sb-ddm   { max-height: 0 !important; opacity: 0 !important; }
+.psb.mini .sb-out   { justify-content: center; border: none; background: transparent; padding: 10px 0; box-shadow: none; transform: none; }
+.psb.mini .sb-div   { margin: 6px 8px; }
+.psb.mini .sb-foot  { padding: 10px 8px; }
+.psb.mini .sb-ico   { transform: none !important; }
+
+/* Tooltips in mini mode */
+.psb.mini .sb-lnk,
+.psb.mini .sb-ddbtn { position: relative; }
+
+.psb.mini .sb-lnk:hover::before {
+  content: attr(data-tip);
+  position: absolute; left: calc(var(--sm) - 4px); top: 50%;
+  transform: translateY(-50%); z-index: 9999;
+  background: var(--ink); color: #fff;
+  font-size: .78rem; font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  padding: 5px 12px; border-radius: 9px;
+  white-space: nowrap; pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+}
+
+/* ── MOBILE ───────────────────────────────────────────── */
+.sb-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(3px); z-index: 1050;
+}
+@media (max-width: 768px) {
+  body { margin-left: 0 !important; }
+  .psb { transform: translateX(-110%); transition: transform var(--sd) var(--se), width var(--sd); width: var(--sw) !important; }
+  .psb.sb-open { transform: translateX(0); }
+  .sb-overlay.active { display: block; }
+}
+</style>
+
+<!-- Mobile backdrop -->
+<div class="sb-overlay" id="sbOv" onclick="sbMobClose()"></div>
+
+<!-- ╔══════════════════════════════════════════════════════╗
+     ║                  SIDEBAR HTML                      ║
+     ╚══════════════════════════════════════════════════════╝ -->
+<aside class="psb" id="pSidebar">
+
+  <!-- ── TOP BAR ── -->
+  <div class="sb-top">
+    <div class="sb-brand">
+      <div class="sb-brand-dot"></div>
+      <div class="sb-brand-text">
+        CrowdTrace
+        <span class="sb-brand-sub">Police Portal</span>
+      </div>
+    </div>
+    <button class="sb-tog" id="sbTog" title="Collapse sidebar">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- ── HERO PROFILE CARD ── -->
+  <div class="sb-hero">
+
+    <!-- Large centred avatar -->
+    <div class="sb-avwrap">
+      <div class="sb-avring">
+        <div class="sb-avfrost">
+          <img class="sb-avatar"
+            src="{% if police and police.photo %}{{ police.photo.url }}{% else %}https://ui-avatars.com/api/?name={{ police.full_name|default:'O'|urlencode }}&background=05AD98&color=ffffff&size=200&bold=true&format=svg{% endif %}"
+            alt="Officer Photo" />
+        </div>
+      </div>
+      <div class="sb-dot" title="Online"></div>
+    </div>
+
+    <!-- Officer details below avatar -->
+    <div class="sb-info">
+      <div class="sb-name">
+        {% if police %}{{ police.full_name }}{% else %}Officer{% endif %}
+      </div>
+
+      <div class="sb-rank">
+        <i class="fas fa-shield-halved" style="font-size:.65rem;"></i>
+        {% if police %}{{ police.designation }}{% else %}Police Dept.{% endif %}
+      </div>
+
+      {% if police and police.policestation %}
+      <div class="sb-stn">
+        <i class="fas fa-building-columns"></i>
+        {{ police.policestation.station_name }}
+      </div>
+      {% endif %}
+
+      {% if police and police.phone %}
+      <div class="sb-phone">
+        <i class="fas fa-phone"></i>
+        {{ police.phone }}
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <!-- ── NAVIGATION ── -->
+  <nav class="sb-nav">
+
+    <!-- Overview -->
+    <div class="sb-sec">Overview</div>
+
+    <a href="{% url 'police_home' %}"
+       class="sb-lnk {% if request.resolver_match.url_name == 'police_home' %}active{% endif %}"
+       data-tip="Dashboard">
+      <i class="fas fa-gauge-high sb-ico"></i>
+      <span class="sb-ltx">Dashboard</span>
+    </a>
+
+    <a href="{% url 'view_police_profile' %}"
+       class="sb-lnk {% if request.resolver_match.url_name == 'view_police_profile' %}active{% endif %}"
+       data-tip="My Profile">
+      <i class="fas fa-id-badge sb-ico"></i>
+      <span class="sb-ltx">My Profile</span>
+    </a>
+
+    <a href="{% url 'police_view_cases' %}"
+   class="sb-lnk {% if request.resolver_match.url_name == 'police_view_cases' %}active{% endif %}"
+   data-tip="View Cases">
+
+  <i class="fas fa-folder-open sb-ico"></i>
+  <span class="sb-ltx">View Cases</span>
+
+</a>
+
+  <a href="{% url 'police_detect_person' %}"
+   class="sb-lnk {% if request.resolver_match.url_name == 'police_detect_person' %}active{% endif %}"
+   data-tip="Detect Person">
+
+  <i class="fas fa-user-secret sb-ico"></i>
+  <span class="sb-ltx">Detect Person</span>
+
+</a>
+
+  <a href="{% url 'police_live_detections' %}"
+   class="sb-lnk {% if request.resolver_match.url_name == 'police_live_detections' %}active{% endif %}"
+   data-tip="Live Detections">
+
+  <i class="fas fa-camera sb-ico"></i>
+  <span class="sb-ltx">View Live Detections</span>
+
+</a>
+
+  <a href="{% url 'police_view_uploads' %}"
+   class="sb-lnk {% if request.resolver_match.url_name == 'police_view_uploads' %}active{% endif %}"
+   data-tip="User & Public Uploads">
+
+  <i class="fas fa-upload sb-ico"></i>
+  <span class="sb-ltx">User & Public detections</span>
+
+</a>
+
+    <div class="sb-div"></div>
+
+    <!-- Case Management -->
+    <div class="sb-sec">Case Management</div>
+
+    <!-- Missing Persons dropdown -->
+    <div class="sb-ddw">
+      <button class="sb-ddbtn {% if request.resolver_match.url_name == 'police_addmissingCase' or request.resolver_match.url_name == 'manage_casefile' %}open{% endif %}"
+              onclick="sbDrop(this)" data-tip="Missing Persons">
+        <div class="sb-ddl">
+          <i class="fas fa-person-circle-question sb-ico"></i>
+          <span class="sb-ltx">Missing Persons</span>
+        </div>
+        <i class="fas fa-chevron-down sb-chev"></i>
+      </button>
+      <div class="sb-ddm {% if request.resolver_match.url_name == 'police_addmissingCase' or request.resolver_match.url_name == 'manage_casefile' %}open{% endif %}">
+        <a href="{% url 'police_addmissingCase' %}"
+           class="sb-ddi {% if request.resolver_match.url_name == 'police_addmissingCase' %}active{% endif %}">
+          <i class="fas fa-user-plus sb-si"></i> Add Missing Person
+        </a>
+        <a href="{% url 'manage_casefile' %}"
+           class="sb-ddi {% if request.resolver_match.url_name == 'manage_casefile' %}active{% endif %}">
+          <i class="fas fa-list-ul sb-si"></i> View Missing Persons
+        </a>
+      </div>
+    </div>
+
+    <!-- Criminal Cases dropdown -->
+    <div class="sb-ddw">
+      <button class="sb-ddbtn {% if request.resolver_match.url_name == 'police_addCriminalCase' or request.resolver_match.url_name == 'view_missing_criminal' %}open{% endif %}"
+              onclick="sbDrop(this)" data-tip="Criminal Cases">
+        <div class="sb-ddl">
+          <i class="fas fa-user-secret sb-ico"></i>
+          <span class="sb-ltx">Criminal Cases</span>
+        </div>
+        <i class="fas fa-chevron-down sb-chev"></i>
+      </button>
+      <div class="sb-ddm {% if request.resolver_match.url_name == 'police_addCriminalCase' or request.resolver_match.url_name == 'view_missing_criminal' %}open{% endif %}">
+        <a href="{% url 'police_addCriminalCase' %}"
+           class="sb-ddi {% if request.resolver_match.url_name == 'police_addCriminalCase' %}active{% endif %}">
+          <i class="fas fa-file-circle-plus sb-si"></i> Add Criminal Case
+        </a>
+        <a href="{% url 'view_missing_criminal' %}"
+           class="sb-ddi {% if request.resolver_match.url_name == 'view_missing_criminal' %}active{% endif %}">
+          <i class="fas fa-list-ul sb-si"></i> View Criminal Cases
+        </a>
+      </div>
+    </div>
+
+    <div class="sb-div"></div>
+
+    <!-- Communications -->
+    <div class="sb-sec">Communications</div>
+
+    <a href="{% url 'police_send_complaint' %}"
+       class="sb-lnk {% if request.resolver_match.url_name == 'police_send_complaint' %}active{% endif %}"
+       data-tip="Complaint">
+      <i class="fas fa-triangle-exclamation sb-ico"></i>
+      <span class="sb-ltx">Send Complaint</span>
+    </a>
+
+  </nav>
+
+  <!-- ── FOOTER ── -->
+  <div class="sb-foot">
+    <div class="sb-foot-row">
+      <span class="sb-ver">v1.0</span>
+      <span class="sb-status-row">
+        <span class="sb-status-dot"></span> System Online
+      </span>
+    </div>
+    <a href="{% url 'login' %}" class="sb-out">
+      <i class="fas fa-right-from-bracket"></i>
+      <span class="sb-otx">Log Out</span>
+    </a>
+  </div>
+
+</aside>
+
+<script>
+(function(){
+  const sb  = document.getElementById('pSidebar');
+  const ov  = document.getElementById('sbOv');
+  const tog = document.getElementById('sbTog');
+  const KEY = 'psb-v4';
+
+  function isMini(){ return sb.classList.contains('mini'); }
+  function applyState(mini){
+    sb.classList.toggle('mini', mini);
+    document.body.classList.toggle('sbmini', mini);
+    localStorage.setItem(KEY, mini ? '1' : '0');
+  }
+
+  // Restore saved
+  if(localStorage.getItem(KEY) === '1') applyState(true);
+
+  if(tog) tog.addEventListener('click', () => applyState(!isMini()));
+
+  // Dropdown toggle
+  window.sbDrop = function(btn){
+    const menu = btn.nextElementSibling;
+    const wasOpen = menu.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.sb-ddm.open').forEach(m => {
+      m.classList.remove('open');
+      m.previousElementSibling.classList.remove('open');
+    });
+    if(!wasOpen){
+      menu.classList.add('open');
+      btn.classList.add('open');
+    }
+  };
+
+  // Mobile
+  window.sbMobOpen  = () => { sb.classList.add('sb-open');    ov.classList.add('active'); };
+  window.sbMobClose = () => { sb.classList.remove('sb-open'); ov.classList.remove('active'); };
+})();
+</script>

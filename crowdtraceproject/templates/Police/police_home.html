@@ -1,0 +1,1387 @@
+{##}
+{##}
+{##}
+{##}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Police Dashboard</title>#}
+{#    <!-- Bootstrap 5 -->#}
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#    <!-- Font Awesome -->#}
+{#    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">#}
+{#    <!-- Fonts -->#}
+{#    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">#}
+{##}
+{#    <style>#}
+{#        body {#}
+{#            background-color: #f4f6f9; /* Standard light grey background */#}
+{#            font-family: 'Inter', sans-serif;#}
+{#            color: #333;#}
+{#        }#}
+{##}
+{#        /* Content Wrapper to respect Sidebar */#}
+{#        .main-content {#}
+{#            margin-left: 280px; /* Default Sidebar Width */#}
+{#            padding: 30px;#}
+{#            transition: margin-left 0.3s ease;#}
+{#        }#}
+{#        body.sidebar-collapsed .main-content {#}
+{#            margin-left: 80px;#}
+{#        }#}
+{##}
+{#        /* Simple Card Style */#}
+{#        .card {#}
+{#            border: 1px solid #e0e0e0;#}
+{#            border-radius: 8px;#}
+{#            box-shadow: 0 2px 4px rgba(0,0,0,0.05);#}
+{#            background: white;#}
+{#            margin-bottom: 20px;#}
+{#        }#}
+{##}
+{#        .card-header {#}
+{#            background-color: #fff;#}
+{#            border-bottom: 1px solid #f0f0f0;#}
+{#            padding: 15px 20px;#}
+{#            font-weight: 600;#}
+{#            color: #2c3e50;#}
+{#        }#}
+{##}
+{#        /* Stats Cards */#}
+{#        .stats-box {#}
+{#            background: white;#}
+{#            border-radius: 8px;#}
+{#            padding: 20px;#}
+{#            border: 1px solid #e0e0e0;#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            justify-content: space-between;#}
+{#            height: 100%;#}
+{#        }#}
+{#        .stats-icon {#}
+{#            width: 50px; height: 50px;#}
+{#            border-radius: 8px;#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#            font-size: 1.5rem;#}
+{#            color: white;#}
+{#        }#}
+{#        .bg-blue { background-color: #3b82f6; }#}
+{#        .bg-orange { background-color: #f59e0b; }#}
+{#        .bg-green { background-color: #10b981; }#}
+{#        .bg-red { background-color: #ef4444; }#}
+{##}
+{#        .stats-content h3 { font-size: 1.8rem; margin: 0; font-weight: 700; color: #333; }#}
+{#        .stats-content p { margin: 0; color: #666; font-size: 0.9rem; }#}
+{##}
+{#        /* Action Buttons */#}
+{#        .quick-action {#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            padding: 15px;#}
+{#            background: #fff;#}
+{#            border: 1px solid #ddd;#}
+{#            border-radius: 8px;#}
+{#            text-decoration: none;#}
+{#            color: #333;#}
+{#            transition: background 0.2s;#}
+{#        }#}
+{#        .quick-action:hover {#}
+{#            background-color: #f8f9fa;#}
+{#            color: #0f62fe; /* Police Blue */#}
+{#        }#}
+{#        .quick-action i { font-size: 1.2rem; margin-right: 15px; color: #555; }#}
+{##}
+{#        /* Recent Activity List */#}
+{#        .activity-list { list-style: none; padding: 0; margin: 0; }#}
+{#        .activity-item {#}
+{#            padding: 15px 20px;#}
+{#            border-bottom: 1px solid #eee;#}
+{#            font-size: 0.9rem;#}
+{#        }#}
+{#        .activity-item:last-child { border-bottom: none; }#}
+{#        .activity-time { font-size: 0.8rem; color: #999; float: right; }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#{% include 'police/police_sidebar.html' %}#}
+{##}
+{#    <main class="main-content">#}
+{#        <div class="container-fluid">#}
+{##}
+{#            <!-- Simple Header -->#}
+{#            <div class="d-flex justify-content-between align-items-center mb-4">#}
+{#                <div>#}
+{#                    <h3 class="fw-bold mb-1">Dashboard</h3>#}
+{#                    <p class="text-muted mb-0">Overview of system status and activities.</p>#}
+{#                </div>#}
+{#                <div class="text-muted small">#}
+{#                    <i class="far fa-calendar-alt me-1"></i> Today#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Stats Boxes -->#}
+{#            <div class="row g-3 mb-4">#}
+{#                <div class="col-md-3">#}
+{#                    <div class="stats-box">#}
+{#                        <div class="stats-content">#}
+{#                            <h3>12</h3>#}
+{#                            <p>Active Cases</p>#}
+{#                        </div>#}
+{#                        <div class="stats-icon bg-blue">#}
+{#                            <i class="fas fa-folder-open"></i>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-3">#}
+{#                    <div class="stats-box">#}
+{#                        <div class="stats-content">#}
+{#                            <h3>5</h3>#}
+{#                            <p>Pending</p>#}
+{#                        </div>#}
+{#                        <div class="stats-icon bg-orange">#}
+{#                            <i class="fas fa-clock"></i>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-3">#}
+{#                    <div class="stats-box">#}
+{#                        <div class="stats-content">#}
+{#                            <h3>84%</h3>#}
+{#                            <p>Solved Rate</p>#}
+{#                        </div>#}
+{#                        <div class="stats-icon bg-green">#}
+{#                            <i class="fas fa-check"></i>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-3">#}
+{#                    <div class="stats-box">#}
+{#                        <div class="stats-content">#}
+{#                            <h3>3</h3>#}
+{#                            <p>Alerts</p>#}
+{#                        </div>#}
+{#                        <div class="stats-icon bg-red">#}
+{#                            <i class="fas fa-bell"></i>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Content Grid -->#}
+{#            <div class="row g-4">#}
+{##}
+{#                <!-- Main Area: Map & Actions -->#}
+{#                <div class="col-lg-8">#}
+{#                    <!-- Map Card -->#}
+{#                    <div class="card mb-4">#}
+{#                        <div class="card-header">#}
+{#                            Patrol Map Overview#}
+{#                        </div>#}
+{#                        <div class="card-body p-0">#}
+{#                            <!-- Simple Map Placeholder -->#}
+{#                            <div style="height: 350px; background: #e9ecef; display: flex; align-items: center; justify-content: center; color: #adb5bd;">#}
+{#                                <i class="fas fa-map-marked-alt me-2"></i> Map Module#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <!-- Quick Links -->#}
+{#                    <div class="row g-3">#}
+{#                        <div class="col-md-6">#}
+{#                            <a href="{% url 'manage_casefile' %}" class="quick-action">#}
+{#                                <i class="fas fa-file-contract"></i>#}
+{#                                <div>#}
+{#                                    <strong>Manage Cases</strong><br>#}
+{#                                    <small class="text-muted">View and edit case files</small>#}
+{#                                </div>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                        <div class="col-md-6">#}
+{#                            <a href="{% url 'police_addmissingCase' %}" class="quick-action">#}
+{#                                <i class="fas fa-plus-circle text-primary"></i>#}
+{#                                <div>#}
+{#                                    <strong>New Report</strong><br>#}
+{#                                    <small class="text-muted">Create a new entry</small>#}
+{#                                </div>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <!-- Right Sidebar: Activity -->#}
+{#                <div class="col-lg-4">#}
+{#                    <div class="card h-100">#}
+{#                        <div class="card-header">#}
+{#                            Recent Logs#}
+{#                        </div>#}
+{#                        <ul class="activity-list">#}
+{#                            <li class="activity-item">#}
+{#                                <strong>Report Submitted</strong>#}
+{#                                <span class="activity-time">10m ago</span>#}
+{#                                <div class="text-muted small mt-1">Missing Person #MP-892 pending approval.</div>#}
+{#                            </li>#}
+{#                            <li class="activity-item">#}
+{#                                <strong>System Login</strong>#}
+{#                                <span class="activity-time">1h ago</span>#}
+{#                                <div class="text-muted small mt-1">User login detected from Terminal 4.</div>#}
+{#                            </li>#}
+{#                            <li class="activity-item">#}
+{#                                <strong>Case Updated</strong>#}
+{#                                <span class="activity-time">2h ago</span>#}
+{#                                <div class="text-muted small mt-1">Details updated for File #CR-114.</div>#}
+{#                            </li>#}
+{#                            <li class="activity-item">#}
+{#                                <strong>High Priority Alert</strong>#}
+{#                                <span class="activity-time">4h ago</span>#}
+{#                                <div class="text-muted small mt-1 text-danger">Suspect sighted in Sector 2.</div>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                        <div class="card-footer text-center bg-white border-top-0">#}
+{#                            <a href="#" class="text-decoration-none small">View Full Log</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{#    </main>#}
+{##}
+{#    <!-- Bootstrap JS -->#}
+{#    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>#}
+{#</body>#}
+{#</html>#}
+
+
+{% include 'police/police_sidebar.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Police Dashboard · CrowdTrace</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Raleway:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CROWDTRACE POLICE DASHBOARD  ·  Glassmorphism Premium
+   Palette matches sidebar:
+     white #fff · snow #f0f6f5 · mist #eaf3f2
+     silver rgba(32,33,32,.51) · slate rgb(22,49,96)
+     teal #05AD98 · teal-d #048a78 · teal-lt #07c9b1
+═══════════════════════════════════════════════════════════ */
+:root {
+  --white:    #ffffff;
+  --snow:     #f0f7f6;
+  --mist:     #e3f2f0;
+  --silver:   rgba(32,33,32,.48);
+  --slate:    rgb(22,49,96);
+  --ink:      #111c1b;
+  --charcoal: #2e3838;
+
+  --teal:     #05AD98;
+  --teal-d:   #048a78;
+  --teal-lt:  #07c9b1;
+  --teal-xs:  rgba(5,173,152,.08);
+  --teal-sm:  rgba(5,173,152,.18);
+  --teal-md:  rgba(5,173,152,.32);
+  --teal-glow:rgba(5,173,152,.28);
+
+  --green:    #10b981;
+  --amber:    #f59e0b;
+  --red:      #e8344a;
+
+  /* Glass recipe */
+  --gb:       rgba(255,255,255,.58);
+  --gb2:      rgba(255,255,255,.38);
+  --gborder:  rgba(255,255,255,.80);
+  --gsh:      0 8px 32px rgba(5,173,152,.09), 0 2px 8px rgba(0,0,0,.05);
+  --gsh2:     0 20px 60px rgba(5,173,152,.16), 0 4px 16px rgba(0,0,0,.08);
+
+  --ease:     cubic-bezier(.4,0,.2,1);
+  --dur:      .32s;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family:'Nunito',sans-serif;
+  background:var(--snow);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ════════════════════════════════════════════
+   ANIMATED BACKGROUND — organic blobs
+════════════════════════════════════════════ */
+.bg-stage {
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+}
+.blob {
+  position:absolute; border-radius:50%;
+  filter:blur(70px); opacity:.55;
+  animation:blobdrift 14s ease-in-out infinite alternate;
+}
+.blob-1 { width:600px;height:500px; top:-160px; left:-160px;
+  background:radial-gradient(circle at 40% 40%, rgba(5,173,152,.35), rgba(7,201,177,.15), transparent 70%);
+  animation-delay:0s; }
+.blob-2 { width:500px;height:450px; bottom:-120px; right:-100px;
+  background:radial-gradient(circle at 60% 60%, rgba(22,49,96,.22), rgba(5,173,152,.12), transparent 70%);
+  animation-delay:-5s; }
+.blob-3 { width:380px;height:380px; top:38%; left:42%;
+  background:radial-gradient(circle, rgba(5,173,152,.14), transparent 70%);
+  animation-delay:-9s; }
+.blob-4 { width:300px;height:300px; top:10%; right:22%;
+  background:radial-gradient(circle, rgba(22,49,96,.10), transparent 70%);
+  animation-delay:-3s; }
+@keyframes blobdrift {
+  0%   { transform:translate(0,0) scale(1); }
+  100% { transform:translate(40px,30px) scale(1.12); }
+}
+
+/* dot-grid overlay */
+.bg-stage::after {
+  content:'';
+  position:absolute; inset:0;
+  background-image:radial-gradient(circle, rgba(5,173,152,.13) 1.2px, transparent 1.2px);
+  background-size:28px 28px;
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%, black 0%, transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 50%, black 0%, transparent 100%);
+  opacity:.6;
+}
+
+/* ════════════════════════════════════════════
+   PAGE LAYOUT
+════════════════════════════════════════════ */
+.page {
+  position:relative; z-index:1;
+  padding:24px 28px 48px;
+  max-width:1480px;
+}
+
+/* ════════════════════════════════════════════
+   GLASS CARD BASE
+════════════════════════════════════════════ */
+.gc {
+  background:var(--gb);
+  backdrop-filter:blur(20px) saturate(200%);
+  -webkit-backdrop-filter:blur(20px) saturate(200%);
+  border:1.5px solid var(--gborder);
+  border-radius:22px;
+  box-shadow:var(--gsh);
+  position:relative; overflow:hidden;
+  transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+/* top shimmer line */
+.gc::before {
+  content:'';
+  position:absolute; top:0; left:10%; right:10%; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+  pointer-events:none;
+}
+.gc:hover { transform:translateY(-5px); box-shadow:var(--gsh2); }
+
+/* ════════════════════════════════════════════
+   HERO HEADER STRIP
+════════════════════════════════════════════ */
+.hero-strip {
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:20px;
+  margin-bottom:28px;
+  animation:slideDown .6s var(--ease) both;
+}
+@keyframes slideDown {
+  from { opacity:0; transform:translateY(-20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.hero-left {}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:7px;
+  background:var(--teal-xs); border:1px solid var(--teal-sm);
+  color:var(--teal-d); font-size:.72rem; font-weight:800;
+  letter-spacing:1.2px; text-transform:uppercase;
+  padding:4px 12px; border-radius:20px; margin-bottom:8px;
+}
+.hero-eyebrow span.live-dot {
+  width:7px; height:7px; border-radius:50%; background:var(--green);
+  box-shadow:0 0 0 0 rgba(16,185,129,.4);
+  animation:livepulse 2s infinite;
+}
+@keyframes livepulse {
+  0%   { box-shadow:0 0 0 0 rgba(16,185,129,.45); }
+  70%  { box-shadow:0 0 0 8px rgba(16,185,129,0); }
+  100% { box-shadow:0 0 0 0 rgba(16,185,129,0); }
+}
+
+.hero-title {
+  font-family:'Raleway',sans-serif;
+  font-weight:900; font-size:2.1rem; color:var(--ink);
+  letter-spacing:-.6px; line-height:1.1; margin-bottom:5px;
+}
+.hero-title em { font-style:normal; color:var(--teal); }
+.hero-meta {
+  font-size:.82rem; color:var(--silver); font-weight:600;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.hero-meta-chip {
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(255,255,255,.6); border:1px solid var(--mist);
+  padding:3px 10px; border-radius:20px;
+  backdrop-filter:blur(6px);
+}
+.hero-meta-chip i { color:var(--teal); font-size:.7rem; }
+
+.hero-ctas {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  animation:slideDown .6s .1s var(--ease) both;
+}
+.cta {
+  display:inline-flex; align-items:center; gap:7px;
+  padding:10px 20px; border-radius:13px; border:none;
+  font-family:'Nunito',sans-serif; font-size:.84rem; font-weight:800;
+  text-decoration:none; cursor:pointer; white-space:nowrap;
+  transition:all .24s var(--ease);
+}
+.cta-primary {
+  background:linear-gradient(135deg, var(--teal), var(--teal-lt));
+  color:#fff;
+  box-shadow:0 6px 20px var(--teal-glow);
+}
+.cta-primary:hover { transform:translateY(-3px); box-shadow:0 10px 30px var(--teal-glow); color:#fff; }
+.cta-ghost {
+  background:var(--gb); color:var(--slate);
+  border:1.5px solid var(--gborder);
+  backdrop-filter:blur(12px);
+}
+.cta-ghost:hover { background:rgba(255,255,255,.85); transform:translateY(-3px); color:var(--slate); }
+
+/* ════════════════════════════════════════════
+   STAT RIBBON  (4 cards)
+════════════════════════════════════════════ */
+.stat-ribbon {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:24px;
+}
+
+.sc {
+  padding:20px 18px 16px;
+  animation:popIn .5s var(--ease) both;
+}
+.sc:nth-child(1){animation-delay:.08s}
+.sc:nth-child(2){animation-delay:.16s}
+.sc:nth-child(3){animation-delay:.24s}
+.sc:nth-child(4){animation-delay:.32s}
+@keyframes popIn {
+  from { opacity:0; transform:translateY(28px) scale(.96); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+
+.sc-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px; }
+
+.sc-icon {
+  width:46px; height:46px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.15rem; flex-shrink:0;
+  position:relative; overflow:hidden;
+}
+.sc-icon::after {
+  content:'';
+  position:absolute; inset:-4px;
+  background:linear-gradient(135deg, rgba(255,255,255,.4), transparent);
+  border-radius:50%;
+  pointer-events:none;
+}
+.ic-teal  { background:linear-gradient(135deg,rgba(5,173,152,.25),rgba(7,201,177,.12)); color:var(--teal); }
+.ic-slate { background:linear-gradient(135deg,rgba(22,49,96,.18),rgba(22,49,96,.08)); color:var(--slate); }
+.ic-amber { background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(245,158,11,.08)); color:var(--amber); }
+.ic-green { background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(16,185,129,.08)); color:var(--green); }
+
+.sc-badge {
+  font-size:.63rem; font-weight:800; letter-spacing:.6px;
+  text-transform:uppercase; padding:3px 9px; border-radius:20px;
+}
+.bg-teal  { background:var(--teal-xs); color:var(--teal); border:1px solid var(--teal-sm); }
+.bg-slate { background:rgba(22,49,96,.1); color:var(--slate); border:1px solid rgba(22,49,96,.2); }
+.bg-amber { background:rgba(245,158,11,.1); color:var(--amber); border:1px solid rgba(245,158,11,.22); }
+.bg-green { background:rgba(16,185,129,.1); color:var(--green); border:1px solid rgba(16,185,129,.22); }
+
+.sc-number {
+  font-family:'Raleway',sans-serif;
+  font-size:2.6rem; font-weight:900; color:var(--ink);
+  letter-spacing:-1.5px; line-height:1;
+  margin-bottom:4px;
+  /* counter animation applied via JS */
+}
+.sc-label {
+  font-size:.72rem; font-weight:800; color:var(--silver);
+  text-transform:uppercase; letter-spacing:.7px;
+}
+
+/* sparkline bars */
+.sparkline {
+  display:flex; align-items:flex-end; gap:3px;
+  height:28px; margin-top:14px;
+}
+.spark-bar {
+  flex:1; border-radius:3px 3px 0 0;
+  background:var(--teal-sm);
+  transition:height .8s var(--ease);
+  min-height:4px;
+}
+.spark-bar.active { background:linear-gradient(180deg, var(--teal), var(--teal-lt)); }
+
+/* progress line */
+.sc-progress { margin-top:10px; }
+.sc-track { height:3px; background:var(--mist); border-radius:3px; overflow:hidden; }
+.sc-fill {
+  height:100%; border-radius:3px;
+  background:linear-gradient(90deg, var(--teal), var(--teal-lt));
+  width:0; transition:width 1.4s var(--ease);
+}
+
+/* ════════════════════════════════════════════
+   MAIN BENTO GRID  (asymmetric)
+════════════════════════════════════════════ */
+.bento {
+  display:grid;
+  grid-template-columns: 2fr 1.3fr 1.1fr;
+  grid-template-rows: auto auto;
+  gap:20px;
+  margin-bottom:22px;
+}
+
+/* ── HERO VISUAL CARD (spans 2 rows left) ── */
+.bento-hero {
+  grid-column:1;
+  grid-row:1 / 3;
+  padding:28px;
+  display:flex; flex-direction:column;
+}
+
+/* Radial gauge */
+.gauge-section {
+  display:flex; align-items:center; gap:28px;
+  margin-bottom:28px;
+}
+.gauge-wrap {
+  position:relative; width:140px; height:140px; flex-shrink:0;
+}
+.gauge-svg { width:100%; height:100%; transform:rotate(-90deg); }
+.gauge-track { fill:none; stroke:var(--mist); stroke-width:10; }
+.gauge-fill  {
+  fill:none; stroke-width:10; stroke-linecap:round;
+  stroke:url(#tealGrad);
+  stroke-dasharray:345; stroke-dashoffset:345;
+  transition:stroke-dashoffset 1.6s var(--ease);
+}
+.gauge-center {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+}
+.gauge-pct {
+  font-family:'Raleway',sans-serif;
+  font-size:1.6rem; font-weight:900; color:var(--ink); line-height:1;
+}
+.gauge-sub { font-size:.6rem; font-weight:800; color:var(--silver); letter-spacing:.7px; text-transform:uppercase; }
+
+.gauge-legend { flex:1; }
+.gl-title {
+  font-family:'Raleway',sans-serif;
+  font-size:1.05rem; font-weight:800; color:var(--ink); margin-bottom:5px;
+}
+.gl-desc { font-size:.78rem; color:var(--silver); font-weight:600; margin-bottom:18px; }
+.gl-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:9px 0; border-bottom:1px solid var(--mist);
+}
+.gl-row:last-child { border-bottom:none; }
+.gl-left { display:flex; align-items:center; gap:9px; }
+.gl-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.gl-name { font-size:.83rem; font-weight:700; color:var(--charcoal); }
+.gl-val {
+  font-family:'Raleway',sans-serif;
+  font-size:.95rem; font-weight:900; color:var(--ink);
+}
+
+/* Age bars */
+.age-section {}
+.age-title {
+  font-family:'Raleway',sans-serif;
+  font-size:.9rem; font-weight:800; color:var(--ink);
+  margin-bottom:16px; display:flex; align-items:center; gap:8px;
+}
+.age-title i { color:var(--teal); font-size:.85rem; }
+
+.age-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.age-lbl { font-size:.72rem; font-weight:800; color:var(--silver); width:50px; flex-shrink:0; }
+.age-track { flex:1; height:9px; background:var(--mist); border-radius:9px; overflow:hidden; }
+.age-fill {
+  height:100%; border-radius:9px; width:0;
+  transition:width 1.5s var(--ease);
+}
+.af-teal  { background:linear-gradient(90deg,var(--teal),var(--teal-lt)); }
+.af-slate { background:linear-gradient(90deg,var(--slate),rgba(22,49,96,.55)); }
+.af-green { background:linear-gradient(90deg,var(--green),rgba(16,185,129,.55)); }
+.af-amber { background:linear-gradient(90deg,var(--amber),rgba(245,158,11,.55)); }
+.age-count { font-family:'Raleway',sans-serif; font-size:.88rem; font-weight:900; color:var(--ink); width:22px; text-align:right; }
+
+/* ── ACTIVITY STREAM (middle-top) ── */
+.bento-activity {
+  grid-column:2;
+  grid-row:1;
+  padding:22px;
+  display:flex; flex-direction:column;
+}
+
+.card-head {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px;
+}
+.card-title {
+  font-family:'Raleway',sans-serif;
+  font-size:.97rem; font-weight:800; color:var(--ink);
+  display:flex; align-items:center; gap:8px;
+}
+.card-title i { color:var(--teal); font-size:.88rem; }
+.card-sub { font-size:.7rem; color:var(--silver); font-weight:600; margin-top:2px; }
+
+.live-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(16,185,129,.10); border:1px solid rgba(16,185,129,.22);
+  color:var(--green); font-size:.65rem; font-weight:800;
+  padding:3px 9px; border-radius:20px; letter-spacing:.5px;
+  text-transform:uppercase;
+}
+
+.act-list { flex:1; overflow-y:auto; }
+.act-list::-webkit-scrollbar { width:2px; }
+.act-list::-webkit-scrollbar-thumb { background:var(--mist); border-radius:4px; }
+
+.act-item {
+  display:flex; align-items:flex-start; gap:11px;
+  padding:11px 0; border-bottom:1px solid rgba(234,243,242,.7);
+  animation:fadeUp .4s var(--ease) both;
+}
+.act-item:last-child { border-bottom:none; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.act-icon {
+  width:38px; height:38px; border-radius:12px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.88rem;
+}
+.ai-missing  { background:rgba(5,173,152,.12);  color:var(--teal); }
+.ai-criminal { background:rgba(22,49,96,.10);   color:var(--slate); }
+.ai-complaint{ background:rgba(245,158,11,.12); color:var(--amber); }
+
+.act-body { flex:1; min-width:0; }
+.act-name { font-size:.85rem; font-weight:700; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.act-desc { font-size:.72rem; color:var(--silver); font-weight:600; margin-top:1px; }
+.act-tag  {
+  font-size:.66rem; font-weight:800; padding:2px 8px;
+  border-radius:8px; white-space:nowrap; flex-shrink:0;
+}
+.tag-teal  { background:var(--teal-xs); color:var(--teal-d); }
+.tag-slate { background:rgba(22,49,96,.1); color:var(--slate); }
+
+/* ── OFFICER CARD (middle-bottom) ── */
+.bento-officer {
+  grid-column:2;
+  grid-row:2;
+  padding:22px;
+}
+
+.officer-photo-row {
+  display:flex; align-items:center; gap:14px; margin-bottom:16px;
+}
+.officer-thumb {
+  width:56px; height:56px; border-radius:16px;
+  object-fit:cover; border:2.5px solid var(--gborder);
+  box-shadow:0 4px 14px var(--teal-glow);
+}
+.officer-thumb-ph {
+  width:56px; height:56px; border-radius:16px;
+  background:linear-gradient(135deg,var(--teal-sm),var(--teal-xs));
+  display:flex; align-items:center; justify-content:center;
+  color:var(--teal); font-size:1.3rem;
+  border:2.5px solid var(--gborder);
+}
+.officer-details {}
+.officer-name {
+  font-family:'Raleway',sans-serif;
+  font-size:1rem; font-weight:800; color:var(--ink); margin-bottom:3px;
+}
+.officer-rank {
+  display:inline-flex; align-items:center; gap:5px;
+  background:var(--teal); color:#fff;
+  font-size:.64rem; font-weight:800; letter-spacing:.9px;
+  text-transform:uppercase; padding:3px 10px; border-radius:20px;
+}
+
+.officer-info-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+}
+.info-chip {
+  background:rgba(255,255,255,.5); border:1px solid var(--mist);
+  border-radius:12px; padding:10px 12px;
+}
+.info-chip-label { font-size:.63rem; font-weight:800; color:var(--silver); text-transform:uppercase; letter-spacing:.6px; margin-bottom:3px; }
+.info-chip-val   { font-size:.82rem; font-weight:700; color:var(--ink); }
+
+/* ── COMPLAINT CARD (right col top) ── */
+.bento-complaints {
+  grid-column:3;
+  grid-row:1;
+  padding:22px;
+  display:flex; flex-direction:column;
+}
+
+.comp-item {
+  background:rgba(255,255,255,.42); border:1.5px solid rgba(255,255,255,.7);
+  border-radius:14px; padding:12px 14px; margin-bottom:10px;
+  transition:all .22s;
+}
+.comp-item:last-child { margin-bottom:0; }
+.comp-item:hover { background:rgba(255,255,255,.72); transform:translateX(4px); }
+
+.comp-top {
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;
+}
+.comp-id { font-size:.76rem; font-weight:800; color:var(--ink); }
+.comp-id span { color:var(--teal); }
+.comp-status {
+  font-size:.64rem; font-weight:800; letter-spacing:.5px;
+  text-transform:uppercase; padding:3px 9px; border-radius:20px;
+}
+.cs-pending { background:rgba(245,158,11,.12); color:var(--amber); border:1px solid rgba(245,158,11,.25); }
+.cs-replied { background:rgba(16,185,129,.1); color:var(--green); border:1px solid rgba(16,185,129,.2); }
+.comp-desc { font-size:.79rem; color:var(--charcoal); font-weight:600; line-height:1.45; }
+.comp-date { font-size:.67rem; color:var(--silver); margin-top:5px; }
+
+.comp-add-btn {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; margin-top:12px; padding:10px;
+  background:var(--teal-xs); border:1.5px dashed var(--teal-sm);
+  border-radius:12px; color:var(--teal-d);
+  font-family:'Nunito',sans-serif; font-size:.82rem; font-weight:800;
+  text-decoration:none; cursor:pointer;
+  transition:all .22s;
+}
+.comp-add-btn:hover { background:var(--teal-sm); border-style:solid; }
+
+/* ── QUICK PANEL (right col bottom) ── */
+.bento-quick {
+  grid-column:3;
+  grid-row:2;
+  padding:22px;
+}
+
+.quick-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 0; border-bottom:1px solid var(--mist);
+}
+.quick-row:last-child { border-bottom:none; }
+.quick-left { display:flex; align-items:center; gap:11px; }
+.quick-icon {
+  width:36px; height:36px; border-radius:11px;
+  display:flex; align-items:center; justify-content:center; font-size:.9rem;
+}
+.quick-label { font-size:.83rem; font-weight:700; color:var(--charcoal); }
+.quick-sub   { font-size:.68rem; color:var(--silver); }
+.quick-val {
+  font-family:'Raleway',sans-serif;
+  font-size:1.4rem; font-weight:900; color:var(--ink);
+}
+
+/* ════════════════════════════════════════════
+   BOTTOM ROW: Two tables side by side
+════════════════════════════════════════════ */
+.table-row {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.table-card { padding:22px; }
+
+.dt { width:100%; border-collapse:collapse; font-size:.83rem; }
+.dt thead th {
+  font-size:.66rem; font-weight:800; letter-spacing:1px;
+  text-transform:uppercase; color:var(--silver);
+  padding:0 10px 10px; text-align:left;
+  border-bottom:1.5px solid var(--mist);
+}
+.dt tbody tr { transition:background .18s; cursor:default; }
+.dt tbody tr:hover td { background:rgba(5,173,152,.04); }
+.dt tbody td {
+  padding:11px 10px; color:var(--charcoal); font-weight:600;
+  border-bottom:1px solid rgba(234,243,242,.6);
+  vertical-align:middle;
+}
+.dt tbody tr:last-child td { border-bottom:none; }
+
+.td-av {
+  width:36px; height:36px; border-radius:11px; object-fit:cover;
+  border:2px solid var(--mist);
+}
+.td-av-ph {
+  width:36px; height:36px; border-radius:11px;
+  background:var(--mist); display:inline-flex;
+  align-items:center; justify-content:center;
+  color:var(--silver); font-size:.9rem;
+}
+.td-name { font-weight:700; color:var(--ink); }
+.chip-age  {
+  background:var(--teal-xs); color:var(--teal-d);
+  padding:2px 9px; border-radius:8px; font-size:.72rem; font-weight:800;
+}
+.chip-age.slate { background:rgba(22,49,96,.09); color:var(--slate); }
+.chip-gender {
+  padding:2px 9px; border-radius:8px; font-size:.72rem; font-weight:800;
+}
+.chip-gender.male   { background:rgba(22,49,96,.10); color:var(--slate); }
+.chip-gender.female { background:rgba(5,173,152,.10); color:var(--teal-d); }
+
+.empty-td { text-align:center; padding:28px !important; color:var(--silver); font-size:.83rem; }
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media (max-width:1200px) {
+  .bento { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+  .bento-hero  { grid-column:1 / 3; grid-row:1; }
+  .bento-activity, .bento-officer { grid-column:1; }
+  .bento-complaints, .bento-quick { grid-column:2; }
+  .stat-ribbon { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:768px) {
+  .page { padding:14px; }
+  .stat-ribbon { grid-template-columns:1fr 1fr; }
+  .bento, .table-row { grid-template-columns:1fr; }
+  .bento-hero,.bento-activity,.bento-officer,
+  .bento-complaints,.bento-quick { grid-column:1; grid-row:auto; }
+  .hero-strip { grid-template-columns:1fr; }
+  .hero-title { font-size:1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Background stage ── -->
+<div class="bg-stage">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+
+<div class="page">
+
+  <!-- ══════════ HERO STRIP ══════════ -->
+  <div class="hero-strip">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <span class="live-dot"></span>
+        Live Operations Dashboard
+      </div>
+      <div class="hero-title">
+        Welcome back, <em>{% if police %}{{ police.full_name|truncatewords:1 }}{% else %}Officer{% endif %}</em>
+      </div>
+      <div class="hero-meta">
+        <span class="hero-meta-chip"><i class="fas fa-calendar-day"></i> {{ current_date }}</span>
+        {% if police and police.policestation %}
+        <span class="hero-meta-chip"><i class="fas fa-building-columns"></i> {{ police.policestation.station_name }}</span>
+        {% endif %}
+        {% if police %}
+        <span class="hero-meta-chip"><i class="fas fa-shield-halved"></i> {{ police.designation }}</span>
+        {% endif %}
+      </div>
+    </div>
+    <div class="hero-ctas">
+      <a href="{% url 'police_addmissingCase' %}" class="cta cta-primary">
+        <i class="fas fa-user-plus"></i> Add Missing
+      </a>
+      <a href="{% url 'police_addCriminalCase' %}" class="cta cta-ghost">
+        <i class="fas fa-file-circle-plus"></i> Add Criminal
+      </a>
+      <a href="{% url 'police_send_complaint' %}" class="cta cta-ghost">
+        <i class="fas fa-triangle-exclamation"></i> Complaint
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════════ STAT RIBBON ══════════ -->
+  <div class="stat-ribbon">
+
+    <div class="gc sc">
+      <div class="sc-top">
+        <div class="sc-icon ic-teal"><i class="fas fa-person-circle-question"></i></div>
+        <span class="sc-badge bg-teal">Active</span>
+      </div>
+      <div class="sc-number" data-target="{{ total_missing }}">0</div>
+      <div class="sc-label">Missing Persons</div>
+      <div class="sparkline">
+        {% for i in "12345678" %}<div class="spark-bar {% if forloop.last %}active{% endif %}" style="height:{{ forloop.counter|add:30 }}%"></div>{% endfor %}
+      </div>
+    </div>
+
+    <div class="gc sc">
+      <div class="sc-top">
+        <div class="sc-icon ic-slate"><i class="fas fa-user-secret"></i></div>
+        <span class="sc-badge bg-slate">Records</span>
+      </div>
+      <div class="sc-number" data-target="{{ total_criminals }}">0</div>
+      <div class="sc-label">Criminal Cases</div>
+      <div class="sparkline">
+        {% for i in "12345678" %}<div class="spark-bar {% if forloop.last %}active{% endif %}" style="height:{{ forloop.counter|add:20 }}%;background:linear-gradient(180deg,rgba(22,49,96,.4),rgba(22,49,96,.2));"></div>{% endfor %}
+      </div>
+    </div>
+
+    <div class="gc sc">
+      <div class="sc-top">
+        <div class="sc-icon ic-amber"><i class="fas fa-envelope-open-text"></i></div>
+        <span class="sc-badge bg-amber">Filed</span>
+      </div>
+      <div class="sc-number" data-target="{{ total_complaints }}">0</div>
+      <div class="sc-label">Complaints Filed</div>
+      <div class="sparkline">
+        {% for i in "12345678" %}<div class="spark-bar {% if forloop.last %}active{% endif %}" style="height:{{ forloop.counter|add:15 }}%;background:linear-gradient(180deg,rgba(245,158,11,.4),rgba(245,158,11,.15));"></div>{% endfor %}
+      </div>
+    </div>
+
+    <div class="gc sc">
+      <div class="sc-top">
+        <div class="sc-icon ic-green"><i class="fas fa-circle-check"></i></div>
+        <span class="sc-badge bg-green">Resolved</span>
+      </div>
+      <div class="sc-number" data-target="{{ replied_complaints }}">0</div>
+      <div class="sc-label">Replies Received</div>
+      <div class="sparkline">
+        {% for i in "12345678" %}<div class="spark-bar {% if forloop.last %}active{% endif %}" style="height:{{ forloop.counter|add:25 }}%;background:linear-gradient(180deg,rgba(16,185,129,.4),rgba(16,185,129,.15));"></div>{% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════ BENTO GRID ══════════ -->
+  <div class="bento">
+
+    <!-- ── HERO CARD: Gauge + Age bars ── -->
+    <div class="gc bento-hero">
+
+      <!-- Gauge: Gender Breakdown -->
+      <div class="gauge-section">
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#05AD98"/>
+                <stop offset="100%" stop-color="#07c9b1"/>
+              </linearGradient>
+            </defs>
+            <circle class="gauge-track" cx="60" cy="60" r="54"/>
+            <circle class="gauge-fill" cx="60" cy="60" r="54"
+              data-pct="{% if total_missing %}{% widthratio missing_male total_missing 100 %}{% else %}0{% endif %}"/>
+          </svg>
+          <div class="gauge-center">
+            <div class="gauge-pct">{{ total_missing }}</div>
+            <div class="gauge-sub">Total</div>
+          </div>
+        </div>
+
+        <div class="gauge-legend">
+          <div class="gl-title">Gender Breakdown</div>
+          <div class="gl-desc">Missing persons by gender & criminal records</div>
+          <div class="gl-row">
+            <div class="gl-left">
+              <div class="gl-dot" style="background:var(--teal)"></div>
+              <div class="gl-name">Missing · Male</div>
+            </div>
+            <div class="gl-val">{{ missing_male }}</div>
+          </div>
+          <div class="gl-row">
+            <div class="gl-left">
+              <div class="gl-dot" style="background:var(--slate)"></div>
+              <div class="gl-name">Missing · Female</div>
+            </div>
+            <div class="gl-val">{{ missing_female }}</div>
+          </div>
+          <div class="gl-row">
+            <div class="gl-left">
+              <div class="gl-dot" style="background:var(--green)"></div>
+              <div class="gl-name">Criminal · Male</div>
+            </div>
+            <div class="gl-val">{{ criminal_male }}</div>
+          </div>
+          <div class="gl-row">
+            <div class="gl-left">
+              <div class="gl-dot" style="background:var(--amber)"></div>
+              <div class="gl-name">Criminal · Female</div>
+            </div>
+            <div class="gl-val">{{ criminal_female }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div style="height:1px;background:linear-gradient(90deg,transparent,var(--mist),transparent);margin-bottom:24px;"></div>
+
+      <!-- Age Distribution -->
+      <div class="age-section">
+        <div class="age-title"><i class="fas fa-chart-bar"></i> Age Distribution — Missing Persons</div>
+
+        {% with tot=total_missing|add:1 %}
+        <div class="age-row">
+          <div class="age-lbl">0 – 18</div>
+          <div class="age-track">
+            <div class="age-fill af-teal"
+              data-width="{% if total_missing %}{% widthratio age_0_18 tot 100 %}{% else %}0{% endif %}"></div>
+          </div>
+          <div class="age-count">{{ age_0_18 }}</div>
+        </div>
+        <div class="age-row">
+          <div class="age-lbl">19 – 35</div>
+          <div class="age-track">
+            <div class="age-fill af-slate"
+              data-width="{% if total_missing %}{% widthratio age_19_35 tot 100 %}{% else %}0{% endif %}"></div>
+          </div>
+          <div class="age-count">{{ age_19_35 }}</div>
+        </div>
+        <div class="age-row">
+          <div class="age-lbl">36 – 60</div>
+          <div class="age-track">
+            <div class="age-fill af-green"
+              data-width="{% if total_missing %}{% widthratio age_36_60 tot 100 %}{% else %}0{% endif %}"></div>
+          </div>
+          <div class="age-count">{{ age_36_60 }}</div>
+        </div>
+        <div class="age-row">
+          <div class="age-lbl">60+</div>
+          <div class="age-track">
+            <div class="age-fill af-amber"
+              data-width="{% if total_missing %}{% widthratio age_60p tot 100 %}{% else %}0{% endif %}"></div>
+          </div>
+          <div class="age-count">{{ age_60p }}</div>
+        </div>
+        {% endwith %}
+
+        <!-- Resolution bar -->
+        <div style="margin-top:22px;padding-top:20px;border-top:1px solid var(--mist);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-size:.73rem;font-weight:800;color:var(--silver);text-transform:uppercase;letter-spacing:.6px;">Complaint Resolution Rate</span>
+            <span style="font-family:'Raleway',sans-serif;font-size:1rem;font-weight:900;color:var(--teal);">
+              {% if total_complaints %}{% widthratio replied_complaints total_complaints 100 %}{% else %}0{% endif %}%
+            </span>
+          </div>
+          <div style="height:7px;background:var(--mist);border-radius:7px;overflow:hidden;">
+            <div class="age-fill af-teal"
+              data-width="{% if total_complaints %}{% widthratio replied_complaints total_complaints 100 %}{% else %}0{% endif %}"
+              style="height:100%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ACTIVITY STREAM ── -->
+    <div class="gc bento-activity">
+      <div class="card-head">
+        <div>
+          <div class="card-title"><i class="fas fa-bolt"></i> Live Feed</div>
+          <div class="card-sub">Recent activity from your station</div>
+        </div>
+        <span class="live-badge"><span class="live-dot" style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;"></span> Live</span>
+      </div>
+
+      <div class="act-list">
+        {% for p in recent_missing %}
+        <div class="act-item" style="animation-delay:{{ forloop.counter0 }}00ms">
+          <div class="act-icon ai-missing"><i class="fas fa-person-circle-question"></i></div>
+          <div class="act-body">
+            <div class="act-name">{{ p.name }}</div>
+            <div class="act-desc">Missing · {{ p.gender }} · Age {{ p.age }}</div>
+          </div>
+          <span class="act-tag tag-teal">#{{ p.id }}</span>
+        </div>
+        {% endfor %}
+
+        {% for c in recent_criminals %}
+        <div class="act-item" style="animation-delay:{{ forloop.counter0|add:5 }}00ms">
+          <div class="act-icon ai-criminal"><i class="fas fa-user-secret"></i></div>
+          <div class="act-body">
+            <div class="act-name">{{ c.name }}</div>
+            <div class="act-desc">Criminal · {{ c.gender }} · Age {{ c.age }}</div>
+          </div>
+          <span class="act-tag tag-slate">#{{ c.id }}</span>
+        </div>
+        {% endfor %}
+
+        {% if not recent_missing and not recent_criminals %}
+        <div style="text-align:center;padding:36px 0;color:var(--silver);">
+          <i class="fas fa-inbox" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.3;"></i>
+          <span style="font-size:.84rem;font-weight:600;">No recent activity</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ── OFFICER CARD ── -->
+{#    <div class="gc bento-officer">#}
+{#      <div class="card-head">#}
+{#        <div class="card-title"><i class="fas fa-id-badge"></i> Officer Profile</div>#}
+{#      </div>#}
+{##}
+{#      {% if police %}#}
+{#      <div class="officer-photo-row">#}
+{#        {% if police.photo %}#}
+{#        <img src="{{ police.photo.url }}" class="officer-thumb" alt="{{ police.full_name }}">#}
+{#        {% else %}#}
+{#        <div class="officer-thumb-ph"><i class="fas fa-user-shield"></i></div>#}
+{#        {% endif %}#}
+{#        <div class="officer-details">#}
+{#          <div class="officer-name">{{ police.full_name }}</div>#}
+{#          <div class="officer-rank">#}
+{#            <i class="fas fa-shield-halved" style="font-size:.58rem;"></i>#}
+{#            {{ police.designation }}#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <div class="officer-info-grid">#}
+{#        {% if police.phone %}#}
+{#        <div class="info-chip">#}
+{#          <div class="info-chip-label"><i class="fas fa-phone" style="color:var(--teal);margin-right:3px;"></i> Phone</div>#}
+{#          <div class="info-chip-val">{{ police.phone }}</div>#}
+{#        </div>#}
+{#        {% endif %}#}
+{#        {% if police.policestation %}#}
+{#        <div class="info-chip">#}
+{#          <div class="info-chip-label"><i class="fas fa-building-columns" style="color:var(--teal);margin-right:3px;"></i> Station</div>#}
+{#          <div class="info-chip-val">{{ police.policestation.station_name }}</div>#}
+{#        </div>#}
+{#        {% endif %}#}
+{#        {% if police.address %}#}
+{#        <div class="info-chip" style="grid-column:span 2;">#}
+{#          <div class="info-chip-label"><i class="fas fa-location-dot" style="color:var(--teal);margin-right:3px;"></i> Address</div>#}
+{#          <div class="info-chip-val">{{ police.address }}</div>#}
+{#        </div>#}
+{#        {% endif %}#}
+{#      </div>#}
+{#      {% else %}#}
+{#      <div style="text-align:center;padding:20px;color:var(--silver);font-size:.83rem;">Officer data unavailable</div>#}
+{#      {% endif %}#}
+{#    </div>#}
+
+    <!-- ── COMPLAINTS CARD ── -->
+    <div class="gc bento-complaints">
+      <div class="card-head">
+        <div>
+          <div class="card-title"><i class="fas fa-envelope-open-text"></i> Complaints</div>
+          <div class="card-sub">{{ pending_complaints }} pending · {{ replied_complaints }} replied</div>
+        </div>
+      </div>
+
+      {% for c in recent_complaints %}
+      <div class="comp-item">
+        <div class="comp-top">
+          <span class="comp-id">Case <span>#{{ c.id }}</span></span>
+          <span class="comp-status {% if c.status|lower == 'replied' %}cs-replied{% else %}cs-pending{% endif %}">{{ c.status }}</span>
+        </div>
+        <div class="comp-desc">{{ c.description|truncatechars:80 }}</div>
+        {% if c.reply and c.reply != 'pending' %}
+        <div class="comp-date" style="color:var(--green);margin-top:4px;">
+          <i class="fas fa-reply" style="margin-right:4px;"></i>{{ c.reply|truncatechars:55 }}
+        </div>
+        {% endif %}
+        <div class="comp-date"><i class="fas fa-clock" style="margin-right:3px;"></i>{{ c.date }}</div>
+      </div>
+      {% empty %}
+      <div style="text-align:center;padding:24px;color:var(--silver);font-size:.83rem;">
+        <i class="fas fa-inbox" style="font-size:1.6rem;display:block;margin-bottom:8px;opacity:.3;"></i>
+        No complaints filed yet
+      </div>
+      {% endfor %}
+
+      <a href="{% url 'police_send_complaint' %}" class="comp-add-btn">
+        <i class="fas fa-plus"></i> File New Complaint
+      </a>
+    </div>
+
+    <!-- ── QUICK STATS ── -->
+    <div class="gc bento-quick">
+      <div class="card-head" style="margin-bottom:4px;">
+        <div class="card-title"><i class="fas fa-gauge-high"></i> Quick Stats</div>
+      </div>
+
+      <div class="quick-row">
+        <div class="quick-left">
+          <div class="quick-icon ic-teal"><i class="fas fa-person-circle-question"></i></div>
+          <div>
+            <div class="quick-label">Missing Cases</div>
+            <div class="quick-sub">Your station</div>
+          </div>
+        </div>
+        <div class="quick-val">{{ total_missing }}</div>
+      </div>
+      <div class="quick-row">
+        <div class="quick-left">
+          <div class="quick-icon ic-slate"><i class="fas fa-user-secret"></i></div>
+          <div>
+            <div class="quick-label">Criminal Records</div>
+            <div class="quick-sub">Your station</div>
+          </div>
+        </div>
+        <div class="quick-val">{{ total_criminals }}</div>
+      </div>
+      <div class="quick-row">
+        <div class="quick-left">
+          <div class="quick-icon ic-amber"><i class="fas fa-clock"></i></div>
+          <div>
+            <div class="quick-label">Pending</div>
+            <div class="quick-sub">Awaiting reply</div>
+          </div>
+        </div>
+        <div class="quick-val" style="color:var(--amber);">{{ pending_complaints }}</div>
+      </div>
+      <div class="quick-row">
+        <div class="quick-left">
+          <div class="quick-icon ic-green"><i class="fas fa-circle-check"></i></div>
+          <div>
+            <div class="quick-label">Resolved</div>
+            <div class="quick-sub">Complaints replied</div>
+          </div>
+        </div>
+        <div class="quick-val" style="color:var(--green);">{{ replied_complaints }}</div>
+      </div>
+    </div>
+
+  </div><!-- /bento -->
+
+  <!-- ══════════ BOTTOM TABLES ══════════ -->
+  <div class="table-row">
+
+{#    <!-- Recent Missing -->#}
+{#    <div class="gc table-card">#}
+{#      <div class="card-head">#}
+{#        <div>#}
+{#          <div class="card-title"><i class="fas fa-person-circle-question"></i> Recent Missing Persons</div>#}
+{#          <div class="card-sub">Last {{ recent_missing|length }} records · your station</div>#}
+{#        </div>#}
+{#        <a href="{% url 'manage_casefile' %}" class="cta cta-ghost" style="padding:7px 14px;font-size:.76rem;">#}
+{#          View All <i class="fas fa-arrow-right"></i>#}
+{#        </a>#}
+{#      </div>#}
+{#      <table class="dt">#}
+{#        <thead>#}
+{#          <tr><th>Photo</th><th>Name</th><th>Age</th><th>Gender</th></tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#          {% for p in recent_missing %}#}
+{#          <tr>#}
+{#            <td>{% if p.photo %}<img src="{{ p.photo.url }}" class="td-av" alt="">{% else %}<div class="td-av-ph"><i class="fas fa-user"></i></div>{% endif %}</td>#}
+{#            <td class="td-name">{{ p.name }}</td>#}
+{#            <td><span class="chip-age">{{ p.age }} yrs</span></td>#}
+{#            <td><span class="chip-gender {{ p.gender|lower }}">{{ p.gender }}</span></td>#}
+{#          </tr>#}
+{#          {% empty %}#}
+{#          <tr><td colspan="4" class="empty-td"><i class="fas fa-inbox" style="margin-right:5px;"></i>No records found</td></tr>#}
+{#          {% endfor %}#}
+{#        </tbody>#}
+{#      </table>#}
+{#    </div>#}
+{##}
+{#    <!-- Recent Criminals -->#}
+{#    <div class="gc table-card">#}
+{#      <div class="card-head">#}
+{#        <div>#}
+{#          <div class="card-title"><i class="fas fa-user-secret"></i> Recent Criminal Cases</div>#}
+{#          <div class="card-sub">Last {{ recent_criminals|length }} records · your station</div>#}
+{#        </div>#}
+{#        <a href="{% url 'view_missing_criminal' %}" class="cta cta-ghost" style="padding:7px 14px;font-size:.76rem;">#}
+{#          View All <i class="fas fa-arrow-right"></i>#}
+{#        </a>#}
+{#      </div>#}
+{#      <table class="dt">#}
+{#        <thead>#}
+{#          <tr><th>Photo</th><th>Name</th><th>Age</th><th>Gender</th></tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#          {% for c in recent_criminals %}#}
+{#          <tr>#}
+{#            <td>{% if c.photo %}<img src="{{ c.photo.url }}" class="td-av" alt="">{% else %}<div class="td-av-ph"><i class="fas fa-user-secret"></i></div>{% endif %}</td>#}
+{#            <td class="td-name">{{ c.name }}</td>#}
+{#            <td><span class="chip-age slate">{{ c.age }} yrs</span></td>#}
+{#            <td><span class="chip-gender {{ c.gender|lower }}">{{ c.gender }}</span></td>#}
+{#          </tr>#}
+{#          {% empty %}#}
+{#          <tr><td colspan="4" class="empty-td"><i class="fas fa-inbox" style="margin-right:5px;"></i>No records found</td></tr>#}
+{#          {% endfor %}#}
+{#        </tbody>#}
+{#      </table>#}
+{#    </div>#}
+
+  </div><!-- /table-row -->
+
+</div><!-- /page -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ── Animated counter ── */
+  document.querySelectorAll('.sc-number[data-target]').forEach(el => {
+    const target = parseInt(el.dataset.target, 10) || 0;
+    if (target === 0) { el.textContent = '0'; return; }
+    let start = 0;
+    const dur = 1400;
+    const step = t => {
+      start += 1;
+      const progress = Math.min(start / (dur / 16), 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(ease * target);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+
+  /* ── SVG gauge animation ── */
+  document.querySelectorAll('.gauge-fill[data-pct]').forEach(circle => {
+    const pct = Math.min(parseFloat(circle.dataset.pct) || 0, 100);
+    const r = 54;
+    const circ = 2 * Math.PI * r;
+    circle.style.strokeDasharray = circ;
+    circle.style.strokeDashoffset = circ;
+    setTimeout(() => {
+      circle.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1)';
+      circle.style.strokeDashoffset = circ - (pct / 100) * circ;
+    }, 300);
+  });
+
+  /* ── Age fill bars ── */
+  document.querySelectorAll('.age-fill[data-width]').forEach(bar => {
+    const w = parseFloat(bar.dataset.width) || 0;
+    bar.style.width = '0%';
+    setTimeout(() => {
+      bar.style.width = Math.min(w, 100) + '%';
+    }, 400);
+  });
+
+});
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,687 @@
+{#{% include 'admin_sidebar.html' %}#}
+{#    <!--  Main wrapper -->#}
+{#    <div class="body-wrapper"style="margin-top: 180px;margin-left: 400px">#}
+{#      <!--  Header Start -->#}
+{#      <header class="app-header">#}
+{#        <nav class="navbar navbar-expand-lg navbar-light">#}
+{#          <ul class="navbar-nav">#}
+{##}
+{#            <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">#}
+{#              <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">#}
+{#                <b class="logo-icon">#}
+{#                  <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->#}
+{#                  <!-- Dark Logo icon -->#}
+{#                  <img src="../static/admin/assets/images/logos/logo-light-icon.svg" alt="homepage" class="dark-logo" />#}
+{#                </b>#}
+{#                <!--End Logo icon -->#}
+{#                <!-- Logo text -->#}
+{#                <span class="logo-text">#}
+{#                  <!-- dark Logo text -->#}
+{#                  <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />#}
+{#                </span>#}
+{#              </a>#}
+{#            </div>#}
+{##}
+{#            <li class="nav-item d-block d-xl-none">#}
+{#              <a class="nav-link sidebartoggler " id="headerCollapse" href="javascript:void(0)">#}
+{#                <i class="ti ti-menu-2"></i>#}
+{#              </a>#}
+{#            </li>#}
+{#            <li class="nav-item dropdown">#}
+{#              <a class="nav-link " href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>#}
+{#                <div class="notification bg-primary rounded-circle"></div>#}
+{#              </a>#}
+{#              <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">#}
+{#                <div class="message-body">#}
+{#                  <a href="javascript:void(0)" class="dropdown-item">#}
+{#                    Item 1#}
+{#                  </a>#}
+{#                  <a href="javascript:void(0)" class="dropdown-item">#}
+{#                    Item 2#}
+{#                  </a>#}
+{#                </div>#}
+{#              </div>#}
+{#            </li>#}
+{#          </ul>#}
+{#          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">#}
+{#            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">#}
+{#              <a href="{% url 'casefile' %}" target="_blank"#}
+{#                class="btn btn-success">UPLOAD CASE FILE</a>#}
+{#              <li class="nav-item dropdown">#}
+{#                <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"#}
+{#                  aria-expanded="false">#}
+{#                  <img src="../static/admin/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">#}
+{#                </a>#}
+{#                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">#}
+{#                  <div class="message-body">#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-user fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Profile</p>#}
+{#                    </a>#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-mail fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Account</p>#}
+{#                    </a>#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-list-check fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Task</p>#}
+{#                    </a>#}
+{#                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </li>#}
+{#            </ul>#}
+{#          </div>#}
+{#        </nav>#}
+{#      </header>#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Registered Users</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons only — NO Tailwind, no CSS framework conflicts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /*
+         * All styles use the .vu- prefix so they never
+         * conflict with the admin template's Bootstrap/
+         * sidebar CSS that controls .body-wrapper, .app-header,
+         * .navbar, etc.
+         */
+
+        /* Scoped content wrapper */
+        .vu-content {
+            padding: 32px 36px 60px;
+            font-family: 'DM Sans', sans-serif;
+            color: #0d1b3e;
+            box-sizing: border-box;
+        }
+        .vu-content *, .vu-content *::before, .vu-content *::after {
+            box-sizing: border-box;
+        }
+
+        /* ---- Page header row ---- */
+        .vu-header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .vu-eyebrow {
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #1565c0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 6px;
+        }
+        .vu-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 2.5px;
+            background: #1976d2;
+            border-radius: 2px;
+        }
+
+        .vu-page-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #0d1b3e;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin: 0 0 4px;
+        }
+
+        .vu-page-sub {
+            font-size: 0.875rem;
+            color: #4a5980;
+            margin: 0 0 10px;
+            font-weight: 400;
+        }
+
+        .vu-count-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1565c0;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            line-height: 1;
+        }
+        .vu-count-pill svg { width: 13px; height: 13px; }
+
+        /* ---- Controls ---- */
+        .vu-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .vu-search-wrap { position: relative; }
+        .vu-search-wrap .vu-search-icon {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            color: #7a9bbf;
+            pointer-events: none;
+        }
+        .vu-search-input {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            color: #0d1b3e;
+            background: #ffffff;
+            border: 1.5px solid #c8d8f0;
+            border-radius: 10px;
+            padding: 9px 14px 9px 34px;
+            width: 230px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .vu-search-input::placeholder { color: #9db5d8; }
+        .vu-search-input:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25,118,210,0.12);
+        }
+
+        .vu-sort-btn {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #4a5980;
+            background: #ffffff;
+            border: 1.5px solid #c8d8f0;
+            border-radius: 10px;
+            padding: 9px 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+        .vu-sort-btn svg { width: 14px; height: 14px; }
+        .vu-sort-btn:hover {
+            border-color: #1976d2;
+            color: #0d1b3e;
+            background: #e8f1fb;
+        }
+
+        /* ---- Table card ---- */
+        .vu-table-card {
+            background: #ffffff;
+            border: 1.5px solid #ccdaf5;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(21,101,192,0.09), 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .vu-table-scroll { overflow-x: auto; }
+        .vu-table-scroll::-webkit-scrollbar { height: 5px; }
+        .vu-table-scroll::-webkit-scrollbar-track { background: #edf3fd; }
+        .vu-table-scroll::-webkit-scrollbar-thumb { background: #b3cff5; border-radius: 10px; }
+
+        /* ---- Table ---- */
+        .vu-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 860px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .vu-table thead {
+            background: linear-gradient(135deg, #0d1b3e 0%, #1565c0 100%);
+        }
+        .vu-table thead tr { border: none; }
+        .vu-table thead th {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.70);
+            padding: 16px 18px;
+            white-space: nowrap;
+            border: none;
+            vertical-align: middle;
+            background: transparent;
+        }
+        .vu-table thead th:first-child {
+            padding-left: 24px;
+            color: #ffffff;
+            position: relative;
+        }
+        .vu-table thead th:first-child::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 24px; right: 18px;
+            height: 2.5px;
+            background: #29b6f6;
+            border-radius: 2px;
+        }
+        .vu-table thead th:last-child { padding-right: 24px; }
+
+        /* Body rows */
+        .vu-table tbody tr {
+            border-bottom: 1px solid #e5edf8;
+            transition: background 0.15s;
+            animation: vuRowIn 0.3s ease both;
+            background: transparent;
+        }
+        .vu-table tbody tr:last-child { border-bottom: none; }
+        .vu-table tbody tr:hover { background-color: #f0f6ff; }
+
+        .vu-table tbody tr:nth-child(1)  { animation-delay: 0.04s; }
+        .vu-table tbody tr:nth-child(2)  { animation-delay: 0.09s; }
+        .vu-table tbody tr:nth-child(3)  { animation-delay: 0.14s; }
+        .vu-table tbody tr:nth-child(4)  { animation-delay: 0.19s; }
+        .vu-table tbody tr:nth-child(5)  { animation-delay: 0.24s; }
+        .vu-table tbody tr:nth-child(n+6){ animation-delay: 0.28s; }
+
+        @keyframes vuRowIn {
+            from { opacity: 0; transform: translateY(7px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .vu-table tbody td {
+            padding: 14px 18px;
+            font-size: 0.875rem;
+            color: #4a5980;
+            vertical-align: middle;
+            border: none;
+            background: transparent;
+        }
+        .vu-table tbody td:first-child { padding-left: 24px; }
+        .vu-table tbody td:last-child  { padding-right: 24px; }
+
+        /* Name cell */
+        .vu-user-cell {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+        .vu-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #daeaff, #b3cff5);
+            border: 1.5px solid #99bcf0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .vu-avatar svg { width: 15px; height: 15px; color: #1565c0; }
+        .vu-name {
+            font-weight: 600;
+            color: #0d1b3e;
+            font-size: 0.9rem;
+        }
+
+        /* Email */
+        .vu-email-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #1976d2;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.15s;
+        }
+        .vu-email-link:hover { color: #0d1b3e; text-decoration: none; }
+        .vu-email-link svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+        /* Place badge */
+        .vu-place-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 7px;
+            background: #e8f1fb;
+            border: 1px solid #b3cff5;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #1565c0;
+            white-space: nowrap;
+        }
+        .vu-place-badge svg { width: 11px; height: 11px; color: #1976d2; }
+
+        /* Phone */
+        .vu-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.875rem;
+            color: #4a5980;
+        }
+        .vu-phone svg { width: 13px; height: 13px; color: #9db5d8; }
+
+        /* Address */
+        .vu-address {
+            display: block;
+            max-width: 190px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.875rem;
+            color: #4a5980;
+        }
+
+        /* Aadhar */
+        .vu-aadhar {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2c4a7a;
+            background: #edf3fd;
+            border: 1px solid #c5d9f5;
+            border-radius: 6px;
+            padding: 4px 10px;
+            letter-spacing: 0.04em;
+            display: inline-block;
+        }
+
+        /* Empty state */
+        .vu-empty {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+        .vu-empty-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: #e8f1fb;
+            border: 1.5px solid #b3cff5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        .vu-empty-icon svg { width: 26px; height: 26px; color: #9db5d8; }
+        .vu-empty p {
+            font-family: 'DM Sans', sans-serif;
+            color: #7a96be;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Table footer */
+        .vu-table-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 24px;
+            background: #f4f8ff;
+            border-top: 1px solid #d0ddf5;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: #7a9bbf;
+            font-weight: 500;
+        }
+        .vu-showing {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .vu-showing svg { width: 13px; height: 13px; }
+
+        /* Toast */
+        #vu-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1565c0;
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(21,101,192,0.35);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(.34,1.56,.64,1);
+            z-index: 9999;
+        }
+        #vu-toast svg { width: 18px; height: 18px; }
+    </style>
+</head>
+<body>
+
+    <!-- Include Django Sidebar -->
+    {% include 'admin_sidebar.html' %}
+
+    <!-- Main wrapper — original inline styles preserved exactly -->
+    <div class="body-wrapper" style="margin-top: 180px; margin-left: 400px;">
+
+        <!-- Header Start — original structure untouched -->
+        <header class="app-header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <ul class="navbar-nav">
+                    <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">
+                        <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">
+                            <span class="logo-text">
+                                <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />
+                            </span>
+                        </a>
+                    </div>
+                    <li class="nav-item d-block d-xl-none">
+                        <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
+                            <i class="ti ti-menu-2"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Header End -->
+
+        <!-- Styled content area — all classes scoped with vu- prefix -->
+        <div class="vu-content">
+
+            <!-- Page Header Row -->
+            <div class="vu-header-row">
+                <div>
+                    <div class="vu-eyebrow">Admin Panel</div>
+                    <h2 class="vu-page-title">Registered Users</h2>
+                    <p class="vu-page-sub">Manage and view all registered system participants.</p>
+                    <span class="vu-count-pill">
+                        <svg data-lucide="users"></svg>
+                        <span id="vuCountText">Loading…</span>
+                    </span>
+                </div>
+
+                <div class="vu-controls">
+                    <div class="vu-search-wrap">
+                        <svg data-lucide="search" class="vu-search-icon"></svg>
+                        <input type="text" id="vuSearch" class="vu-search-input" placeholder="Search name, email, place…">
+                    </div>
+                    <button class="vu-sort-btn" id="vuSortBtn">
+                        <svg data-lucide="arrow-up-down"></svg>
+                        <span id="vuSortLabel">Sort A–Z</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="vu-table-card">
+                <div class="vu-table-scroll">
+                    <table class="vu-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Place</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Aadhar Number</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vuTableBody">
+                            <!-- Django Loop Start -->
+                            {% for i in a %}
+                            <tr>
+                                <td>
+                                    <div class="vu-user-cell">
+                                        <div class="vu-avatar">
+                                            <svg data-lucide="user"></svg>
+                                        </div>
+                                        <span class="vu-name">{{ i.USER.username }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="mailto:{{ i.email }}" class="vu-email-link">
+                                        <svg data-lucide="mail"></svg>
+                                        {{ i.email }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="vu-place-badge">
+                                        <svg data-lucide="map-pin"></svg>
+                                        {{ i.place }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="vu-phone">
+                                        <svg data-lucide="phone"></svg>
+                                        {{ i.phone }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="vu-address" title="{{ i.address }}">{{ i.address }}</span>
+                                </td>
+                                <td>
+                                    <span class="vu-aadhar">{{ i.aadhar }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <!-- Django Loop End -->
+                        </tbody>
+                    </table>
+
+                    <!-- Empty State -->
+                    <div id="vuEmpty" class="vu-empty">
+                        <div class="vu-empty-icon">
+                            <svg data-lucide="database"></svg>
+                        </div>
+                        <p>No users found.</p>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="vu-table-footer">
+                    <span class="vu-showing">
+                        <svg data-lucide="info"></svg>
+                        <span id="vuFooterText">Showing all users</span>
+                    </span>
+                    <span>Last updated: <span id="vuLastUpdated"></span></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="vu-toast">
+        <svg data-lucide="check-circle"></svg>
+        <span id="vu-toast-msg">Action successful</span>
+    </div>
+
+    <!-- Orphaned tbody kept for compatibility -->
+    <tbody id="complaintTableBody" style="display:none;"></tbody>
+
+</body>
+
+<!-- Scripts — original order preserved exactly -->
+<script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../static/admin/assets/js/sidebarmenu.js"></script>
+<script src="../static/admin/assets/js/app.min.js"></script>
+<script src="../static/admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>
+<script src="../static/admin/assets/js/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+<script>
+    // Init Lucide icons
+    lucide.createIcons();
+
+    // Count
+    const rows = Array.from(document.querySelectorAll('#vuTableBody tr'));
+    const total = rows.length;
+
+    function updateCount(visible, filtered) {
+        document.getElementById('vuCountText').textContent =
+            total + ' user' + (total !== 1 ? 's' : '') + ' registered';
+        document.getElementById('vuFooterText').textContent = filtered
+            ? 'Showing ' + visible + ' of ' + total + ' user' + (total !== 1 ? 's' : '')
+            : 'Showing all ' + total + ' user' + (total !== 1 ? 's' : '');
+    }
+    updateCount(total, false);
+
+    // Last updated
+    document.getElementById('vuLastUpdated').textContent = new Date().toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'short', year: 'numeric'
+    });
+
+    // Search
+    document.getElementById('vuSearch').addEventListener('input', function () {
+        const q = this.value.toLowerCase().trim();
+        let visible = 0;
+        rows.forEach(row => {
+            const show = row.textContent.toLowerCase().includes(q);
+            row.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        document.getElementById('vuEmpty').style.display = visible === 0 ? 'flex' : 'none';
+        updateCount(visible, q.length > 0);
+    });
+
+    // Sort
+    let sortAsc = true;
+    document.getElementById('vuSortBtn').addEventListener('click', function () {
+        const tbody = document.getElementById('vuTableBody');
+        rows.sort((a, b) => {
+            const na = a.querySelector('.vu-name')?.textContent.trim().toLowerCase() || '';
+            const nb = b.querySelector('.vu-name')?.textContent.trim().toLowerCase() || '';
+            return sortAsc ? na.localeCompare(nb) : nb.localeCompare(na);
+        });
+        rows.forEach(r => tbody.appendChild(r));
+        sortAsc = !sortAsc;
+        document.getElementById('vuSortLabel').textContent = 'Sort ' + (sortAsc ? 'A–Z' : 'Z–A');
+        lucide.createIcons();
+    });
+</script>
+</html>

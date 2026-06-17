@@ -1,0 +1,1150 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{##}
+{#<meta charset="UTF-8">#}
+{#<title>Detect Person</title>#}
+{#<meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{##}
+{#<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">#}
+{#<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">#}
+{##}
+{#<style>#}
+{##}
+{#body{#}
+{#background:#f1f5f9;#}
+{#font-family:'Barlow',sans-serif;#}
+{#}#}
+{##}
+{#.detect-card{#}
+{#background:white;#}
+{#border-radius:14px;#}
+{#padding:30px;#}
+{#box-shadow:0 8px 24px rgba(0,0,0,0.08);#}
+{#border:1px solid #e2e8f0;#}
+{#}#}
+{##}
+{#.page-title{#}
+{#font-size:28px;#}
+{#font-weight:700;#}
+{#margin-bottom:25px;#}
+{#display:flex;#}
+{#align-items:center;#}
+{#gap:10px;#}
+{#}#}
+{##}
+{#.preview-image{#}
+{#width:250px;#}
+{#height:220px;#}
+{#object-fit:cover;#}
+{#border-radius:10px;#}
+{#border:1px solid #e2e8f0;#}
+{#cursor:pointer;#}
+{#}#}
+{##}
+{#.preview-video{#}
+{#width:350px;#}
+{#border-radius:10px;#}
+{#border:1px solid #e2e8f0;#}
+{#}#}
+{##}
+{#.result-box{#}
+{#background:#ecfeff;#}
+{#border:1px solid #06b6d4;#}
+{#padding:15px;#}
+{#border-radius:8px;#}
+{#margin-top:20px;#}
+{#}#}
+{##}
+{#.label{#}
+{#font-weight:600;#}
+{#color:#475569;#}
+{#}#}
+{##}
+{#.btn-detect{#}
+{#background:#05AD98;#}
+{#border:none;#}
+{#padding:10px 18px;#}
+{#font-weight:600;#}
+{#border-radius:6px;#}
+{#color:white;#}
+{#}#}
+{##}
+{#.btn-detect:hover{#}
+{#background:#048a78;#}
+{#}#}
+{##}
+{#/* LOADING SCREEN */#}
+{##}
+{#.loading-overlay{#}
+{#position:fixed;#}
+{#top:0;#}
+{#left:0;#}
+{#width:100%;#}
+{#height:100%;#}
+{#background:rgba(255,255,255,0.85);#}
+{#display:none;#}
+{#align-items:center;#}
+{#justify-content:center;#}
+{#z-index:9999;#}
+{#flex-direction:column;#}
+{#}#}
+{##}
+{#.spinner-border{#}
+{#width:4rem;#}
+{#height:4rem;#}
+{#}#}
+{##}
+{#/* IMAGE VIEWER */#}
+{##}
+{#.image-viewer{#}
+{#position:fixed;#}
+{#top:0;#}
+{#left:0;#}
+{#width:100%;#}
+{#height:100%;#}
+{#background:rgba(0,0,0,0.9);#}
+{#display:none;#}
+{#justify-content:center;#}
+{#align-items:center;#}
+{#z-index:9999;#}
+{#}#}
+{##}
+{#.image-viewer img{#}
+{#max-width:90%;#}
+{#max-height:90%;#}
+{#border-radius:10px;#}
+{#}#}
+{##}
+{#.close-btn{#}
+{#position:absolute;#}
+{#top:20px;#}
+{#right:30px;#}
+{#font-size:35px;#}
+{#color:white;#}
+{#cursor:pointer;#}
+{#}#}
+{##}
+{#</style>#}
+{##}
+{#</head>#}
+{##}
+{#<body>#}
+{##}
+{#{% include 'police/police_sidebar.html' %}#}
+{##}
+{#<!-- LOADING -->#}
+{#<div id="loadingScreen" class="loading-overlay">#}
+{##}
+{#<div class="spinner-border text-success"></div>#}
+{##}
+{#<h5 class="mt-3">Detecting faces... Please wait</h5>#}
+{##}
+{#</div>#}
+{##}
+{#<div class="container mt-5">#}
+{##}
+{#<div class="page-title">#}
+{#<i class="fas fa-user-secret"></i>#}
+{#Detect Missing Person / Criminal#}
+{#</div>#}
+{##}
+{#<div class="detect-card">#}
+{##}
+{#<form method="POST" enctype="multipart/form-data" onsubmit="showLoading()">#}
+{##}
+{#{% csrf_token %}#}
+{##}
+{#<div class="mb-3">#}
+{##}
+{#<label class="form-label label">#}
+{#Upload Image or Video#}
+{#</label>#}
+{##}
+{#<input type="file" name="file" class="form-control" required>#}
+{##}
+{#</div>#}
+{##}
+{#<button class="btn btn-detect">#}
+{#<i class="fas fa-search me-1"></i>#}
+{#Detect Person#}
+{#</button>#}
+{##}
+{#</form>#}
+{##}
+{##}
+{#{% if file_url %}#}
+{##}
+{#<hr>#}
+{##}
+{#<div class="row mt-4">#}
+{##}
+{#<div class="col-md-4 text-center">#}
+{##}
+{#{% if file_type == "image" %}#}
+{##}
+{#<img src="{{ file_url }}" class="preview-image" onclick="openImage(this.src)">#}
+{##}
+{#{% elif file_type == "video" %}#}
+{##}
+{#<video class="preview-video" controls>#}
+{#<source src="{{ file_url }}">#}
+{#</video>#}
+{##}
+{#<br><br>#}
+{##}
+{#<a href="{{ file_url }}" class="btn btn-primary btn-sm" target="_blank">#}
+{##}
+{#<i class="fa fa-play"></i> Open Video#}
+{##}
+{#</a>#}
+{##}
+{#<a href="{{ file_url }}" class="btn btn-success btn-sm" download>#}
+{##}
+{#<i class="fa fa-download"></i> Download#}
+{##}
+{#</a>#}
+{##}
+{#{% endif %}#}
+{##}
+{#</div>#}
+{##}
+{#<div class="col-md-8">#}
+{##}
+{#<h5 class="mb-3">Detection Result</h5>#}
+{##}
+{#{% if result %}#}
+{##}
+{#<div class="result-box">#}
+{##}
+{#{% for r in result %}#}
+{##}
+{#<p>#}
+{#<span class="label">Name:</span>#}
+{#{{ r.name }}#}
+{#</p>#}
+{##}
+{#<p>#}
+{#<span class="label">Category:</span>#}
+{#{{ r.category }}#}
+{#</p>#}
+{##}
+{#<p>#}
+{#<span class="label">Confidence:</span>#}
+{#{{ r.confidence }}#}
+{#</p>#}
+{##}
+{#<hr>#}
+{##}
+{#{% endfor %}#}
+{##}
+{#</div>#}
+{##}
+{#{% else %}#}
+{##}
+{#<div class="result-box text-danger">#}
+{#No match found#}
+{#</div>#}
+{##}
+{#{% endif %}#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#{% endif %}#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#<!-- IMAGE VIEWER -->#}
+{##}
+{#<div id="imageViewer" class="image-viewer" onclick="closeImage()">#}
+{##}
+{#<span class="close-btn">&times;</span>#}
+{##}
+{#<img id="viewerImage">#}
+{##}
+{#</div>#}
+{##}
+{#<script>#}
+{##}
+{#function openImage(src){#}
+{##}
+{#document.getElementById("viewerImage").src = src;#}
+{#document.getElementById("imageViewer").style.display = "flex";#}
+{##}
+{#}#}
+{##}
+{#function closeImage(){#}
+{##}
+{#document.getElementById("imageViewer").style.display = "none";#}
+{##}
+{#}#}
+{##}
+{#function showLoading(){#}
+{##}
+{#document.getElementById("loadingScreen").style.display="flex";#}
+{##}
+{#}#}
+{##}
+{#</script>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{% include 'police/police_sidebar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Detect Person · CrowdTrace Police</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800;900&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   AI DETECT PERSON  ·  Light Mint / Teal Palette
+   Matching CrowdTrace Police Portal dashboard
+═══════════════════════════════════════════════════════════ */
+:root {
+  --bg:         #e8f8f5;
+  --bg2:        #d4f2ec;
+  --bg3:        #c0eae2;
+  --surface:    rgba(255,255,255,.82);
+  --surf2:      rgba(255,255,255,.94);
+  --border:     rgba(0,180,160,.18);
+  --border2:    rgba(0,180,160,.10);
+  --ink:        #0d3b35;
+  --ink2:       #1a5048;
+  --muted:      rgba(20,90,78,.50);
+  --accent:     #00b4a0;
+  --accent-d:   #00998a;
+  --accent-lt:  #33c9b8;
+  --accent-xs:  rgba(0,180,160,.09);
+  --accent-sm:  rgba(0,180,160,.20);
+  --green:      #27ae86;
+  --amber:      #e8a020;
+  --red:        #e05c6a;
+  --gsh:        0 4px 24px rgba(0,180,160,.10), 0 2px 8px rgba(0,0,0,.05);
+  --gsh2:       0 16px 48px rgba(0,180,160,.18), 0 4px 16px rgba(0,0,0,.08);
+  --ease:       cubic-bezier(.4,0,.2,1);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+  color:var(--ink2);
+}
+
+/* ── BG BLOBS ─────────────────────────────────────────── */
+.bg-stage { position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden; }
+.blob { position:absolute;border-radius:50%;filter:blur(90px);opacity:.35;
+  animation:blobdrift 18s ease-in-out infinite alternate; }
+.b1 { width:600px;height:520px;top:-160px;left:-160px;
+  background:radial-gradient(circle at 40% 40%,rgba(0,180,160,.22),rgba(0,153,138,.07),transparent 68%);
+  animation-delay:0s; }
+.b2 { width:480px;height:440px;bottom:-120px;right:-100px;
+  background:radial-gradient(circle at 60% 60%,rgba(39,174,134,.16),rgba(0,180,160,.06),transparent 68%);
+  animation-delay:-7s; }
+.b3 { width:360px;height:360px;top:38%;right:12%;
+  background:radial-gradient(circle,rgba(0,180,160,.12),transparent 68%);
+  animation-delay:-13s; }
+.b4 { width:240px;height:240px;top:14%;right:30%;
+  background:radial-gradient(circle,rgba(51,201,184,.10),transparent 68%);
+  animation-delay:-4s; }
+@keyframes blobdrift{0%{transform:translate(0,0)scale(1)}100%{transform:translate(36px,26px)scale(1.09)}}
+.bg-stage::after {
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(0,180,160,.09) 1.2px,transparent 1.2px);
+  background-size:28px 28px;
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,#000 0%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,#000 0%,transparent 100%);
+  opacity:.6;
+}
+
+/* ── GLASS CARD ─────────────────────────────────────────── */
+.gc {
+  background:var(--surface);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  box-shadow:var(--gsh);
+  position:relative;overflow:hidden;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.gc::before {
+  content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.10),transparent);
+  pointer-events:none;
+}
+.gc:hover{transform:translateY(-3px);box-shadow:var(--gsh2);}
+
+/* ── PAGE ────────────────────────────────────────────────── */
+.page{position:relative;z-index:1;padding:28px 30px 56px;max-width:1320px;}
+
+/* ── PAGE HEADER ─────────────────────────────────────────── */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;margin-bottom:26px;
+  animation:slideD .55s var(--ease) both;}
+@keyframes slideD{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+.ph-badge{display:inline-flex;align-items:center;gap:7px;
+  background:var(--accent-xs);border:1px solid var(--accent-sm);
+  color:var(--accent-d);font-size:.82rem;font-weight:800;
+  letter-spacing:1.2px;text-transform:uppercase;
+  padding:4px 14px;border-radius:20px;margin-bottom:9px;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);
+  animation:livepulse 2s infinite;}
+@keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(76,175,138,.55)}
+  70%{box-shadow:0 0 0 7px rgba(76,175,138,0)}100%{box-shadow:0 0 0 0 rgba(76,175,138,0)}}
+.ph-title{font-family:'Raleway',sans-serif;font-weight:900;font-size:2.1rem;
+  color:var(--ink);letter-spacing:-.5px;line-height:1.1;margin-bottom:5px;}
+.ph-title em{font-style:normal;color:var(--accent-d);}
+.ph-meta{font-size:.9rem;color:var(--muted);font-weight:600;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.ph-chip{display:inline-flex;align-items:center;gap:5px;
+  background:var(--surf2);border:1px solid var(--border);
+  padding:3px 11px;border-radius:20px;backdrop-filter:blur(6px);font-size:.84rem;}
+.ph-chip i{color:var(--accent-d);font-size:.76rem;}
+
+/* ── STAT STRIP ─────────────────────────────────────────── */
+.stat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px;}
+.sc{padding:18px 18px 16px;animation:popIn .5s var(--ease) both;}
+.sc:nth-child(1){animation-delay:.05s}
+.sc:nth-child(2){animation-delay:.12s}
+.sc:nth-child(3){animation-delay:.19s}
+@keyframes popIn{from{opacity:0;transform:translateY(22px)scale(.96)}to{opacity:1;transform:translateY(0)scale(1)}}
+.sc-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sc-ico{width:44px;height:44px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.ic-t{background:rgba(0,180,160,.15);color:var(--accent-d);}
+.ic-r{background:rgba(224,92,106,.18);color:var(--red);}
+.ic-g{background:rgba(76,175,138,.18);color:var(--green);}
+.sc-pill{font-size:.75rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;}
+.p-t{background:rgba(0,180,160,.12);color:var(--accent-d);border:1px solid rgba(0,180,160,.26);}
+.p-r{background:rgba(224,92,106,.12);color:var(--red);border:1px solid rgba(224,92,106,.26);}
+.p-g{background:rgba(76,175,138,.12);color:var(--green);border:1px solid rgba(76,175,138,.26);}
+.sc-val{font-family:'Raleway',sans-serif;font-size:2.4rem;font-weight:900;
+  color:var(--ink);letter-spacing:-1.2px;line-height:1;margin-bottom:3px;}
+.sc-lbl{font-size:.8rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.6px;color:var(--muted);}
+.sc-bar{margin-top:12px;}
+.sc-track{height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
+.sc-fill{height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--accent-d),var(--accent-lt));
+  width:0;transition:width 1.4s var(--ease);}
+.sc-fill.red  {background:linear-gradient(90deg,var(--red),#f08090);}
+.sc-fill.green{background:linear-gradient(90deg,var(--green),#7dd4b0);}
+
+/* ── MAIN GRID ───────────────────────────────────────────── */
+.main-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;margin-bottom:26px;}
+
+/* ── CARD HEADER ─────────────────────────────────────────── */
+.card-hd{display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px;border-bottom:1.5px solid var(--border2);}
+.card-hd-left{display:flex;align-items:center;gap:12px;}
+.card-hd-icon{width:42px;height:42px;border-radius:13px;
+  background:rgba(0,180,160,.18);color:var(--accent-d);
+  display:flex;align-items:center;justify-content:center;font-size:1.05rem;}
+.card-hd-icon.red  {background:rgba(224,92,106,.16);color:var(--red);}
+.card-hd-title{font-family:'Raleway',sans-serif;font-weight:800;font-size:1.05rem;
+  color:var(--ink);margin-bottom:2px;}
+.card-hd-sub{font-size:.82rem;color:var(--muted);font-weight:600;}
+
+/* ── UPLOAD ZONE ─────────────────────────────────────────── */
+.upload-zone{border:2px dashed rgba(0,180,160,.35);border-radius:16px;
+  background:rgba(0,180,160,.05);padding:2.8rem 2rem;
+  text-align:center;cursor:pointer;transition:all .28s var(--ease);position:relative;}
+.upload-zone:hover{border-color:var(--accent-d);background:rgba(0,180,160,.10);
+  box-shadow:0 0 0 4px rgba(0,180,160,.08);}
+.upload-zone.drag-over{border-color:var(--accent-d);background:rgba(0,180,160,.16);transform:scale(1.01);}
+.uz-icon{width:76px;height:76px;
+  background:linear-gradient(135deg,rgba(0,180,160,.22),rgba(0,180,160,.06));
+  border-radius:22px;display:grid;place-items:center;
+  margin:0 auto 1.2rem;font-size:1.9rem;color:var(--accent-d);
+  box-shadow:0 4px 20px rgba(0,180,160,.22);transition:transform .28s var(--ease);}
+.upload-zone:hover .uz-icon{transform:translateY(-5px)scale(1.06);}
+.uz-title{font-family:'Raleway',sans-serif;font-weight:800;font-size:1.08rem;
+  color:var(--ink);margin-bottom:.4rem;}
+.uz-sub{font-size:.86rem;color:var(--muted);font-weight:600;}
+.uz-types{display:flex;justify-content:center;gap:.55rem;flex-wrap:wrap;margin-top:1rem;}
+.uz-chip{background:rgba(0,180,160,.12);border:1px solid rgba(0,180,160,.28);
+  border-radius:20px;padding:3px 12px;font-size:.78rem;font-weight:800;color:var(--ink2);}
+
+/* ── FILE BAR ────────────────────────────────────────────── */
+.file-bar{display:none;align-items:center;gap:.75rem;
+  background:rgba(76,175,138,.08);border:1.5px solid rgba(76,175,138,.28);
+  border-radius:13px;padding:.8rem 1rem;margin-top:1rem;}
+.file-bar.show{display:flex;}
+.fb-icon{color:var(--green);font-size:1.3rem;flex-shrink:0;}
+.fb-name{font-weight:800;color:var(--ink);font-size:.92rem;}
+.fb-size{font-size:.8rem;color:var(--muted);}
+.fb-rm{margin-left:auto;background:transparent;border:none;
+  color:var(--muted);cursor:pointer;font-size:.95rem;
+  padding:4px 8px;border-radius:8px;transition:all .2s;}
+.fb-rm:hover{color:var(--red);background:rgba(224,92,106,.10);}
+
+/* ── THUMB PREVIEW ───────────────────────────────────────── */
+.preview-thumb-wrap{margin-top:1rem;display:none;}
+.preview-thumb-wrap.show{display:block;}
+.preview-thumb{width:100%;max-height:200px;object-fit:cover;
+  border-radius:12px;border:1.5px solid var(--border);cursor:zoom-in;}
+
+/* ── DETECT BUTTON ───────────────────────────────────────── */
+.btn-detect{width:100%;margin-top:1.4rem;padding:.95rem 2rem;
+  background:linear-gradient(135deg,var(--accent-d) 0%,var(--accent-lt) 100%);
+  color:#fff;border:none;border-radius:14px;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;gap:.7rem;
+  cursor:pointer;position:relative;overflow:hidden;
+  box-shadow:0 6px 22px rgba(0,180,160,.38);
+  transition:all .26s var(--ease);}
+.btn-detect::before{content:'';position:absolute;top:0;left:-110%;
+  width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+  transition:left .55s;}
+.btn-detect:hover::before{left:150%;}
+.btn-detect:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(0,180,160,.48);}
+.btn-detect:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-detect .spinner{display:none;width:18px;height:18px;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,.25);border-top-color:#fff;
+  animation:spin .7s linear infinite;}
+.btn-detect.loading .btn-ico{display:none;}
+.btn-detect.loading .spinner{display:block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cbp{padding:22px;}
+
+/* ── RESULTS ─────────────────────────────────────────────── */
+.results-layout{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:start;}
+.prev-pane{background:var(--surf2);border:1.5px solid var(--border);
+  border-radius:16px;overflow:hidden;box-shadow:var(--gsh);}
+.prev-label{padding:.65rem 1rem;background:rgba(0,180,160,.12);
+  border-bottom:1px solid var(--border2);font-size:.78rem;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);
+  display:flex;align-items:center;gap:.5rem;}
+.prev-label i{color:var(--accent-d);}
+.prev-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+  cursor:zoom-in;transition:transform .3s;}
+.prev-img:hover{transform:scale(1.03);}
+.prev-video{width:100%;display:block;background:#000;}
+.prev-actions{padding:.75rem 1rem;display:flex;gap:.5rem;border-top:1px solid var(--border2);}
+.pv-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
+  padding:.55rem .8rem;border-radius:9px;font-size:.82rem;font-weight:700;
+  text-decoration:none;border:1.5px solid var(--border);color:var(--ink2);
+  background:transparent;cursor:pointer;transition:all .2s;}
+.pv-btn:hover{border-color:var(--accent-d);color:var(--accent-d);background:var(--accent-xs);}
+.pv-btn.primary{background:var(--accent-d);border-color:var(--accent-d);color:#fff;}
+.pv-btn.primary:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+.rp{display:flex;flex-direction:column;gap:12px;}
+.rp-hd{display:flex;align-items:center;gap:.75rem;margin-bottom:2px;}
+.rp-hd h5{font-family:'Raleway',sans-serif;font-weight:800;color:var(--ink);margin:0;font-size:1.1rem;}
+.rp-count{background:var(--accent-xs);color:var(--accent-d);
+  border:1px solid rgba(0,180,160,.28);padding:2px 11px;border-radius:20px;
+  font-size:.78rem;font-weight:800;}
+
+.match-card{background:var(--surf2);border:1.5px solid var(--border);border-radius:16px;
+  overflow:visible;box-shadow:0 4px 16px rgba(0,0,0,.25);
+  transition:all .26s var(--ease);animation:fadeUp .4s var(--ease) both;}
+.match-card:hover{transform:translateX(5px);box-shadow:0 8px 28px rgba(0,0,0,.35);
+  border-color:rgba(0,180,160,.35);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.match-topbar{height:3px;}
+.mt-criminal{background:linear-gradient(90deg,var(--red),#f08090);}
+.mt-missing {background:linear-gradient(90deg,var(--amber),#f4c050);}
+.mt-default {background:linear-gradient(90deg,var(--accent-d),var(--accent-lt));}
+.match-inner{padding:1.1rem 1.2rem;display:flex;align-items:flex-start;gap:1rem;}
+.match-type-icon{width:50px;height:50px;border-radius:14px;
+  display:grid;place-items:center;font-size:1.25rem;flex-shrink:0;}
+.mti-criminal{background:rgba(224,92,106,.14);color:var(--red);}
+.mti-missing {background:rgba(232,160,32,.14);color:var(--amber);}
+.mti-default {background:rgba(0,180,160,.14);color:var(--accent-d);}
+.match-details{flex:1;min-width:0;}
+.match-name{font-family:'Raleway',sans-serif;font-weight:800;font-size:1.02rem;
+  color:var(--ink);margin-bottom:.4rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.match-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem;}
+.meta-chip{display:inline-flex;align-items:center;gap:4px;
+  padding:3px 11px;border-radius:20px;font-size:.78rem;font-weight:700;}
+.mc-cat-criminal{background:rgba(224,92,106,.12);color:var(--red);border:1px solid rgba(224,92,106,.24);}
+.mc-cat-missing {background:rgba(232,160,32,.12);color:var(--amber);border:1px solid rgba(232,160,32,.24);}
+.mc-cat-default {background:var(--accent-xs);color:var(--accent-d);border:1px solid rgba(0,180,160,.24);}
+.mc-conf        {background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--border);}
+.conf-label{font-size:.78rem;color:var(--muted);font-weight:700;margin-bottom:4px;
+  display:flex;justify-content:space-between;}
+.conf-label span:last-child{color:var(--ink);font-weight:900;}
+.conf-track{height:6px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;}
+.conf-fill{height:100%;border-radius:6px;
+  background:linear-gradient(90deg,var(--accent-d),var(--accent-lt));
+  width:0;transition:width .9s var(--ease);}
+.conf-fill.criminal{background:linear-gradient(90deg,var(--red),#f08090);}
+.conf-fill.missing {background:linear-gradient(90deg,var(--amber),#f4c050);}
+.match-action{display:inline-flex;align-items:center;gap:6px;
+  margin-top:.7rem;padding:6px 14px;border-radius:10px;
+  font-size:.82rem;font-weight:800;text-decoration:none;
+  background:var(--accent-xs);color:var(--accent-d);
+  border:1.5px solid rgba(0,180,160,.26);transition:all .2s;}
+.match-action:hover{background:var(--accent-sm);}
+.match-action.criminal{background:rgba(224,92,106,.08);color:var(--red);border-color:rgba(224,92,106,.22);}
+.match-action.criminal:hover{background:rgba(224,92,106,.16);}
+.match-action.missing {background:rgba(232,160,32,.08);color:var(--amber);border-color:rgba(232,160,32,.22);}
+.match-action.missing:hover {background:rgba(232,160,32,.16);}
+.no-match{background:var(--surf2);border:1.5px solid var(--border);
+  border-radius:16px;padding:2.6rem;text-align:center;box-shadow:var(--gsh);}
+.nm-icon{width:68px;height:68px;border-radius:20px;background:rgba(255,255,255,.06);
+  display:grid;place-items:center;margin:0 auto 1.1rem;font-size:1.7rem;color:var(--muted);}
+.no-match h6{font-family:'Raleway',sans-serif;font-weight:800;color:var(--ink);font-size:1.05rem;margin-bottom:.4rem;}
+.no-match p{font-size:.88rem;color:var(--muted);font-weight:600;margin:0;}
+
+/* ── HISTORY TABLE ───────────────────────────────────────── */
+.history-card{padding:22px;}
+.hc-tbl{width:100%;border-collapse:collapse;font-size:.88rem;}
+.hc-tbl thead th{font-size:.76rem;font-weight:800;letter-spacing:.9px;
+  text-transform:uppercase;color:var(--muted);padding:0 12px 11px;text-align:left;
+  border-bottom:1.5px solid var(--border);}
+.hc-tbl tbody tr{transition:background .18s;}
+.hc-tbl tbody tr:hover td{background:rgba(0,180,160,.06);}
+.hc-tbl tbody td{padding:11px 12px;color:var(--ink2);font-weight:600;
+  border-bottom:1px solid var(--border2);vertical-align:middle;}
+.hc-tbl tbody tr:last-child td{border-bottom:none;}
+.tbl-name{font-weight:800;color:var(--ink);}
+.tbl-thumb{width:38px;height:38px;border-radius:11px;object-fit:cover;border:2px solid var(--border);}
+.tbl-thumb-ph{width:38px;height:38px;border-radius:11px;background:var(--bg3);
+  display:inline-flex;align-items:center;justify-content:center;color:var(--muted);font-size:.95rem;}
+.badge-cat{display:inline-flex;align-items:center;gap:4px;
+  padding:3px 11px;border-radius:20px;font-size:.76rem;font-weight:800;letter-spacing:.3px;}
+.bc-criminal{background:rgba(224,92,106,.12);color:var(--red);border:1px solid rgba(224,92,106,.24);}
+.bc-missing {background:rgba(232,160,32,.12);color:var(--amber);border:1px solid rgba(232,160,32,.24);}
+.bc-ok      {background:rgba(76,175,138,.12);color:var(--green);border:1px solid rgba(76,175,138,.24);}
+.conf-chip{background:var(--accent-xs);color:var(--accent-d);border:1px solid rgba(0,180,160,.24);
+  padding:2px 10px;border-radius:20px;font-size:.76rem;font-weight:800;}
+.empty-row td{text-align:center;padding:2.5rem !important;color:var(--muted);font-size:.9rem;}
+
+/* ── LOADING OVERLAY ─────────────────────────────────────── */
+.loading-overlay{position:fixed;inset:0;background:rgba(232,248,245,.92);backdrop-filter:blur(12px);
+  display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:1.4rem;}
+.loading-overlay.show{display:flex;}
+.scan-ring{width:96px;height:96px;position:relative;}
+.scan-ring::before,.scan-ring::after{content:'';position:absolute;inset:0;
+  border-radius:50%;border:3.5px solid transparent;}
+.scan-ring::before{border-top-color:var(--accent);border-right-color:var(--accent);
+  animation:spin 1s linear infinite;}
+.scan-ring::after{border-bottom-color:rgba(0,180,160,.25);border-left-color:rgba(0,180,160,.25);
+  animation:spin .7s linear infinite reverse;}
+.scan-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:1.7rem;color:var(--accent-d);}
+.lo-title{font-family:'Raleway',sans-serif;font-weight:800;font-size:1.15rem;color:var(--ink);}
+.lo-sub  {font-size:.88rem;color:var(--muted);margin-top:-.5rem;font-weight:600;}
+.lo-prog {width:220px;height:5px;background:rgba(0,180,160,.16);border-radius:10px;overflow:hidden;}
+.lo-fill {height:100%;width:0%;border-radius:10px;
+  background:linear-gradient(90deg,var(--accent-d),var(--accent-lt));
+  animation:scanprogress 4s ease-in-out forwards;}
+@keyframes scanprogress{0%{width:0%}55%{width:75%}85%{width:90%}100%{width:95%}}
+.lo-steps{display:flex;flex-direction:column;gap:.4rem;align-items:center;}
+.lo-step{font-size:.82rem;font-weight:700;color:var(--muted);
+  display:flex;align-items:center;gap:.5rem;transition:color .3s;}
+.lo-step.active{color:var(--accent-d);}
+.lo-step i{font-size:.72rem;}
+
+/* ── LIGHTBOX ─────────────────────────────────────────────── */
+.lightbox{position:fixed;inset:0;background:rgba(13,59,53,.96);
+  display:none;align-items:center;justify-content:center;z-index:9999;cursor:zoom-out;}
+.lightbox.show{display:flex;}
+.lightbox img{max-width:92%;max-height:92%;border-radius:14px;
+  box-shadow:0 20px 60px rgba(0,0,0,.70);animation:zoomIn .24s var(--ease);}
+@keyframes zoomIn{from{transform:scale(.86);opacity:0}to{transform:scale(1);opacity:1}}
+.lb-close{position:absolute;top:20px;right:24px;width:46px;height:46px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.7);font-size:1.3rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.lb-close:hover{background:rgba(255,255,255,.16);color:#fff;}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media(max-width:1100px){
+  .main-grid{grid-template-columns:1fr;}
+  .results-layout{grid-template-columns:220px 1fr;}
+}
+@media(max-width:768px){
+  body{margin-left:0 !important;}
+  .page{padding:14px 14px 40px;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+  .results-layout{grid-template-columns:1fr;}
+  .ph-title{font-size:1.65rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-stage">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="blob b3"></div><div class="blob b4"></div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingScreen">
+  <div class="scan-ring">
+    <div class="scan-center"><i class="fas fa-face-viewfinder"></i></div>
+  </div>
+  <div class="lo-title">Running AI Detection…</div>
+  <div class="lo-sub">Face recognition in progress</div>
+  <div class="lo-prog"><div class="lo-fill"></div></div>
+  <div class="lo-steps">
+    <div class="lo-step active" id="step1"><i class="fas fa-circle-dot"></i> Uploading file</div>
+    <div class="lo-step" id="step2"><i class="fas fa-circle-dot"></i> Extracting faces</div>
+    <div class="lo-step" id="step3"><i class="fas fa-circle-dot"></i> Matching against database</div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()"><i class="fas fa-xmark"></i></button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<div class="page">
+
+  <!-- Page Header -->
+  <div class="ph">
+    <div>
+      <div class="ph-badge">
+        <span class="live-dot"></span>
+        AI Face Recognition Engine
+      </div>
+      <div class="ph-title">Detect <em>Person</em></div>
+      <div class="ph-meta">
+        <span class="ph-chip"><i class="fas fa-calendar-day"></i> {% now "l, d F Y" %}</span>
+        {% if police and police.policestation %}
+        <span class="ph-chip"><i class="fas fa-building-columns"></i> {{ police.policestation.station_name }}</span>
+        {% endif %}
+        {% if police %}
+        <span class="ph-chip"><i class="fas fa-shield-halved"></i> {{ police.designation }}</span>
+        {% endif %}
+        <span class="ph-chip"><i class="fas fa-microchip"></i> Face Recognition v2</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <a href="{% url 'police_live_detections' %}"
+         style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;
+                background:var(--accent-xs);border:1.5px solid var(--accent-sm);
+                border-radius:13px;color:var(--accent-d);font-family:'Nunito',sans-serif;
+                font-weight:800;font-size:.92rem;text-decoration:none;transition:all .22s;">
+        <i class="fas fa-clock-rotate-left"></i> Detection Log
+      </a>
+      <a href="{% url 'police_home' %}"
+         style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;
+                background:var(--surf2);border:1.5px solid var(--border);
+                border-radius:13px;color:var(--ink2);font-family:'Nunito',sans-serif;
+                font-weight:800;font-size:.92rem;text-decoration:none;transition:all .22s;">
+        <i class="fas fa-gauge-high"></i> Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- Stat Strip -->
+  <div class="stat-strip">
+    <div class="gc sc">
+      <div class="sc-row">
+        <div class="sc-ico ic-t"><i class="fas fa-users-viewfinder"></i></div>
+        <span class="sc-pill p-t">Total Scans</span>
+      </div>
+      <div class="sc-val">{{ total_scans|default:0 }}</div>
+      <div class="sc-lbl">Files Analysed</div>
+      <div class="sc-bar"><div class="sc-track"><div class="sc-fill" style="width:72%"></div></div></div>
+    </div>
+    <div class="gc sc">
+      <div class="sc-row">
+        <div class="sc-ico ic-r"><i class="fas fa-user-secret"></i></div>
+        <span class="sc-pill p-r">Criminals</span>
+      </div>
+      <div class="sc-val">{{ total_criminals|default:0 }}</div>
+      <div class="sc-lbl">Criminal Records</div>
+      <div class="sc-bar"><div class="sc-track"><div class="sc-fill red" style="width:58%"></div></div></div>
+    </div>
+    <div class="gc sc">
+      <div class="sc-row">
+        <div class="sc-ico ic-g"><i class="fas fa-person-circle-question"></i></div>
+        <span class="sc-pill p-g">Missing</span>
+      </div>
+      <div class="sc-val">{{ total_missing|default:0 }}</div>
+      <div class="sc-lbl">Missing Person Records</div>
+      <div class="sc-bar"><div class="sc-track"><div class="sc-fill green" style="width:64%"></div></div></div>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="main-grid">
+
+    <!-- LEFT: Upload -->
+    <div class="gc" style="animation:popIn .5s .08s var(--ease) both;">
+      <div class="card-hd">
+        <div class="card-hd-left">
+          <div class="card-hd-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+          <div>
+            <div class="card-hd-title">Upload Image or Video</div>
+            <div class="card-hd-sub">Supported: JPG · PNG · WEBP · MP4 · AVI · MOV</div>
+          </div>
+        </div>
+        <span id="fileTypeBadge"
+              style="display:none;font-size:.8rem;font-weight:800;
+                     padding:4px 12px;border-radius:20px;
+                     background:var(--accent-xs);color:var(--accent-d);
+                     border:1px solid rgba(0,180,160,.28);" style="display:none;"></span>
+      </div>
+      <div class="cbp">
+        <form method="POST" enctype="multipart/form-data" id="detectForm">
+          {% csrf_token %}
+          <div class="upload-zone" id="uploadZone"
+               onclick="document.getElementById('fileInput').click()"
+               ondragover="handleDragOver(event)"
+               ondragleave="handleDragLeave(event)"
+               ondrop="handleDrop(event)">
+            <div class="uz-icon"><i class="fas fa-camera-rotate"></i></div>
+            <div class="uz-title" id="uzTitle">Drop your file here or click to browse</div>
+            <div class="uz-sub"   id="uzSub">Supports images and video files for AI face detection</div>
+            <div class="uz-types" id="uzTypes">
+              <span class="uz-chip">JPG</span><span class="uz-chip">PNG</span>
+              <span class="uz-chip">WEBP</span><span class="uz-chip">MP4</span>
+              <span class="uz-chip">AVI</span><span class="uz-chip">MOV</span>
+            </div>
+            <div class="preview-thumb-wrap" id="thumbWrap">
+              <img class="preview-thumb" id="thumbPreview" src="" alt=""
+                   onclick="event.stopPropagation();openLightbox(this.src)">
+            </div>
+          </div>
+          <input type="file" name="file" id="fileInput" style="display:none"
+                 accept="image/*,video/*" required onchange="handleFileSelect(this)">
+          <div class="file-bar" id="fileBar">
+            <i class="fas fa-file-image fb-icon" id="fbIcon"></i>
+            <div>
+              <div class="fb-name" id="fbName">—</div>
+              <div class="fb-size" id="fbSize">—</div>
+            </div>
+            <button type="button" class="fb-rm" onclick="clearFile()"><i class="fas fa-xmark"></i></button>
+          </div>
+          <button type="submit" class="btn-detect" id="detectBtn" disabled onclick="triggerDetect(event)">
+            <i class="fas fa-magnifying-glass btn-ico"></i>
+            <div class="spinner"></div>
+            Run AI Detection
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- RIGHT: Results -->
+    <div class="gc" style="animation:popIn .5s .14s var(--ease) both;">
+      <div class="card-hd">
+        <div class="card-hd-left">
+          <div class="card-hd-icon {% if result and result|length > 0 %}red{% endif %}">
+            <i class="fas fa-chart-mixed"></i>
+          </div>
+          <div>
+            <div class="card-hd-title">Detection Results</div>
+            <div class="card-hd-sub">
+              {% if result %}{{ result|length }} match{% if result|length != 1 %}es{% endif %} found in scan
+              {% elif file_url %}Scan completed — no matches found
+              {% else %}Awaiting file upload{% endif %}
+            </div>
+          </div>
+        </div>
+        {% if result %}
+        <span style="font-size:.82rem;font-weight:800;padding:4px 14px;border-radius:20px;
+              background:rgba(224,92,106,.12);color:var(--red);border:1px solid rgba(224,92,106,.26);">
+          <i class="fas fa-triangle-exclamation" style="margin-right:4px;font-size:.76rem;"></i>
+          {{ result|length }} Alert{% if result|length != 1 %}s{% endif %}
+        </span>
+        {% endif %}
+      </div>
+      <div class="cbp">
+        {% if file_url %}
+        <div class="results-layout">
+          <div class="prev-pane">
+            <div class="prev-label">
+              <i class="fas fa-{% if file_type == 'video' %}video{% else %}image{% endif %}"></i>
+              {% if file_type == "video" %}Video Preview{% else %}Image Preview{% endif %}
+            </div>
+            {% if file_type == "image" %}
+            <img src="{{ file_url }}" class="prev-img" onclick="openLightbox('{{ file_url }}')" alt="">
+            {% elif file_type == "video" %}
+            <video class="prev-video" controls><source src="{{ file_url }}">Your browser does not support video.</video>
+            {% endif %}
+            <div class="prev-actions">
+              {% if file_type == "image" %}
+              <button class="pv-btn" onclick="openLightbox('{{ file_url }}')"><i class="fas fa-expand"></i> Zoom</button>
+              {% endif %}
+              <a href="{{ file_url }}" class="pv-btn primary" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Open</a>
+              <a href="{{ file_url }}" class="pv-btn" download><i class="fas fa-download"></i> Save</a>
+            </div>
+          </div>
+          <div class="rp">
+            <div class="rp-hd">
+              <h5>{% if result %}Matched Records{% else %}Scan Complete{% endif %}</h5>
+              {% if result %}<span class="rp-count">{{ result|length }} found</span>{% endif %}
+            </div>
+            {% if result %}
+              {% for r in result %}{% with cat=r.category|lower %}
+              <div class="match-card" style="animation-delay:{{ forloop.counter0 }}00ms;">
+                <div class="match-topbar {% if 'criminal' in cat %}mt-criminal{% elif 'missing' in cat %}mt-missing{% else %}mt-default{% endif %}"></div>
+                <div class="match-inner">
+                  <div class="match-type-icon {% if 'criminal' in cat %}mti-criminal{% elif 'missing' in cat %}mti-missing{% else %}mti-default{% endif %}">
+                    {% if 'criminal' in cat %}<i class="fas fa-user-secret"></i>
+                    {% elif 'missing' in cat %}<i class="fas fa-person-circle-question"></i>
+                    {% else %}<i class="fas fa-user-check"></i>{% endif %}
+                  </div>
+                  <div class="match-details">
+                    <div class="match-name">{{ r.name }}</div>
+                    <div class="match-meta">
+                      <span class="meta-chip {% if 'criminal' in cat %}mc-cat-criminal{% elif 'missing' in cat %}mc-cat-missing{% else %}mc-cat-default{% endif %}">
+                        <i class="fas fa-{% if 'criminal' in cat %}user-secret{% elif 'missing' in cat %}person-circle-question{% else %}check{% endif %}" style="font-size:.72rem;"></i>
+                        {{ r.category }}
+                      </span>
+                      {% if r.confidence %}
+                      <span class="meta-chip mc-conf">
+                        <i class="fas fa-shield-check" style="font-size:.72rem;"></i>
+                        <span class="conf-display" data-raw="{{ r.confidence }}">{{ r.confidence }}%</span> match
+                      </span>
+                      {% endif %}
+                    </div>
+                    {% if r.confidence %}
+                    <div>
+                      <div class="conf-label"><span>Confidence Score</span><span class="conf-val" data-raw="{{ r.confidence }}">{{ r.confidence }}%</span></div>
+                      <div class="conf-track">
+                        <div class="conf-fill {% if 'criminal' in cat %}criminal{% elif 'missing' in cat %}missing{% endif %}"
+                             data-width="{{ r.confidence }}"></div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if r.id %}
+                    <a href="#" class="match-action {% if 'criminal' in cat %}criminal{% elif 'missing' in cat %}missing{% endif %}">
+                      <i class="fas fa-arrow-right" style="font-size:.76rem;"></i> View Full Record
+                    </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% endwith %}{% endfor %}
+            {% else %}
+            <div class="no-match">
+              <div class="nm-icon"><i class="fas fa-user-slash"></i></div>
+              <h6>No Match Found</h6>
+              <p>The AI could not find a matching record in the database for this file.</p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% else %}
+        <div style="text-align:center;padding:3.5rem 2rem;">
+          <div style="width:80px;height:80px;border-radius:22px;
+            background:var(--accent-xs);color:var(--accent-d);font-size:2rem;
+            display:grid;place-items:center;margin:0 auto 1.2rem;
+            box-shadow:0 4px 20px rgba(0,180,160,.14);">
+            <i class="fas fa-face-viewfinder"></i>
+          </div>
+          <div style="font-family:'Raleway',sans-serif;font-weight:800;font-size:1.08rem;color:var(--ink);margin-bottom:.5rem;">
+            Ready to Detect
+          </div>
+          <div style="font-size:.88rem;color:var(--muted);font-weight:600;max-width:280px;margin:0 auto;line-height:1.5;">
+            Upload an image or video on the left to run the AI face recognition engine.
+          </div>
+          <div style="display:flex;justify-content:center;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap;">
+            <span style="display:flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--ink2);">
+              <i class="fas fa-circle-check" style="color:var(--green);"></i> Scan Images</span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--ink2);">
+              <i class="fas fa-circle-check" style="color:var(--green);"></i> Scan Videos</span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--ink2);">
+              <i class="fas fa-circle-check" style="color:var(--green);"></i> Real-Time AI</span>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div><!-- end main-grid -->
+
+  <!-- History Table -->
+  <div class="gc history-card" style="animation:popIn .5s .22s var(--ease) both;">
+    <div class="card-hd" style="padding:18px 22px 14px;">
+      <div class="card-hd-left">
+        <div class="card-hd-icon"><i class="fas fa-clock-rotate-left"></i></div>
+        <div>
+          <div class="card-hd-title">Recent Detection History</div>
+          <div class="card-hd-sub">Latest AI scan results stored in the system</div>
+        </div>
+      </div>
+      <a href="{% url 'police_live_detections' %}"
+         style="font-size:.84rem;font-weight:800;color:var(--accent-d);text-decoration:none;
+                background:var(--accent-xs);border:1px solid var(--accent-sm);
+                padding:6px 14px;border-radius:11px;transition:all .2s;
+                display:inline-flex;align-items:center;gap:6px;">
+        <i class="fas fa-arrow-right" style="font-size:.76rem;"></i> View All
+      </a>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="hc-tbl">
+        <thead>
+          <tr>
+            <th>Photo</th><th>Name</th><th>Category</th>
+            <th>Confidence</th><th>Date / Time</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if detections %}
+            {% for d in detections %}
+            <tr>
+              <td>
+                {% if d.photo %}
+                <img src="{{ d.photo.url }}" class="tbl-thumb" style="cursor:zoom-in;"
+                     onclick="openLightbox('{{ d.photo.url }}')" alt="{{ d.name }}">
+                {% else %}
+                <div class="tbl-thumb-ph"><i class="fas fa-user"></i></div>
+                {% endif %}
+              </td>
+              <td><span class="tbl-name">{{ d.name }}</span></td>
+              <td>
+                {% with cat=d.category|lower %}
+                <span class="badge-cat {% if 'criminal' in cat %}bc-criminal{% elif 'missing' in cat %}bc-missing{% else %}bc-ok{% endif %}">
+                  <i class="fas fa-{% if 'criminal' in cat %}user-secret{% elif 'missing' in cat %}person-circle-question{% else %}circle-check{% endif %}" style="font-size:.72rem;"></i>
+                  {{ d.category }}
+                </span>
+                {% endwith %}
+              </td>
+              <td>
+                {% if d.confidence %}<span class="conf-chip">{{ d.confidence }}%</span>
+                {% else %}<span style="color:var(--muted);font-size:.84rem;">—</span>{% endif %}
+              </td>
+              <td style="color:var(--muted);font-size:.86rem;">{{ d.date }}</td>
+              <td>
+                {% if d.photo %}
+                <button onclick="openLightbox('{{ d.photo.url }}')"
+                  style="background:var(--accent-xs);border:1px solid rgba(0,180,160,.26);
+                         color:var(--accent-d);border-radius:9px;padding:5px 12px;
+                         font-size:.82rem;font-weight:800;cursor:pointer;
+                         font-family:'Nunito',sans-serif;">
+                  <i class="fas fa-expand" style="font-size:.76rem;"></i> View
+                </button>
+                {% else %}<span style="color:var(--muted);font-size:.84rem;">—</span>{% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+          <tr class="empty-row">
+            <td colspan="6">
+              <i class="fas fa-inbox" style="font-size:1.5rem;color:var(--border);display:block;margin-bottom:.5rem;"></i>
+              No detection history yet — run your first scan above.
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- end .page -->
+
+<script>
+function handleFileSelect(input) {
+  if (input.files && input.files[0]) displayFile(input.files[0]);
+}
+function displayFile(file) {
+  document.getElementById('fbName').textContent = file.name;
+  document.getElementById('fbSize').textContent = formatBytes(file.size);
+  document.getElementById('fileBar').classList.add('show');
+  document.getElementById('detectBtn').disabled = false;
+  const isVideo = file.type.startsWith('video/');
+  document.getElementById('fbIcon').className = isVideo ? 'fas fa-file-video fb-icon' : 'fas fa-file-image fb-icon';
+  const badge = document.getElementById('fileTypeBadge');
+  badge.textContent = isVideo ? '🎬 Video' : '🖼 Image';
+  badge.style.display = 'inline-flex';
+  document.getElementById('uzTypes').style.display = 'none';
+  document.getElementById('uzTitle').style.fontSize = '.9rem';
+  if (!isVideo) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('thumbPreview').src = e.target.result;
+      document.getElementById('thumbWrap').classList.add('show');
+      document.getElementById('uzSub').textContent = 'Click image to zoom · click to change file';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    document.getElementById('thumbWrap').classList.remove('show');
+    document.getElementById('uzSub').textContent = 'Video file ready — click to change file';
+  }
+}
+function clearFile() {
+  document.getElementById('fileInput').value = '';
+  document.getElementById('fileBar').classList.remove('show');
+  document.getElementById('detectBtn').disabled = true;
+  document.getElementById('fileTypeBadge').style.display = 'none';
+  document.getElementById('thumbWrap').classList.remove('show');
+  document.getElementById('uzTypes').style.display = 'flex';
+  document.getElementById('uzTitle').textContent = 'Drop your file here or click to browse';
+  document.getElementById('uzSub').textContent = 'Supports images and video files for AI face detection';
+}
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(1) + ' MB';
+}
+function handleDragOver(e) { e.preventDefault(); document.getElementById('uploadZone').classList.add('drag-over'); }
+function handleDragLeave() { document.getElementById('uploadZone').classList.remove('drag-over'); }
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.remove('drag-over');
+  const files = e.dataTransfer.files;
+  if (files.length) {
+    const dt = new DataTransfer(); dt.items.add(files[0]);
+    document.getElementById('fileInput').files = dt.files;
+    displayFile(files[0]);
+  }
+}
+function triggerDetect(e) {
+  const btn = document.getElementById('detectBtn');
+  if (btn.disabled) { e.preventDefault(); return; }
+  btn.classList.add('loading'); btn.disabled = true;
+  document.getElementById('loadingScreen').classList.add('show');
+  setTimeout(() => document.getElementById('step2')?.classList.add('active'), 900);
+  setTimeout(() => document.getElementById('step3')?.classList.add('active'), 2200);
+  document.getElementById('detectForm').submit();
+}
+function openLightbox(src) {
+  document.getElementById('lbImg').src = src;
+  document.getElementById('lightbox').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.sc-fill').forEach(b => {
+    const w = b.style.width; b.style.width = '0';
+    setTimeout(() => { b.style.width = w; }, 400);
+  });
+  // Normalise confidence: detector returns 0–1 fraction, convert to 0–100 %
+  function normConf(raw) {
+    const v = parseFloat(raw) || 0;
+    return v <= 1 ? +(v * 100).toFixed(1) : +v.toFixed(1);
+  }
+  document.querySelectorAll('.conf-fill').forEach(b => {
+    const pct = normConf(b.getAttribute('data-width'));
+    b.style.width = '0%';
+    setTimeout(() => { b.style.width = pct + '%'; }, 500);
+  });
+  document.querySelectorAll('.conf-display, .conf-val').forEach(el => {
+    const pct = normConf(el.getAttribute('data-raw'));
+    el.textContent = pct + '%';
+  });
+});
+</script>
+</body>
+</html>
+

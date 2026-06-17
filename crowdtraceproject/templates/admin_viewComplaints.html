@@ -1,0 +1,754 @@
+onfig
+{% include 'admin_sidebar.html' %}
+    <!--  Main wrapper -->
+    <div class="body-wrapper" style="margin-top: 180px;margin-left: 400px">
+      <!--  Header Start -->
+       <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+
+            <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">
+              <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">
+{#                <b class="logo-icon">#}
+{#                  <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->#}
+{#                  <!-- Dark Logo icon -->#}
+{#                  <img src="../static/admin/assets/images/logos/logo-light-icon.svg" alt="homepage" class="dark-logo" />#}
+{#                </b>#}
+                <!--End Logo icon -->
+                <!-- Logo text -->
+                <span class="logo-text">
+                  <!-- dark Logo text -->
+                  <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />
+                </span>
+              </a>
+            </div>
+
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler " id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+{#            <li class="nav-item dropdown">#}
+{#              <a class="nav-link " href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>#}
+{#                <div class="notification bg-primary rounded-circle"></div>#}
+{#              </a>#}
+{#              <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">#}
+{#                <div class="message-body">#}
+{#                  <a href="javascript:void(0)" class="dropdown-item">#}
+{#                    Item 1#}
+{#                  </a>#}
+{#                  <a href="javascript:void(0)" class="dropdown-item">#}
+{#                    Item 2#}
+{#                  </a>#}
+{#                </div>#}
+{#              </div>#}
+{#            </li>#}
+          </ul>
+{#          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">#}
+{#            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">#}
+{#              <a href="{% url 'casefile' %}" target="_blank"#}
+{#                class="btn btn-success">UPLOAD CASE FILE</a>#}
+{#              <li class="nav-item dropdown">#}
+{#                <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"#}
+{#                  aria-expanded="false">#}
+{#                  <img src="../static/admin/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">#}
+{#                </a>#}
+{#                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">#}
+{#                  <div class="message-body">#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-user fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Profile</p>#}
+{#                    </a>#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-mail fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Account</p>#}
+{#                    </a>#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-list-check fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Task</p>#}
+{#                    </a>#}
+{#                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </li>#}
+{#            </ul>#}
+{#          </div>#}
+        </nav>
+      </header>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Complaints</title>
+
+    <!--
+        Using DM Sans (clean, modern, not stretched) + Outfit for headings
+        — avoids the stretched look Syne caused on the title.
+        NO Tailwind to prevent conflicts with admin Bootstrap template.
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /*
+         * All rules use the .vc- prefix (view-complaints)
+         * so they never conflict with Bootstrap / sidebar admin styles.
+         */
+
+        .vc-content {
+            padding: 32px 36px 60px;
+            font-family: 'DM Sans', sans-serif;
+            color: #0d1b3e;
+            box-sizing: border-box;
+        }
+        .vc-content *, .vc-content *::before, .vc-content *::after {
+            box-sizing: border-box;
+        }
+
+        /* ---- Page header row ---- */
+        .vc-header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .vc-eyebrow {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #1565c0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 7px;
+        }
+        .vc-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 2.5px;
+            background: #1976d2;
+            border-radius: 2px;
+        }
+
+        /* Outfit at regular weight — no stretching */
+        .vc-page-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0d1b3e;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            margin: 0 0 5px;
+        }
+
+        .vc-page-sub {
+            font-size: 0.875rem;
+            color: #4a5980;
+            margin: 0 0 12px;
+            font-weight: 400;
+        }
+
+        .vc-count-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1565c0;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            line-height: 1;
+        }
+        .vc-count-pill svg { width: 13px; height: 13px; }
+
+        /* ---- Controls ---- */
+        .vc-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .vc-search-wrap { position: relative; }
+        .vc-search-icon {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            color: #7a9bbf;
+            pointer-events: none;
+        }
+        .vc-search-input {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            color: #0d1b3e;
+            background: #ffffff;
+            border: 1.5px solid #c8d8f0;
+            border-radius: 10px;
+            padding: 9px 14px 9px 34px;
+            width: 220px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .vc-search-input::placeholder { color: #9db5d8; }
+        .vc-search-input:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25,118,210,0.12);
+        }
+
+        .vc-filter-btn {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #4a5980;
+            background: #ffffff;
+            border: 1.5px solid #c8d8f0;
+            border-radius: 10px;
+            padding: 9px 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+        .vc-filter-btn svg { width: 14px; height: 14px; }
+        .vc-filter-btn:hover {
+            border-color: #1976d2;
+            color: #0d1b3e;
+            background: #e8f1fb;
+        }
+
+        /* ---- Table card ---- */
+        .vc-table-card {
+            background: #ffffff;
+            border: 1.5px solid #ccdaf5;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(21,101,192,0.09), 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .vc-table-scroll { overflow-x: auto; }
+        .vc-table-scroll::-webkit-scrollbar { height: 5px; }
+        .vc-table-scroll::-webkit-scrollbar-track { background: #edf3fd; }
+        .vc-table-scroll::-webkit-scrollbar-thumb { background: #b3cff5; border-radius: 10px; }
+
+        /* ---- Table ---- */
+        .vc-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        /* Thead — navy to blue gradient */
+        .vc-table thead {
+            background: linear-gradient(135deg, #0d1b3e 0%, #1565c0 100%);
+        }
+        .vc-table thead tr { border: none; }
+        .vc-table thead th {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.68);
+            padding: 16px 16px;
+            white-space: nowrap;
+            border: none;
+            vertical-align: middle;
+            background: transparent;
+        }
+        .vc-table thead th:first-child {
+            padding-left: 24px;
+            color: #ffffff;
+            position: relative;
+        }
+        .vc-table thead th:first-child::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 24px; right: 16px;
+            height: 2.5px;
+            background: #29b6f6;
+            border-radius: 2px;
+        }
+        .vc-table thead th:last-child { padding-right: 24px; text-align: center; }
+
+        /* Tbody rows */
+        .vc-table tbody tr {
+            border-bottom: 1px solid #e5edf8;
+            transition: background 0.15s;
+            animation: vcRowIn 0.3s ease both;
+            background: transparent;
+        }
+        .vc-table tbody tr:last-child { border-bottom: none; }
+        .vc-table tbody tr:hover { background-color: #f0f6ff; }
+
+        .vc-table tbody tr:nth-child(1)  { animation-delay: 0.04s; }
+        .vc-table tbody tr:nth-child(2)  { animation-delay: 0.09s; }
+        .vc-table tbody tr:nth-child(3)  { animation-delay: 0.14s; }
+        .vc-table tbody tr:nth-child(4)  { animation-delay: 0.19s; }
+        .vc-table tbody tr:nth-child(5)  { animation-delay: 0.24s; }
+        .vc-table tbody tr:nth-child(n+6){ animation-delay: 0.28s; }
+
+        @keyframes vcRowIn {
+            from { opacity: 0; transform: translateY(7px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .vc-table tbody td {
+            padding: 14px 16px;
+            font-size: 0.875rem;
+            color: #4a5980;
+            vertical-align: middle;
+            border: none;
+            background: transparent;
+        }
+        .vc-table tbody td:first-child { padding-left: 24px; }
+        .vc-table tbody td:last-child  { padding-right: 24px; text-align: center; }
+
+        /* Sender ID chip */
+        .vc-sender-chip {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2c4a7a;
+            background: #edf3fd;
+            border: 1px solid #c5d9f5;
+            border-radius: 7px;
+            padding: 4px 10px;
+            letter-spacing: 0.03em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .vc-sender-chip svg { width: 12px; height: 12px; color: #1976d2; }
+
+        /* Description */
+        .vc-desc {
+            font-size: 0.875rem;
+            color: #0d1b3e;
+            font-weight: 500;
+            max-width: 240px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        /* Reply text */
+        .vc-reply-text {
+            font-size: 0.85rem;
+            color: #4a5980;
+            max-width: 200px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .vc-reply-empty {
+            font-size: 0.82rem;
+            color: #9db5d8;
+            font-style: italic;
+        }
+
+        /* Date */
+        .vc-date {
+            font-size: 0.82rem;
+            color: #6b87b0;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .vc-date svg { width: 12px; height: 12px; color: #9db5d8; }
+
+        /* Status badge */
+        .vc-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 11px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+        }
+        .vc-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        /* Pending */
+        .vc-status-pending {
+            background: #fff8e6;
+            color: #a05a00;
+            border: 1px solid #f5d68a;
+        }
+        .vc-status-pending .vc-status-dot { background: #f0a500; }
+        /* Resolved */
+        .vc-status-resolved {
+            background: #e6f4ff;
+            color: #1565c0;
+            border: 1px solid #b3cff5;
+        }
+        .vc-status-resolved .vc-status-dot { background: #1976d2; }
+        /* Replied */
+        .vc-status-replied {
+            background: #e6fff5;
+            color: #0a7c4e;
+            border: 1px solid #86efca;
+        }
+        .vc-status-replied .vc-status-dot { background: #10b981; }
+
+        /* Default / other */
+        .vc-status-default {
+            background: #f0f4f8;
+            color: #4a5980;
+            border: 1px solid #d0ddf5;
+        }
+        .vc-status-default .vc-status-dot { background: #9db5d8; }
+
+        /* Reply form — inline styled */
+        .vc-reply-form {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .vc-reply-input {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: #0d1b3e;
+            background: #f4f8ff;
+            border: 1.5px solid #c8d8f0;
+            border-radius: 8px;
+            padding: 6px 10px;
+            width: 130px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .vc-reply-input::placeholder { color: #9db5d8; font-size: 0.78rem; }
+        .vc-reply-input:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25,118,210,0.10);
+            background: #fff;
+        }
+        .vc-reply-btn {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            border: none;
+            border-radius: 8px;
+            padding: 7px 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: opacity 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+        .vc-reply-btn svg { width: 12px; height: 12px; }
+        .vc-reply-btn:hover {
+            opacity: 0.88;
+            box-shadow: 0 3px 10px rgba(21,101,192,0.28);
+        }
+
+        /* ---- Table footer ---- */
+        .vc-table-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 24px;
+            background: #f4f8ff;
+            border-top: 1px solid #d0ddf5;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: #7a9bbf;
+            font-weight: 500;
+        }
+        .vc-showing {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .vc-showing svg { width: 13px; height: 13px; }
+
+        /* ---- Empty state ---- */
+        .vc-empty {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+        .vc-empty-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: #e8f1fb;
+            border: 1.5px solid #b3cff5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        .vc-empty-icon svg { width: 26px; height: 26px; color: #9db5d8; }
+        .vc-empty p {
+            font-family: 'DM Sans', sans-serif;
+            color: #7a96be;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* ---- Toast ---- */
+        #vc-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1565c0;
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(21,101,192,0.35);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(.34,1.56,.64,1);
+            z-index: 9999;
+        }
+        #vc-toast svg { width: 18px; height: 18px; }
+    </style>
+</head>
+<body>
+
+    <!-- vc-content sits inside .body-wrapper which is already rendered
+         by the Django sidebar include above. We only style the inner area. -->
+    <div class="vc-content">
+
+        <!-- Page Header Row -->
+        <div class="vc-header-row">
+            <div>
+                <div class="vc-eyebrow">Admin Panel</div>
+                <h2 class="vc-page-title">Complaint Management</h2>
+                <p class="vc-page-sub">Review and respond to user complaints and feedback.</p>
+                <span class="vc-count-pill">
+                    <svg data-lucide="message-square-warning"></svg>
+                    <span id="vcCountText">Loading…</span>
+                </span>
+            </div>
+
+            <div class="vc-controls">
+                <div class="vc-search-wrap">
+                    <svg data-lucide="search" class="vc-search-icon"></svg>
+                    <input type="text" id="vcSearch" class="vc-search-input" placeholder="Search by sender, status…">
+                </div>
+                <button class="vc-filter-btn" id="vcFilterBtn">
+                    <svg data-lucide="filter"></svg>
+                    <span id="vcFilterLabel">All</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="vc-table-card">
+            <div class="vc-table-scroll">
+                <table class="vc-table">
+                    <thead>
+                        <tr>
+                            <th>Sender</th>
+                            <th>Description</th>
+                            <th>Reply</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vcTableBody">
+                        {% for i in a %}
+                        <tr>
+                            <!-- Sender ID -->
+                            <td>
+                                <span class="vc-sender-chip">
+                                    <svg data-lucide="user"></svg>
+                                    {{ i.USER.username }}
+                                </span>
+                            </td>
+
+                            <!-- Description -->
+                            <td>
+                                <span class="vc-desc" title="{{ i.description }}">{{ i.description }}</span>
+                            </td>
+
+                            <!-- Reply -->
+                            <td>
+                                {% if i.reply %}
+                                    <span class="vc-reply-text">{{ i.reply }}</span>
+                                {% else %}
+                                    <span class="vc-reply-empty">No reply yet</span>
+                                {% endif %}
+                            </td>
+
+                            <!-- Date -->
+                            <td>
+                                <span class="vc-date">
+                                    <svg data-lucide="calendar"></svg>
+                                    {{ i.date }}
+                                </span>
+                            </td>
+
+                            <!-- Status badge — auto-styled based on value -->
+                            <td>
+                                {% if i.status == "Replied" or i.status == "replied" %}
+                                    <span class="vc-status vc-status-replied">
+                                        <span class="vc-status-dot"></span>{{ i.status }}
+                                    </span>
+                                {% elif i.status == "Resolved" or i.status == "resolved" %}
+                                    <span class="vc-status vc-status-resolved">
+                                        <span class="vc-status-dot"></span>{{ i.status }}
+                                    </span>
+                                {% elif i.status == "Pending" or i.status == "pending" %}
+                                    <span class="vc-status vc-status-pending">
+                                        <span class="vc-status-dot"></span>{{ i.status }}
+                                    </span>
+                                {% else %}
+                                    <span class="vc-status vc-status-default">
+                                        <span class="vc-status-dot"></span>{{ i.status }}
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <!-- Action: reply form — backend untouched -->
+                            <td>
+                                <form method="post" action="{% url 'send_reply' i.id %}" class="vc-reply-form">
+                                    {% csrf_token %}
+                                    <input type="text" name="reply" class="vc-reply-input" placeholder="Type reply…">
+                                    <button type="submit" class="vc-reply-btn">
+                                        <svg data-lucide="send"></svg>
+                                        Send
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Empty State -->
+                <div id="vcEmpty" class="vc-empty">
+                    <div class="vc-empty-icon">
+                        <svg data-lucide="inbox"></svg>
+                    </div>
+                    <p>No complaints found.</p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="vc-table-footer">
+                <span class="vc-showing">
+                    <svg data-lucide="info"></svg>
+                    <span id="vcFooterText">Showing all complaints</span>
+                </span>
+                <span>Last updated: <span id="vcLastUpdated"></span></span>
+            </div>
+        </div>
+
+    </div><!-- /.vc-content -->
+
+    <!-- Toast -->
+    <div id="vc-toast">
+        <svg data-lucide="check-circle"></svg>
+        <span id="vc-toast-msg">Action successful</span>
+    </div>
+
+</body>
+
+  <script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/admin/assets/js/sidebarmenu.js"></script>
+  <script src="../static/admin/assets/js/app.min.js"></script>
+  <script src="../static/admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../static/admin/assets/js/dashboard.js"></script>
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+<script>
+    lucide.createIcons();
+
+    // Count
+    const rows = Array.from(document.querySelectorAll('#vcTableBody tr'));
+    const total = rows.length;
+
+    function updateCount(visible, filtered) {
+        document.getElementById('vcCountText').textContent =
+            total + ' complaint' + (total !== 1 ? 's' : '');
+        document.getElementById('vcFooterText').textContent = filtered
+            ? 'Showing ' + visible + ' of ' + total + ' complaint' + (total !== 1 ? 's' : '')
+            : 'Showing all ' + total + ' complaint' + (total !== 1 ? 's' : '');
+    }
+    updateCount(total, false);
+
+    // Last updated
+    document.getElementById('vcLastUpdated').textContent = new Date().toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'short', year: 'numeric'
+    });
+
+    // Search
+    document.getElementById('vcSearch').addEventListener('input', function () {
+        const q = this.value.toLowerCase().trim();
+        let visible = 0;
+        rows.forEach(row => {
+            const show = row.textContent.toLowerCase().includes(q);
+            row.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        document.getElementById('vcEmpty').style.display = visible === 0 ? 'flex' : 'none';
+        updateCount(visible, q.length > 0);
+    });
+
+    // Filter toggle: All → Pending → Resolved → All
+    const filterCycles = ['All', 'Pending', 'Resolved'];
+    let filterIdx = 0;
+    document.getElementById('vcFilterBtn').addEventListener('click', function () {
+        filterIdx = (filterIdx + 1) % filterCycles.length;
+        const val = filterCycles[filterIdx];
+        document.getElementById('vcFilterLabel').textContent = val;
+        let visible = 0;
+        rows.forEach(row => {
+            const statusEl = row.querySelector('.vc-status');
+            const statusText = statusEl ? statusEl.textContent.trim() : '';
+            const show = val === 'All' || statusText.toLowerCase() === val.toLowerCase();
+            row.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        document.getElementById('vcEmpty').style.display = visible === 0 ? 'flex' : 'none';
+        updateCount(visible, val !== 'All');
+    });
+</script>
+</html>

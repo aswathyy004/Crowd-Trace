@@ -1,0 +1,220 @@
+{% include 'admin_sidebar.html' %}
+
+<div class="body-wrapper">
+
+<header class="app-header">
+<nav class="navbar navbar-expand-lg navbar-light">
+
+<ul class="navbar-nav">
+
+<div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">
+<a href="" class="text-nowrap logo-img d-flex align-items-center gap-2">
+<span class="logo-text">
+<img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" class="dark-logo ps-2">
+</span>
+</a>
+</div>
+
+<li class="nav-item d-block d-xl-none">
+<a class="nav-link sidebartoggler" id="headerCollapse">
+<i class="ti ti-menu-2"></i>
+</a>
+</li>
+
+</ul>
+
+<div class="navbar-collapse justify-content-end px-0">
+
+<ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+
+<a href="/admin_home/" class="btn btn-primary d-flex align-items-center gap-2">
+<i class="ti ti-home"></i> DASHBOARD
+</a>
+
+</ul>
+
+</div>
+
+</nav>
+</header>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Live Face Detection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+
+.camera-wrap{
+
+padding:30px;
+font-family:'DM Sans',sans-serif;
+
+}
+
+.camera-card{
+
+background:white;
+border-radius:16px;
+padding:25px;
+box-shadow:0 6px 25px rgba(0,0,0,0.08);
+
+}
+
+.camera-header{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:20px;
+
+}
+
+.camera-title{
+
+font-family:'Outfit',sans-serif;
+font-size:22px;
+font-weight:700;
+color:#0d1b3e;
+
+}
+
+.camera-sub{
+
+font-size:13px;
+color:#7a9bbf;
+
+}
+
+.camera-box{
+
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0d1b3e;
+border-radius:12px;
+padding:10px;
+
+}
+
+.camera-box img{
+
+width:900px;
+max-width:100%;
+border-radius:10px;
+border:4px solid #1565c0;
+
+}
+
+.camera-controls{
+
+margin-top:20px;
+display:flex;
+justify-content:center;
+gap:15px;
+
+}
+
+.camera-btn{
+
+padding:10px 20px;
+border-radius:8px;
+border:none;
+font-weight:600;
+cursor:pointer;
+font-size:14px;
+
+}
+
+.btn-start{
+
+background:#10b981;
+color:white;
+
+}
+
+.btn-stop{
+
+background:#ef4444;
+color:white;
+
+}
+
+</style>
+
+</head>
+
+<br><br><br><br><br><br><br><br><br>
+<body>
+
+<div class="camera-wrap">
+
+<div class="camera-card">
+
+<div class="camera-header">
+
+<div>
+
+<div class="camera-title">Live Face Detection</div>
+
+<div class="camera-sub">
+Real-time criminal & missing person detection using AI
+</div>
+
+</div>
+
+</div>
+
+
+<div class="camera-box">
+
+<img id="cameraStream" src="{% url 'video_feed' %}">
+
+</div>
+
+
+<div class="camera-controls">
+
+<button class="camera-btn btn-start" onclick="startCamera()">
+Start Camera
+</button>
+
+<button class="camera-btn btn-stop" onclick="stopCamera()">
+Stop Camera
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function startCamera(){
+
+document.getElementById("cameraStream").src="{% url 'video_feed' %}"
+
+}
+
+function stopCamera(){
+
+document.getElementById("cameraStream").src=""
+
+}
+
+</script>
+
+
+<script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../static/admin/assets/js/sidebarmenu.js"></script>
+<script src="../static/admin/assets/js/app.min.js"></script>
+
+</body>
+</html>

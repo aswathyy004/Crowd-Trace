@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>Live AI Detections</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f1f5f9;
+font-family:'Barlow',sans-serif;
+}
+
+.page-title{
+font-size:28px;
+font-weight:700;
+margin-bottom:25px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.detect-card{
+background:white;
+border-radius:12px;
+padding:25px;
+box-shadow:0 8px 20px rgba(0,0,0,0.06);
+border:1px solid #e2e8f0;
+}
+
+.person-card{
+background:white;
+border-radius:10px;
+padding:18px;
+box-shadow:0 4px 14px rgba(0,0,0,0.05);
+border:1px solid #e2e8f0;
+transition:.2s;
+}
+
+.person-card:hover{
+transform:translateY(-3px);
+}
+
+.person-img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.person-img:hover{
+transform:scale(1.02);
+}
+
+.person-name{
+font-size:18px;
+font-weight:600;
+margin-top:10px;
+}
+
+.person-info{
+font-size:14px;
+color:#475569;
+margin-top:6px;
+}
+
+.badge-criminal{
+background:#dc2626;
+color:white;
+padding:4px 10px;
+border-radius:6px;
+font-size:12px;
+}
+
+.badge-missing{
+background:#ea580c;
+color:white;
+padding:4px 10px;
+border-radius:6px;
+font-size:12px;
+}
+
+.time-box{
+font-size:13px;
+color:#64748b;
+}
+
+.view-btn{
+margin-top:10px;
+font-size:13px;
+}
+
+/* FULLSCREEN IMAGE */
+
+.image-viewer{
+display:none;
+position:fixed;
+z-index:9999;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
+}
+
+.image-viewer img{
+max-width:90%;
+max-height:90%;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.5);
+animation:zoomIn .3s ease;
+}
+
+@keyframes zoomIn{
+from{
+transform:scale(.7);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+{% include 'police/police_sidebar.html' %}
+
+<div class="container mt-5">
+
+<div class="page-title">
+<i class="fas fa-camera"></i>
+Live AI Detections
+</div>
+
+<div class="detect-card">
+
+<div class="row">
+
+{% for d in detections %}
+
+<div class="col-md-4 mb-4">
+
+<div class="person-card">
+
+{% if d.photo %}
+<img src="{{ d.photo.url }}" class="person-img" onclick="openImage(this.src)">
+{% endif %}
+
+<div class="person-name">
+{{ d.name }}
+</div>
+
+<div class="person-info">
+
+{% if d.category == "Criminal" %}
+
+<span class="badge-criminal">
+Criminal
+</span>
+
+{% else %}
+
+<span class="badge-missing">
+Missing Person
+</span>
+
+{% endif %}
+
+</div>
+
+<div class="person-info mt-2">
+
+<i class="fa fa-calendar"></i>
+
+{{ d.date|slice:":10" }}
+
+</div>
+
+<div class="time-box">
+
+<i class="fa fa-clock"></i>
+
+{{ d.date|slice:"11:19" }}
+
+</div>
+
+<a href="{{ d.photo.url }}" target="_blank" class="btn btn-primary btn-sm view-btn">
+
+<i class="fa fa-eye"></i>
+View Evidence
+
+</a>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="col-12 text-center text-muted">
+
+<h5>No detections yet</h5>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FULLSCREEN IMAGE VIEWER -->
+
+<div id="imageViewer" class="image-viewer" onclick="closeImage()">
+<img id="viewerImg">
+</div>
+
+
+<script>
+
+function openImage(src){
+
+const viewer=document.getElementById("imageViewer");
+const img=document.getElementById("viewerImg");
+
+img.src=src;
+
+viewer.style.display="flex";
+
+}
+
+function closeImage(){
+
+document.getElementById("imageViewer").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>

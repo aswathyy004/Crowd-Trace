@@ -1,0 +1,1901 @@
+{##}
+{##}
+{##}
+{#{% include 'admin_sidebar.html' %}#}
+{#    <!--  Main wrapper -->#}
+{#    <div class="body-wrapper">#}
+{#      <!--  Header Start -->#}
+{#      <header class="app-header">#}
+{#        <nav class="navbar navbar-expand-lg navbar-light">#}
+{#          <ul class="navbar-nav">#}
+{#            <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">#}
+{#              <a href="" class="text-nowrap logo-img d-flex align-items-center gap-2">#}
+{#                <span class="logo-text">#}
+{#                  <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />#}
+{#                </span>#}
+{#              </a>#}
+{#            </div>#}
+{#            <li class="nav-item d-block d-xl-none">#}
+{#              <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">#}
+{#                <i class="ti ti-menu-2"></i>#}
+{#              </a>#}
+{#            </li>#}
+{#            <li class="nav-item dropdown">#}
+{#              <a class="nav-link" href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>#}
+{#                <div class="notification bg-danger rounded-circle"></div>#}
+{#              </a>#}
+{#              <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">#}
+{#                <div class="message-body">#}
+{#                  <a href="javascript:void(0)" class="dropdown-item">#}
+{#                    <p class="mb-0 fs-3">New Complaint Received</p>#}
+{#                  </a>#}
+{#                  <a href="javascript:void(0)" class="dropdown-item">#}
+{#                    <p class="mb-0 fs-3">New User Registered</p>#}
+{#                  </a>#}
+{#                </div>#}
+{#              </div>#}
+{#            </li>#}
+{#          </ul>#}
+{#          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">#}
+{#            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">#}
+{#              <a href="/casefile/" class="btn btn-success d-flex align-items-center gap-2">#}
+{#                <i class="ti ti-plus"></i> UPLOAD CASE FILE#}
+{#              </a>#}
+{#              <li class="nav-item dropdown">#}
+{#                <a class="nav-link" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                  <img src="../static/admin/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">#}
+{#                </a>#}
+{#                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">#}
+{#                  <div class="message-body">#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-user fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">Admin Profile</p>#}
+{#                    </a>#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-settings fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">System Settings</p>#}
+{#                    </a>#}
+{#                    <a href="/login/" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </li>#}
+{#            </ul>#}
+{#          </div>#}
+{#        </nav>#}
+{#      </header>#}
+{#      <!--  Header End -->#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Admin Home — CrowdTrace</title>#}
+{#    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">#}
+{#    <script src="https://unpkg.com/lucide@latest"></script>#}
+{#    <style>#}
+{#        /*#}
+{#         * Scoped with ah- prefix (admin-home)#}
+{#         * No Tailwind — zero conflict with Bootstrap/sidebar admin styles#}
+{#         */#}
+{##}
+{#        .ah-wrap {#}
+{#            padding: 28px 36px 60px;#}
+{#            font-family: 'DM Sans', sans-serif;#}
+{#            color: #0d1b3e;#}
+{#            box-sizing: border-box;#}
+{#        }#}
+{#        .ah-wrap *, .ah-wrap *::before, .ah-wrap *::after { box-sizing: border-box; }#}
+{##}
+{#        /* ===== GREETING BAR ===== */#}
+{#        .ah-greeting {#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            justify-content: space-between;#}
+{#            flex-wrap: wrap;#}
+{#            gap: 12px;#}
+{#            margin-bottom: 28px;#}
+{#            padding: 20px 28px;#}
+{#            background: linear-gradient(135deg, #0d1b3e 0%, #1565c0 60%, #1976d2 100%);#}
+{#            border-radius: 16px;#}
+{#            box-shadow: 0 6px 28px rgba(21,101,192,0.22);#}
+{#        }#}
+{#        .ah-greeting-left { display: flex; align-items: center; gap: 16px; }#}
+{#        .ah-greeting-avatar {#}
+{#            width: 52px; height: 52px;#}
+{#            border-radius: 14px;#}
+{#            background: rgba(255,255,255,0.15);#}
+{#            border: 2px solid rgba(255,255,255,0.25);#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#        }#}
+{#        .ah-greeting-avatar svg { width: 26px; height: 26px; color: #fff; }#}
+{#        .ah-greeting-title {#}
+{#            font-family: 'Outfit', sans-serif;#}
+{#            font-size: 1.35rem;#}
+{#            font-weight: 700;#}
+{#            color: #fff;#}
+{#            margin: 0 0 2px;#}
+{#        }#}
+{#        .ah-greeting-sub {#}
+{#            font-size: 0.82rem;#}
+{#            color: rgba(255,255,255,0.65);#}
+{#            margin: 0;#}
+{#        }#}
+{#        .ah-greeting-time {#}
+{#            font-size: 0.82rem;#}
+{#            color: rgba(255,255,255,0.70);#}
+{#            background: rgba(255,255,255,0.1);#}
+{#            border: 1px solid rgba(255,255,255,0.18);#}
+{#            padding: 6px 14px;#}
+{#            border-radius: 20px;#}
+{#            display: flex; align-items: center; gap: 6px;#}
+{#        }#}
+{#        .ah-greeting-time svg { width: 13px; height: 13px; }#}
+{##}
+{#        /* ===== STAT CARDS GRID ===== */#}
+{#        .ah-stats-grid {#}
+{#            display: grid;#}
+{#            grid-template-columns: repeat(4, 1fr);#}
+{#            gap: 16px;#}
+{#            margin-bottom: 24px;#}
+{#        }#}
+{#        @media (max-width: 1100px) { .ah-stats-grid { grid-template-columns: repeat(2,1fr); } }#}
+{#        @media (max-width: 600px)  { .ah-stats-grid { grid-template-columns: 1fr; } }#}
+{##}
+{#        .ah-stat-card {#}
+{#            background: #fff;#}
+{#            border: 1.5px solid #ccdaf5;#}
+{#            border-radius: 14px;#}
+{#            padding: 20px 22px;#}
+{#            display: flex;#}
+{#            flex-direction: column;#}
+{#            gap: 12px;#}
+{#            box-shadow: 0 2px 12px rgba(21,101,192,0.07);#}
+{#            transition: transform 0.2s, box-shadow 0.2s;#}
+{#            position: relative;#}
+{#            overflow: hidden;#}
+{#        }#}
+{#        .ah-stat-card::before {#}
+{#            content: '';#}
+{#            position: absolute;#}
+{#            top: 0; left: 0; right: 0;#}
+{#            height: 3px;#}
+{#            border-radius: 14px 14px 0 0;#}
+{#        }#}
+{#        .ah-stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(21,101,192,0.13); }#}
+{##}
+{#        .ah-stat-card.blue::before  { background: linear-gradient(90deg,#1565c0,#29b6f6); }#}
+{#        .ah-stat-card.green::before { background: linear-gradient(90deg,#0a7c4e,#10b981); }#}
+{#        .ah-stat-card.amber::before { background: linear-gradient(90deg,#a05a00,#f0a500); }#}
+{#        .ah-stat-card.red::before   { background: linear-gradient(90deg,#b91c1c,#ef4444); }#}
+{#        .ah-stat-card.purple::before{ background: linear-gradient(90deg,#6d28d9,#a78bfa); }#}
+{##}
+{#        .ah-stat-top {#}
+{#            display: flex; align-items: center; justify-content: space-between;#}
+{#        }#}
+{#        .ah-stat-icon {#}
+{#            width: 42px; height: 42px;#}
+{#            border-radius: 11px;#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#        }#}
+{#        .ah-stat-icon svg { width: 20px; height: 20px; }#}
+{#        .ah-stat-icon.blue   { background: #e8f1fb; color: #1565c0; }#}
+{#        .ah-stat-icon.green  { background: #e6fff5; color: #0a7c4e; }#}
+{#        .ah-stat-icon.amber  { background: #fff8e6; color: #a05a00; }#}
+{#        .ah-stat-icon.red    { background: #fef2f2; color: #b91c1c; }#}
+{#        .ah-stat-icon.purple { background: #f3f0ff; color: #6d28d9; }#}
+{##}
+{#        .ah-stat-badge {#}
+{#            font-size: 0.68rem;#}
+{#            font-weight: 700;#}
+{#            letter-spacing: 0.04em;#}
+{#            padding: 3px 9px;#}
+{#            border-radius: 20px;#}
+{#        }#}
+{#        .ah-stat-badge.blue   { background: #e8f1fb; color: #1565c0; }#}
+{#        .ah-stat-badge.green  { background: #e6fff5; color: #0a7c4e; }#}
+{#        .ah-stat-badge.amber  { background: #fff8e6; color: #a05a00; }#}
+{#        .ah-stat-badge.red    { background: #fef2f2; color: #b91c1c; }#}
+{#        .ah-stat-badge.purple { background: #f3f0ff; color: #6d28d9; }#}
+{##}
+{#        .ah-stat-number {#}
+{#            font-family: 'Outfit', sans-serif;#}
+{#            font-size: 2.1rem;#}
+{#            font-weight: 800;#}
+{#            color: #0d1b3e;#}
+{#            line-height: 1;#}
+{#            margin: 0;#}
+{#        }#}
+{#        .ah-stat-label {#}
+{#            font-size: 0.82rem;#}
+{#            color: #6b87b0;#}
+{#            font-weight: 500;#}
+{#            margin: 2px 0 0;#}
+{#        }#}
+{##}
+{#        /* ===== MAIN GRID (table + panels) ===== */#}
+{#        .ah-main-grid {#}
+{#            display: grid;#}
+{#            grid-template-columns: 1fr 340px;#}
+{#            gap: 20px;#}
+{#            margin-bottom: 20px;#}
+{#        }#}
+{#        @media (max-width: 1050px) { .ah-main-grid { grid-template-columns: 1fr; } }#}
+{##}
+{#        /* ===== CARD BASE ===== */#}
+{#        .ah-card {#}
+{#            background: #fff;#}
+{#            border: 1.5px solid #ccdaf5;#}
+{#            border-radius: 16px;#}
+{#            overflow: hidden;#}
+{#            box-shadow: 0 2px 14px rgba(21,101,192,0.07);#}
+{#        }#}
+{#        .ah-card-header {#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            justify-content: space-between;#}
+{#            padding: 18px 22px 14px;#}
+{#            border-bottom: 1px solid #e5edf8;#}
+{#            flex-wrap: wrap;#}
+{#            gap: 10px;#}
+{#        }#}
+{#        .ah-card-title {#}
+{#            font-family: 'Outfit', sans-serif;#}
+{#            font-size: 1rem;#}
+{#            font-weight: 700;#}
+{#            color: #0d1b3e;#}
+{#            margin: 0 0 2px;#}
+{#        }#}
+{#        .ah-card-sub {#}
+{#            font-size: 0.78rem;#}
+{#            color: #7a9bbf;#}
+{#            margin: 0;#}
+{#        }#}
+{#        .ah-card-action {#}
+{#            font-size: 0.78rem;#}
+{#            font-weight: 600;#}
+{#            color: #1976d2;#}
+{#            background: #e8f1fb;#}
+{#            border: 1px solid #b3cff5;#}
+{#            border-radius: 8px;#}
+{#            padding: 5px 12px;#}
+{#            text-decoration: none;#}
+{#            transition: background 0.15s;#}
+{#            white-space: nowrap;#}
+{#        }#}
+{#        .ah-card-action:hover { background: #d0e4f7; color: #0d1b3e; text-decoration: none; }#}
+{##}
+{#        /* ===== MISSING PERSONS TABLE ===== */#}
+{#        .ah-table { width: 100%; border-collapse: collapse; font-family: 'DM Sans', sans-serif; }#}
+{#        .ah-table thead { background: linear-gradient(135deg, #0d1b3e 0%, #1565c0 100%); }#}
+{#        .ah-table thead th {#}
+{#            font-size: 0.66rem;#}
+{#            font-weight: 700;#}
+{#            letter-spacing: 0.12em;#}
+{#            text-transform: uppercase;#}
+{#            color: rgba(255,255,255,0.68);#}
+{#            padding: 13px 16px;#}
+{#            white-space: nowrap;#}
+{#            border: none;#}
+{#        }#}
+{#        .ah-table thead th:first-child { padding-left: 22px; color: #fff; }#}
+{#        .ah-table thead th:last-child  { padding-right: 22px; }#}
+{#        .ah-table tbody tr {#}
+{#            border-bottom: 1px solid #e5edf8;#}
+{#            transition: background 0.12s;#}
+{#        }#}
+{#        .ah-table tbody tr:last-child { border-bottom: none; }#}
+{#        .ah-table tbody tr:hover { background: #f0f6ff; }#}
+{#        .ah-table tbody td {#}
+{#            padding: 12px 16px;#}
+{#            font-size: 0.85rem;#}
+{#            color: #4a5980;#}
+{#            vertical-align: middle;#}
+{#            border: none;#}
+{#        }#}
+{#        .ah-table tbody td:first-child { padding-left: 22px; }#}
+{#        .ah-table tbody td:last-child  { padding-right: 22px; }#}
+{##}
+{#        /* person cell */#}
+{#        .ah-person-cell { display: flex; align-items: center; gap: 10px; }#}
+{#        .ah-person-photo {#}
+{#            width: 34px; height: 34px;#}
+{#            border-radius: 9px;#}
+{#            object-fit: cover;#}
+{#            border: 1.5px solid #b3cff5;#}
+{#            background: #e8f1fb;#}
+{#            flex-shrink: 0;#}
+{#        }#}
+{#        .ah-person-placeholder {#}
+{#            width: 34px; height: 34px;#}
+{#            border-radius: 9px;#}
+{#            background: linear-gradient(135deg,#daeaff,#b3cff5);#}
+{#            border: 1.5px solid #99bcf0;#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#            flex-shrink: 0;#}
+{#        }#}
+{#        .ah-person-placeholder svg { width: 15px; height: 15px; color: #1565c0; }#}
+{#        .ah-person-name { font-weight: 600; color: #0d1b3e; font-size: 0.875rem; }#}
+{#        .ah-person-meta { font-size: 0.75rem; color: #9db5d8; }#}
+{##}
+{#        /* case id chip */#}
+{#        .ah-case-id {#}
+{#            font-family: 'Courier New', monospace;#}
+{#            font-size: 0.78rem;#}
+{#            font-weight: 700;#}
+{#            color: #2c4a7a;#}
+{#            background: #edf3fd;#}
+{#            border: 1px solid #c5d9f5;#}
+{#            border-radius: 6px;#}
+{#            padding: 3px 8px;#}
+{#        }#}
+{##}
+{#        /* gender/age badge */#}
+{#        .ah-gender-badge {#}
+{#            display: inline-flex; align-items: center; gap: 4px;#}
+{#            padding: 3px 9px;#}
+{#            border-radius: 6px;#}
+{#            font-size: 0.73rem;#}
+{#            font-weight: 600;#}
+{#        }#}
+{#        .ah-gender-badge.male   { background: #e8f1fb; color: #1565c0; border: 1px solid #b3cff5; }#}
+{#        .ah-gender-badge.female { background: #fdf0fb; color: #9333ea; border: 1px solid #ddb8f5; }#}
+{#        .ah-gender-badge.other  { background: #f0f4f8; color: #4a5980; border: 1px solid #c8d8f0; }#}
+{##}
+{#        /* location */#}
+{#        .ah-location { display: inline-flex; align-items: center; gap: 5px; font-size: 0.82rem; color: #4a5980; }#}
+{#        .ah-location svg { width: 11px; height: 11px; color: #9db5d8; }#}
+{##}
+{#        /* ===== RIGHT PANEL ===== */#}
+{#        .ah-right-col { display: flex; flex-direction: column; gap: 20px; }#}
+{##}
+{#        /* Complaints summary */#}
+{#        .ah-complaints-list { padding: 0 4px; }#}
+{#        .ah-complaint-item {#}
+{#            display: flex;#}
+{#            align-items: flex-start;#}
+{#            gap: 12px;#}
+{#            padding: 12px 18px;#}
+{#            border-bottom: 1px solid #e8eef8;#}
+{#            transition: background 0.12s;#}
+{#        }#}
+{#        .ah-complaint-item:last-child { border-bottom: none; }#}
+{#        .ah-complaint-item:hover { background: #f4f8ff; }#}
+{#        .ah-complaint-dot {#}
+{#            width: 8px; height: 8px;#}
+{#            border-radius: 50%;#}
+{#            margin-top: 6px;#}
+{#            flex-shrink: 0;#}
+{#        }#}
+{#        .ah-complaint-dot.pending  { background: #f0a500; }#}
+{#        .ah-complaint-dot.replied  { background: #10b981; }#}
+{#        .ah-complaint-dot.other    { background: #9db5d8; }#}
+{#        .ah-complaint-user { font-weight: 600; font-size: 0.85rem; color: #0d1b3e; }#}
+{#        .ah-complaint-desc { font-size: 0.78rem; color: #7a9bbf; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }#}
+{#        .ah-complaint-status {#}
+{#            margin-left: auto;#}
+{#            font-size: 0.68rem;#}
+{#            font-weight: 700;#}
+{#            padding: 3px 8px;#}
+{#            border-radius: 12px;#}
+{#            flex-shrink: 0;#}
+{#            white-space: nowrap;#}
+{#        }#}
+{#        .ah-complaint-status.pending { background: #fff8e6; color: #a05a00; border: 1px solid #f5d68a; }#}
+{#        .ah-complaint-status.replied { background: #e6fff5; color: #0a7c4e; border: 1px solid #86efca; }#}
+{#        .ah-complaint-status.other   { background: #f0f4f8; color: #4a5980; border: 1px solid #d0ddf5; }#}
+{##}
+{#        /* ===== BOTTOM GRID ===== */#}
+{#        .ah-bottom-grid {#}
+{#            display: grid;#}
+{#            grid-template-columns: 1fr 1fr;#}
+{#            gap: 20px;#}
+{#        }#}
+{#        @media (max-width: 900px) { .ah-bottom-grid { grid-template-columns: 1fr; } }#}
+{##}
+{#        /* Police stations list */#}
+{#        .ah-station-item {#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            gap: 14px;#}
+{#            padding: 13px 22px;#}
+{#            border-bottom: 1px solid #e8eef8;#}
+{#            transition: background 0.12s;#}
+{#        }#}
+{#        .ah-station-item:last-child { border-bottom: none; }#}
+{#        .ah-station-item:hover { background: #f4f8ff; }#}
+{#        .ah-station-icon {#}
+{#            width: 38px; height: 38px;#}
+{#            border-radius: 10px;#}
+{#            background: linear-gradient(135deg,#e8f1fb,#daeaff);#}
+{#            border: 1.5px solid #b3cff5;#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#            flex-shrink: 0;#}
+{#        }#}
+{#        .ah-station-icon svg { width: 16px; height: 16px; color: #1565c0; }#}
+{#        .ah-station-name { font-weight: 600; font-size: 0.875rem; color: #0d1b3e; }#}
+{#        .ah-station-place { font-size: 0.75rem; color: #7a9bbf; }#}
+{#        .ah-station-head {#}
+{#            margin-left: auto;#}
+{#            font-size: 0.75rem;#}
+{#            color: #4a5980;#}
+{#            text-align: right;#}
+{#        }#}
+{#        .ah-station-head span { display: block; font-size: 0.68rem; color: #9db5d8; }#}
+{##}
+{#        /* Users list */#}
+{#        .ah-user-item {#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            gap: 12px;#}
+{#            padding: 12px 22px;#}
+{#            border-bottom: 1px solid #e8eef8;#}
+{#            transition: background 0.12s;#}
+{#        }#}
+{#        .ah-user-item:last-child { border-bottom: none; }#}
+{#        .ah-user-item:hover { background: #f4f8ff; }#}
+{#        .ah-user-avatar {#}
+{#            width: 36px; height: 36px;#}
+{#            border-radius: 10px;#}
+{#            background: linear-gradient(135deg,#daeaff,#b3cff5);#}
+{#            border: 1.5px solid #99bcf0;#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#            flex-shrink: 0;#}
+{#        }#}
+{#        .ah-user-avatar svg { width: 15px; height: 15px; color: #1565c0; }#}
+{#        .ah-user-name  { font-weight: 600; font-size: 0.875rem; color: #0d1b3e; }#}
+{#        .ah-user-place { font-size: 0.75rem; color: #7a9bbf; }#}
+{#        .ah-user-phone { margin-left: auto; font-size: 0.78rem; color: #4a5980; display: flex; align-items: center; gap: 4px; }#}
+{#        .ah-user-phone svg { width: 11px; height: 11px; color: #9db5d8; }#}
+{##}
+{#        /* ===== CRIMINAL CARDS ===== */#}
+{#        .ah-criminal-grid {#}
+{#            display: grid;#}
+{#            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));#}
+{#            gap: 14px;#}
+{#            padding: 18px 22px;#}
+{#        }#}
+{#        .ah-criminal-card {#}
+{#            background: #f4f8ff;#}
+{#            border: 1.5px solid #ccdaf5;#}
+{#            border-radius: 12px;#}
+{#            overflow: hidden;#}
+{#            text-align: center;#}
+{#            transition: transform 0.2s, box-shadow 0.2s;#}
+{#        }#}
+{#        .ah-criminal-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(21,101,192,0.12); }#}
+{#        .ah-criminal-photo {#}
+{#            width: 100%; height: 110px;#}
+{#            object-fit: cover;#}
+{#            display: block;#}
+{#        }#}
+{#        .ah-criminal-placeholder {#}
+{#            width: 100%; height: 110px;#}
+{#            background: linear-gradient(135deg,#e8f1fb,#daeaff);#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#        }#}
+{#        .ah-criminal-placeholder svg { width: 36px; height: 36px; color: #b3cff5; }#}
+{#        .ah-criminal-info { padding: 10px 10px 12px; }#}
+{#        .ah-criminal-name { font-weight: 700; font-size: 0.82rem; color: #0d1b3e; margin-bottom: 4px; }#}
+{#        .ah-criminal-meta { font-size: 0.72rem; color: #7a9bbf; }#}
+{#        .ah-criminal-badge {#}
+{#            display: inline-block;#}
+{#            margin-top: 6px;#}
+{#            font-size: 0.65rem;#}
+{#            font-weight: 700;#}
+{#            padding: 2px 8px;#}
+{#            border-radius: 10px;#}
+{#            background: #fef2f2;#}
+{#            color: #b91c1c;#}
+{#            border: 1px solid #fecaca;#}
+{#        }#}
+{##}
+{#        /* ===== FOOTER ===== */#}
+{#        .ah-footer {#}
+{#            text-align: center;#}
+{#            padding: 20px 0 0;#}
+{#            font-size: 0.78rem;#}
+{#            color: #9db5d8;#}
+{#        }#}
+{##}
+{#        /* ===== EMPTY STATE (inline) ===== */#}
+{#        .ah-empty-row td {#}
+{#            text-align: center;#}
+{#            padding: 36px 20px !important;#}
+{#            color: #9db5d8;#}
+{#            font-size: 0.85rem;#}
+{#        }#}
+{#        .ah-empty-inline {#}
+{#            display: flex;#}
+{#            flex-direction: column;#}
+{#            align-items: center;#}
+{#            justify-content: center;#}
+{#            padding: 36px 20px;#}
+{#            color: #9db5d8;#}
+{#            font-size: 0.85rem;#}
+{#            gap: 8px;#}
+{#        }#}
+{#        .ah-empty-inline svg { width: 28px; height: 28px; color: #c5d9f5; }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<div class="ah-wrap">#}
+{##}
+{#    <!-- ===== GREETING BAR ===== -->#}
+{#    <div class="ah-greeting">#}
+{#        <div class="ah-greeting-left">#}
+{#            <div class="ah-greeting-avatar">#}
+{#                <svg data-lucide="shield-check"></svg>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-greeting-title">Welcome back, Crowd Trace Admin 👋</p>#}
+{#                <p class="ah-greeting-sub">Here's a live overview of everything happening on the platform.</p>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="ah-greeting-time">#}
+{#            <svg data-lucide="clock"></svg>#}
+{#            <span id="ahClock">—</span>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <!-- ===== STAT CARDS ===== -->#}
+{#    <div class="ah-stats-grid">#}
+{##}
+{#        <!-- Registered Users -->#}
+{#        <div class="ah-stat-card blue">#}
+{#            <div class="ah-stat-top">#}
+{#                <div class="ah-stat-icon blue"><svg data-lucide="users"></svg></div>#}
+{#                <span class="ah-stat-badge blue">Registered</span>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-stat-number">{{ total_users }}</p>#}
+{#                <p class="ah-stat-label">Registered Users</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Missing Persons -->#}
+{#        <div class="ah-stat-card amber">#}
+{#            <div class="ah-stat-top">#}
+{#                <div class="ah-stat-icon amber"><svg data-lucide="search"></svg></div>#}
+{#                <span class="ah-stat-badge amber">Active</span>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-stat-number">{{ total_missing }}</p>#}
+{#                <p class="ah-stat-label">Missing Persons</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Criminals on Record -->#}
+{#        <div class="ah-stat-card red">#}
+{#            <div class="ah-stat-top">#}
+{#                <div class="ah-stat-icon red"><svg data-lucide="alert-triangle"></svg></div>#}
+{#                <span class="ah-stat-badge red">Wanted</span>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-stat-number">{{ total_criminals }}</p>#}
+{#                <p class="ah-stat-label">Criminals on Record</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Police Stations -->#}
+{#        <div class="ah-stat-card green">#}
+{#            <div class="ah-stat-top">#}
+{#                <div class="ah-stat-icon green"><svg data-lucide="building-2"></svg></div>#}
+{#                <span class="ah-stat-badge green">Active</span>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-stat-number">{{ total_stations }}</p>#}
+{#                <p class="ah-stat-label">Police Stations</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Total Police -->#}
+{#        <div class="ah-stat-card purple">#}
+{#            <div class="ah-stat-top">#}
+{#                <div class="ah-stat-icon purple"><svg data-lucide="badge"></svg></div>#}
+{#                <span class="ah-stat-badge purple">Deployed</span>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-stat-number">{{ total_police }}</p>#}
+{#                <p class="ah-stat-label">Police Officers</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Complaints -->#}
+{#        <div class="ah-stat-card red">#}
+{#            <div class="ah-stat-top">#}
+{#                <div class="ah-stat-icon red"><svg data-lucide="message-circle-warning"></svg></div>#}
+{#                <span class="ah-stat-badge amber">Pending: {{ pending_complaints }}</span>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-stat-number">{{ total_complaints }}</p>#}
+{#                <p class="ah-stat-label">Total Complaints</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Replied Complaints -->#}
+{#        <div class="ah-stat-card green">#}
+{#            <div class="ah-stat-top">#}
+{#                <div class="ah-stat-icon green"><svg data-lucide="message-circle-check"></svg></div>#}
+{#                <span class="ah-stat-badge green">Resolved</span>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-stat-number">{{ replied_complaints }}</p>#}
+{#                <p class="ah-stat-label">Complaints Replied</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- System Status -->#}
+{#        <div class="ah-stat-card blue">#}
+{#            <div class="ah-stat-top">#}
+{#                <div class="ah-stat-icon blue"><svg data-lucide="activity"></svg></div>#}
+{#                <span class="ah-stat-badge green">Online</span>#}
+{#            </div>#}
+{#            <div>#}
+{#                <p class="ah-stat-number" style="font-size:1.4rem;">CrowdTrace</p>#}
+{#                <p class="ah-stat-label">System Status — All OK</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+{##}
+{#    <!-- ===== MAIN GRID ===== -->#}
+{#    <div class="ah-main-grid">#}
+{##}
+{#        <!-- LEFT: Missing Persons Table -->#}
+{#        <div class="ah-card">#}
+{#            <div class="ah-card-header">#}
+{#                <div>#}
+{#                    <p class="ah-card-title">Missing Persons</p>#}
+{#                    <p class="ah-card-sub">All active missing person cases on record</p>#}
+{#                </div>#}
+{#                <a href="#" class="ah-card-action">View All</a>#}
+{#            </div>#}
+{#            <div style="overflow-x:auto;">#}
+{#                <table class="ah-table">#}
+{#                    <thead>#}
+{#                        <tr>#}
+{#                            <th>Person</th>#}
+{#                            <th>Age</th>#}
+{#                            <th>Gender</th>#}
+{#                            <th>Details</th>#}
+{#                            <th>Filed By</th>#}
+{#                        </tr>#}
+{#                    </thead>#}
+{#                    <tbody>#}
+{#                        {% for p in missing_persons %}#}
+{#                        <tr>#}
+{#                            <td>#}
+{#                                <div class="ah-person-cell">#}
+{#                                    {% if p.photo %}#}
+{#                                        <img src="{{ p.photo.url }}" class="ah-person-photo" alt="{{ p.name }}">#}
+{#                                    {% else %}#}
+{#                                        <div class="ah-person-placeholder">#}
+{#                                            <svg data-lucide="user"></svg>#}
+{#                                        </div>#}
+{#                                    {% endif %}#}
+{#                                    <div>#}
+{#                                        <div class="ah-person-name">{{ p.name }}</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </td>#}
+{#                            <td>{{ p.age }} yrs</td>#}
+{#                            <td>#}
+{#                                {% if p.gender == "Male" or p.gender == "male" %}#}
+{#                                    <span class="ah-gender-badge male">#}
+{#                                        <svg data-lucide="user" style="width:10px;height:10px;"></svg>#}
+{#                                        {{ p.gender }}#}
+{#                                    </span>#}
+{#                                {% elif p.gender == "Female" or p.gender == "female" %}#}
+{#                                    <span class="ah-gender-badge female">{{ p.gender }}</span>#}
+{#                                {% else %}#}
+{#                                    <span class="ah-gender-badge other">{{ p.gender }}</span>#}
+{#                                {% endif %}#}
+{#                            </td>#}
+{#                            <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ p.details }}">#}
+{#                                {{ p.details|truncatechars:40 }}#}
+{#                            </td>#}
+{#                            <td>#}
+{#                                <span style="font-size:0.78rem; color:#7a9bbf;">#}
+{#                                    {{ p.POLICE.full_name|default:p.POLICE.USER.username }}#}
+{#                                </span>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                        {% empty %}#}
+{#                        <tr class="ah-empty-row">#}
+{#                            <td colspan="5">No missing person records found.</td>#}
+{#                        </tr>#}
+{#                        {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- RIGHT: Recent Complaints -->#}
+{#        <div class="ah-card">#}
+{#            <div class="ah-card-header">#}
+{#                <div>#}
+{#                    <p class="ah-card-title">Recent Complaints</p>#}
+{#                    <p class="ah-card-sub">Latest {{ recent_complaints|length }} submitted</p>#}
+{#                </div>#}
+{#                <a href="{% url 'admin_viewComplaints' %}" class="ah-card-action">View All</a>#}
+{#            </div>#}
+{#            <div class="ah-complaints-list">#}
+{#                {% for c in recent_complaints %}#}
+{#                <div class="ah-complaint-item">#}
+{#                    <div class="ah-complaint-dot {% if c.status == 'Replied' or c.status == 'replied' %}replied{% elif c.status == 'pending' or c.status == 'Pending' %}pending{% else %}other{% endif %}"></div>#}
+{#                    <div style="min-width:0;">#}
+{#                        <div class="ah-complaint-user">{{ c.USER.username }}</div>#}
+{#                        <div class="ah-complaint-desc">{{ c.description }}</div>#}
+{#                        <div style="font-size:0.7rem;color:#b3cff5;margin-top:2px;">{{ c.date }}</div>#}
+{#                    </div>#}
+{#                    <span class="ah-complaint-status {% if c.status == 'Replied' or c.status == 'replied' %}replied{% elif c.status == 'pending' or c.status == 'Pending' %}pending{% else %}other{% endif %}">#}
+{#                        {{ c.status|capfirst }}#}
+{#                    </span>#}
+{#                </div>#}
+{#                {% empty %}#}
+{#                <div class="ah-empty-inline">#}
+{#                    <svg data-lucide="inbox"></svg>#}
+{#                    <span>No complaints yet</span>#}
+{#                </div>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+{##}
+{#    <!-- ===== BOTTOM GRID ===== -->#}
+{#    <div class="ah-bottom-grid">#}
+{##}
+{#        <!-- Police Stations -->#}
+{#        <div class="ah-card">#}
+{#            <div class="ah-card-header">#}
+{#                <div>#}
+{#                    <p class="ah-card-title">Police Stations</p>#}
+{#                    <p class="ah-card-sub">{{ total_stations }} station{{ total_stations|pluralize }} registered</p>#}
+{#                </div>#}
+{#                <a href="{% url 'admin_add_station' %}" class="ah-card-action">Manage</a>#}
+{#            </div>#}
+{#            {% for s in stations %}#}
+{#            <div class="ah-station-item">#}
+{#                <div class="ah-station-icon"><svg data-lucide="building-2"></svg></div>#}
+{#                <div>#}
+{#                    <div class="ah-station-name">{{ s.station_name }}</div>#}
+{#                    <div class="ah-station-place">{{ s.place }}</div>#}
+{#                </div>#}
+{#                <div class="ah-station-head">#}
+{#                    {{ s.station_head }}#}
+{#                    <span>Head Officer</span>#}
+{#                </div>#}
+{#            </div>#}
+{#            {% empty %}#}
+{#            <div class="ah-empty-inline">#}
+{#                <svg data-lucide="building-2"></svg>#}
+{#                <span>No stations added yet</span>#}
+{#            </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{##}
+{#        <!-- Registered Users -->#}
+{#        <div class="ah-card">#}
+{#            <div class="ah-card-header">#}
+{#                <div>#}
+{#                    <p class="ah-card-title">Registered Users</p>#}
+{#                    <p class="ah-card-sub">{{ total_users }} user{{ total_users|pluralize }} on platform</p>#}
+{#                </div>#}
+{#                <a href="{% url 'admin_viewUsers' %}" class="ah-card-action">View All</a>#}
+{#            </div>#}
+{#            {% for u in recent_users %}#}
+{#            <div class="ah-user-item">#}
+{#                <div class="ah-user-avatar"><svg data-lucide="user"></svg></div>#}
+{#                <div>#}
+{#                    <div class="ah-user-name">{{ u.USER.username }}</div>#}
+{#                    <div class="ah-user-place">{{ u.place }}</div>#}
+{#                </div>#}
+{#                <div class="ah-user-phone">#}
+{#                    <svg data-lucide="phone"></svg>#}
+{#                    {{ u.phone }}#}
+{#                </div>#}
+{#            </div>#}
+{#            {% empty %}#}
+{#            <div class="ah-empty-inline">#}
+{#                <svg data-lucide="users"></svg>#}
+{#                <span>No users registered yet</span>#}
+{#            </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{##}
+{#    </div>#}
+{##}
+{#    <!-- ===== CRIMINALS SECTION ===== -->#}
+{#    {% if criminals %}#}
+{#    <div class="ah-card" style="margin-top:20px;">#}
+{#        <div class="ah-card-header">#}
+{#            <div>#}
+{#                <p class="ah-card-title">Criminals on Record</p>#}
+{#                <p class="ah-card-sub">{{ total_criminals }} record{{ total_criminals|pluralize }} in database</p>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="ah-criminal-grid">#}
+{#            {% for c in criminals %}#}
+{#            <div class="ah-criminal-card">#}
+{#                {% if c.photo %}#}
+{#                    <img src="{{ c.photo.url }}" class="ah-criminal-photo" alt="{{ c.name }}">#}
+{#                {% else %}#}
+{#                    <div class="ah-criminal-placeholder">#}
+{#                        <svg data-lucide="user-x"></svg>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#                <div class="ah-criminal-info">#}
+{#                    <div class="ah-criminal-name">{{ c.name }}</div>#}
+{#                    <div class="ah-criminal-meta">{{ c.age }} yrs · {{ c.gender }}</div>#}
+{#                    <span class="ah-criminal-badge">Wanted</span>#}
+{#                </div>#}
+{#            </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+{#    {% endif %}#}
+{##}
+{#    <!-- ===== FOOTER ===== -->#}
+{#    <div class="ah-footer">Crowd Trace Admin Panel &copy; 2024 — All systems operational</div>#}
+{##}
+{#</div><!-- /.ah-wrap -->#}
+{##}
+{#</body>#}
+{##}
+{#  <script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>#}
+{#  <script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>#}
+{#  <script src="../static/admin/assets/js/sidebarmenu.js"></script>#}
+{#  <script src="../static/admin/assets/js/app.min.js"></script>#}
+{#  <script src="../static/admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>#}
+{#  <script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>#}
+{#  <script src="../static/admin/assets/js/dashboard.js"></script>#}
+{#  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>#}
+{##}
+{#<script>#}
+{#    lucide.createIcons();#}
+{##}
+{#    // Live clock#}
+{#    function updateClock() {#}
+{#        const now = new Date();#}
+{#        document.getElementById('ahClock').textContent = now.toLocaleString('en-IN', {#}
+{#            weekday: 'short', day: '2-digit', month: 'short',#}
+{#            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true#}
+{#        });#}
+{#    }#}
+{#    updateClock();#}
+{#    setInterval(updateClock, 1000);#}
+{#</script>#}
+{#</html>#}
+
+
+
+
+
+{% include 'admin_sidebar.html' %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════════════
+   SCOPE: .cr  — zero conflict with Bootstrap / sidebar
+═══════════════════════════════════════════════════════ */
+.cr {
+  --ind: #4361ee;  --ind-l: #eef0fd;  --ind-m: #c7cdfb;
+  --vio: #7c3aed;  --vio-l: #f5f3ff;  --vio-m: #ddd6fe;
+  --eme: #0d9488;  --eme-l: #f0fdfa;  --eme-m: #99f6e4;
+  --ros: #e11d48;  --ros-l: #fff1f2;  --ros-m: #fecdd3;
+  --amb: #d97706;  --amb-l: #fffbeb;  --amb-m: #fde68a;
+  --sky: #0284c7;  --sky-l: #e0f2fe;  --sky-m: #bae6fd;
+
+  --bg:    #f0f4fa;
+  --bg2:   #e8edf8;
+  --card:  #ffffff;
+  --card2: #f8faff;
+  --bd:    #e2e8f4;
+  --bd2:   #c8d3eb;
+  --t1:    #0f172a;
+  --t2:    #475569;
+  --t3:    #94a3b8;
+
+  --sh: 0 1px 3px rgba(15,23,42,0.06), 0 4px 16px rgba(15,23,42,0.05);
+  --sh2: 0 4px 20px rgba(15,23,42,0.1);
+  --r: 18px; --r2: 12px;
+  --ease: 0.24s cubic-bezier(0.4,0,0.2,1);
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  color: var(--t1);
+  background: var(--bg);
+  /* ↓ FIX: extra top padding so the blue header bar doesn't mask the greeting card */
+  padding: 44px 28px 60px;
+  min-height: calc(100vh - 70px);
+  box-sizing: border-box;
+}
+
+/* ════════════════════════════════
+   GREETING HERO BANNER
+════════════════════════════════ */
+.cr-hero {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+  background: linear-gradient(130deg, #1e3a8a 0%, #2563eb 52%, #0ea5e9 100%);
+  border-radius: var(--r);
+  padding: 26px 32px;
+  margin-bottom: 28px;
+  box-shadow: 0 12px 40px rgba(37,99,235,0.3);
+  position: relative; overflow: hidden;
+}
+/* shimmer highlight */
+.cr-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 65% 90% at 85% 40%, rgba(255,255,255,0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+/* decorative circles */
+.cr-hero::after {
+  content: '';
+  position: absolute; right: -60px; top: -60px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  pointer-events: none;
+}
+.cr-hero-left { display: flex; align-items: center; gap: 18px; z-index: 1; }
+.cr-hero-av {
+  width: 52px; height: 52px; border-radius: 16px;
+  background: rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.cr-hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.35rem; font-weight: 800; color: #fff;
+  margin: 0 0 4px; line-height: 1.1;
+}
+.cr-hero-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.6);
+  display: flex; align-items: center; gap: 8px;
+}
+.cr-live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #4ade80; box-shadow: 0 0 0 3px rgba(74,222,128,0.28);
+  display: inline-block; flex-shrink: 0;
+  animation: ldp 2s ease-in-out infinite;
+}
+@keyframes ldp {
+  0%,100%{ box-shadow:0 0 0 3px rgba(74,222,128,0.28); }
+  50%    { box-shadow:0 0 0 7px rgba(74,222,128,0); }
+}
+.cr-hero-right { display:flex; align-items:center; gap:10px; z-index:1; }
+.cr-clock {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.13);
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 8px 18px; border-radius: 100px;
+  display: flex; align-items: center; gap: 8px;
+}
+.cr-clock strong { color: #fff; font-size: 14px; }
+
+/* ════════════════════════════════
+   ALERT
+════════════════════════════════ */
+.cr-alert {
+  display: flex; align-items: center; gap: 13px;
+  padding: 13px 18px; border-radius: var(--r2); margin-bottom: 22px;
+  background: #fff7ed; border: 1px solid #fed7aa; box-shadow: var(--sh);
+}
+.cr-alert-title { font-size: 13px; font-weight: 700; color: #c2410c; font-family: 'Plus Jakarta Sans', sans-serif; }
+.cr-alert-sub   { font-size: 11px; color: #92400e; margin-top: 1px; }
+.cr-alert-link  { font-size: 12px; color: var(--ind); text-decoration: none; font-weight: 700; white-space: nowrap; margin-left: auto; }
+.cr-alert-close { background: none; border: none; color: #d97706; cursor: pointer; font-size: 14px; padding: 0; flex-shrink: 0; }
+
+/* ════════════════════════════════
+   SECTION LABEL  — new font style
+════════════════════════════════ */
+.cr-sl {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.cr-sl-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ind); flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(67,97,238,0.15);
+}
+.cr-sl::after { content:''; flex:1; height:1px; background:var(--bd); }
+
+/* ════════════════════════════════
+   BASE CARD
+════════════════════════════════ */
+.cr-card {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  box-shadow: var(--sh);
+  transition: var(--ease);
+  position: relative; overflow: hidden;
+}
+.cr-card:hover {
+  box-shadow: var(--sh2);
+  border-color: var(--bd2);
+  transform: translateY(-2px);
+}
+
+/* ════════════════════════════════
+   KPI CARDS — NEW HORIZONTAL DESIGN
+   Icon left | number + label right | coloured bg strip
+════════════════════════════════ */
+.cr-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px; margin-bottom: 24px;
+}
+@media(max-width:1050px){ .cr-kpi-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:560px) { .cr-kpi-grid { grid-template-columns:1fr 1fr; } }
+
+.cr-kpi {
+  padding: 0; cursor: default;
+  border-radius: var(--r); overflow: hidden;
+}
+/* coloured left sidebar stripe */
+.cr-kpi-stripe {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px; border-radius: var(--r) 0 0 var(--r);
+  background: var(--kc);
+}
+.cr-kpi-inner {
+  padding: 18px 18px 16px 22px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.cr-kpi-top {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+}
+.cr-kpi-icon-wrap {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px;
+  background: var(--kc-l); border: 1px solid var(--kc-m);
+}
+.cr-kpi-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 9px; border-radius: 20px;
+  background: var(--kc-l); color: var(--kc); border: 1px solid var(--kc-m);
+  letter-spacing: .3px;
+}
+.cr-kpi-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 40px; font-weight: 800;
+  line-height: 1; letter-spacing: -2px;
+  color: var(--kc);
+}
+.cr-kpi-lbl {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 600; color: var(--t2);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+/* sparkline mini-bar row */
+.cr-kpi-spark {
+  display: flex; align-items: flex-end; gap: 3px;
+  height: 28px; margin-top: 12px;
+}
+.cr-kpi-spark-b {
+  flex: 1; border-radius: 3px 3px 0 0;
+  background: var(--kc-m);
+  animation: sbGrow .9s ease both;
+  transform-origin: bottom;
+  transition: background .2s;
+}
+.cr-kpi-spark-b.hi { background: var(--kc); }
+.cr-kpi:hover .cr-kpi-spark-b { background: var(--kc); }
+@keyframes sbGrow { from{transform:scaleY(0);} to{transform:scaleY(1);} }
+
+/* ════════════════════════════════
+   2ND ROW — compact metric pills
+════════════════════════════════ */
+.cr-pill-row {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px;
+}
+.cr-mpill {
+  flex: 1; min-width: 140px;
+  display: flex; align-items: center; gap: 13px;
+  background: var(--card); border: 1px solid var(--bd);
+  border-radius: 14px; padding: 14px 16px;
+  box-shadow: var(--sh); transition: var(--ease);
+}
+.cr-mpill:hover { border-color:var(--bd2); box-shadow:var(--sh2); transform:translateY(-1px); }
+.cr-mpill-icon {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 17px;
+}
+.cr-mpill-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px; font-weight: 800; line-height: 1; color: var(--mc);
+}
+.cr-mpill-lbl {
+  font-size: 10px; font-weight: 600; color: var(--t3);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 2px;
+}
+.cr-mpill-chip {
+  margin-left: auto; font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 8px;
+  background: var(--mc-l); color: var(--mc); border: 1px solid var(--mc-m);
+}
+
+/* ════════════════════════════════
+   ANALYTICS GRID
+════════════════════════════════ */
+.cr-main {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr 300px;
+  gap: 18px; margin-bottom: 22px;
+}
+@media(max-width:1200px){ .cr-main { grid-template-columns:1fr 1fr; } }
+@media(max-width:780px)  { .cr-main { grid-template-columns:1fr; } }
+
+.cr-chart-card { padding: 22px; }
+.cr-chart-hd {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 16px; gap: 10px;
+}
+.cr-chart-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--t1);
+}
+.cr-chart-sub { font-size: 11px; color: var(--t3); margin-top: 2px; }
+.cr-tabs { display:flex; gap:5px; }
+.cr-tab {
+  padding:5px 13px; border-radius:8px; font-size:11px; font-weight:600;
+  border:1px solid var(--bd); background:var(--card2); color:var(--t2);
+  cursor:pointer; transition:var(--ease);
+}
+.cr-tab.on,.cr-tab:hover { background:var(--ind); border-color:var(--ind); color:#fff; }
+
+/* ── RADIAL RING CHART (complaint) ── */
+.cr-radial-wrap {
+  display: flex; align-items: center; gap: 24px; margin-top: 8px;
+}
+.cr-radial-svg-wrap {
+  position: relative; flex-shrink: 0;
+}
+.cr-radial-svg { transform: rotate(-90deg); }
+.cr-radial-track { fill: none; stroke: var(--bg2); stroke-width: 12; }
+.cr-radial-fill  {
+  fill: none; stroke-width: 12; stroke-linecap: round;
+  stroke-dasharray: 283; stroke-dashoffset: 283;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1) 0.3s;
+}
+.cr-radial-fill2 {
+  fill: none; stroke-width: 12; stroke-linecap: round;
+  stroke-dasharray: 283; stroke-dashoffset: 283;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1) 0.5s;
+}
+.cr-radial-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.cr-radial-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px; font-weight: 800; color: var(--t1); line-height: 1;
+}
+.cr-radial-lbl { font-size: 10px; color: var(--t3); letter-spacing: 1px; margin-top: 2px; }
+.cr-radial-legend { display: flex; flex-direction: column; gap: 14px; }
+.cr-radial-li { display: flex; align-items: center; gap: 10px; }
+.cr-radial-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.cr-radial-li-num { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; line-height:1; }
+.cr-radial-li-lbl { font-size:11px; color:var(--t3); margin-top:2px; }
+
+/* ── WAVE / AREA CHART CANVAS ── */
+.cr-area-wrap { position:relative; height:200px; }
+
+/* ── HORIZONTAL BAR (stat bars) ── */
+.cr-hbar-list { display:flex; flex-direction:column; gap:14px; margin-top:6px; }
+.cr-hbar-item { }
+.cr-hbar-head { display:flex; justify-content:space-between; margin-bottom:6px; }
+.cr-hbar-lbl { font-size:12px; font-weight:600; color:var(--t2); }
+.cr-hbar-val { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--t2); }
+.cr-hbar-bg { height:8px; border-radius:4px; background:var(--bg2); overflow:hidden; }
+.cr-hbar-fill {
+  height:100%; border-radius:4px;
+  animation: growW 1.3s ease both;
+}
+@keyframes growW { from{width:0!important;} }
+
+/* ── FEED CARD ── */
+.cr-feed-card { padding:22px; display:flex; flex-direction:column; }
+.cr-feed-list {
+  flex:1; overflow-y:auto; max-height:290px;
+  display:flex; flex-direction:column; gap:2px;
+  scrollbar-width:thin; scrollbar-color:var(--bd) transparent;
+}
+.cr-fi {
+  display:flex; align-items:flex-start; gap:11px;
+  padding:10px; border-radius:10px; transition:background .2s;
+}
+.cr-fi:hover { background:var(--card2); }
+.cr-fi-dot { width:8px; height:8px; border-radius:50%; margin-top:4px; flex-shrink:0; }
+.cr-fi-name { font-size:12px; font-weight:700; color:var(--t1); }
+.cr-fi-desc { font-size:11px; color:var(--t2); margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:180px; }
+.cr-fi-date { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); margin-top:2px; }
+.cr-schip {
+  display:inline-block; padding:2px 8px; border-radius:6px;
+  font-size:10px; font-weight:700; margin-left:5px; vertical-align:middle; border:1px solid;
+}
+.cr-schip.r { background:var(--eme-l); color:var(--eme); border-color:var(--eme-m); }
+.cr-schip.p { background:var(--amb-l); color:var(--amb); border-color:var(--amb-m); }
+
+/* ════════════════════════════════
+   BOTTOM 3-COL
+════════════════════════════════ */
+.cr-bottom {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:18px; margin-bottom:22px;
+}
+@media(max-width:1100px){ .cr-bottom { grid-template-columns:1fr 1fr; } }
+@media(max-width:700px)  { .cr-bottom { grid-template-columns:1fr; } }
+
+.cr-li {
+  display:flex; align-items:center; gap:11px;
+  padding:10px 12px; border-radius:11px;
+  border:1px solid transparent; transition:var(--ease); cursor:pointer;
+}
+.cr-li:hover { background:var(--card2); border-color:var(--bd); }
+.cr-li-icon {
+  width:35px; height:35px; border-radius:9px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:15px;
+  background:var(--ind-l); border:1px solid var(--ind-m);
+}
+.cr-li-name { font-size:13px; font-weight:700; color:var(--t1); }
+.cr-li-meta { font-size:11px; color:var(--t3); margin-top:1px; }
+.cr-li-badge {
+  margin-left:auto; font-size:10px; font-weight:700;
+  padding:3px 9px; border-radius:20px; white-space:nowrap;
+  background:var(--eme-l); color:var(--eme); border:1px solid var(--eme-m);
+}
+.cr-av {
+  width:34px; height:34px; border-radius:9px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Syne',sans-serif; font-size:12px; font-weight:800;
+  background:linear-gradient(135deg,var(--ind),var(--vio)); color:#fff;
+}
+
+/* ── DONUT HEALTH RINGS ── */
+.cr-health-rings { display:flex; flex-direction:column; gap:12px; }
+.cr-hring-item { display:flex; align-items:center; gap:12px; }
+.cr-hring-svg { flex-shrink:0; }
+.cr-hring-track { fill:none; stroke:var(--bg2); stroke-width:5; }
+.cr-hring-fill  { fill:none; stroke-width:5; stroke-linecap:round; transition:stroke-dashoffset 1.5s ease .2s; }
+.cr-hring-info { flex:1; }
+.cr-hring-label { font-size:12px; font-weight:600; color:var(--t2); }
+.cr-hring-val   { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--t3); margin-top:1px; }
+
+/* ── QUICK ACTIONS ── */
+.cr-actions { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+.cr-action {
+  display:flex; align-items:center; gap:9px;
+  padding:12px 13px; border-radius:11px;
+  border:1px solid var(--bd); background:var(--card2); color:var(--t1);
+  font-size:12px; font-weight:600; cursor:pointer; text-decoration:none;
+  transition:var(--ease);
+}
+.cr-action:hover { border-color:var(--ind); background:var(--ind-l); color:var(--ind); transform:translateY(-1px); }
+.cr-action-ic { width:27px; height:27px; border-radius:7px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:13px; background:var(--ind-l); }
+
+/* ── WANTED CARDS ── */
+.cr-wanted-section { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:22px; }
+@media(max-width:800px){ .cr-wanted-section { grid-template-columns:1fr; } }
+.cr-wgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(108px,1fr)); gap:10px; max-height:280px; overflow-y:auto; }
+.cr-wcard { background:var(--card2); border:1px solid var(--bd); border-radius:13px; overflow:hidden; transition:var(--ease); cursor:pointer; }
+.cr-wcard:hover { transform:translateY(-3px); box-shadow:var(--sh2); border-color:var(--bd2); }
+.cr-wphoto { width:100%; aspect-ratio:1; background:linear-gradient(135deg,#e0e7ff,#f0f4ff); display:flex; align-items:center; justify-content:center; font-size:26px; overflow:hidden; }
+.cr-wphoto img { width:100%; height:100%; object-fit:cover; }
+.cr-winfo { padding:8px 9px; }
+.cr-wname { font-size:11px; font-weight:700; color:var(--t1); line-height:1.3; }
+.cr-wmeta { font-size:10px; color:var(--t3); margin-top:2px; }
+.cr-wtag { display:inline-block; margin-top:5px; font-size:9px; font-weight:700; letter-spacing:1px; padding:2px 7px; border-radius:4px; }
+.cr-wtag.c { background:var(--ros-l); color:var(--ros); border:1px solid var(--ros-m); }
+.cr-wtag.m { background:var(--amb-l); color:var(--amb); border:1px solid var(--amb-m); }
+
+/* ── TAGS ── */
+.cr-tag { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; border:1px solid; }
+.cr-tag.up   { color:var(--eme); background:var(--eme-l); border-color:var(--eme-m); }
+.cr-tag.dn   { color:var(--ros); background:var(--ros-l); border-color:var(--ros-m); }
+.cr-tag.warn { color:var(--amb); background:var(--amb-l); border-color:var(--amb-m); }
+
+/* ── UTIL ── */
+.cr-pad   { padding:22px; }
+.cr-pad-s { padding:18px 20px; }
+.cr-scroll { overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--bd) transparent; }
+.cr-divider { height:1px; background:var(--bd); margin:14px 0; }
+.cr-empty { text-align:center; padding:28px; font-size:12px; color:var(--t3); display:flex; flex-direction:column; align-items:center; gap:7px; }
+.cr-empty-ic { font-size:26px; opacity:.4; }
+
+/* ── FOOTER ── */
+.cr-footer {
+  margin-top:32px; padding-top:18px; border-top:1px solid var(--bd);
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:1px;
+}
+.cr-footer-st { display:flex; gap:16px; }
+.cr-fdot { display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:4px; vertical-align:middle; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+.cr-a  { animation:fadeUp .5s ease both; }
+.cr-d1 { animation-delay:.04s; }
+.cr-d2 { animation-delay:.10s; }
+.cr-d3 { animation-delay:.17s; }
+.cr-d4 { animation-delay:.24s; }
+.cr-d5 { animation-delay:.31s; }
+
+.cr ::-webkit-scrollbar { width:4px; }
+.cr ::-webkit-scrollbar-track { background:transparent; }
+.cr ::-webkit-scrollbar-thumb { background:var(--bd2); border-radius:2px; }
+</style>
+
+<div class="body-wrapper">
+<div class="cr">
+
+  <!-- ══ HERO GREETING ══ -->
+  <div class="cr-hero cr-a cr-d1">
+    <div class="cr-hero-left">
+      <div class="cr-hero-av">🛡️</div>
+      <div>
+        <div class="cr-hero-title">Welcome back, Crowd Trace Admin 👋</div>
+        <div class="cr-hero-sub"><span class="cr-live-dot"></span>CONTROL ROOM · ALL SYSTEMS OPERATIONAL</div>
+      </div>
+    </div>
+    <div class="cr-hero-right">
+      <div class="cr-clock">🕐 <strong id="crClock">--:--:--</strong></div>
+    </div>
+  </div>
+
+  <!-- ══ ALERT ══ -->
+  {% if pending_complaints > 0 %}
+  <div class="cr-alert cr-a cr-d1" id="crAlert">
+    <span style="font-size:18px;flex-shrink:0;">🔔</span>
+    <div style="flex:1;">
+      <div class="cr-alert-title">Action Required — {{ pending_complaints }} Complaint{{ pending_complaints|pluralize }} Awaiting Response</div>
+      <div class="cr-alert-sub">{{ replied_complaints }} resolved · {{ pending_complaints }} pending · Review to maintain SLA</div>
+    </div>
+    <a href="/admin_viewComplaints/" class="cr-alert-link">Review Now →</a>
+    <button class="cr-alert-close" onclick="document.getElementById('crAlert').style.display='none'">✕</button>
+  </div>
+  {% endif %}
+
+  <!-- ══ KPI CARDS ROW 1 (new horizontal stripe design) ══ -->
+  <div class="cr-sl cr-a cr-d2"><span class="cr-sl-dot"></span>System Metrics</div>
+  <div class="cr-kpi-grid cr-a cr-d2">
+
+    <div class="cr-card cr-kpi" style="--kc:var(--ind);--kc-l:var(--ind-l);--kc-m:var(--ind-m);">
+      <div class="cr-kpi-stripe"></div>
+      <div class="cr-kpi-inner">
+        <div class="cr-kpi-top">
+          <div class="cr-kpi-icon-wrap">👤</div>
+          <div class="cr-kpi-badge">Registered</div>
+        </div>
+        <div class="cr-kpi-num" data-target="{{ total_users }}">0</div>
+        <div class="cr-kpi-lbl">Registered Users</div>
+        <div class="cr-kpi-spark" id="spark1"></div>
+      </div>
+    </div>
+
+    <div class="cr-card cr-kpi" style="--kc:var(--ros);--kc-l:var(--ros-l);--kc-m:var(--ros-m);">
+      <div class="cr-kpi-stripe"></div>
+      <div class="cr-kpi-inner">
+        <div class="cr-kpi-top">
+          <div class="cr-kpi-icon-wrap">🔍</div>
+          <div class="cr-kpi-badge">Active</div>
+        </div>
+        <div class="cr-kpi-num" data-target="{{ total_missing }}">0</div>
+        <div class="cr-kpi-lbl">Missing Persons</div>
+        <div class="cr-kpi-spark" id="spark2"></div>
+      </div>
+    </div>
+
+    <div class="cr-card cr-kpi" style="--kc:var(--amb);--kc-l:var(--amb-l);--kc-m:var(--amb-m);">
+      <div class="cr-kpi-stripe"></div>
+      <div class="cr-kpi-inner">
+        <div class="cr-kpi-top">
+          <div class="cr-kpi-icon-wrap">⚠️</div>
+          <div class="cr-kpi-badge">Wanted</div>
+        </div>
+        <div class="cr-kpi-num" data-target="{{ total_criminals }}">0</div>
+        <div class="cr-kpi-lbl">Criminals on Record</div>
+        <div class="cr-kpi-spark" id="spark3"></div>
+      </div>
+    </div>
+
+    <div class="cr-card cr-kpi" style="--kc:var(--sky);--kc-l:var(--sky-l);--kc-m:var(--sky-m);">
+      <div class="cr-kpi-stripe"></div>
+      <div class="cr-kpi-inner">
+        <div class="cr-kpi-top">
+          <div class="cr-kpi-icon-wrap">🏛️</div>
+          <div class="cr-kpi-badge">Active</div>
+        </div>
+        <div class="cr-kpi-num" data-target="{{ total_stations }}">0</div>
+        <div class="cr-kpi-lbl">Police Stations</div>
+        <div class="cr-kpi-spark" id="spark4"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ PILL ROW (officers / complaints / replied / status) ══ -->
+  <div class="cr-pill-row cr-a cr-d2">
+
+    <div class="cr-mpill" style="--mc:var(--vio);--mc-l:var(--vio-l);--mc-m:var(--vio-m);">
+      <div class="cr-mpill-icon" style="background:var(--vio-l);border:1px solid var(--vio-m);">🛡️</div>
+      <div>
+        <div class="cr-mpill-num" data-target="{{ total_police }}">0</div>
+        <div class="cr-mpill-lbl">Officers</div>
+      </div>
+      <div class="cr-mpill-chip">Deployed</div>
+    </div>
+
+    <div class="cr-mpill" style="--mc:var(--sky);--mc-l:var(--sky-l);--mc-m:var(--sky-m);">
+      <div class="cr-mpill-icon" style="background:var(--sky-l);border:1px solid var(--sky-m);">📋</div>
+      <div>
+        <div class="cr-mpill-num" data-target="{{ total_complaints }}">0</div>
+        <div class="cr-mpill-lbl">Complaints</div>
+      </div>
+      <div class="cr-mpill-chip">{{ pending_complaints }} Pending</div>
+    </div>
+
+    <div class="cr-mpill" style="--mc:var(--eme);--mc-l:var(--eme-l);--mc-m:var(--eme-m);">
+      <div class="cr-mpill-icon" style="background:var(--eme-l);border:1px solid var(--eme-m);">✅</div>
+      <div>
+        <div class="cr-mpill-num" data-target="{{ replied_complaints }}">0</div>
+        <div class="cr-mpill-lbl">Resolved</div>
+      </div>
+      <div class="cr-mpill-chip">Replied</div>
+    </div>
+
+    <div class="cr-mpill" style="--mc:var(--eme);--mc-l:var(--eme-l);--mc-m:var(--eme-m);">
+      <div class="cr-mpill-icon" style="background:var(--eme-l);border:1px solid var(--eme-m);">📡</div>
+      <div>
+        <div class="cr-mpill-num" style="color:var(--eme);">OK</div>
+        <div class="cr-mpill-lbl">System Status</div>
+      </div>
+      <div class="cr-mpill-chip">Online</div>
+    </div>
+
+  </div>
+
+  <!-- ══ ANALYTICS ROW ══ -->
+  <div class="cr-sl cr-a cr-d3"><span class="cr-sl-dot"></span>Real-time Analytics</div>
+  <div class="cr-main cr-a cr-d3">
+
+    <!-- LEFT: Dual radial rings + horizontal entity bars -->
+    <div class="cr-card cr-chart-card">
+      <div class="cr-chart-hd">
+        <div>
+          <div class="cr-chart-title">Complaint Overview</div>
+          <div class="cr-chart-sub">Resolution rate at a glance</div>
+        </div>
+      </div>
+
+      <!-- Dual SVG rings -->
+      <div class="cr-radial-wrap">
+        <div class="cr-radial-svg-wrap">
+          <svg class="cr-radial-svg" width="120" height="120" viewBox="0 0 100 100">
+            <!-- outer: replied -->
+            <circle class="cr-radial-track" cx="50" cy="50" r="42"/>
+            <circle class="cr-radial-fill" id="ringReplied" cx="50" cy="50" r="42"
+              stroke="#0d9488" stroke-dasharray="264" stroke-dashoffset="264"/>
+            <!-- inner: pending -->
+            <circle class="cr-radial-track" cx="50" cy="50" r="28" stroke-width="8"/>
+            <circle class="cr-radial-fill2" id="ringPending" cx="50" cy="50" r="28"
+              stroke-width="8" stroke-dasharray="176" stroke-dashoffset="176"
+              stroke="#d97706"/>
+          </svg>
+          <div class="cr-radial-center">
+            <div class="cr-radial-num">{{ total_complaints }}</div>
+            <div class="cr-radial-lbl">TOTAL</div>
+          </div>
+        </div>
+
+        <div class="cr-radial-legend">
+          <div class="cr-radial-li">
+            <div class="cr-radial-dot" style="background:#0d9488;box-shadow:0 0 0 3px rgba(13,148,136,0.15);"></div>
+            <div>
+              <div class="cr-radial-li-num" style="color:#0d9488;">{{ replied_complaints }}</div>
+              <div class="cr-radial-li-lbl">Replied</div>
+            </div>
+          </div>
+          <div class="cr-radial-li">
+            <div class="cr-radial-dot" style="background:#d97706;box-shadow:0 0 0 3px rgba(217,119,6,0.15);"></div>
+            <div>
+              <div class="cr-radial-li-num" style="color:#d97706;">{{ pending_complaints }}</div>
+              <div class="cr-radial-li-lbl">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cr-divider" style="margin-top:20px;"></div>
+
+      <!-- Horizontal entity bars -->
+      <div class="cr-hbar-list" style="margin-top:14px;">
+        <div class="cr-hbar-item">
+          <div class="cr-hbar-head"><span class="cr-hbar-lbl">👤 Citizens</span><span class="cr-hbar-val">{{ total_users }}</span></div>
+          <div class="cr-hbar-bg"><div class="cr-hbar-fill" id="hb1" style="background:linear-gradient(90deg,#4361ee,#818cf8);"></div></div>
+        </div>
+        <div class="cr-hbar-item">
+          <div class="cr-hbar-head"><span class="cr-hbar-lbl">🔍 Missing</span><span class="cr-hbar-val">{{ total_missing }}</span></div>
+          <div class="cr-hbar-bg"><div class="cr-hbar-fill" id="hb2" style="background:linear-gradient(90deg,#e11d48,#fb7185);"></div></div>
+        </div>
+        <div class="cr-hbar-item">
+          <div class="cr-hbar-head"><span class="cr-hbar-lbl">⚠️ Criminals</span><span class="cr-hbar-val">{{ total_criminals }}</span></div>
+          <div class="cr-hbar-bg"><div class="cr-hbar-fill" id="hb3" style="background:linear-gradient(90deg,#d97706,#fbbf24);"></div></div>
+        </div>
+        <div class="cr-hbar-item">
+          <div class="cr-hbar-head"><span class="cr-hbar-lbl">🛡️ Officers</span><span class="cr-hbar-val">{{ total_police }}</span></div>
+          <div class="cr-hbar-bg"><div class="cr-hbar-fill" id="hb4" style="background:linear-gradient(90deg,#7c3aed,#a78bfa);"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTRE: Smooth area wave chart -->
+    <div class="cr-card cr-chart-card">
+      <div class="cr-chart-hd">
+        <div>
+          <div class="cr-chart-title">System Distribution</div>
+          <div class="cr-chart-sub">All entities visualised</div>
+        </div>
+      </div>
+      <div class="cr-area-wrap">
+        <canvas id="areaChart"></canvas>
+      </div>
+    </div>
+
+    <!-- RIGHT: Activity feed -->
+    <div class="cr-card cr-feed-card">
+      <div class="cr-chart-title" style="margin-bottom:4px;">Live Feed</div>
+      <div class="cr-chart-sub" style="margin-bottom:14px;">Recent {{ recent_complaints|length }} complaints</div>
+      <div class="cr-feed-list">
+        {% for c in recent_complaints %}
+        <div class="cr-fi">
+          <div class="cr-fi-dot" style="background:{% if c.status|lower == 'replied' %}#0d9488{% else %}#d97706{% endif %};box-shadow:0 0 0 3px {% if c.status|lower == 'replied' %}rgba(13,148,136,0.15){% else %}rgba(217,119,6,0.15){% endif %};"></div>
+          <div style="flex:1;min-width:0;">
+            <div>
+              <span class="cr-fi-name">{{ c.USER.username }}</span>
+              <span class="cr-schip {% if c.status|lower == 'replied' %}r{% else %}p{% endif %}">{{ c.status|capfirst }}</span>
+            </div>
+            <div class="cr-fi-desc">{{ c.description|truncatechars:48 }}</div>
+            <div class="cr-fi-date">{{ c.date }}</div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="cr-empty"><div class="cr-empty-ic">📭</div>No complaints yet</div>
+        {% endfor %}
+      </div>
+      <div class="cr-divider"></div>
+      <a href="/admin_viewComplaints/" style="font-size:12px;color:var(--ind);text-decoration:none;font-weight:700;">View all →</a>
+    </div>
+
+  </div><!-- /cr-main -->
+
+  <!-- ══ OPERATIONAL PANELS ══ -->
+  <div class="cr-sl cr-a cr-d4"><span class="cr-sl-dot"></span>Operational Panels</div>
+  <div class="cr-bottom cr-a cr-d4">
+
+    <!-- Stations -->
+    <div class="cr-card cr-pad">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div class="cr-chart-title">Police Stations</div>
+          <div class="cr-chart-sub">{{ total_stations }} registered</div>
+        </div>
+        <a href="/admin_add_station/" style="font-size:12px;color:var(--ind);text-decoration:none;font-weight:700;">Manage →</a>
+      </div>
+      <div class="cr-scroll" style="max-height:250px;display:flex;flex-direction:column;gap:2px;">
+        {% for s in stations %}
+        <div class="cr-li">
+          <div class="cr-li-icon">🏛️</div>
+          <div style="flex:1;min-width:0;">
+            <div class="cr-li-name">{{ s.station_name }}</div>
+            <div class="cr-li-meta">{{ s.place }} · {{ s.station_head }}</div>
+          </div>
+          <div class="cr-li-badge">● Active</div>
+        </div>
+        {% empty %}
+        <div class="cr-empty"><div class="cr-empty-ic">🏛️</div>No stations added</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Users -->
+    <div class="cr-card cr-pad">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div class="cr-chart-title">Registered Citizens</div>
+          <div class="cr-chart-sub">{{ total_users }} on platform</div>
+        </div>
+        <a href="/admin_viewUsers/" style="font-size:12px;color:var(--ind);text-decoration:none;font-weight:700;">View All →</a>
+      </div>
+      <div class="cr-scroll" style="max-height:250px;display:flex;flex-direction:column;gap:2px;">
+        {% for u in recent_users %}
+        <div class="cr-li">
+          <div class="cr-av">{{ u.name|slice:":2"|upper }}</div>
+          <div style="flex:1;min-width:0;">
+            <div class="cr-li-name">{{ u.name }}</div>
+            <div class="cr-li-meta">{{ u.phone }}</div>
+          </div>
+          <div style="font-size:11px;color:var(--t2);background:var(--card2);border:1px solid var(--bd);padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;">{{ u.place|truncatechars:11 }}</div>
+        </div>
+        {% empty %}
+        <div class="cr-empty"><div class="cr-empty-ic">👤</div>No users yet</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Actions + Donut health rings -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="cr-card cr-pad-s">
+        <div class="cr-chart-title" style="margin-bottom:12px;">Quick Actions</div>
+        <div class="cr-actions">
+          <a href="/admin_viewComplaints/" class="cr-action"><div class="cr-action-ic">📋</div>Complaints</a>
+          <a href="/admin_viewUsers/"      class="cr-action"><div class="cr-action-ic">👥</div>Users</a>
+          <a href="/admin_add_station/"    class="cr-action"><div class="cr-action-ic">🏛️</div>Stations</a>
+          <a href="/casefile/"             class="cr-action"><div class="cr-action-ic">📁</div>Case File</a>
+        </div>
+      </div>
+
+      <!-- Donut mini health rings -->
+      <div class="cr-card cr-pad-s">
+        <div class="cr-chart-title" style="margin-bottom:14px;">System Health</div>
+        <div class="cr-health-rings">
+
+          <div class="cr-hring-item">
+            <svg class="cr-hring-svg" width="44" height="44" viewBox="0 0 44 44">
+              <circle class="cr-hring-track" cx="22" cy="22" r="18" transform="rotate(-90 22 22)"/>
+              <circle class="cr-hring-fill" cx="22" cy="22" r="18" transform="rotate(-90 22 22)"
+                stroke="#0d9488" stroke-dasharray="113" stroke-dashoffset="9"
+                style="stroke-dashoffset:9;"/>
+            </svg>
+            <div class="cr-hring-info">
+              <div class="cr-hring-label">Response Rate</div>
+              <div class="cr-hring-val">92% — Excellent</div>
+            </div>
+          </div>
+
+          <div class="cr-hring-item">
+            <svg class="cr-hring-svg" width="44" height="44" viewBox="0 0 44 44">
+              <circle class="cr-hring-track" cx="22" cy="22" r="18" transform="rotate(-90 22 22)"/>
+              <circle class="cr-hring-fill" cx="22" cy="22" r="18" transform="rotate(-90 22 22)"
+                stroke="#4361ee" stroke-dasharray="113" stroke-dashoffset="1"/>
+            </svg>
+            <div class="cr-hring-info">
+              <div class="cr-hring-label">DB Uptime</div>
+              <div class="cr-hring-val">99% — Stable</div>
+            </div>
+          </div>
+
+          <div class="cr-hring-item">
+            <svg class="cr-hring-svg" width="44" height="44" viewBox="0 0 44 44">
+              <circle class="cr-hring-track" cx="22" cy="22" r="18" transform="rotate(-90 22 22)"/>
+              <circle class="cr-hring-fill" id="resolvedRing" cx="22" cy="22" r="18" transform="rotate(-90 22 22)"
+                stroke="#d97706" stroke-dasharray="113" stroke-dashoffset="113"/>
+            </svg>
+            <div class="cr-hring-info">
+              <div class="cr-hring-label">Cases Resolved</div>
+              <div class="cr-hring-val" id="resolvedText">--%</div>
+            </div>
+          </div>
+
+          <div class="cr-hring-item">
+            <svg class="cr-hring-svg" width="44" height="44" viewBox="0 0 44 44">
+              <circle class="cr-hring-track" cx="22" cy="22" r="18" transform="rotate(-90 22 22)"/>
+              <circle class="cr-hring-fill" cx="22" cy="22" r="18" transform="rotate(-90 22 22)"
+                stroke="#7c3aed" stroke-dasharray="113" stroke-dashoffset="0"/>
+            </svg>
+            <div class="cr-hring-info">
+              <div class="cr-hring-label">API Status</div>
+              <div class="cr-hring-val">100% — Live</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /cr-bottom -->
+
+  <!-- ══ CASE RECORDS ══ -->
+  {% if criminals or missing_persons %}
+  <div class="cr-sl cr-a cr-d5"><span class="cr-sl-dot"></span>Case Records</div>
+  <div class="cr-wanted-section cr-a cr-d5">
+    {% if criminals %}
+    <div class="cr-card cr-pad">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div><div class="cr-chart-title">Criminal Records</div><div class="cr-chart-sub">{{ total_criminals }} tracked</div></div>
+        <span class="cr-tag dn">⚠ Wanted</span>
+      </div>
+      <div class="cr-wgrid">
+        {% for c in criminals %}
+        <div class="cr-wcard">
+          <div class="cr-wphoto">{% if c.photo %}<img src="{{ c.photo.url }}" alt="{{ c.name }}"/>{% else %}🚨{% endif %}</div>
+          <div class="cr-winfo"><div class="cr-wname">{{ c.name }}</div><div class="cr-wmeta">{{ c.age }}y · {{ c.gender }}</div><span class="cr-wtag c">WANTED</span></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if missing_persons %}
+    <div class="cr-card cr-pad">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div><div class="cr-chart-title">Missing Persons</div><div class="cr-chart-sub">{{ total_missing }} active</div></div>
+        <span class="cr-tag warn">🔍 Active</span>
+      </div>
+      <div class="cr-wgrid">
+        {% for p in missing_persons %}
+        <div class="cr-wcard">
+          <div class="cr-wphoto">{% if p.photo %}<img src="{{ p.photo.url }}" alt="{{ p.name }}"/>{% else %}👤{% endif %}</div>
+          <div class="cr-winfo"><div class="cr-wname">{{ p.name }}</div><div class="cr-wmeta">{{ p.age }}y · {{ p.gender }}</div><span class="cr-wtag m">MISSING</span></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- ══ FOOTER ══ -->
+  <div class="cr-footer">
+    <span>CROWDTRACE · ADMIN CONTROL ROOM · © 2025</span>
+    <div class="cr-footer-st">
+      <span><span class="cr-fdot" style="background:#0d9488;"></span>DB ONLINE</span>
+      <span><span class="cr-fdot" style="background:#0284c7;"></span>API LIVE</span>
+      <span><span class="cr-fdot" style="background:#4361ee;"></span>SESSION ACTIVE</span>
+    </div>
+  </div>
+
+</div><!-- /cr -->
+</div><!-- /body-wrapper -->
+
+<script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../static/admin/assets/js/sidebarmenu.js"></script>
+<script src="../static/admin/assets/js/app.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+<script>
+/* ── CLOCK ── */
+!function tick(){
+  const n=new Date(),p=x=>String(x).padStart(2,'0');
+  const el=document.getElementById('crClock');
+  if(el) el.textContent=`${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+  setTimeout(tick,1000);
+}();
+
+/* ── COUNTERS ── */
+document.querySelectorAll('[data-target]').forEach(el=>{
+  const t=parseInt(el.dataset.target)||0;
+  let c=0; const inc=Math.max(1,Math.ceil(t/50));
+  const id=setInterval(()=>{c=Math.min(c+inc,t);el.textContent=c;if(c>=t)clearInterval(id);},28);
+});
+
+/* ── SPARKLINES (random demo bars — replace with real data if available) ── */
+['spark1','spark2','spark3','spark4'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(!el)return;
+  const bars=[0.3,0.5,0.4,0.7,0.55,0.8,0.6,0.9,0.75,1.0];
+  bars.forEach((h,i)=>{
+    const b=document.createElement('div');
+    b.className='cr-kpi-spark-b'+(i===bars.length-1?' hi':'');
+    b.style.height=(h*100)+'%';
+    b.style.animationDelay=(i*0.06)+'s';
+    el.appendChild(b);
+  });
+});
+
+/* ── DUAL RADIAL RINGS ── */
+const tc={{ total_complaints }}, rc={{ replied_complaints }}, pc={{ pending_complaints }};
+if(tc>0){
+  const rPct=rc/tc, pPct=pc/tc;
+  // outer ring (replied): circumference=264
+  const rOffset=264-(264*rPct);
+  // inner ring (pending): circumference=176
+  const pOffset=176-(176*pPct);
+  setTimeout(()=>{
+    const rEl=document.getElementById('ringReplied');
+    const pEl=document.getElementById('ringPending');
+    if(rEl) rEl.style.strokeDashoffset=rOffset;
+    if(pEl) pEl.style.strokeDashoffset=pOffset;
+  },200);
+
+  // resolved health ring (circumference=113)
+  const rr=document.getElementById('resolvedRing');
+  const rt=document.getElementById('resolvedText');
+  const rpct=Math.round(rPct*100);
+  const rrOffset=113-(113*rPct);
+  if(rt) rt.textContent=rpct+'% — '+( rpct>=80?'Good':rpct>=50?'Fair':'Low');
+  setTimeout(()=>{ if(rr) rr.style.strokeDashoffset=rrOffset; },300);
+}
+
+/* ── HORIZONTAL BARS (relative widths based on max value) ── */
+const vals={
+  hb1:{{ total_users }},
+  hb2:{{ total_missing }},
+  hb3:{{ total_criminals }},
+  hb4:{{ total_police }}
+};
+const mx=Math.max(...Object.values(vals),1);
+Object.entries(vals).forEach(([id,v])=>{
+  const el=document.getElementById(id);
+  if(el) el.style.width=Math.max(4,(v/mx)*100)+'%';
+});
+
+/* ── AREA CHART (Chart.js smooth) ── */
+Chart.defaults.color='#94a3b8';
+Chart.defaults.font.family="'Plus Jakarta Sans',sans-serif";
+
+const aCtx=document.getElementById('areaChart').getContext('2d');
+const labels=['Citizens','Missing','Criminals','Stations','Officers','Complaints'];
+const dataVals=[{{ total_users }},{{ total_missing }},{{ total_criminals }},{{ total_stations }},{{ total_police }},{{ total_complaints }}];
+const colors=['#4361ee','#e11d48','#d97706','#0284c7','#7c3aed','#0d9488'];
+
+new Chart(aCtx,{
+  type:'bar',
+  data:{
+    labels:labels,
+    datasets:[{
+      label:'Count',
+      data:dataVals,
+      backgroundColor: colors.map(c=>c+'22'),
+      borderColor: colors,
+      borderWidth: 2,
+      borderRadius: 10,
+      borderSkipped: false,
+      hoverBackgroundColor: colors.map(c=>c+'44'),
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#0f172a',
+        borderColor:'#1e293b', borderWidth:1,
+        titleColor:'#f1f5f9', bodyColor:'#94a3b8',
+        padding:12, cornerRadius:10,
+        callbacks:{
+          label: ctx=>`  ${ctx.parsed.y} records`
+        }
+      }
+    },
+    scales:{
+      x:{
+        grid:{ display:false },
+        border:{ display:false },
+        ticks:{ color:'#94a3b8', font:{size:10,weight:'600'} }
+      },
+      y:{
+        grid:{ color:'rgba(0,0,0,0.04)', drawBorder:false },
+        border:{ display:false },
+        ticks:{ color:'#94a3b8', font:{size:10}, stepSize:1 },
+        beginAtZero:true
+      }
+    },
+    animation:{
+      delay: ctx => ctx.dataIndex * 80,
+      duration:1000, easing:'easeOutQuart'
+    }
+  }
+});
+</script>

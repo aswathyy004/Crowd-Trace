@@ -1,0 +1,1359 @@
+{##}
+{##}
+{##}
+{#{% include 'admin_sidebar.html' %}#}
+{#    <!--  Main wrapper -->#}
+{#    <div class="body-wrapper">#}
+{#      <!--  Header Start -->#}
+{#      <header class="app-header">#}
+{#        <nav class="navbar navbar-expand-lg navbar-light">#}
+{#          <ul class="navbar-nav">#}
+{##}
+{#            <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">#}
+{#              <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">#}
+{#                <b class="logo-icon">#}
+{#                  <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->#}
+{#                  <!-- Dark Logo icon -->#}
+{#                  <img src="../static/admin/assets/images/logos/logo-light-icon.svg" alt="homepage" class="dark-logo" />#}
+{#                </b>#}
+{#                <!--End Logo icon -->#}
+{#                <!-- Logo text -->#}
+{#                <span class="logo-text">#}
+{#                  <!-- dark Logo text -->#}
+{#                  <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />#}
+{#                </span>#}
+{#              </a>#}
+{#            </div>#}
+{##}
+{#            <li class="nav-item d-block d-xl-none">#}
+{#              <a class="nav-link sidebartoggler " id="headerCollapse" href="javascript:void(0)">#}
+{#                <i class="ti ti-menu-2"></i>#}
+{#              </a>#}
+{#            </li>#}
+{#            <li class="nav-item dropdown">#}
+{#              <a class="nav-link " href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>#}
+{#                <div class="notification bg-primary rounded-circle"></div>#}
+{#              </a>#}
+{#              <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">#}
+{#                <div class="message-body">#}
+{#                  <a href="javascript:void(0)" class="dropdown-item">#}
+{#                    Item 1#}
+{#                  </a>#}
+{#                  <a href="javascript:void(0)" class="dropdown-item">#}
+{#                    Item 2#}
+{#                  </a>#}
+{#                </div>#}
+{#              </div>#}
+{#            </li>#}
+{#          </ul>#}
+{#          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">#}
+{#            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">#}
+{#              <a href="{% url 'casefile' %}" target="_blank"#}
+{#                class="btn btn-success">UPLOAD CASE FILE</a>#}
+{#              <li class="nav-item dropdown">#}
+{#                <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"#}
+{#                  aria-expanded="false">#}
+{#                  <img src="../static/admin/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">#}
+{#                </a>#}
+{#                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">#}
+{#                  <div class="message-body">#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-user fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Profile</p>#}
+{#                    </a>#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-mail fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Account</p>#}
+{#                    </a>#}
+{#                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                      <i class="ti ti-list-check fs-6"></i>#}
+{#                      <p class="mb-0 fs-3">My Task</p>#}
+{#                    </a>#}
+{#                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </li>#}
+{#            </ul>#}
+{#          </div>#}
+{#        </nav>#}
+{#      </header>#}
+{#      <!--  Header End -->#}
+{#      <div class="body-wrapper-inner">#}
+{#        <div class="container-fluid">#}
+{##}
+{##}
+{#            <div class="row">#}
+{#  <!-- Profile card 1 -->#}
+{#  <div class="col-lg-6 mb-4">#}
+{#    <div class="card">#}
+{#      <div class="card-body p-2">#}
+{#        <img class="card-img-top w-100 profile-bg-height rounded overflow-hidden"#}
+{#          src="../static/admin/assets/images/backgrounds/profile-bg.jpg" height="111" alt="Card image cap" />#}
+{#        <div class="card-body little-profile text-center p-9">#}
+{#          <div class="pro-img">#}
+{#            <img src="../static/admin/assets/images/profile/user-2.jpg" alt="user" class="rounded-circle shadow-sm" width="112" />#}
+{#          </div>#}
+{#          <h3 class="mb-1">Aswathy</h3>#}
+{#          <p class="fs-3">Missing Since 12-10-2025</p>#}
+{#          <a href="javascript:void(0)" class="waves-effect waves-dark btn btn-primary btn-md btn-rounded mb-4">VIEW DETAILS</a>#}
+{#          <div class="row gx-lg-4 text-center pt-9 justify-content-center border-top">#}
+{#            <div class="col-4">#}
+{#              <h3 class="mb-3 fs-5">25 years</h3>#}
+{#              <small class="text-muted fs-3">AGE</small>#}
+{#            </div>#}
+{#            <div class="col-4">#}
+{#              <h3 class="mb-4 fs-4">mannarkad</h3>#}
+{#              <small class="text-muted fs-3">Last Seen at</small>#}
+{#            </div>#}
+{#            <div class="col-4">#}
+{#              <h3 class="mb-3 fs-5">A60-35</h3>#}
+{#              <small class="text-muted fs-3">CASE ID</small>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{##}
+{#  <!-- Profile card 2 -->#}
+{#  <div class="col-lg-6 mb-4">#}
+{#    <div class="card">#}
+{#      <div class="card-body p-2">#}
+{#        <img class="card-img-top w-100 profile-bg-height rounded overflow-hidden"#}
+{#          src="../static/admin/assets/images/backgrounds/profile-bg.jpg" height="111" alt="Card image cap" />#}
+{#        <div class="card-body little-profile text-center p-9">#}
+{#          <div class="pro-img">#}
+{#            <img src="../static/admin/assets/images/profile/user-2.jpg" alt="user" class="rounded-circle shadow-sm" width="112" />#}
+{#          </div>#}
+{#          <h3 class="mb-1">abijith</h3>#}
+{#          <p class="fs-3">Missing Since 13-4-2008</p>#}
+{#          <a href="javascript:void(0)" class="waves-effect waves-dark btn btn-primary btn-md btn-rounded mb-4">VIEW DETAILS</a>#}
+{#          <div class="row gx-lg-4 text-center pt-9 justify-content-center border-top">#}
+{#            <div class="col-4">#}
+{#              <h3 class="mb-3 fs-5">22 years</h3>#}
+{#              <small class="text-muted fs-3">AGE</small>#}
+{#            </div>#}
+{#            <div class="col-4">#}
+{#              <h3 class="mb-3 fs-4">palakad</h3>#}
+{#              <small class="text-muted fs-3">Last Seen at</small>#}
+{#            </div>#}
+{#            <div class="col-4">#}
+{#              <h3 class="mb-3 fs-5">g50-45</h3>#}
+{#              <small class="text-muted fs-3">CASE ID</small>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{##}
+{#<!DOCTYPE html>#}
+{##}
+{##}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Admin: Manage Police Stations</title>#}
+{#    <!-- Load Tailwind CSS -->#}
+{#    <script src="https://cdn.tailwindcss.com"></script>#}
+{#    <style>#}
+{#        /* Recreating essential theme structure approximations from the original styles.min.css */#}
+{#        body {#}
+{#            font-family: 'Poppins', sans-serif;#}
+{#            background-color: #EEF5F9; /* Page wrapper background color */#}
+{#        }#}
+{#        .app-header {#}
+{#            background: #1B84FF; /* Primary blue header color */#}
+{#            z-index: 50;#}
+{#            height: 64px; /* Approximate height */#}
+{#        }#}
+{#        .sidebar-mock {#}
+{#            width: 260px;#}
+{#            min-height: 100vh;#}
+{#            background: #fff;#}
+{#            padding-top: 20px;#}
+{#            box-shadow: 2px 0 5px rgba(0,0,0,0.05);#}
+{#            position: fixed;#}
+{#            left: 0;#}
+{#            top: 0;#}
+{#            bottom: 0;#}
+{#            z-index: 60;#}
+{#        }#}
+{#        .content-area {#}
+{#            margin-left: 100px;#}
+{#            padding-top: 30px; /* Space for fixed header */#}
+{#            min-height: 100vh;#}
+{#        }#}
+{#        .card {#}
+{#            border-radius: 10px;#}
+{#            box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03), 0px 0px 1px 0px rgba(0, 0, 0, 0.1);#}
+{#        }#}
+{#        .logo-text {#}
+{#            color: #1B84FF;#}
+{#            font-size: 1.5rem;#}
+{#            font-weight: 700;#}
+{#        }#}
+{#        .status-card {#}
+{#            min-height: 100px;#}
+{#        }#}
+{#        .btn-success {#}
+{#            background-color: #2cd07e; /* Green for success/add action */#}
+{#            color: white;#}
+{#            padding: 8px 16px;#}
+{#            border-radius: 30px;#}
+{#            font-weight: 500;#}
+{#            transition: background-color 0.2s;#}
+{#        }#}
+{#        .btn-success:hover {#}
+{#             background-color: #24a867;#}
+{#        }#}
+{#        .text-danger { color: #F8285A; }#}
+{#        .text-success { color: #2cd07e; }#}
+{#        .text-warning { color: #F6C000; }#}
+{##}
+{#        @media (max-width: 768px) {#}
+{#            .sidebar-mock {#}
+{#                width: 100%;#}
+{#                height: auto;#}
+{#                position: relative;#}
+{#                box-shadow: none;#}
+{#            }#}
+{#            .content-area {#}
+{#                margin-left: 0;#}
+{#                padding-top: 0;#}
+{#            }#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body class="flex flex-col md:flex-row">#}
+{##}
+{#  <!-- Mock Sidebar Structure (Admin Navigation) -->#}
+{#  <div class="sidebar-mock hidden md:block">#}
+{#    <div class="brand-logo p-4 text-center border-b">#}
+{#        <h1 class="logo-text">ADMIN PANEL</h1>#}
+{#    </div>#}
+{#    <ul class="p-4 space-y-2">#}
+{#        <h3 class="text-sm font-semibold uppercase text-gray-500 my-4">ADMIN NAVIGATION</h3>#}
+{#        <li class="p-3 rounded-lg text-gray-700 hover:bg-gray-100 cursor-pointer">#}
+{#            <span class="inline-block w-4 h-4 mr-2 align-middle">#}
+{#                <!-- Icon: Home/Dashboard -->#}
+{#                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a1.5 1.5 0 0 1 .43 1.06V20.25a2.25 2.25 0 0 1-2.25 2.25h-5.25a2.25 2.25 0 0 1-2.25-2.25v-3.25a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0-.75.75v3.25a2.25 2.25 0 0 1-2.25 2.25H3.69a1.5 1.5 0 0 1-.43-1.06l8.69-8.69Z" /></svg>#}
+{#            </span>#}
+{#            Home Page#}
+{#        </li>#}
+{#        <li class="p-3 rounded-lg bg-cyan-200 text-cyan-800 font-semibold cursor-pointer shadow-sm">#}
+{#            <span class="inline-block w-4 h-4 mr-2 align-middle">#}
+{#                <!-- Icon: Police Station -->#}
+{#                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M11.47 2.47a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1-1.06 1.06l-4.5-4.5a.75.75 0 0 1 0-1.06Zm-1.892 1.488a.75.75 0 1 0 1.06-1.06l-4.5-4.5a.75.75 0 1 0-1.06 1.06l4.5 4.5Z" clip-rule="evenodd" /><path d="M12 2.25a.75.75 0 0 1 .75.75v16.5a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75Z" /><path fill-rule="evenodd" d="M15.58 4.25c-.27-.27-.63-.42-1.01-.42h-4.998c-.38 0-.74.15-1.01.42L3.626 7.424A3.75 3.75 0 0 0 2.25 10.15v9.1A2.25 2.25 0 0 0 4.5 21.5h15a2.25 2.25 0 0 0 2.25-2.25v-9.1A3.75 3.75 0 0 0 20.374 7.424L15.58 4.25ZM16.5 10.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0-.75.75v3a.75.75 0 0 0 .75.75h7.5a.75.75 0 0 0 .75-.75v-3Z" clip-rule="evenodd" /></svg>#}
+{#            </span>#}
+{#            Manage Police Station#}
+{#        </li>#}
+{#        <li class="p-3 rounded-lg text-gray-700 hover:bg-gray-100 cursor-pointer">#}
+{#            <span class="inline-block w-4 h-4 mr-2 align-middle">#}
+{#                <!-- Icon: Users -->#}
+{#                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M6.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM7.5 19.125A7.125 7.125 0 0 1 14.625 12h-0.344a7.125 7.125 0 0 1-6.781 7.125V19.125Z" /><path d="M16.516 21.088a7.125 7.125 0 0 1 3.597-5.592 11.517 11.517 0 0 0-3.921-2.046c-.571.554-1.282.964-2.083 1.157A4.125 4.125 0 0 0 16.516 21.088Z" /></svg>#}
+{#            </span>#}
+{#            View Users#}
+{#        </li>#}
+{#        <li class="p-3 rounded-lg text-gray-700 hover:bg-gray-100 cursor-pointer">#}
+{#            <span class="inline-block w-4 h-4 mr-2 align-middle">#}
+{#                <!-- Icon: Complaints -->#}
+{#                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6a.75.75 0 0 0 1.5 0V6ZM12 17a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" /></svg>#}
+{#            </span>#}
+{#            View Complaints#}
+{#        </li>#}
+{#        <li class="p-3 rounded-lg text-gray-700 hover:bg-gray-100 cursor-pointer">#}
+{#            <span class="inline-block w-4 h-4 mr-2 align-middle">#}
+{#                <!-- Icon: Logout -->#}
+{#                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 16.5 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.758 5.756a.75.75 0 0 0-1.06 1.06L20.2 12h-8.47a.75.75 0 0 0 0 1.5h8.47l-2.992 2.994a.75.75 0 0 0 1.06 1.06l4.25-4.25a.75.75 0 0 0 0-1.06l-4.25-4.25Z" clip-rule="evenodd" /></svg>#}
+{#            </span>#}
+{#            Logout#}
+{#        </li>#}
+{#    </ul>#}
+{#  </div>#}
+{##}
+{#  <div class="flex-grow content-area">#}
+{#    <!-- Header Start -->#}
+{#    <header class="app-header flex items-center justify-between px-6 fixed top-0 right-0 left-0 md:left-[260px]">#}
+{#        <h2 class="text-white text-xl font-semibold">Station Management</h2>#}
+{#        <div class="flex items-center space-x-4">#}
+{#            <div class="text-sm font-medium text-white">Admin ID: A-001</div>#}
+{#            <img src="https://placehold.co/35x35/1B84FF/ffffff?text=AD" alt="Admin" class="rounded-full border-2 border-white cursor-pointer">#}
+{#        </div>#}
+{#    </header>#}
+{#    <!-- Header End -->#}
+{##}
+{#    <main class="p-6">#}
+{#        <h1 class="text-3xl font-bold text-gray-800 mb-6">Manage Registered Police Stations</h1>#}
+{##}
+{#        <!-- Filter and Action Row (Top Controls) -->#}
+{#        <div class="card p-4 bg-white mb-6">#}
+{#            <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0 md:space-x-4">#}
+{##}
+{#                <!-- Station Selector Dropdown -->#}
+{#                <div class="w-full md:w-1/4">#}
+{#                    <label for="stationSelector" class="block text-sm font-medium text-gray-700 mb-1">Select Station ID:</label>#}
+{#                    <select id="stationSelector" onchange="filterData()" class="form-select block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border-1">#}
+{#                        <option value="all">-- All Stations Overview --</option>#}
+{#                        <option value="PS-001">PS-001 | Central City Precinct</option>#}
+{#                        <option value="PS-002">PS-002 | West Side Division</option>#}
+{#                        <option value="PS-003">PS-003 | North Block Division</option>#}
+{#                    </select>#}
+{#                </div>#}
+{##}
+{#                <!-- Status Filter Dropdown -->#}
+{#                <div class="w-full md:w-1/4">#}
+{#                    <label for="statusFilter" class="block text-sm font-medium text-gray-700 mb-1">Filter by Status:</label>#}
+{#                    <select id="statusFilter" onchange="filterData()" class="form-select block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border-1">#}
+{#                        <option value="all">All Statuses</option>#}
+{#                        <option value="Active Search">Active Search</option>#}
+{#                        <option value="Resolved">Resolved</option>#}
+{#                    </select>#}
+{#                </div>#}
+{##}
+{#                <!-- Search/Filter Input -->#}
+{#                <div class="w-full md:w-1/4">#}
+{#                    <label for="stationSearch" class="block text-sm font-medium text-gray-700 mb-1">Search Cases:</label>#}
+{#                    <input type="text" id="stationSearch" onkeyup="filterData()" placeholder="e.g., Rahul, Mumbai" class="form-input block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border-1">#}
+{#                </div>#}
+{##}
+{#                <!-- Add New Station Button -->#}
+{#                <div class="w-full md:w-auto pt-5">#}
+{#                    <button class="btn-success text-sm shadow-md hover:opacity-90 flex items-center justify-center space-x-1 w-full">#}
+{#                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">#}
+{#                            <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />#}
+{#                         </svg>#}
+{#                        <span><a href="/admin_add_station/">Add New Station</a></span>#}
+{#                    </button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Station Overview Cards (Dynamic/Filtered Data) -->#}
+{#        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="stationStats">#}
+{##}
+{#            <!-- Card 1: Total Cases Handled -->#}
+{#            <div class="card p-5 bg-white status-card flex flex-col justify-between">#}
+{#                <p class="text-sm font-semibold text-gray-500 uppercase">Total Cases Handled</p>#}
+{#                <h3 class="text-4xl font-extrabold text-blue-600 mt-2" id="stat-total-cases">124</h3>#}
+{#                <p class="text-xs text-gray-500 mt-1">Across all active periods.</p>#}
+{#            </div>#}
+{##}
+{#            <!-- Card 2: Active Case Files -->#}
+{#            <div class="card p-5 bg-white status-card flex flex-col justify-between">#}
+{#                <p class="text-sm font-semibold text-gray-500 uppercase">Currently Active Case Files</p>#}
+{#                <h3 class="text-4xl font-extrabold text-danger mt-2" id="stat-active-cases">18</h3>#}
+{#                <p class="text-xs text-gray-500 mt-1">Requires immediate attention.</p>#}
+{#            </div>#}
+{##}
+{#            <!-- Card 3: Account Status -->#}
+{#            <div class="card p-5 bg-white status-card flex flex-col justify-between">#}
+{#                <p class="text-sm font-semibold uppercase text-gray-500" id="stat-status-label">Station Status</p>#}
+{#                <h3 class="text-4xl font-extrabold text-success mt-2" id="stat-status">Active</h3>#}
+{#                <p class="text-xs text-gray-500 mt-1">Last Logged In: 2025-10-20</p>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Missing Persons List Table -->#}
+{#        <div class="card p-6 bg-white">#}
+{#            <div class="flex justify-between items-center mb-4 flex-wrap gap-4">#}
+{#                 <h2 class="text-xl font-semibold text-gray-800" id="missingPersonsTitle">Missing Persons Under All Stations</h2>#}
+{#                 <!-- Sorting Dropdown -->#}
+{#                 <div class="flex items-center space-x-2">#}
+{#                    <label for="sortSelector" class="text-sm font-medium text-gray-700">Sort By:</label>#}
+{#                    <select id="sortSelector" onchange="handleSortChange(this.value)" class="form-select rounded-md border-gray-300 shadow-sm p-1.5 border-1 text-sm">#}
+{#                        <option value="dateMissing|desc">Longest Missing (Urgent)</option>#}
+{#                        <option value="dateMissing|asc">Recently Missing</option>#}
+{#                        <option value="age|asc">Age (Youngest First)</option>#}
+{#                        <option value="age|desc">Age (Oldest First)</option>#}
+{#                    </select>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="overflow-x-auto">#}
+{#                <table class="min-w-full divide-y divide-gray-200">#}
+{#                    <thead class="bg-gray-50">#}
+{#                        <tr>#}
+{#                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Case ID</th>#}
+{#                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Child Name</th>#}
+{#                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>#}
+{#                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Missing</th>#}
+{#                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" id="tableHeaderStation">Reporting Station</th>#}
+{#                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>#}
+{#                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Admin Action</th>#}
+{#                        </tr>#}
+{#                    </thead>#}
+{#                    <tbody class="bg-white divide-y divide-gray-200" id="missingPersonsTableBody">#}
+{#                        <!-- Content will be populated by JavaScript -->#}
+{#                    </tbody>#}
+{#                </table>#}
+{#                <div id="noMissingPersonsMessage" class="hidden text-center py-8 text-gray-500">#}
+{#                    No active missing persons reported for this police station.#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </main>#}
+{##}
+{#    <footer class="mt-8 pt-4 p-6 text-center text-sm text-gray-500">#}
+{#        <p class="mb-0">Secure Admin Panel for <span class="text-blue-600 font-medium">Crowd Trace Admin</span> | Station Management</p>#}
+{#    </footer>#}
+{##}
+{#  </div>#}
+{##}
+{#  <script>#}
+{#    // --- MOCK DATA ---#}
+{#    const stationData = {#}
+{#        'PS-001': { total: 45, active: 5, status: 'Active', lastLogin: '2025-10-20', label: 'Central City Precinct' },#}
+{#        'PS-002': { total: 32, active: 2, status: 'Active', lastLogin: '2025-10-19', label: 'West Side Division' },#}
+{#        'PS-003': { total: 10, active: 0, status: 'Inactive', lastLogin: '2024-12-01', label: 'North Block Division' },#}
+{#        'all': { total: 102, active: 11, status: 'All Active', lastLogin: 'N/A', label: 'All Stations' }#}
+{#    };#}
+{##}
+{#    const missingPersonsData = [#}
+{#        // PS-001 Cases#}
+{#        { caseId: 'M-101', name: 'Rahul Varma', age: 7, dateMissing: '2024-09-15', stationId: 'PS-001', stationName: 'Central City Precinct', status: 'Active Search' },#}
+{#        { caseId: 'M-102', name: 'Pooja Devi', age: 10, dateMissing: '2025-01-05', stationId: 'PS-001', stationName: 'Central City Precinct', status: 'Active Search' },#}
+{#        { caseId: 'M-103', name: 'Amit Singh', age: 14, dateMissing: '2024-11-20', stationId: 'PS-001', stationName: 'Central City Precinct', status: 'Resolved' },#}
+{#        // PS-002 Cases#}
+{#        { caseId: 'M-201', name: 'Sara Khan', age: 5, dateMissing: '2025-02-14', stationId: 'PS-002', stationName: 'West Side Division', status: 'Active Search' },#}
+{#        { caseId: 'M-202', name: 'Vishal Rao', age: 16, dateMissing: '2025-03-01', stationId: 'PS-002', stationName: 'West Side Division', status: 'Active Search' },#}
+{#        // PS-004 Cases (Two Active, Two Resolved for variety)#}
+{#        { caseId: 'M-401', name: 'Lata Patil', age: 9, dateMissing: '2024-10-10', stationId: 'PS-004', stationName: 'Suburban Outpost', status: 'Active Search' },#}
+{#        { caseId: 'M-402', name: 'Kiran Raj', age: 11, dateMissing: '2024-12-12', stationId: 'PS-004', stationName: 'Suburban Outpost', status: 'Resolved' },#}
+{#        { caseId: 'M-403', name: 'Jiya Menon', age: 6, dateMissing: '2025-01-25', stationId: 'PS-004', stationName: 'Suburban Outpost', status: 'Active Search' },#}
+{#        { caseId: 'M-404', name: 'Arjun Das', age: 15, dateMissing: '2024-09-01', stationId: 'PS-004', stationName: 'Suburban Outpost', status: 'Resolved' },#}
+{#        // Remaining active cases for 'all' overview (not tied to PS-001/2/3/4)#}
+{#        { caseId: 'M-901', name: 'Unknown Boy', age: 8, dateMissing: '2024-06-15', stationId: 'PS-999', stationName: 'HQ Central Unit', status: 'Active Search' },#}
+{#        { caseId: 'M-902', name: 'Samaira', age: 3, dateMissing: '2025-03-20', stationId: 'PS-999', stationName: 'HQ Central Unit', status: 'Active Search' },#}
+{#    ];#}
+{##}
+{#    // Global state for sorting#}
+{#    let currentSort = { column: 'dateMissing', direction: 'desc' };#}
+{##}
+{#    // --- DOM REFERENCES ---#}
+{#    const tableBody = document.getElementById('missingPersonsTableBody');#}
+{#    const noResultsMessage = document.getElementById('noMissingPersonsMessage');#}
+{#    const missingPersonsTitle = document.getElementById('missingPersonsTitle');#}
+{#    const tableHeaderStation = document.getElementById('tableHeaderStation');#}
+{##}
+{#    // Function to update the top stats cards#}
+{#    function updateStats(stationId) {#}
+{#        const data = stationData[stationId] || stationData['all'];#}
+{##}
+{#        document.getElementById('stat-total-cases').textContent = data.total;#}
+{#        document.getElementById('stat-active-cases').textContent = data.active;#}
+{##}
+{#        const statusElement = document.getElementById('stat-status');#}
+{#        const statusLabelElement = document.getElementById('stat-status-label');#}
+{##}
+{#        if (stationId === 'all') {#}
+{#            statusLabelElement.textContent = 'System Status';#}
+{#        } else {#}
+{#            statusLabelElement.textContent = `PS Status (${stationData[stationId].label})`;#}
+{#        }#}
+{##}
+{#        statusElement.textContent = data.status;#}
+{##}
+{#        // Update color based on status#}
+{#        statusElement.classList.remove('text-success', 'text-danger');#}
+{#        if (data.status === 'Active' || data.status === 'All Active') {#}
+{#            statusElement.classList.add('text-success');#}
+{#        } else {#}
+{#            statusElement.classList.add('text-danger');#}
+{#        }#}
+{##}
+{#        document.querySelector('#stat-status + p').textContent = `Last Login: ${data.lastLogin}`;#}
+{#    }#}
+{##}
+{#    // Function to render the missing persons table based on selection, text search, and status filter#}
+{#    function displayMissingPersons() {#}
+{#        const selectedId = document.getElementById('stationSelector').value;#}
+{#        const searchText = document.getElementById('stationSearch').value.trim().toLowerCase();#}
+{#        const statusFilter = document.getElementById('statusFilter').value;#}
+{##}
+{#        tableBody.innerHTML = ''; // Clear previous entries#}
+{##}
+{#        let casesToDisplay = missingPersonsData.filter(caseItem => {#}
+{#            // Filter by selected station ID#}
+{#            const idMatch = selectedId === 'all' || caseItem.stationId === selectedId;#}
+{##}
+{#            // Filter by status#}
+{#            const statusMatch = statusFilter === 'all' || caseItem.status === statusFilter;#}
+{##}
+{#            // Filter by search text (Case ID, Name, Station Name, Status)#}
+{#            const textMatch = searchText === '' ||#}
+{#                              caseItem.caseId.toLowerCase().includes(searchText) ||#}
+{#                              caseItem.name.toLowerCase().includes(searchText) ||#}
+{#                              caseItem.stationName.toLowerCase().includes(searchText);#}
+{##}
+{#            return idMatch && statusMatch && textMatch;#}
+{#        });#}
+{##}
+{#        // Apply sorting#}
+{#        casesToDisplay.sort((a, b) => sortCasesLogic(a, b, currentSort.column, currentSort.direction));#}
+{##}
+{#        // Update table title#}
+{#        if (selectedId === 'all') {#}
+{#            missingPersonsTitle.textContent = 'All Missing Persons Cases (System-wide)';#}
+{#        } else {#}
+{#            const selectedStationName = stationData[selectedId] ? stationData[selectedId].label : 'Selected Station';#}
+{#            missingPersonsTitle.textContent = `Missing Persons Under: ${selectedStationName}`;#}
+{#        }#}
+{##}
+{#        // Determine if the 'Reporting Station' column should be visible#}
+{#        const showStationColumn = selectedId === 'all';#}
+{#        const headerCell = document.querySelector('#missingPersonsTableBody thead th:nth-child(5)');#}
+{#        if (headerCell) {#}
+{#            headerCell.classList.toggle('hidden', !showStationColumn);#}
+{#        }#}
+{##}
+{#        // Re-render rows#}
+{#        if (casesToDisplay.length > 0) {#}
+{#            casesToDisplay.forEach(caseItem => {#}
+{#                let statusColor = 'bg-red-100 text-danger';#}
+{#                if (caseItem.status === 'Resolved') {#}
+{#                    statusColor = 'bg-green-100 text-success';#}
+{#                }#}
+{##}
+{#                const row = document.createElement('tr');#}
+{#                // Construct the row content, conditionally including the station name column#}
+{#                row.innerHTML = `#}
+{#                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${caseItem.caseId}</td>#}
+{#                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">${caseItem.name}</td>#}
+{#                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${caseItem.age}</td>#}
+{#                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${caseItem.dateMissing}</td>#}
+{#                    ${showStationColumn ? `<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${caseItem.stationName}</td>` : ''}#}
+{#                    <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}">${caseItem.status}</span></td>#}
+{#                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">#}
+{#                        <button onclick="alert('Viewing case ${caseItem.caseId}')" class="text-blue-600 hover:text-blue-900 mr-2">View Case</button>#}
+{#                        <button onclick="alert('Updating case ${caseItem.caseId}')" class="text-warning hover:text-yellow-700">Update</button>#}
+{#                    </td>#}
+{#                `;#}
+{#                tableBody.appendChild(row);#}
+{#            });#}
+{#            noMissingPersonsMessage.classList.add('hidden');#}
+{#        } else {#}
+{#            noMissingPersonsMessage.classList.remove('hidden');#}
+{#        }#}
+{#    }#}
+{##}
+{#    // Sort logic function#}
+{#    function sortCasesLogic(a, b, column, direction) {#}
+{#        let aValue;#}
+{#        let bValue;#}
+{##}
+{#        if (column === 'dateMissing') {#}
+{#            aValue = new Date(a.dateMissing);#}
+{#            bValue = new Date(b.dateMissing);#}
+{#        } else if (column === 'age') {#}
+{#            aValue = a.age;#}
+{#            bValue = b.age;#}
+{#        } else {#}
+{#            return 0; // No sort applied#}
+{#        }#}
+{##}
+{#        if (aValue < bValue) {#}
+{#            return direction === 'asc' ? -1 : 1;#}
+{#        }#}
+{#        if (aValue > bValue) {#}
+{#            return direction === 'asc' ? 1 : -1;#}
+{#        }#}
+{#        return 0;#}
+{#    }#}
+{##}
+{#    // New Sort handler function, called by dropdown#}
+{#    function handleSortChange(sortValue) {#}
+{#        const [column, direction] = sortValue.split('|');#}
+{#        currentSort = { column, direction };#}
+{##}
+{#        // Re-display the filtered data with new sort order#}
+{#        displayMissingPersons();#}
+{#    }#}
+{##}
+{#    // Main controller function to run all filtering and sorting#}
+{#    function filterData() {#}
+{#        const selectedId = document.getElementById('stationSelector').value;#}
+{#        updateStats(selectedId);#}
+{#        displayMissingPersons(); // Re-renders the table with current filters and sort state#}
+{#    }#}
+{##}
+{#    // Initial load setup#}
+{#    document.addEventListener('DOMContentLoaded', () => {#}
+{#        // Manually set the default sort value in the selector and call the handler#}
+{#        const defaultSortValue = currentSort.column + '|' + currentSort.direction;#}
+{#        const sortSelector = document.getElementById('sortSelector');#}
+{##}
+{#        if (sortSelector) {#}
+{#            sortSelector.value = defaultSortValue;#}
+{#        }#}
+{##}
+{#        filterData(); // Initialize the dashboard with 'all' data#}
+{#    });#}
+{#  </script>#}
+{#</body>#}
+{#</html>#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#  <script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>#}
+{#  <script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>#}
+{#  <script src="../static/admin/assets/js/sidebarmenu.js"></script>#}
+{#  <script src="../static/admin/assets/js/app.min.js"></script>#}
+{#  <script src="../static/admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>#}
+{#  <script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>#}
+{#  <script src="../static/admin/assets/js/dashboard.js"></script>#}
+{#  <!-- solar icons -->#}
+{#  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>#}
+{#</div>#}
+{##}
+{#</div>#}
+
+
+
+{% include 'admin_sidebar.html' %}
+
+<!-- Main wrapper -->
+<div class="body-wrapper">
+
+  <!-- Header Start -->
+  <header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <ul class="navbar-nav">
+        <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">
+          <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">
+            <span class="logo-text">
+              <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />
+            </span>
+          </a>
+        </div>
+        <li class="nav-item d-block d-xl-none">
+          <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
+            <i class="ti ti-menu-2"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <!-- Header End -->
+
+  <div class="body-wrapper-inner">
+    <div class="container-fluid">
+
+      <!-- Page Title Row -->
+      <div class="ms-page-header mb-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+          <div>
+            <h2 class="ms-page-title">
+              <iconify-icon icon="solar:buildings-2-linear" class="ms-title-icon"></iconify-icon>
+              Police Station Management
+            </h2>
+            <p class="ms-page-sub">Manage stations, officers and missing person cases</p>
+          </div>
+          <a href="{% url 'admin_add_station' %}" class="ms-add-btn">
+            <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+            Add New Station
+          </a>
+        </div>
+      </div>
+
+      <!-- Summary Stats Row -->
+      <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-sm-6">
+          <div class="ms-stat-card ms-stat-blue">
+            <div class="ms-stat-icon-wrap blue">
+              <iconify-icon icon="solar:buildings-2-bold"></iconify-icon>
+            </div>
+            <div>
+              <div class="ms-stat-value" id="stat-stations">{{ total_stations }}</div>
+              <div class="ms-stat-label">Total Stations</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="ms-stat-card ms-stat-indigo">
+            <div class="ms-stat-icon-wrap indigo">
+              <iconify-icon icon="solar:shield-user-bold"></iconify-icon>
+            </div>
+            <div>
+              <div class="ms-stat-value" id="stat-officers">{{ total_police }}</div>
+              <div class="ms-stat-label">Total Officers</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="ms-stat-card ms-stat-red">
+            <div class="ms-stat-icon-wrap red">
+              <iconify-icon icon="solar:user-check-rounded-bold"></iconify-icon>
+            </div>
+            <div>
+              <div class="ms-stat-value" id="stat-missing">{{ total_missing }}</div>
+              <div class="ms-stat-label">Active Missing Cases</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="ms-stat-card ms-stat-green">
+            <div class="ms-stat-icon-wrap green">
+              <iconify-icon icon="solar:file-check-bold"></iconify-icon>
+            </div>
+            <div>
+              <div class="ms-stat-value" id="stat-criminals">{{ total_criminals }}</div>
+              <div class="ms-stat-label">Criminal Records</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Station Cards Grid -->
+      <div class="ms-section-header mb-3">
+        <h5 class="ms-section-title">
+          <iconify-icon icon="solar:map-point-bold"></iconify-icon>
+          Registered Stations
+        </h5>
+        <div class="ms-search-wrap">
+          <iconify-icon icon="solar:magnifer-linear" class="ms-search-icon"></iconify-icon>
+          <input type="text" id="stationSearchInput" placeholder="Search stations..." class="ms-search-input" oninput="filterStations()" />
+        </div>
+      </div>
+
+      <div class="row g-3 mb-5" id="stationCardsRow">
+        {% for station in stations %}
+        <div class="col-xl-4 col-lg-6 col-md-6 station-card-col"
+             data-name="{{ station.station_name|lower }}"
+             data-place="{{ station.place|lower }}"
+             data-head="{{ station.station_head|lower }}">
+          <div class="ms-station-card" onclick="selectStation({{ station.id }}, '{{ station.station_name }}')">
+            <div class="ms-station-card-top">
+              <div class="ms-station-icon-wrap">
+                <iconify-icon icon="solar:buildings-2-bold-duotone"></iconify-icon>
+              </div>
+              <div class="ms-station-badges">
+                <span class="ms-badge ms-badge-blue">ID: {{ station.id }}</span>
+                <span class="ms-badge ms-badge-green">Active</span>
+              </div>
+            </div>
+            <h5 class="ms-station-name">{{ station.station_name }}</h5>
+            <p class="ms-station-place">
+              <iconify-icon icon="solar:map-point-linear"></iconify-icon>
+              {{ station.place }}
+            </p>
+            <div class="ms-station-divider"></div>
+            <div class="ms-station-meta">
+              <div class="ms-meta-item">
+                <iconify-icon icon="solar:user-bold-duotone" class="ms-meta-icon"></iconify-icon>
+                <div>
+                  <span class="ms-meta-val">{{ station.station_head }}</span>
+                  <span class="ms-meta-lbl">Station Head</span>
+                </div>
+              </div>
+              <div class="ms-meta-item">
+                <iconify-icon icon="solar:phone-bold-duotone" class="ms-meta-icon"></iconify-icon>
+                <div>
+                  <span class="ms-meta-val">{{ station.phone }}</span>
+                  <span class="ms-meta-lbl">Phone</span>
+                </div>
+              </div>
+            </div>
+            <div class="ms-station-actions">
+              <a href="{% url 'admin_add_police' station.id %}" class="ms-action-btn ms-action-primary" onclick="event.stopPropagation()">
+                <iconify-icon icon="solar:user-plus-linear"></iconify-icon>
+                Register Officers
+              </a>
+              <button class="ms-action-btn ms-action-ghost" onclick="event.stopPropagation(); viewMissingForStation({{ station.id }}, '{{ station.station_name }}')">
+                <iconify-icon icon="solar:eye-linear"></iconify-icon>
+                View Cases
+              </button>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+          <div class="ms-empty-state">
+            <iconify-icon icon="solar:buildings-2-linear"></iconify-icon>
+            <h5>No Stations Registered Yet</h5>
+            <p>Click "Add New Station" to get started.</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Missing Persons Table Section -->
+      <div class="ms-table-card">
+        <div class="ms-table-header">
+          <div>
+            <h5 class="ms-table-title" id="missingPersonsTitle">
+              <iconify-icon icon="solar:user-check-rounded-linear"></iconify-icon>
+              Missing Persons — All Stations
+            </h5>
+            <p class="ms-table-sub" id="missingPersonsCount">
+              Showing <strong>{{ missing_persons|length }}</strong> records
+            </p>
+          </div>
+          <div class="ms-table-controls">
+            <!-- Filter by station -->
+            <select id="stationSelector" onchange="filterTable()" class="ms-select">
+              <option value="all">All Stations</option>
+              {% for station in stations %}
+              <option value="{{ station.id }}">{{ station.station_name }}</option>
+              {% endfor %}
+            </select>
+            <!-- Search -->
+            <div class="ms-search-wrap">
+              <iconify-icon icon="solar:magnifer-linear" class="ms-search-icon"></iconify-icon>
+              <input type="text" id="tableSearchInput" placeholder="Search cases..." class="ms-search-input" oninput="filterTable()" />
+            </div>
+            <!-- Sort -->
+            <select id="sortSelector" onchange="filterTable()" class="ms-select">
+              <option value="id|desc">Newest First</option>
+              <option value="id|asc">Oldest First</option>
+              <option value="age|asc">Age (Youngest)</option>
+              <option value="age|desc">Age (Oldest)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="ms-table">
+            <thead>
+              <tr>
+                <th>Case ID</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Station</th>
+                <th>Details</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="missingPersonsTableBody">
+              {% for person in missing_persons %}
+              <tr class="ms-table-row"
+                  data-station="{{ person.POLICE.policestation.id }}"
+                  data-name="{{ person.name|lower }}"
+                  data-age="{{ person.age }}"
+                  data-id="{{ person.id }}">
+                <td><span class="ms-case-id">#{{ person.id }}</span></td>
+                <td>
+                  {% if person.photo %}
+                  <img src="{{ person.photo.url }}" alt="{{ person.name }}" class="ms-table-photo" />
+                  {% else %}
+                  <div class="ms-table-photo-ph">
+                    <iconify-icon icon="solar:user-bold"></iconify-icon>
+                  </div>
+                  {% endif %}
+                </td>
+                <td class="ms-name-cell">{{ person.name }}</td>
+                <td>{{ person.age }} yrs</td>
+                <td>
+                  <span class="ms-gender-badge {{ person.gender|lower }}">{{ person.gender }}</span>
+                </td>
+                <td class="ms-station-cell">{{ person.POLICE.policestation.station_name }}</td>
+                <td class="ms-details-cell">{{ person.details|truncatechars:50 }}</td>
+                <td class="text-center">
+                  <button class="ms-tbl-btn ms-tbl-view"
+                    onclick="openPersonModal({{ person.id }}, '{{ person.name }}', {{ person.age }}, '{{ person.gender }}', '{{ person.details|escapejs }}', '{% if person.photo %}{{ person.photo.url }}{% endif %}', '{{ person.POLICE.policestation.station_name }}')">
+                    <iconify-icon icon="solar:eye-linear"></iconify-icon>
+                  </button>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="8">
+                  <div class="ms-empty-state">
+                    <iconify-icon icon="solar:ghost-linear"></iconify-icon>
+                    <h5>No Records Found</h5>
+                    <p>Missing person cases will appear here once added.</p>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div id="noResultsMsg" class="ms-empty-state d-none">
+          <iconify-icon icon="solar:magnifer-linear"></iconify-icon>
+          <h5>No matching records</h5>
+          <p>Try adjusting your search or filter.</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="ms-footer">
+        Secure Admin Panel — <span>Police Station Management System</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Person Detail Modal -->
+<div class="modal fade" id="personDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content ms-modal">
+      <div class="ms-modal-header">
+        <div class="ms-modal-title-wrap">
+          <iconify-icon icon="solar:user-check-rounded-linear"></iconify-icon>
+          <span>Missing Person Details</span>
+        </div>
+        <button class="ms-modal-close" data-bs-dismiss="modal">
+          <iconify-icon icon="solar:close-circle-linear"></iconify-icon>
+        </button>
+      </div>
+      <div class="ms-modal-body">
+        <div class="ms-modal-profile">
+          <div class="ms-modal-photo-wrap">
+            <img id="mdlPhoto" src="" alt="" class="ms-modal-photo" />
+            <div id="mdlPhotoPh" class="ms-modal-photo-ph d-none">
+              <iconify-icon icon="solar:user-bold"></iconify-icon>
+            </div>
+          </div>
+          <div class="ms-modal-info">
+            <h3 id="mdlName" class="ms-modal-name"></h3>
+            <div class="ms-modal-chips">
+              <span class="ms-chip blue"><iconify-icon icon="solar:calendar-linear"></iconify-icon> <span id="mdlAge"></span></span>
+              <span class="ms-chip purple"><iconify-icon icon="solar:user-bold"></iconify-icon> <span id="mdlGender"></span></span>
+              <span class="ms-chip teal"><iconify-icon icon="solar:hashtag-circle-linear"></iconify-icon> Case <span id="mdlCaseId"></span></span>
+              <span class="ms-chip navy"><iconify-icon icon="solar:buildings-2-linear"></iconify-icon> <span id="mdlStation"></span></span>
+            </div>
+          </div>
+        </div>
+        <div class="ms-modal-details">
+          <h6 class="ms-modal-det-title">
+            <iconify-icon icon="solar:document-text-linear"></iconify-icon> Case Details
+          </h6>
+          <p id="mdlDetails" class="ms-modal-det-text"></p>
+        </div>
+        <div class="ms-modal-alert">
+          <iconify-icon icon="solar:info-circle-linear"></iconify-icon>
+          If you have any information, please contact the reporting station immediately.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================
+     STYLES
+================================================= -->
+<style>
+  /* ---- TOKENS ---- */
+  :root {
+    --ms-blue:     #1b6fe8;
+    --ms-blue-lt:  #e8f1fd;
+    --ms-blue-md:  #bcd4f8;
+    --ms-indigo:   #5b5bd6;
+    --ms-indigo-lt:#eeeeff;
+    --ms-red:      #e53e3e;
+    --ms-red-lt:   #fff0f0;
+    --ms-green:    #2ca76e;
+    --ms-green-lt: #edfaf4;
+    --ms-gray-1:   #f5f8ff;
+    --ms-gray-2:   #eaf0fb;
+    --ms-gray-3:   #c8d6ed;
+    --ms-gray-txt: #64748b;
+    --ms-dark:     #1e2a45;
+    --ms-card-shadow: 0 2px 12px rgba(27,111,232,0.07), 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  /* ---- PAGE HEADER ---- */
+  .ms-page-header { padding: 8px 0 4px; }
+  .ms-page-title {
+    font-size: 1.6rem; font-weight: 800; color: var(--ms-dark);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 3px;
+  }
+  .ms-title-icon { font-size: 1.5rem; color: var(--ms-blue); }
+  .ms-page-sub { color: var(--ms-gray-txt); font-size: 0.85rem; margin: 0; }
+
+  .ms-add-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--ms-blue); color: #fff;
+    padding: 10px 20px; border-radius: 10px;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(27,111,232,0.25);
+  }
+  .ms-add-btn:hover {
+    background: #1558c0; color: #fff;
+    transform: translateY(-1px); box-shadow: 0 6px 20px rgba(27,111,232,0.35);
+  }
+
+  /* ---- STAT CARDS ---- */
+  .ms-stat-card {
+    background: #fff; border-radius: 14px;
+    padding: 18px 20px; display: flex; align-items: center; gap: 16px;
+    box-shadow: var(--ms-card-shadow);
+    border: 1px solid var(--ms-gray-2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .ms-stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(27,111,232,0.12); }
+
+  .ms-stat-icon-wrap {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; flex-shrink: 0;
+  }
+  .ms-stat-icon-wrap.blue   { background: var(--ms-blue-lt);  color: var(--ms-blue); }
+  .ms-stat-icon-wrap.indigo { background: var(--ms-indigo-lt); color: var(--ms-indigo); }
+  .ms-stat-icon-wrap.red    { background: var(--ms-red-lt);    color: var(--ms-red); }
+  .ms-stat-icon-wrap.green  { background: var(--ms-green-lt);  color: var(--ms-green); }
+
+  .ms-stat-value { font-size: 1.8rem; font-weight: 800; color: var(--ms-dark); line-height: 1.1; }
+  .ms-stat-label { font-size: 0.75rem; color: var(--ms-gray-txt); font-weight: 500; margin-top: 2px; }
+
+  /* ---- SECTION HEADER ---- */
+  .ms-section-header {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .ms-section-title {
+    font-size: 1rem; font-weight: 700; color: var(--ms-dark);
+    display: flex; align-items: center; gap: 7px; margin: 0;
+  }
+
+  /* ---- SEARCH ---- */
+  .ms-search-wrap { position: relative; display: flex; align-items: center; }
+  .ms-search-icon { position: absolute; left: 11px; color: #a0aec0; font-size: 0.95rem; pointer-events: none; }
+  .ms-search-input {
+    border: 1.5px solid var(--ms-gray-3); border-radius: 9px;
+    padding: 8px 14px 8px 34px; font-size: 0.83rem; color: var(--ms-dark);
+    width: 220px; outline: none; background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ms-search-input:focus { border-color: var(--ms-blue); box-shadow: 0 0 0 3px rgba(27,111,232,0.1); }
+  .ms-search-input::placeholder { color: #b0bac9; }
+
+  /* ---- STATION CARDS ---- */
+  .ms-station-card {
+    background: #fff; border-radius: 16px; padding: 20px;
+    box-shadow: var(--ms-card-shadow); border: 1.5px solid var(--ms-gray-2);
+    cursor: pointer; transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+    height: 100%;
+  }
+  .ms-station-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(27,111,232,0.14);
+    border-color: var(--ms-blue-md);
+  }
+  .ms-station-card.active-station {
+    border-color: var(--ms-blue);
+    box-shadow: 0 0 0 3px rgba(27,111,232,0.12), 0 8px 24px rgba(27,111,232,0.14);
+  }
+
+  .ms-station-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+  .ms-station-icon-wrap {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--ms-blue-lt); color: var(--ms-blue);
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  }
+  .ms-station-badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .ms-badge {
+    padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600;
+  }
+  .ms-badge-blue  { background: var(--ms-blue-lt);  color: var(--ms-blue); }
+  .ms-badge-green { background: var(--ms-green-lt); color: var(--ms-green); }
+
+  .ms-station-name { font-size: 1.05rem; font-weight: 700; color: var(--ms-dark); margin: 0 0 5px; }
+  .ms-station-place { font-size: 0.82rem; color: var(--ms-gray-txt); margin: 0; display: flex; align-items: center; gap: 4px; }
+  .ms-station-divider { height: 1px; background: var(--ms-gray-2); margin: 14px 0; }
+
+  .ms-station-meta { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .ms-meta-item { display: flex; align-items: center; gap: 8px; }
+  .ms-meta-icon { font-size: 1.1rem; color: var(--ms-blue); flex-shrink: 0; }
+  .ms-meta-item div { display: flex; flex-direction: column; }
+  .ms-meta-val { font-size: 0.82rem; font-weight: 600; color: var(--ms-dark); line-height: 1.2; }
+  .ms-meta-lbl { font-size: 0.68rem; color: var(--ms-gray-txt); line-height: 1; }
+
+  .ms-station-actions { display: flex; gap: 8px; }
+  .ms-action-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 8px 12px; border-radius: 9px; font-size: 0.78rem; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer; transition: all 0.18s;
+  }
+  .ms-action-primary { background: #0d9488; color: #fff; }
+  .ms-action-primary:hover { background: #0a7870; color: #fff; }
+  .ms-action-ghost { background: var(--ms-gray-1); color: var(--ms-blue); border: 1.5px solid var(--ms-gray-3); }
+  .ms-action-ghost:hover { background: var(--ms-blue-lt); border-color: var(--ms-blue-md); }
+
+  /* ---- TABLE SECTION ---- */
+  .ms-table-card {
+    background: #fff; border-radius: 16px;
+    box-shadow: var(--ms-card-shadow); border: 1.5px solid var(--ms-gray-2);
+    overflow: hidden; margin-bottom: 20px;
+  }
+  .ms-table-header {
+    padding: 20px 24px; border-bottom: 1.5px solid var(--ms-gray-2);
+    display: flex; align-items: flex-start; justify-content: space-between;
+    flex-wrap: wrap; gap: 14px; background: var(--ms-gray-1);
+  }
+  .ms-table-title {
+    font-size: 1rem; font-weight: 700; color: var(--ms-dark);
+    display: flex; align-items: center; gap: 7px; margin: 0 0 3px;
+  }
+  .ms-table-sub { font-size: 0.78rem; color: var(--ms-gray-txt); margin: 0; }
+  .ms-table-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .ms-select {
+    border: 1.5px solid var(--ms-gray-3); border-radius: 9px;
+    padding: 8px 12px; font-size: 0.82rem; color: var(--ms-dark);
+    outline: none; background: #fff;
+    transition: border-color 0.2s;
+  }
+  .ms-select:focus { border-color: var(--ms-blue); }
+
+  .ms-table {
+    width: 100%; border-collapse: collapse; font-size: 0.85rem;
+  }
+  .ms-table thead th {
+    background: #f0f5fe; color: #4a5b7a;
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; padding: 12px 16px; white-space: nowrap;
+    border-bottom: 2px solid var(--ms-blue-md);
+  }
+  .ms-table-row td {
+    padding: 12px 16px; color: var(--ms-dark); vertical-align: middle;
+    border-bottom: 1px solid var(--ms-gray-2);
+  }
+  .ms-table-row:last-child td { border-bottom: none; }
+  .ms-table-row:hover td { background: var(--ms-gray-1); }
+
+  .ms-case-id {
+    background: var(--ms-blue-lt); color: var(--ms-blue);
+    padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+  }
+
+  .ms-table-photo {
+    width: 40px; height: 40px; border-radius: 10px;
+    object-fit: cover; border: 2px solid var(--ms-gray-2);
+  }
+  .ms-table-photo-ph {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--ms-gray-1); display: flex; align-items: center; justify-content: center;
+    color: var(--ms-gray-txt); font-size: 1.1rem; border: 2px solid var(--ms-gray-2);
+  }
+
+  .ms-name-cell { font-weight: 600; color: var(--ms-dark); }
+  .ms-station-cell { color: var(--ms-gray-txt); font-size: 0.8rem; }
+  .ms-details-cell { color: var(--ms-gray-txt); font-size: 0.8rem; max-width: 180px; }
+
+  .ms-gender-badge {
+    padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
+  }
+  .ms-gender-badge.male   { background: #e8f1fd; color: var(--ms-blue); }
+  .ms-gender-badge.female { background: #fce8f3; color: #c0307a; }
+
+  .ms-tbl-btn {
+    width: 34px; height: 34px; border-radius: 9px; border: none; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.18s;
+  }
+  .ms-tbl-view { background: var(--ms-blue-lt); color: var(--ms-blue); }
+  .ms-tbl-view:hover { background: var(--ms-blue); color: #fff; }
+
+  /* ---- EMPTY STATE ---- */
+  .ms-empty-state {
+    text-align: center; padding: 48px 20px; color: var(--ms-gray-txt);
+  }
+  .ms-empty-state iconify-icon { font-size: 3.5rem; color: var(--ms-blue-md); display: block; margin: 0 auto 12px; }
+  .ms-empty-state h5 { color: #3a4a6a; font-weight: 700; margin-bottom: 6px; }
+  .ms-empty-state p  { font-size: 0.85rem; margin: 0; }
+
+  /* ---- FOOTER ---- */
+  .ms-footer {
+    text-align: center; padding: 16px; font-size: 0.8rem; color: var(--ms-gray-txt);
+  }
+  .ms-footer span { color: var(--ms-blue); font-weight: 600; }
+
+  /* ---- MODAL ---- */
+  .ms-modal { border-radius: 16px; overflow: hidden; border: none; box-shadow: 0 20px 60px rgba(27,111,232,0.15); }
+  .ms-modal-header {
+    background: linear-gradient(135deg, var(--ms-dark) 0%, #e8736c 100%);
+    padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border: none;
+  }
+  .ms-modal-title-wrap { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; font-size: 0.95rem; }
+  .ms-modal-close {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
+    color: #fff; width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer;
+  }
+  .ms-modal-close:hover { background: rgba(255,255,255,0.25); }
+  .ms-modal-body { padding: 0; }
+  .ms-modal-profile {
+    display: flex; gap: 20px; padding: 22px 24px; align-items: flex-start;
+    border-bottom: 1.5px solid var(--ms-gray-2);
+  }
+  .ms-modal-photo-wrap { flex-shrink: 0; }
+  .ms-modal-photo {
+    width: 100px; height: 100px; border-radius: 14px; object-fit: cover;
+    border: 3px solid var(--ms-gray-2); box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  }
+  .ms-modal-photo-ph {
+    width: 100px; height: 100px; border-radius: 14px; background: var(--ms-gray-1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; color: var(--ms-gray-txt); border: 3px solid var(--ms-gray-2);
+  }
+  .ms-modal-name { font-size: 1.4rem; font-weight: 800; color: var(--ms-dark); margin-bottom: 12px; }
+  .ms-modal-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ms-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+  }
+  .ms-chip.blue   { background: var(--ms-blue-lt);  color: var(--ms-blue); }
+  .ms-chip.purple { background: var(--ms-indigo-lt); color: var(--ms-indigo); }
+  .ms-chip.teal   { background: #e6f9f5; color: #0d9488; }
+  .ms-chip.navy   { background: #e8edf8; color: #3b4f7a; }
+  .ms-modal-details { padding: 18px 24px; }
+  .ms-modal-det-title {
+    font-size: 0.78rem; font-weight: 700; color: #4a5b7a; text-transform: uppercase;
+    letter-spacing: 0.7px; display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+  }
+  .ms-modal-det-text { font-size: 0.88rem; color: #4a5568; line-height: 1.7; margin: 0; }
+  .ms-modal-alert {
+    background: #eff6ff; border-left: 4px solid var(--ms-blue);
+    padding: 12px 24px; margin: 0 0 20px; font-size: 0.8rem; color: #1e40af;
+    display: flex; align-items: center; gap: 8px; margin: 0 24px 20px; border-radius: 0 8px 8px 0;
+  }
+
+  @media (max-width: 576px) {
+    .ms-table-header { flex-direction: column; }
+    .ms-table-controls { width: 100%; }
+    .ms-search-input { width: 100%; }
+    .ms-modal-profile { flex-direction: column; align-items: center; text-align: center; }
+    .ms-modal-chips { justify-content: center; }
+  }
+</style>
+
+<!-- Scripts -->
+<script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../static/admin/assets/js/sidebarmenu.js"></script>
+<script src="../static/admin/assets/js/app.min.js"></script>
+<script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+<script>
+  /* =============================================
+     STATION CARD SEARCH FILTER
+  ============================================= */
+  function filterStations() {
+    const q = document.getElementById('stationSearchInput').value.toLowerCase().trim();
+    document.querySelectorAll('.station-card-col').forEach(col => {
+      const name    = col.dataset.name    || '';
+      const place   = col.dataset.place   || '';
+      const head    = col.dataset.head    || '';
+      col.style.display = (!q || name.includes(q) || place.includes(q) || head.includes(q)) ? '' : 'none';
+    });
+  }
+
+  /* =============================================
+     TABLE FILTERING + SORTING
+  ============================================= */
+  function filterTable() {
+    const stationFilter = document.getElementById('stationSelector').value;
+    const searchText    = document.getElementById('tableSearchInput').value.toLowerCase().trim();
+    const sortVal       = document.getElementById('sortSelector').value;
+    const [sortCol, sortDir] = sortVal.split('|');
+
+    const rows   = Array.from(document.querySelectorAll('#missingPersonsTableBody .ms-table-row'));
+    let visible  = 0;
+
+    // Filter
+    rows.forEach(row => {
+      const stationMatch = stationFilter === 'all' || row.dataset.station === stationFilter;
+      const textMatch    = !searchText ||
+                           row.dataset.name.includes(searchText) ||
+                           row.querySelector('.ms-station-cell').textContent.toLowerCase().includes(searchText) ||
+                           row.querySelector('.ms-case-id').textContent.toLowerCase().includes(searchText);
+      const show = stationMatch && textMatch;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    // Sort visible rows
+    const tbody = document.getElementById('missingPersonsTableBody');
+    const visibleRows = rows.filter(r => r.style.display !== 'none');
+    visibleRows.sort((a, b) => {
+      let aVal, bVal;
+      if (sortCol === 'age') {
+        aVal = parseInt(a.dataset.age) || 0;
+        bVal = parseInt(b.dataset.age) || 0;
+      } else {
+        aVal = parseInt(a.dataset.id) || 0;
+        bVal = parseInt(b.dataset.id) || 0;
+      }
+      return sortDir === 'asc' ? aVal - bVal : bVal - aVal;
+    });
+    visibleRows.forEach(r => tbody.appendChild(r));
+
+    // Update count label
+    document.querySelector('#missingPersonsCount strong').textContent = visible;
+
+    // No results message
+    const noMsg = document.getElementById('noResultsMsg');
+    noMsg.classList.toggle('d-none', visible > 0);
+
+    // Update title if station filter set
+    const titleEl = document.getElementById('missingPersonsTitle');
+    const sel = document.getElementById('stationSelector');
+    if (stationFilter === 'all') {
+      titleEl.lastChild.textContent = ' Missing Persons — All Stations';
+    } else {
+      const stationName = sel.options[sel.selectedIndex].text;
+      titleEl.lastChild.textContent = ' Missing Persons — ' + stationName;
+    }
+  }
+
+  /* =============================================
+     STATION CARD CLICK → FILTER TABLE
+  ============================================= */
+  function selectStation(stationId, stationName) {
+    // Highlight card
+    document.querySelectorAll('.ms-station-card').forEach(c => c.classList.remove('active-station'));
+    event.currentTarget.classList.add('active-station');
+
+    // Set selector and filter
+    const sel = document.getElementById('stationSelector');
+    sel.value = String(stationId);
+    filterTable();
+
+    // Scroll to table
+    document.querySelector('.ms-table-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function viewMissingForStation(stationId, stationName) {
+    const sel = document.getElementById('stationSelector');
+    sel.value = String(stationId);
+    filterTable();
+    document.querySelector('.ms-table-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* =============================================
+     PERSON DETAIL MODAL
+  ============================================= */
+  function openPersonModal(id, name, age, gender, details, photoUrl, station) {
+    document.getElementById('mdlName').textContent    = name;
+    document.getElementById('mdlAge').textContent     = age + ' years';
+    document.getElementById('mdlGender').textContent  = gender;
+    document.getElementById('mdlCaseId').textContent  = '#' + id;
+    document.getElementById('mdlStation').textContent = station;
+    document.getElementById('mdlDetails').textContent = details || 'No additional details available.';
+
+    const photo = document.getElementById('mdlPhoto');
+    const ph    = document.getElementById('mdlPhotoPh');
+    if (photoUrl) {
+      photo.src = photoUrl; photo.alt = name;
+      photo.classList.remove('d-none'); ph.classList.add('d-none');
+    } else {
+      photo.classList.add('d-none'); ph.classList.remove('d-none');
+    }
+    new bootstrap.Modal(document.getElementById('personDetailModal')).show();
+  }
+
+  // Init
+  document.addEventListener('DOMContentLoaded', filterTable);
+</script>

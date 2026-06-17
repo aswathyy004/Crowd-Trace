@@ -1,0 +1,318 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Full Report</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+/* ===== GLOBAL ===== */
+body{
+  font-family:'Nunito',sans-serif;
+  background:#ecfdf5;
+  margin:0;
+}
+
+/* ===== SIDEBAR FIX ===== */
+.main-content{
+  margin-left:260px;
+  padding:30px;
+}
+@media(max-width:768px){
+  .main-content{margin-left:0;}
+}
+
+/* ===== HEADER ===== */
+.header h2{
+  font-family:'Raleway';
+  font-weight:800;
+  color:#065f46;
+}
+
+/* ===== CARD ===== */
+.card{
+  background:white;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  margin-bottom:20px;
+}
+
+/* ===== IMAGE ===== */
+.image-wrapper{
+  display:flex;
+  justify-content:center;
+}
+
+.case-image{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #10b981;
+  cursor:pointer;
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.lightbox img{
+  max-width:90%;
+  max-height:90%;
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+}
+
+/* ===== FIELD ===== */
+.field{
+  background:#f0fdf4;
+  padding:10px;
+  border-radius:8px;
+}
+.label{
+  font-weight:700;
+  color:#047857;
+}
+.value{
+  margin-top:5px;
+}
+
+/* ===== BADGES ===== */
+.badge{
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.status-badge{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.pending{background:#fef3c7;}
+.in-progress{background:#dbeafe;}
+.found{background:#d1fae5;}
+
+/* ===== FORM ===== */
+.update-box{
+  background:#f8fafc;
+  padding:15px;
+  border-radius:12px;
+}
+
+select, textarea{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  margin-top:10px;
+  width:100%;
+  background:#10b981;
+  color:white;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+#msg{
+  margin-top:10px;
+  font-weight:600;
+  color:green;
+}
+
+</style>
+</head>
+
+<body>
+
+{% include 'police/police_sidebar.html' %}
+
+<div class="main-content">
+
+<div class="header">
+  <h2>Case Full Report #{{ case.id }}</h2>
+</div>
+
+<!-- IMAGE -->
+<div class="card">
+<div class="image-wrapper">
+{% if case.photo %}
+<img src="{{ case.photo.url }}" class="case-image" onclick="openImage(this.src)">
+{% endif %}
+</div>
+</div>
+
+<!-- BASIC INFO -->
+<div class="card">
+<h3>Basic Details</h3>
+
+<div class="grid">
+<div class="field"><div class="label">Name</div><div class="value">{{ case.name }}</div></div>
+<div class="field"><div class="label">Age</div><div class="value">{{ case.age }}</div></div>
+<div class="field"><div class="label">Gender</div><div class="value">{{ case.Gender }}</div></div>
+<div class="field"><div class="label">Phone</div><div class="value">{{ case.phone }}</div></div>
+<div class="field"><div class="label">Email</div><div class="value">{{ case.email }}</div></div>
+<div class="field"><div class="label">Address</div><div class="value">{{ case.address }}</div></div>
+</div>
+
+</div>
+
+<!-- CASE INFO -->
+<div class="card">
+<h3>Case Info</h3>
+
+<div class="grid">
+<div class="field"><div class="label">Description</div><div class="value">{{ case.description }}</div></div>
+<div class="field"><div class="label">Date</div><div class="value">{{ case.date }}</div></div>
+</div>
+
+<!-- FIXED STATUS DISPLAY -->
+<div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
+
+  <span class="badge status-badge">
+    <i class="fa fa-flag"></i> Status: {{ case.status }}
+  </span>
+
+  <span id="progressBadge" class="badge {{ case.progress|lower|slugify }}">
+    <i class="fa fa-tasks"></i> Progress: {{ case.progress }}
+  </span>
+
+</div>
+
+</div>
+
+<!-- REPORT -->
+<div class="card" id="reportDisplay">
+<h3>Final Report</h3>
+{{ case.report|default:"Not available" }}
+</div>
+
+<!-- UPDATE -->
+<div class="card">
+     {% if case.status != "closed" %}
+<h3>Update Case</h3>
+
+<form id="updateForm">
+
+
+<select id="progressSelect">
+<option value="pending">Pending</option>
+<option value="In Progress">In Progress</option>
+<option value="Found">Found</option>
+</select>
+
+
+<textarea id="reportInput" placeholder="Enter report..." style="display:none;"></textarea>
+
+<button type="submit">Update</button>
+
+
+
+</form>
+     {% endif %}
+
+<div id="msg"></div>
+
+</div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div id="viewer" class="lightbox" onclick="closeImage()">
+<img id="viewerImg">
+</div>
+
+<script>
+
+// IMAGE VIEW
+function openImage(src){
+  viewerImg.src = src;
+  viewer.style.display = "flex";
+}
+function closeImage(){
+  viewer.style.display = "none";
+}
+
+// SET DEFAULT SELECT VALUE
+document.getElementById("progressSelect").value = "{{ case.progress }}";
+
+// REPORT TOGGLE
+const progressSelect = document.getElementById("progressSelect");
+const reportInput = document.getElementById("reportInput");
+
+function toggleReport(){
+  reportInput.style.display =
+    progressSelect.value.toLowerCase()==="found" ? "block":"none";
+}
+progressSelect.addEventListener("change",toggleReport);
+toggleReport();
+
+// AJAX UPDATE
+document.getElementById("updateForm").addEventListener("submit",async function(e){
+e.preventDefault();
+
+const progress = progressSelect.value;
+const report = reportInput.value;
+
+if(progress === "Found" && !report.trim()){
+alert("Report required");
+return;
+}
+
+const fd = new FormData();
+fd.append("progress",progress);
+fd.append("report",report);
+fd.append("csrfmiddlewaretoken",getCookie("csrftoken"));
+
+const res = await fetch("",{method:"POST",body:fd});
+const data = await res.json();
+
+if(data.success){
+msg.innerText="Updated successfully";
+
+progressBadge.innerHTML =
+'<i class="fa fa-tasks"></i> Progress: '+data.progress;
+
+reportDisplay.innerHTML =
+"<h3>Final Report</h3>"+(data.report || "Not available");
+}
+
+});
+
+// CSRF
+function getCookie(name){
+let v=null;
+document.cookie.split(";").forEach(c=>{
+c=c.trim();
+if(c.startsWith(name+"=")){
+v=decodeURIComponent(c.slice(name.length+1));
+}
+});
+return v;
+}
+
+</script>
+
+</body>
+</html>

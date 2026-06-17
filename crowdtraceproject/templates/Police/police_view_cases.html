@@ -1,0 +1,1541 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#<meta charset="UTF-8">#}
+{#<title>Police Cases</title>#}
+{#<meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{##}
+{#<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">#}
+{#<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">#}
+{##}
+{#<style>#}
+{##}
+{#body{#}
+{#background:#f1f5f9;#}
+{#font-family:'Barlow',sans-serif;#}
+{#margin:0;#}
+{#color:#1e293b;#}
+{#}#}
+{##}
+{#/* PAGE TITLE */#}
+{##}
+{#.page-title{#}
+{#font-size:30px;#}
+{#font-weight:700;#}
+{#margin-bottom:35px;#}
+{#display:flex;#}
+{#align-items:center;#}
+{#gap:10px;#}
+{#}#}
+{##}
+{#/* GRID */#}
+{##}
+{#.case-grid{#}
+{#display:grid;#}
+{#grid-template-columns:repeat(4,1fr);#}
+{#gap:26px;#}
+{#}#}
+{##}
+{#/* RESPONSIVE */#}
+{##}
+{#@media(max-width:1200px){#}
+{#.case-grid{#}
+{#grid-template-columns:repeat(2,1fr);#}
+{#}#}
+{#}#}
+{##}
+{#@media(max-width:768px){#}
+{#.case-grid{#}
+{#grid-template-columns:1fr;#}
+{#}#}
+{#}#}
+{##}
+{#/* CARD */#}
+{##}
+{#.case-card{#}
+{#background:white;#}
+{#border-radius:16px;#}
+{#overflow:hidden;#}
+{#box-shadow:0 6px 22px rgba(0,0,0,0.06);#}
+{#border:1px solid #e2e8f0;#}
+{#transition:all .25s ease;#}
+{#display:flex;#}
+{#flex-direction:column;#}
+{#}#}
+{##}
+{#.case-card:hover{#}
+{#transform:translateY(-6px);#}
+{#box-shadow:0 16px 40px rgba(0,0,0,0.15);#}
+{#}#}
+{##}
+{#/* IMAGE */#}
+{##}
+{#.case-photo{#}
+{#width:100%;#}
+{#height:180px;#}
+{#object-fit:cover;#}
+{#cursor:pointer;#}
+{#}#}
+{##}
+{#/* CARD BODY */#}
+{##}
+{#.case-body{#}
+{#padding:20px;#}
+{#display:flex;#}
+{#flex-direction:column;#}
+{#gap:12px;#}
+{#}#}
+{##}
+{#/* CASE ID */#}
+{##}
+{#.case-id{#}
+{#font-size:15px;#}
+{#font-weight:600;#}
+{#color:#475569;#}
+{#}#}
+{##}
+{#/* STATUS + PROGRESS BLOCK */#}
+{##}
+{#.meta-row{#}
+{#display:flex;#}
+{#flex-direction:column;#}
+{#gap:8px;#}
+{#margin-top:5px;#}
+{#}#}
+{##}
+{#/* LABEL */#}
+{##}
+{#.label{#}
+{#font-size:13px;#}
+{#font-weight:600;#}
+{#color:#64748b;#}
+{#margin-right:5px;#}
+{#}#}
+{##}
+{#/* BADGES */#}
+{##}
+{#.badge-status{#}
+{#background:#f59e0b;#}
+{#color:white;#}
+{#padding:5px 10px;#}
+{#font-size:12px;#}
+{#border-radius:6px;#}
+{#}#}
+{##}
+{#.badge-viewed{#}
+{#background:#10b981;#}
+{#color:white;#}
+{#padding:5px 10px;#}
+{#font-size:12px;#}
+{#border-radius:6px;#}
+{#}#}
+{##}
+{#.badge-progress{#}
+{#background:#1e293b;#}
+{#color:white;#}
+{#padding:5px 10px;#}
+{#font-size:12px;#}
+{#border-radius:6px;#}
+{#}#}
+{##}
+{#/* BUTTON */#}
+{##}
+{#.btn-view{#}
+{#width:50%;#}
+{#margin-top:10px;#}
+{#background:#05AD98;#}
+{#border:none;#}
+{#color:white;#}
+{#font-weight:600;#}
+{#letter-spacing:.5px;#}
+{#padding:9px;#}
+{#border-radius:7px;#}
+{#transition:.2s;#}
+{#}#}
+{##}
+{#.btn-view:hover{#}
+{#background:#048a78;#}
+{#color:white;#}
+{#}#}
+{##}
+{#/* FULLSCREEN IMAGE */#}
+{##}
+{#.image-viewer{#}
+{#display:none;#}
+{#position:fixed;#}
+{#top:0;#}
+{#left:0;#}
+{#width:100%;#}
+{#height:100%;#}
+{#background:rgba(0,0,0,0.95);#}
+{#justify-content:center;#}
+{#align-items:center;#}
+{#z-index:9999;#}
+{#cursor:pointer;#}
+{#}#}
+{##}
+{#.image-viewer img{#}
+{#max-width:90%;#}
+{#max-height:90%;#}
+{#border-radius:10px;#}
+{#}#}
+{##}
+{#</style>#}
+{##}
+{#</head>#}
+{##}
+{#<body>#}
+{##}
+{#{% include 'police/police_sidebar.html' %}#}
+{##}
+{#<div class="container-fluid mt-4 px-4">#}
+{##}
+{#<div class="page-title">#}
+{#<i class="fas fa-folder-open"></i>#}
+{#Reported Cases#}
+{#</div>#}
+{##}
+{#<div class="case-grid">#}
+{##}
+{#{% for c in cases %}#}
+{##}
+{#<div class="case-card">#}
+{##}
+{#<img src="{{ c.photo.url }}" class="case-photo" onclick="openImage(this.src)">#}
+{##}
+{#<div class="case-body">#}
+{##}
+{#<div class="case-id">#}
+{#Case #{{ c.id }}#}
+{#</div>#}
+{##}
+{#<div class="meta-row">#}
+{##}
+{#<div>#}
+{#<span class="label">Status:</span>#}
+{##}
+{#{% if c.status == "Viewed" %}#}
+{#<span class="badge-viewed">#}
+{#<i class="fa fa-eye"></i> {{ c.status }}#}
+{#</span>#}
+{#{% else %}#}
+{#<span class="badge-status">#}
+{#<i class="fa fa-bell"></i> {{ c.status }}#}
+{#</span>#}
+{#{% endif %}#}
+{#</div>#}
+{##}
+{#<div>#}
+{#<span class="label">Progress:</span>#}
+{#<span class="badge-progress">#}
+{#{{ c.progress }}#}
+{#</span>#}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#<a href="{% url 'police_update_case' c.id %}" class="btn-view">#}
+{#<i class="fa fa-search me-1"></i> View Case#}
+{#</a>#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#{% endfor %}#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{##}
+{#<!-- FULLSCREEN IMAGE VIEWER -->#}
+{##}
+{#<div id="imageViewer" class="image-viewer" onclick="closeImage()">#}
+{#<img id="viewerImg">#}
+{#</div>#}
+{##}
+{##}
+{#<script>#}
+{##}
+{#function openImage(src){#}
+{##}
+{#const viewer=document.getElementById("imageViewer");#}
+{#const img=document.getElementById("viewerImg");#}
+{##}
+{#img.src=src;#}
+{##}
+{#viewer.style.display="flex";#}
+{##}
+{#}#}
+{##}
+{#function closeImage(){#}
+{##}
+{#document.getElementById("imageViewer").style.display="none";#}
+{##}
+{#}#}
+{##}
+{#</script>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+
+{% include 'police/police_sidebar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reported Cases · CrowdTrace Police</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800;900&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ══════════════════════════════════════════════
+   POLICE VIEW CASES  ·  Mint-Teal Light Palette
+══════════════════════════════════════════════ */
+:root {
+  --bg:        #e8f8f5;
+  --surface:   rgba(255,255,255,.88);
+  --surf2:     #ffffff;
+  --border:    rgba(0,180,160,.16);
+  --border2:   rgba(0,180,160,.10);
+  --ink:       #0d3b35;
+  --ink2:      #1a5048;
+  --muted:     rgba(20,90,78,.48);
+  --teal:      #00b4a0;
+  --teal-d:    #00998a;
+  --teal-lt:   #33c9b8;
+  --teal-xs:   rgba(0,180,160,.08);
+  --teal-sm:   rgba(0,180,160,.18);
+  --green:     #27ae86;
+  --amber:     #e8a020;
+  --red:       #e05c6a;
+  --purple:    #7c5cbf;
+  --gsh:       0 4px 20px rgba(0,180,160,.10), 0 2px 8px rgba(0,0,0,.05);
+  --gsh2:      0 12px 40px rgba(0,180,160,.16), 0 4px 14px rgba(0,0,0,.08);
+  --ease:      cubic-bezier(.4,0,.2,1);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  color:var(--ink2);
+}
+
+/* ── BG DOT GRID ─────────────────────────── */
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:radial-gradient(circle,rgba(0,180,160,.09) 1.2px,transparent 1.2px);
+  background-size:26px 26px;
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,#000 0%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,#000 0%,transparent 100%);
+}
+
+.page { position:relative; z-index:1; padding:28px 30px 56px; max-width:1400px; }
+
+/* ── PAGE HEADER ─────────────────────────── */
+.ph {
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:14px; margin-bottom:26px;
+  animation:slideD .5s var(--ease) both;
+}
+@keyframes slideD { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+.ph-left {}
+.ph-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--teal-xs); border:1px solid var(--teal-sm);
+  color:var(--teal-d); font-size:.78rem; font-weight:800;
+  letter-spacing:1.2px; text-transform:uppercase;
+  padding:3px 12px; border-radius:20px; margin-bottom:7px;
+}
+.ph-title {
+  font-family:'Raleway',sans-serif; font-weight:900; font-size:2rem;
+  color:var(--ink); letter-spacing:-.4px; line-height:1.1; margin-bottom:4px;
+}
+.ph-title em { font-style:normal; color:var(--teal-d); }
+.ph-sub { font-size:.88rem; color:var(--muted); font-weight:600; }
+
+/* ── STAT STRIP ──────────────────────────── */
+.stat-strip {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:13px; margin-bottom:24px;
+}
+.sc {
+  background:var(--surface);
+  backdrop-filter:blur(18px);
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--gsh);
+  padding:15px 18px;
+  display:flex; align-items:center; gap:13px;
+  animation:popIn .45s var(--ease) both;
+}
+.sc:nth-child(1){animation-delay:.04s}
+.sc:nth-child(2){animation-delay:.10s}
+.sc:nth-child(3){animation-delay:.16s}
+.sc:nth-child(4){animation-delay:.22s}
+@keyframes popIn { from{opacity:0;transform:translateY(18px)scale(.97)} to{opacity:1;transform:translateY(0)scale(1)} }
+.sc-ico {
+  width:42px; height:42px; border-radius:13px; flex-shrink:0;
+  display:grid; place-items:center; font-size:1.05rem;
+}
+.si-all    { background:rgba(0,180,160,.14); color:var(--teal-d); }
+.si-new    { background:rgba(232,160,32,.14); color:var(--amber); }
+.si-viewed { background:rgba(124,92,191,.14); color:var(--purple); }
+.si-done   { background:rgba(39,174,134,.14); color:var(--green); }
+.sc-info {}
+.sc-val {
+  font-family:'Raleway',sans-serif; font-size:1.7rem; font-weight:900;
+  color:var(--ink); line-height:1; letter-spacing:-1px;
+}
+.sc-lbl {
+  font-size:.73rem; font-weight:800; text-transform:uppercase;
+  letter-spacing:.5px; color:var(--muted); margin-top:2px;
+}
+
+/* ── FILTER BAR ──────────────────────────── */
+.filter-bar {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.filter-btn {
+  padding:7px 18px; border-radius:20px; border:1.5px solid var(--border);
+  background:var(--surface); color:var(--muted);
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:.82rem;
+  cursor:pointer; transition:all .2s var(--ease);
+  backdrop-filter:blur(10px);
+}
+.filter-btn:hover { border-color:var(--teal-d); color:var(--teal-d); }
+.filter-btn.active {
+  background:var(--teal-d); border-color:var(--teal-d); color:#fff;
+}
+.filter-count {
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:18px; height:18px; border-radius:9px; font-size:.7rem;
+  font-weight:900; padding:0 5px; margin-left:5px;
+  background:rgba(255,255,255,.25);
+}
+.filter-btn:not(.active) .filter-count {
+  background:var(--teal-xs); color:var(--teal-d);
+}
+
+/* ── CASE GRID ───────────────────────────── */
+.case-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:20px;
+}
+
+/* ── CASE CARD ───────────────────────────── */
+.case-card {
+  background:var(--surf2);
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--gsh);
+  display:flex; flex-direction:column;
+  transition:transform .28s var(--ease), box-shadow .28s var(--ease);
+  animation:popIn .45s var(--ease) both;
+}
+.case-card:hover {
+  transform:translateY(-5px);
+  box-shadow:var(--gsh2);
+}
+
+/* status top bar */
+.card-topbar { height:3.5px; }
+.tb-pending  { background:linear-gradient(90deg,var(--amber),#f4d070); }
+.tb-viewed   { background:linear-gradient(90deg,var(--purple),#a07de0); }
+.tb-approved { background:linear-gradient(90deg,var(--green),#5dd4a8); }
+
+/* photo */
+.case-photo-wrap { position:relative; overflow:hidden; }
+.case-photo {
+  width:100%; height:190px; object-fit:cover; display:block;
+  cursor:zoom-in; transition:transform .4s var(--ease);
+}
+.case-card:hover .case-photo { transform:scale(1.04); }
+.photo-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(13,59,53,.55) 0%, transparent 55%);
+  display:flex; align-items:flex-end; padding:12px 14px; gap:7px;
+  pointer-events:none;
+}
+.photo-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:4px 10px; border-radius:20px; font-size:.74rem; font-weight:800;
+  backdrop-filter:blur(8px);
+}
+.pb-pending  { background:rgba(232,160,32,.88); color:#fff; }
+.pb-viewed   { background:rgba(124,92,191,.88); color:#fff; }
+.pb-approved { background:rgba(39,174,134,.88); color:#fff; }
+
+/* card body */
+.case-body { padding:16px 18px 18px; display:flex; flex-direction:column; gap:12px; flex:1; }
+
+.case-meta {
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;
+}
+.case-id {
+  font-family:'Raleway',sans-serif; font-weight:800; font-size:.95rem; color:var(--ink);
+}
+.case-date { font-size:.78rem; color:var(--muted); font-weight:600; }
+
+/* description */
+.case-desc {
+  font-size:.86rem; color:var(--ink2); font-weight:600; line-height:1.55;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  background:var(--teal-xs); border-left:3px solid var(--teal-d);
+  border-radius:0 10px 10px 0; padding:10px 12px;
+}
+
+/* reporter info */
+.reporter-row {
+  display:flex; align-items:center; gap:9px;
+  background:rgba(0,180,160,.05); border:1px solid var(--border2);
+  border-radius:11px; padding:9px 12px;
+}
+.reporter-avatar {
+  width:32px; height:32px; border-radius:50%; background:var(--teal-xs);
+  border:2px solid var(--teal-sm); display:grid; place-items:center;
+  font-size:.85rem; color:var(--teal-d); flex-shrink:0;
+}
+.reporter-name { font-weight:800; color:var(--ink); font-size:.84rem; }
+.reporter-sub  { font-size:.74rem; color:var(--muted); font-weight:600; }
+
+/* action row */
+.action-row {
+  display:flex; gap:8px; margin-top:auto; padding-top:4px;
+}
+.btn-view-case {
+  flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:9px 14px; border-radius:11px;
+  background:var(--teal-xs); border:1.5px solid var(--teal-sm);
+  color:var(--teal-d); font-family:'Nunito',sans-serif; font-weight:800; font-size:.84rem;
+  text-decoration:none; transition:all .2s;
+}
+.btn-view-case:hover { background:var(--teal-sm); color:var(--teal-d); }
+
+.btn-approve {
+  flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:9px 14px; border-radius:11px;
+  background:linear-gradient(135deg,var(--teal-d),var(--teal-lt));
+  border:none; color:#fff;
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:.84rem;
+  cursor:pointer; transition:all .22s;
+  box-shadow:0 4px 14px rgba(0,180,160,.28);
+}
+.btn-approve:hover { transform:translateY(-2px); box-shadow:0 7px 20px rgba(0,180,160,.38); }
+.btn-approve:disabled {
+  background:rgba(0,180,160,.22); box-shadow:none;
+  cursor:not-allowed; transform:none; color:rgba(255,255,255,.7);
+}
+
+/* already approved tag */
+.approved-tag {
+  flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:9px 14px; border-radius:11px;
+  background:rgba(39,174,134,.10); border:1.5px solid rgba(39,174,134,.26);
+  color:var(--green); font-weight:800; font-size:.84rem;
+}
+
+/* ── EMPTY STATE ─────────────────────────── */
+.empty-state {
+  grid-column:1/-1; text-align:center; padding:4rem 2rem;
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:18px; box-shadow:var(--gsh);
+}
+.empty-icon {
+  width:80px; height:80px; border-radius:22px;
+  background:var(--teal-xs); color:var(--teal-d); font-size:2rem;
+  display:grid; place-items:center; margin:0 auto 1.2rem;
+}
+.empty-title { font-family:'Raleway',sans-serif; font-weight:800; font-size:1.1rem; color:var(--ink); margin-bottom:.4rem; }
+.empty-sub   { font-size:.88rem; color:var(--muted); font-weight:600; }
+
+/* ══════════════════════════════════════════════
+   MODAL SYSTEM
+══════════════════════════════════════════════ */
+.modal-backdrop {
+  position:fixed; inset:0; background:rgba(13,59,53,.55);
+  backdrop-filter:blur(6px);
+  display:none; align-items:center; justify-content:center;
+  z-index:9000; padding:20px; animation:fadeB .22s var(--ease);
+}
+.modal-backdrop.show { display:flex; }
+@keyframes fadeB { from{opacity:0} to{opacity:1} }
+
+/* ── DETAIL MODAL ─── */
+.detail-modal {
+  background:#fff; border-radius:22px; width:100%; max-width:580px;
+  max-height:90vh; overflow-y:auto;
+  box-shadow:0 24px 72px rgba(13,59,53,.30), 0 6px 24px rgba(0,0,0,.12);
+  animation:slideUp .28s var(--ease);
+}
+@keyframes slideUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+.dm-header {
+  padding:22px 24px 16px;
+  border-bottom:1.5px solid rgba(0,180,160,.12);
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+}
+.dm-title {
+  font-family:'Raleway',sans-serif; font-weight:800; font-size:1.15rem; color:var(--ink);
+}
+.dm-sub { font-size:.82rem; color:var(--muted); font-weight:600; margin-top:2px; }
+.dm-close {
+  width:34px; height:34px; border-radius:50%; border:none;
+  background:var(--teal-xs); color:var(--teal-d); font-size:1rem;
+  cursor:pointer; display:grid; place-items:center; flex-shrink:0;
+  transition:all .2s;
+}
+.dm-close:hover { background:var(--teal-sm); }
+
+.dm-body { padding:20px 24px 24px; display:flex; flex-direction:column; gap:16px; }
+
+.dm-photo {
+  width:100%; max-height:240px; object-fit:cover; border-radius:12px;
+  border:1.5px solid var(--border); cursor:zoom-in;
+}
+.dm-label {
+  font-size:.72rem; font-weight:800; text-transform:uppercase;
+  letter-spacing:.7px; color:var(--muted); margin-bottom:6px;
+}
+.dm-value {
+  font-size:.9rem; font-weight:600; color:var(--ink2); line-height:1.55;
+  background:var(--teal-xs); border-left:3px solid var(--teal-d);
+  border-radius:0 10px 10px 0; padding:10px 13px;
+}
+.dm-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.dm-chip {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 13px; border-radius:20px; font-size:.8rem; font-weight:800;
+}
+.dc-pending  { background:rgba(232,160,32,.12); color:var(--amber); border:1px solid rgba(232,160,32,.28); }
+.dc-viewed   { background:rgba(124,92,191,.12); color:var(--purple); border:1px solid rgba(124,92,191,.28); }
+.dc-approved { background:rgba(39,174,134,.12); color:var(--green); border:1px solid rgba(39,174,134,.28); }
+
+/* ── APPROVE MODAL ─── */
+.approve-modal {
+  background:#fff; border-radius:22px; width:100%; max-width:680px;
+  max-height:92vh; overflow-y:auto;
+  box-shadow:0 24px 72px rgba(13,59,53,.30), 0 6px 24px rgba(0,0,0,.12);
+  animation:slideUp .28s var(--ease);
+}
+.am-header {
+  background:linear-gradient(120deg,var(--ink) 0%,#035c50 55%,var(--teal-d) 100%);
+  padding:22px 24px; border-radius:22px 22px 0 0;
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+}
+.am-title { font-family:'Raleway',sans-serif; font-weight:800; font-size:1.1rem; color:#fff; }
+.am-sub   { font-size:.8rem; color:rgba(255,255,255,.55); margin-top:2px; }
+.am-close {
+  width:34px; height:34px; border-radius:50%; border:none;
+  background:rgba(255,255,255,.12); color:rgba(255,255,255,.8); font-size:1rem;
+  cursor:pointer; display:grid; place-items:center; flex-shrink:0;
+  transition:all .2s;
+}
+.am-close:hover { background:rgba(255,255,255,.22); }
+
+/* Type tabs */
+.type-tabs {
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  padding:18px 22px 0;
+}
+.type-tab {
+  padding:13px; border-radius:13px; border:2px solid var(--border);
+  background:var(--teal-xs); cursor:pointer; text-align:center;
+  transition:all .2s; position:relative;
+}
+.type-tab input[type=radio] { position:absolute; opacity:0; pointer-events:none; }
+.type-tab-icon { font-size:1.4rem; margin-bottom:6px; }
+.type-tab-name {
+  font-family:'Raleway',sans-serif; font-weight:800; font-size:.9rem; color:var(--ink);
+}
+.type-tab-sub { font-size:.74rem; color:var(--muted); font-weight:600; margin-top:2px; }
+.type-tab.selected-missing {
+  border-color:var(--green); background:rgba(39,174,134,.10);
+}
+.type-tab.selected-missing .type-tab-name { color:var(--green); }
+.type-tab.selected-criminal {
+  border-color:var(--red); background:rgba(224,92,106,.08);
+}
+.type-tab.selected-criminal .type-tab-name { color:var(--red); }
+
+/* form sections */
+.am-form { padding:16px 22px 22px; display:flex; flex-direction:column; gap:14px; }
+
+/* prefilled desc banner */
+.prefill-banner {
+  background:var(--teal-xs); border:1.5px solid var(--teal-sm);
+  border-radius:12px; padding:12px 14px;
+  display:flex; gap:10px; align-items:flex-start;
+}
+.prefill-banner i { color:var(--teal-d); flex-shrink:0; margin-top:2px; }
+.prefill-text { font-size:.83rem; color:var(--ink2); font-weight:600; line-height:1.5; }
+.prefill-label {
+  font-size:.72rem; font-weight:800; text-transform:uppercase;
+  letter-spacing:.6px; color:var(--teal-d); margin-bottom:3px;
+}
+
+/* field */
+.af-label {
+  font-size:.78rem; font-weight:800; text-transform:uppercase;
+  letter-spacing:.5px; color:var(--ink); display:flex; align-items:center; gap:5px;
+  margin-bottom:6px;
+}
+.af-label i { color:var(--teal-d); font-size:.72rem; }
+.req { color:var(--red); }
+.af-input {
+  width:100%; padding:10px 14px; border-radius:11px;
+  border:1.5px solid var(--border); background:#fafffe;
+  font-family:'Nunito',sans-serif; font-size:.9rem; color:var(--ink);
+  font-weight:600; outline:none; transition:border-color .2s;
+}
+.af-input:focus { border-color:var(--teal-d); box-shadow:0 0 0 3px rgba(0,180,160,.10); }
+.af-input.textarea { resize:vertical; min-height:88px; }
+
+.af-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+/* gender radio */
+.gender-row { display:flex; gap:8px; flex-wrap:wrap; }
+.gr-opt { position:relative; }
+.gr-opt input[type=radio] { position:absolute; opacity:0; pointer-events:none; }
+.gr-opt label {
+  display:flex; align-items:center; gap:6px;
+  padding:8px 16px; border-radius:20px; border:1.5px solid var(--border);
+  background:var(--teal-xs); cursor:pointer; font-weight:800; font-size:.83rem; color:var(--muted);
+  transition:all .18s;
+}
+.gr-opt input:checked + label {
+  border-color:var(--teal-d); background:var(--teal-sm); color:var(--teal-d);
+}
+
+/* crime type grid (criminal only) */
+.crime-section { display:none; }
+.crime-section.show { display:block; }
+.crime-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:6px; }
+.ct-opt { position:relative; }
+.ct-opt input[type=radio] { position:absolute; opacity:0; pointer-events:none; }
+.ct-opt label {
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+  padding:10px 6px; border-radius:12px; border:1.5px solid var(--border);
+  background:rgba(224,92,106,.04); cursor:pointer; text-align:center;
+  font-weight:800; font-size:.74rem; color:var(--muted); transition:all .18s;
+}
+.ct-opt label i { font-size:1.1rem; }
+.ct-opt input:checked + label {
+  border-color:var(--red); background:rgba(224,92,106,.10); color:var(--red);
+}
+
+/* severity */
+.sev-row { display:flex; gap:8px; flex-wrap:wrap; }
+.sv-opt { position:relative; }
+.sv-opt input[type=radio] { position:absolute; opacity:0; pointer-events:none; }
+.sv-opt label {
+  padding:7px 14px; border-radius:20px; border:1.5px solid var(--border);
+  background:rgba(255,255,255,.7); cursor:pointer; font-weight:800; font-size:.8rem;
+  color:var(--muted); transition:all .18s; display:flex; align-items:center; gap:5px;
+}
+.sv-low    input:checked + label { border-color:#27ae60; background:rgba(39,174,96,.10); color:#27ae60; }
+.sv-medium input:checked + label { border-color:#e8a020; background:rgba(232,160,32,.10); color:#e8a020; }
+.sv-high   input:checked + label { border-color:#e05c6a; background:rgba(224,92,106,.10); color:var(--red); }
+.sv-crit   input:checked + label { border-color:#4a0010; background:rgba(74,0,16,.08); color:#4a0010; }
+
+/* photo upload */
+.photo-drop {
+  border:2px dashed var(--border); border-radius:13px; padding:20px;
+  text-align:center; cursor:pointer; transition:all .22s;
+  background:var(--teal-xs); position:relative;
+}
+.photo-drop:hover { border-color:var(--teal-d); background:rgba(0,180,160,.12); }
+.photo-drop input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.photo-drop-icon { font-size:1.6rem; color:var(--teal-d); margin-bottom:7px; }
+.photo-drop-title { font-weight:800; font-size:.85rem; color:var(--ink); }
+.photo-drop-sub   { font-size:.76rem; color:var(--muted); font-weight:600; }
+.photo-preview-img {
+  width:100%; max-height:160px; object-fit:cover;
+  border-radius:10px; margin-top:10px; display:none;
+  border:2px solid var(--border);
+}
+
+/* ── IMAGE PICKER (inside approve modal) ─── */
+.ip-tabs { display:flex; gap:8px; margin-bottom:12px; }
+.ip-tab {
+  flex:1; padding:8px 10px; border-radius:9px;
+  border:1.5px solid var(--border); background:var(--teal-xs);
+  color:var(--muted); font-family:'Nunito',sans-serif;
+  font-weight:800; font-size:.78rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:all .18s;
+}
+.ip-tab.active { border-color:var(--teal-d); background:rgba(0,180,160,.14); color:var(--teal-d); }
+.ip-tab:hover:not(.active) { border-color:#94a3b8; color:var(--ink); }
+.ip-count {
+  background:var(--teal-d); color:#fff;
+  font-size:.68rem; padding:1px 6px; border-radius:8px; margin-left:2px;
+}
+.ip-tab:not(.active) .ip-count { background:var(--teal-xs); color:var(--teal-d); border:1px solid var(--teal-sm); }
+
+.ip-panel { display:none; }
+.ip-panel.active { display:block; }
+
+.usr-uploads-grid {
+  display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap; padding:2px;
+}
+.uu-thumb { position:relative; cursor:pointer; width:120px; flex-shrink:0; }
+.uu-thumb img {
+  width:100%; aspect-ratio:1; object-fit:cover;
+  border-radius:9px; border:2.5px solid transparent; transition:.18s;
+}
+.uu-thumb:hover img    { border-color:var(--teal-d); transform:scale(1.04); }
+.uu-thumb.selected img { border-color:var(--teal-d); box-shadow:0 0 0 3px rgba(0,180,160,.22); }
+.uu-check {
+  display:none; position:absolute; top:4px; right:4px;
+  width:18px; height:18px; border-radius:50%;
+  background:var(--teal-d); color:#fff; font-size:9px;
+  align-items:center; justify-content:center;
+}
+.uu-thumb.selected .uu-check { display:flex; }
+.uu-cat-tag {
+  position:absolute; bottom:4px; left:4px;
+  background:rgba(0,0,0,.56); color:#fff;
+  font-size:9px; font-weight:800; padding:1px 5px; border-radius:4px;
+}
+.uu-empty { text-align:center; padding:24px 12px; color:#94a3b8; font-size:.8rem; }
+.uu-empty i { font-size:1.5rem; display:block; margin-bottom:6px; }
+
+/* selected photo preview strip */
+.ip-selected-strip {
+  display:none; margin-top:10px; align-items:center; gap:10px;
+  background:#f8fafc; border:1.5px solid var(--border);
+  border-radius:10px; padding:9px 12px;
+}
+.ip-selected-strip.show { display:flex; }
+.ip-sel-thumb {
+  width:52px; height:52px; object-fit:cover;
+  border-radius:8px; border:2px solid var(--border); cursor:zoom-in;
+}
+.ip-sel-name { font-weight:800; font-size:.82rem; color:var(--ink);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1; min-width:0; }
+.ip-sel-sub  { font-size:.72rem; color:var(--muted); margin-top:1px; }
+.ip-sel-clear {
+  background:transparent; border:none; color:#94a3b8;
+  cursor:pointer; font-size:.9rem; padding:3px 5px;
+  border-radius:5px; transition:.18s; flex-shrink:0;
+}
+.ip-sel-clear:hover { color:var(--red); background:rgba(224,92,106,.08); }
+
+/* submit button */
+.am-submit {
+  width:100%; padding:12px; border-radius:13px; border:none;
+  background:linear-gradient(135deg,var(--teal-d),var(--teal-lt));
+  color:#fff; font-family:'Nunito',sans-serif; font-weight:800; font-size:.95rem;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  cursor:pointer; box-shadow:0 5px 18px rgba(0,180,160,.30);
+  transition:all .22s; margin-top:4px;
+}
+.am-submit:hover { transform:translateY(-2px); box-shadow:0 8px 26px rgba(0,180,160,.40); }
+.am-submit.criminal-submit {
+  background:linear-gradient(135deg,#b71c1c,var(--red));
+  box-shadow:0 5px 18px rgba(224,92,106,.28);
+}
+.am-submit.criminal-submit:hover { box-shadow:0 8px 26px rgba(224,92,106,.38); }
+
+/* ── LIGHTBOX ────────────────────────────── */
+.lightbox {
+  position:fixed; inset:0; background:rgba(5,20,18,.96);
+  display:none; align-items:center; justify-content:center;
+  z-index:9999; cursor:zoom-out; animation:fadeB .2s;
+}
+.lightbox.show { display:flex; }
+.lightbox img { max-width:92%; max-height:92%; border-radius:12px; animation:zoomIn .22s var(--ease); }
+@keyframes zoomIn { from{transform:scale(.88);opacity:0} to{transform:scale(1);opacity:1} }
+.lb-close {
+  position:absolute; top:18px; right:22px; width:44px; height:44px;
+  border-radius:50%; background:rgba(255,255,255,.10); border:none;
+  color:rgba(255,255,255,.8); font-size:1.2rem; cursor:pointer;
+  display:grid; place-items:center; transition:all .2s;
+}
+.lb-close:hover { background:rgba(255,255,255,.20); color:#fff; }
+
+/* ── TOAST ────────────────────────────────── */
+.toast-wrap {
+  position:fixed; bottom:28px; right:28px; z-index:9999;
+  display:flex; flex-direction:column; gap:10px; pointer-events:none;
+}
+.toast {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 18px; border-radius:13px;
+  background:#fff; border:1.5px solid var(--border);
+  box-shadow:0 8px 28px rgba(0,0,0,.14);
+  font-size:.88rem; font-weight:700; color:var(--ink);
+  animation:toastIn .3s var(--ease);
+  pointer-events:all; max-width:320px;
+}
+.toast i { font-size:1rem; flex-shrink:0; }
+.toast.success i { color:var(--green); }
+.toast.error   i { color:var(--red); }
+@keyframes toastIn { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+
+/* ── RESPONSIVE ─────────────────────────── */
+@media(max-width:1100px) { .stat-strip{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:768px)  {
+  body{margin-left:0 !important;}
+  .page{padding:14px 14px 40px;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+  .case-grid{grid-template-columns:1fr;}
+  .af-row{grid-template-columns:1fr;}
+  .crime-grid{grid-template-columns:repeat(4,1fr);}
+  .ph-title{font-size:1.6rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Lightbox ── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()"><i class="fas fa-xmark"></i></button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ═══════════════════ DETAIL MODAL ═══════════════════ -->
+<div class="modal-backdrop" id="detailBackdrop" onclick="closeDetail(event)">
+  <div class="detail-modal" onclick="event.stopPropagation()">
+    <div class="dm-header">
+      <div>
+        <div class="dm-title" id="dm-title">Case #—</div>
+        <div class="dm-sub"  id="dm-sub">Submitted case details</div>
+      </div>
+      <button class="dm-close" onclick="closeDetailModal()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="dm-body">
+      <img id="dm-photo" class="dm-photo" src="" alt="" onclick="openLightbox(this.src)">
+      <div>
+        <div class="dm-label">Reporter</div>
+        <div class="dm-value" id="dm-reporter">—</div>
+      </div>
+      <div>
+        <div class="dm-label">Date Submitted</div>
+        <div class="dm-value" id="dm-date">—</div>
+      </div>
+      <div>
+        <div class="dm-label">Description from User</div>
+        <div class="dm-value" id="dm-desc" style="white-space:pre-wrap;">—</div>
+      </div>
+      <div class="dm-row">
+        <div>
+          <div class="dm-label">Current Status</div>
+          <div id="dm-status"></div>
+        </div>
+        <div>
+          <div class="dm-label">Progress</div>
+          <div class="dm-value" id="dm-progress" style="padding:5px 13px;">—</div>
+        </div>
+      </div>
+      <!-- Mark viewed auto-happens on open via AJAX -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ APPROVE MODAL ═══════════════════ -->
+<div class="modal-backdrop" id="approveBackdrop" onclick="closeApprove(event)">
+  <div class="approve-modal" onclick="event.stopPropagation()">
+
+    <div class="am-header">
+      <div>
+        <div class="am-title"><i class="fas fa-shield-check" style="margin-right:7px;"></i>Approve & Add to Database</div>
+        <div class="am-sub" id="am-sub">Case #— · Fill remaining details before registering</div>
+      </div>
+      <button class="am-close" onclick="closeApproveModal()"><i class="fas fa-xmark"></i></button>
+    </div>
+
+    <!-- DB Type selector -->
+    <div class="type-tabs">
+      <div class="type-tab" id="tab-missing" onclick="selectType('missing')">
+        <input type="radio" name="db_type" value="missing" id="type-missing" checked>
+        <div class="type-tab-icon">🔍</div>
+        <div class="type-tab-name">Missing Person</div>
+        <div class="type-tab-sub">Add to missing persons database</div>
+      </div>
+      <div class="type-tab" id="tab-criminal" onclick="selectType('criminal')">
+        <input type="radio" name="db_type" value="criminal" id="type-criminal">
+        <div class="type-tab-icon">🚨</div>
+        <div class="type-tab-name">Criminal Record</div>
+        <div class="type-tab-sub">Add to criminal database</div>
+      </div>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" id="approveForm" action="">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="approve">
+      <input type="hidden" name="case_id" id="caseIdHidden" value="">
+      <input type="hidden" name="db_type" id="dbTypeHidden" value="missing">
+      <input type="hidden" name="crime_type" id="crimeTypeHidden" value="">
+      <input type="hidden" name="severity"   id="severityHidden"   value="Medium">
+
+      <div class="am-form">
+
+        <!-- Pre-filled description banner -->
+        <div class="prefill-banner">
+          <i class="fas fa-circle-info"></i>
+          <div>
+            <div class="prefill-label">Description from User Report</div>
+            <div class="prefill-text" id="am-desc-preview">—</div>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div>
+          <div class="af-label"><i class="fas fa-user"></i> Full Name <span class="req">*</span></div>
+          <input type="text" name="name" class="af-input" placeholder="Enter full name" required id="af-name">
+        </div>
+
+        <!-- Age + Gender -->
+        <div class="af-row">
+          <div>
+            <div class="af-label"><i class="fas fa-cake-candles"></i> Age <span class="req">*</span></div>
+            <input type="number" name="age" class="af-input" placeholder="Age in years" min="0" max="120" required>
+          </div>
+          <div>
+            <div class="af-label"><i class="fas fa-venus-mars"></i> Gender <span class="req">*</span></div>
+            <div class="gender-row">
+              <div class="gr-opt">
+                <input type="radio" name="gender" id="g-male" value="Male" required>
+                <label for="g-male"><i class="fas fa-mars"></i> Male</label>
+              </div>
+              <div class="gr-opt">
+                <input type="radio" name="gender" id="g-female" value="Female">
+                <label for="g-female"><i class="fas fa-venus"></i> Female</label>
+              </div>
+              <div class="gr-opt">
+                <input type="radio" name="gender" id="g-other" value="Other">
+                <label for="g-other"><i class="fas fa-genderless"></i> Other</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details / Description (pre-filled from case) -->
+        <div>
+          <div class="af-label"><i class="fas fa-file-lines"></i> Full Case Description <span class="req">*</span></div>
+          <textarea name="details" class="af-input textarea" id="af-details"
+            placeholder="Auto-filled from user report. Add or correct details..." required></textarea>
+        </div>
+
+        <!-- ── CRIMINAL-ONLY FIELDS ── -->
+        <div class="crime-section" id="crimeSection">
+          <div class="af-label" style="margin-bottom:8px;"><i class="fas fa-tag"></i> Crime Category <span class="req">*</span></div>
+          <div class="crime-grid">
+            <div class="ct-opt"><input type="radio" name="crime_type_radio" id="ct-theft"   value="Theft"><label for="ct-theft"><i class="fas fa-mask"></i>Theft</label></div>
+            <div class="ct-opt"><input type="radio" name="crime_type_radio" id="ct-assault" value="Assault"><label for="ct-assault"><i class="fas fa-hand-fist"></i>Assault</label></div>
+            <div class="ct-opt"><input type="radio" name="crime_type_radio" id="ct-fraud"   value="Fraud"><label for="ct-fraud"><i class="fas fa-file-circle-xmark"></i>Fraud</label></div>
+            <div class="ct-opt"><input type="radio" name="crime_type_radio" id="ct-drugs"   value="Drug Offence"><label for="ct-drugs"><i class="fas fa-capsules"></i>Drugs</label></div>
+            <div class="ct-opt"><input type="radio" name="crime_type_radio" id="ct-cyber"   value="Cybercrime"><label for="ct-cyber"><i class="fas fa-laptop-code"></i>Cyber</label></div>
+            <div class="ct-opt"><input type="radio" name="crime_type_radio" id="ct-murder"  value="Murder"><label for="ct-murder"><i class="fas fa-skull"></i>Murder</label></div>
+            <div class="ct-opt"><input type="radio" name="crime_type_radio" id="ct-robbery" value="Robbery"><label for="ct-robbery"><i class="fas fa-gun"></i>Robbery</label></div>
+            <div class="ct-opt"><input type="radio" name="crime_type_radio" id="ct-other"   value="Other"><label for="ct-other"><i class="fas fa-ellipsis"></i>Other</label></div>
+          </div>
+
+          <div class="af-label" style="margin-top:14px;margin-bottom:8px;"><i class="fas fa-circle-exclamation"></i> Severity Level <span class="req">*</span></div>
+          <div class="sev-row">
+            <div class="sv-opt sv-low">   <input type="radio" name="severity_radio" id="sv-low"  value="Low"><label for="sv-low"><i class="fas fa-circle-minus"></i>Low</label></div>
+            <div class="sv-opt sv-medium"><input type="radio" name="severity_radio" id="sv-med"  value="Medium" checked><label for="sv-med"><i class="fas fa-circle-half-stroke"></i>Medium</label></div>
+            <div class="sv-opt sv-high">  <input type="radio" name="severity_radio" id="sv-high" value="High"><label for="sv-high"><i class="fas fa-circle-exclamation"></i>High</label></div>
+            <div class="sv-opt sv-crit">  <input type="radio" name="severity_radio" id="sv-crit" value="Critical"><label for="sv-crit"><i class="fas fa-skull-crossbones"></i>Critical</label></div>
+          </div>
+        </div>
+
+        <!-- Photo picker — User Uploads + External -->
+        <div>
+          <div class="af-label"><i class="fas fa-camera"></i> Photograph <span class="req">*</span></div>
+
+          <!-- tabs -->
+          <div class="ip-tabs">
+            <button type="button" class="ip-tab active" onclick="switchIpTab('case-photo', this)">
+              <i class="fas fa-image"></i> User's Case Photo
+            </button>
+            <button type="button" class="ip-tab" onclick="switchIpTab('external-upload', this)">
+              <i class="fas fa-cloud-arrow-up"></i> Upload External
+            </button>
+          </div>
+
+          <!-- panel: case photo submitted by user -->
+          <div class="ip-panel active" id="ip-panel-case-photo">
+            <div id="casePhotoContainer"></div>
+          </div>
+
+          <!-- panel: external file upload -->
+          <div class="ip-panel" id="ip-panel-external-upload">
+            <div class="photo-drop" id="photoDropZone" onclick="document.getElementById('af-photo').click()">
+              <input type="file" name="photo" id="af-photo" accept="image/*"
+                     style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;"
+                     onchange="handlePhotoChange(this)">
+              <div class="photo-drop-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+              <div class="photo-drop-title">Drop photo here or click to browse</div>
+              <div class="photo-drop-sub">JPG, PNG, WEBP · Max 5MB</div>
+            </div>
+          </div>
+
+          <!-- selected preview strip (shared) -->
+          <div class="ip-selected-strip" id="ipSelectedStrip">
+            <img class="ip-sel-thumb" id="ipSelThumb" src="" alt="" onclick="openLightbox(this.src)">
+            <div style="flex:1;min-width:0;">
+              <div class="ip-sel-name" id="ipSelName">—</div>
+              <div class="ip-sel-sub"  id="ipSelSub">—</div>
+            </div>
+            <button type="button" class="ip-sel-clear" onclick="clearIpSelection()" title="Clear">
+              <i class="fas fa-xmark"></i>
+            </button>
+          </div>
+
+          <!-- hidden: stores url when user-upload is selected -->
+          <input type="hidden" name="selected_photo_url" id="selectedPhotoUrl">
+        </div>
+
+        <button type="submit" class="am-submit" id="amSubmitBtn">
+          <i class="fas fa-database"></i>
+          Add to Missing Person Database
+        </button>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════ PAGE ═══════════════════ -->
+<div class="page">
+
+  <!-- Header -->
+  <div class="ph">
+    <div class="ph-left">
+      <div class="ph-badge"><i class="fas fa-folder-open"></i> Case Management</div>
+      <div class="ph-title">Reported <em>Cases</em></div>
+      <div class="ph-sub">
+        {% if police and police.policestation %}{{ police.policestation.station_name }} · {% endif %}
+        Cases submitted via public app
+      </div>
+    </div>
+    <a href="{% url 'police_home' %}"
+       style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;
+              background:var(--surface);border:1.5px solid var(--border);
+              border-radius:12px;color:var(--ink2);font-family:'Nunito',sans-serif;
+              font-weight:800;font-size:.88rem;text-decoration:none;
+              backdrop-filter:blur(10px);transition:all .2s;">
+      <i class="fas fa-gauge-high"></i> Dashboard
+    </a>
+  </div>
+
+  <!-- Stat Strip -->
+  <div class="stat-strip">
+    <div class="sc">
+      <div class="sc-ico si-all"><i class="fas fa-folder"></i></div>
+      <div class="sc-info">
+        <div class="sc-val">{{ cases|length }}</div>
+        <div class="sc-lbl">Total Cases</div>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="sc-ico si-new"><i class="fas fa-bell"></i></div>
+      <div class="sc-info">
+        <div class="sc-val">{{ pending_count|default:"0" }}</div>
+        <div class="sc-lbl">Not Viewed</div>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="sc-ico si-viewed"><i class="fas fa-eye"></i></div>
+      <div class="sc-info">
+        <div class="sc-val">{{ viewed_count|default:"0" }}</div>
+        <div class="sc-lbl">Viewed</div>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="sc-ico si-done"><i class="fas fa-check-double"></i></div>
+      <div class="sc-info">
+        <div class="sc-val">{{ approved_count|default:"0" }}</div>
+        <div class="sc-lbl">Approved</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCases('all', this)">
+      All <span class="filter-count">{{ cases|length }}</span>
+    </button>
+    <button class="filter-btn" onclick="filterCases('Not Viewed', this)">
+      <i class="fas fa-bell" style="font-size:.76rem;"></i> Not Viewed
+      <span class="filter-count">{{ pending_count|default:"0" }}</span>
+    </button>
+    <button class="filter-btn" onclick="filterCases('Viewed', this)">
+      <i class="fas fa-eye" style="font-size:.76rem;"></i> Viewed
+      <span class="filter-count">{{ viewed_count|default:"0" }}</span>
+    </button>
+    <button class="filter-btn" onclick="filterCases('Approved', this)">
+      <i class="fas fa-check-double" style="font-size:.76rem;"></i> Approved
+      <span class="filter-count">{{ approved_count|default:"0" }}</span>
+    </button>
+  </div>
+
+  <!-- Case Grid -->
+  <div class="case-grid" id="caseGrid">
+
+    {% for c in cases %}
+    <div class="case-card" data-status="{{ c.status }}">
+
+      <!-- top status bar -->
+      <div class="card-topbar
+        {% if c.status == 'Approved' %}tb-approved
+        {% elif c.status == 'Viewed' %}tb-viewed
+        {% else %}tb-pending{% endif %}">
+      </div>
+
+      <!-- photo -->
+      <div class="case-photo-wrap">
+        {% if c.photo %}
+        <img src="{{ c.photo.url }}" class="case-photo" alt="Case photo"
+             onclick="openLightbox('{{ c.photo.url }}')">
+        {% else %}
+        <div style="width:100%;height:190px;background:var(--teal-xs);
+                    display:grid;place-items:center;color:var(--muted);font-size:2.5rem;">
+          <i class="fas fa-image-slash"></i>
+        </div>
+        {% endif %}
+        <div class="photo-overlay">
+          <span class="photo-badge
+            {% if c.status == 'Approved' %}pb-approved
+            {% elif c.status == 'Viewed' %}pb-viewed
+            {% else %}pb-pending{% endif %}">
+            <i class="fas fa-{% if c.status == 'Approved' %}check-double{% elif c.status == 'Viewed' %}eye{% else %}bell{% endif %}"></i>
+            {{ c.status }}
+          </span>
+        </div>
+      </div>
+
+      <!-- body -->
+      <div class="case-body">
+
+        <div class="case-meta">
+          <div class="case-id"><i class="fas fa-hashtag" style="font-size:.8rem;color:var(--teal-d);"></i> Case {{ c.id }}</div>
+          <div class="case-date">{{ c.date }}</div>
+        </div>
+
+        <div class="case-desc">{{ c.description }}</div>
+        <div class="case-desc">{{ c.phone }}</div>
+
+
+        {% if c.USER %}
+        <div class="reporter-row">
+          <div class="reporter-avatar"><i class="fas fa-user"></i></div>
+          <div>
+            <div class="reporter-name">{{ c.USER.name|default:"Anonymous" }}</div>
+            <div class="reporter-sub">{{ c.USER.phone|default:"No contact" }} · {{ c.USER.place|default:"" }}</div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="action-row">
+          <!-- View Details button — marks as Viewed -->
+{#          <button class="btn-view-case"#}
+{#            onclick="openDetailModal(#}
+{#              {{ c.id }},#}
+{#              '{% if c.photo %}{{ c.photo.url }}{% endif %}',#}
+{#              '{{ c.description|escapejs }}',#}
+{#              '{{ c.status }}',#}
+{#              '{{ c.progress }}',#}
+{#              '{{ c.date }}',#}
+{#              '{{ c.USER.name|default:"Anonymous"|escapejs }}'#}
+{#            )">#}
+{#            <i class="fas fa-eye"></i> View#}
+{#          </button>#}
+
+
+        <a href="{% url 'police_view_user_case' c.id %}" class="btn-view-case">
+    <i class="fas fa-eye"></i> View Full
+</a>
+
+          {% if c.status == 'Approved' %}
+          <div class="approved-tag">
+            <i class="fas fa-check-double"></i> Approved
+          </div>
+          {% else %}
+          <button class="btn-approve"
+            onclick="openApproveModal(
+              {{ c.id }},
+              '{{ c.description|escapejs }}',
+              '{% if c.photo %}{{ c.photo.url }}{% endif %}'
+            )">
+            <i class="fas fa-shield-check"></i> Approve
+          </button>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+    {% empty %}
+    <div class="empty-state">
+      <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
+      <div class="empty-title">No Cases Yet</div>
+      <div class="empty-sub">Cases submitted by users through the app will appear here.</div>
+    </div>
+    {% endfor %}
+
+  </div><!-- end case-grid -->
+
+</div><!-- end .page -->
+
+<script>
+// ── LIGHTBOX ─────────────────────────────────
+function openLightbox(src) {
+  document.getElementById('lbImg').src = src;
+  document.getElementById('lightbox').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLightbox(); closeDetailModal(); closeApproveModal(); } });
+
+// ── DETAIL MODAL ──────────────────────────────
+let currentCaseId = null;
+
+function openDetailModal(id, photoUrl, desc, status, progress, date, reporter) {
+  currentCaseId = id;
+  document.getElementById('dm-title').textContent = 'Case #' + id;
+  document.getElementById('dm-sub').textContent = 'Submitted on ' + date;
+  document.getElementById('dm-desc').textContent = desc;
+  document.getElementById('dm-date').textContent = date;
+  document.getElementById('dm-reporter').textContent = reporter;
+  document.getElementById('dm-progress').textContent = progress;
+
+  const photo = document.getElementById('dm-photo');
+  if (photoUrl) { photo.src = photoUrl; photo.style.display = 'block'; }
+  else { photo.style.display = 'none'; }
+
+  // Status chip
+  const statusEl = document.getElementById('dm-status');
+  const chipClass = status === 'Approved' ? 'dc-approved' : status === 'Viewed' ? 'dc-viewed' : 'dc-pending';
+  const icon = status === 'Approved' ? 'check-double' : status === 'Viewed' ? 'eye' : 'bell';
+  statusEl.innerHTML = `<span class="dm-chip ${chipClass}"><i class="fas fa-${icon}"></i> ${status}</span>`;
+
+  document.getElementById('detailBackdrop').classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  // Auto-mark as Viewed via AJAX if not yet viewed/approved
+  if (status === 'Not Viewed') {
+    fetch('/police_view_cases', {
+      method: 'POST',
+      headers: { 'X-CSRFToken': getCookie('csrftoken'), 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `action=mark_viewed&case_id=${id}`
+    }).then(r => r.json()).then(d => {
+      if (d.status === 'ok') {
+        // Update the card badge live
+        const cards = document.querySelectorAll('.case-card');
+        cards.forEach(card => {
+          const btn = card.querySelector('.btn-view-case');
+          if (btn && btn.getAttribute('onclick')?.includes(`openDetailModal(${id},`)) {
+            // Update topbar
+            card.querySelector('.card-topbar').className = 'card-topbar tb-viewed';
+            // Update photo badge
+            const pb = card.querySelector('.photo-badge');
+            if (pb) {
+              pb.className = 'photo-badge pb-viewed';
+              pb.innerHTML = '<i class="fas fa-eye"></i> Viewed';
+            }
+            card.setAttribute('data-status', 'Viewed');
+          }
+        });
+        // Update status chip in modal
+        statusEl.innerHTML = `<span class="dm-chip dc-viewed"><i class="fas fa-eye"></i> Viewed</span>`;
+      }
+    }).catch(() => {});
+  }
+}
+
+function closeDetailModal() {
+  document.getElementById('detailBackdrop').classList.remove('show');
+  document.body.style.overflow = '';
+}
+function closeDetail(e) { if (e.target === document.getElementById('detailBackdrop')) closeDetailModal(); }
+
+// ── APPROVE MODAL ──────────────────────────────
+let approveId = null;
+
+function openApproveModal(id, desc, casePhotoUrl) {
+  approveId = id;
+  document.getElementById('caseIdHidden').value = id;
+  document.getElementById('am-sub').textContent = `Case #${id} · Fill remaining details before registering`;
+  document.getElementById('am-desc-preview').textContent = desc;
+  document.getElementById('af-details').value = desc;
+  document.getElementById('approveForm').action = '/police_view_cases';
+
+  // Reset form
+  document.getElementById('af-name').value = '';
+  document.getElementById('af-photo').value = '';
+  clearIpSelection();
+  document.querySelectorAll('#approveForm input[type=radio]').forEach(r => r.checked = false);
+  document.getElementById('sv-med').checked = true;
+  selectType('missing');
+
+  // Render case photo tab
+  const container = document.getElementById('casePhotoContainer');
+  if (casePhotoUrl) {
+    container.innerHTML = `
+      <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;">
+        <div class="uu-thumb selected" onclick="selectCasePhoto(this,'${casePhotoUrl}')" data-url="${casePhotoUrl}" style="width:130px;">
+          <img src="${casePhotoUrl}" alt="Case photo">
+          <div class="uu-check"><i class="fas fa-check"></i></div>
+          <div class="uu-cat-tag">Case Photo</div>
+        </div>
+        <div style="flex:1;min-width:160px;background:var(--teal-xs);border:1.5px solid var(--teal-sm);
+                    border-radius:11px;padding:12px 14px;font-size:.8rem;color:var(--ink2);font-weight:600;line-height:1.6;">
+          <div style="font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+                      color:var(--teal-d);margin-bottom:5px;">
+            <i class="fas fa-circle-info"></i> Photo submitted with report
+          </div>
+          This is the image the user attached when reporting this case.<br>
+          Click to select it, or switch to the other tab to upload a clearer external photo.
+        </div>
+      </div>`;
+    // Auto-select it
+    document.getElementById('selectedPhotoUrl').value = casePhotoUrl;
+    showIpPreview(casePhotoUrl, 'User case photo', 'Submitted with report');
+    switchIpTab('case-photo', document.querySelector('.ip-tab'));
+  } else {
+    container.innerHTML = `<div class="uu-empty"><i class="fas fa-image-slash"></i>No photo was submitted with this case.</div>`;
+    switchIpTab('external-upload', document.querySelectorAll('.ip-tab')[1]);
+  }
+
+  document.getElementById('approveBackdrop').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeApproveModal() {
+  document.getElementById('approveBackdrop').classList.remove('show');
+  document.body.style.overflow = '';
+}
+function closeApprove(e) { if (e.target === document.getElementById('approveBackdrop')) closeApproveModal(); }
+
+// ── TYPE SELECTION ──────────────────────────────
+function selectType(type) {
+  document.getElementById('dbTypeHidden').value = type;
+  const tabM = document.getElementById('tab-missing');
+  const tabC = document.getElementById('tab-criminal');
+  const crimeSection = document.getElementById('crimeSection');
+  const submitBtn = document.getElementById('amSubmitBtn');
+
+  if (type === 'missing') {
+    tabM.className = 'type-tab selected-missing';
+    tabC.className = 'type-tab';
+    document.getElementById('type-missing').checked = true;
+    crimeSection.classList.remove('show');
+    submitBtn.className = 'am-submit';
+    submitBtn.innerHTML = '<i class="fas fa-database"></i> Add to Missing Person Database';
+  } else {
+    tabC.className = 'type-tab selected-criminal';
+    tabM.className = 'type-tab';
+    document.getElementById('type-criminal').checked = true;
+    crimeSection.classList.add('show');
+    submitBtn.className = 'am-submit criminal-submit';
+    submitBtn.innerHTML = '<i class="fas fa-user-secret"></i> Add to Criminal Database';
+  }
+}
+
+// Sync crime_type radio → hidden
+document.querySelectorAll('input[name="crime_type_radio"]').forEach(r => {
+  r.addEventListener('change', () => { document.getElementById('crimeTypeHidden').value = r.value; });
+});
+document.querySelectorAll('input[name="severity_radio"]').forEach(r => {
+  r.addEventListener('change', () => { document.getElementById('severityHidden').value = r.value; });
+});
+
+// ── PHOTO PREVIEW ──────────────────────────────
+// ── IMAGE PICKER (approve modal) ──────────────
+function switchIpTab(tab, btn) {
+  document.querySelectorAll('.ip-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ip-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('ip-panel-' + tab).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+function selectCasePhoto(el, url) {
+  document.querySelectorAll('.uu-thumb').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('af-photo').value = '';
+  document.getElementById('selectedPhotoUrl').value = url;
+  showIpPreview(url, 'User case photo', 'Submitted with report');
+}
+
+function handlePhotoChange(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  document.getElementById('selectedPhotoUrl').value = '';
+  document.querySelectorAll('.uu-thumb').forEach(t => t.classList.remove('selected'));
+  const reader = new FileReader();
+  reader.onload = e => showIpPreview(e.target.result, file.name,
+    (file.size < 1048576 ? (file.size/1024).toFixed(1)+' KB' : (file.size/1048576).toFixed(1)+' MB') + ' · External');
+  reader.readAsDataURL(file);
+}
+
+function showIpPreview(src, name, sub) {
+  document.getElementById('ipSelThumb').src        = src;
+  document.getElementById('ipSelName').textContent  = name;
+  document.getElementById('ipSelSub').textContent   = sub;
+  document.getElementById('ipSelectedStrip').classList.add('show');
+}
+
+function clearIpSelection() {
+  document.querySelectorAll('.uu-thumb').forEach(t => t.classList.remove('selected'));
+  document.getElementById('ipSelectedStrip').classList.remove('show');
+  document.getElementById('selectedPhotoUrl').value = '';
+  document.getElementById('af-photo').value = '';
+}
+
+// ── FILTER ───────────────────────────────────
+function filterCases(status, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.case-card').forEach(card => {
+    if (status === 'all' || card.dataset.status === status) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// ── TOAST ─────────────────────────────────────
+function showToast(msg, type='success') {
+  const icon = type === 'success' ? 'circle-check' : 'circle-exclamation';
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<i class="fas fa-${icon}"></i> ${msg}`;
+  document.getElementById('toastWrap').appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+// ── CSRF HELPER ────────────────────────────────
+function getCookie(name) {
+  const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return v ? v[2] : null;
+}
+
+// Show success toast if ?approved=1 in URL
+if (new URLSearchParams(location.search).get('approved') === '1') {
+  showToast('Case approved and added to database successfully!');
+  history.replaceState({}, '', location.pathname);
+}
+</script>
+</body>
+</html>

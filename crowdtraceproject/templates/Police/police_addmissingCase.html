@@ -1,0 +1,857 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Missing Person</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --white:      #ffffff;
+            --snow:       #f5f8f8;
+            --mist:       #eaf3f2;
+            --silver:     rgba(32,33,32,0.51);
+            --slate:      rgb(22,49,96);
+            --charcoal:   #3d4444;
+            --ink:        #1a2222;
+            --teal:       #05AD98;
+            --teal-d:     #048a78;
+            --teal-lt:    #07c9b1;
+            --teal-xs:    rgba(5,173,152,.10);
+            --teal-sm:    rgba(5,173,152,.18);
+            --teal-glow:  rgba(5,173,152,.30);
+            --teal-soft:  rgba(5,173,152,.06);
+            --border:     rgba(5,173,152,.20);
+            --border-mid: rgba(5,173,152,.10);
+            --danger:     #e05555;
+            --danger-lt:  rgba(224,85,85,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--snow);
+            font-family: 'Barlow', sans-serif;
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        /* Subtle dot-grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(5,173,152,0.12) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 1;
+            padding: 36px 40px 60px;
+        }
+
+        /* ─── BANNER ─── */
+        .page-banner {
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 32px;
+            position: relative;
+            background: linear-gradient(120deg, var(--slate) 0%, #035c50 55%, var(--teal) 100%);
+            height: 160px;
+            box-shadow: 0 16px 48px rgba(5,173,152,0.20), 0 4px 16px rgba(22,49,96,0.15);
+            animation: fadeDown 0.6s cubic-bezier(0.22,1,0.36,1) both;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dot texture overlay */
+        .page-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+        }
+
+        /* Light sweep */
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+        }
+
+        .banner-left-bar {
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--teal-lt), rgba(7,201,177,0));
+        }
+
+        .banner-orb {
+            position: absolute;
+            right: -40px; top: -40px;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(7,201,177,0.25) 0%, transparent 65%);
+        }
+
+        .banner-shimmer {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(7,201,177,0.9), rgba(255,255,255,0.5), rgba(7,201,177,0.9), transparent);
+            background-size: 200% 100%;
+            animation: shimmerSlide 3s linear infinite;
+        }
+        @keyframes shimmerSlide {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .banner-content {
+            position: absolute;
+            bottom: 26px;
+            left: 32px;
+            z-index: 2;
+            animation: slideInLeft 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-24px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .banner-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+        .banner-eyebrow .line { width: 24px; height: 2px; background: rgba(255,255,255,0.45); border-radius: 2px; }
+        .banner-eyebrow span {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+        }
+
+        .banner-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            letter-spacing: 0.5px;
+        }
+        .banner-title span { color: var(--teal-lt); }
+
+        .banner-sub {
+            margin-top: 7px;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.48);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Warning ribbon in banner */
+        .banner-warning-ribbon {
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            z-index: 2;
+            animation: fadeIn 0.8s ease 0.4s both;
+        }
+        .banner-warning-ribbon .ribbon-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.20);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem;
+            color: rgba(255,255,255,0.85);
+            backdrop-filter: blur(4px);
+        }
+        .banner-warning-ribbon span {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.45);
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        /* ─── FORM CARD ─── */
+        .form-card {
+            background: var(--white);
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 40px rgba(5,173,152,0.08), 0 2px 8px rgba(0,0,0,0.04);
+            overflow: hidden;
+            animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card section header */
+        .card-section-header {
+            padding: 22px 32px 18px;
+            border-bottom: 1px solid var(--border-mid);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: linear-gradient(to right, var(--teal-soft), transparent);
+        }
+        .card-section-header .section-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: var(--teal-xs);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--teal);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .card-section-header h5 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--ink);
+            margin: 0;
+        }
+        .card-section-header small {
+            font-size: 0.75rem;
+            color: var(--silver);
+            display: block;
+            margin-top: 1px;
+        }
+
+        /* Form body */
+        .form-body {
+            padding: 32px;
+        }
+
+        /* Section divider label */
+        .field-group-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--teal);
+            margin-bottom: 18px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .field-group-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border), transparent);
+        }
+
+        /* ─── CUSTOM INPUTS ─── */
+        .field-wrap {
+            margin-bottom: 22px;
+        }
+
+        .field-label {
+            font-size: 1.0rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .field-label i {
+            color: var(--teal);
+            font-size: 0.9rem;
+        }
+        .field-label .required-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--danger);
+            margin-left: 2px;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 13px 16px;
+            background: var(--snow);
+            border: 1.5px solid rgba(5,173,152,0.18);
+            border-radius: 10px;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.95rem;
+            color: var(--ink);
+            transition: all 0.25s;
+            outline: none;
+            appearance: none;
+        }
+        .field-input:focus {
+            border-color: var(--teal);
+            background: var(--white);
+            box-shadow: 0 0 0 4px var(--teal-xs);
+        }
+        .field-input::placeholder { color: rgba(32,33,32,0.35); font-size: 1.0rem; }
+
+        /* Input with icon */
+        .input-with-icon {
+            position: relative;
+        }
+        .input-with-icon .field-input {
+            padding-left: 44px;
+        }
+        .input-with-icon .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--teal);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        /* Textarea */
+        textarea.field-input {
+            resize: none;
+            min-height: 110px;
+            line-height: 1.6;
+        }
+
+        /* Gender selector */
+        .gender-group {
+            display: flex;
+            gap: 12px;
+        }
+        .gender-option {
+            flex: 1;
+            position: relative;
+        }
+        .gender-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0; height: 0;
+        }
+        .gender-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 16px;
+            border: 1.5px solid rgba(5,173,152,0.18);
+            border-radius: 10px;
+            background: var(--snow);
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--charcoal);
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .gender-option label i { font-size: 0.9rem; }
+        .gender-option input:checked + label {
+            border-color: var(--teal);
+            background: var(--teal-xs);
+            color: var(--teal-d);
+            box-shadow: 0 0 0 4px var(--teal-xs);
+        }
+        .gender-option label:hover {
+            border-color: var(--teal-sm);
+            background: var(--mist);
+        }
+
+        /* ─── PHOTO UPLOAD ─── */
+        .photo-upload-zone {
+            border: 2px dashed rgba(5,173,152,0.30);
+            border-radius: 14px;
+            background: var(--teal-soft);
+            padding: 36px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .photo-upload-zone:hover {
+            border-color: var(--teal);
+            background: var(--teal-xs);
+        }
+        .photo-upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        .upload-icon-wrap {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 14px;
+            color: var(--teal);
+            font-size: 1.4rem;
+            box-shadow: 0 4px 16px rgba(5,173,152,0.15);
+            transition: transform 0.2s;
+        }
+        .photo-upload-zone:hover .upload-icon-wrap { transform: scale(1.08); }
+        .upload-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+        .upload-sub {
+            font-size: 0.78rem;
+            color: var(--silver);
+        }
+        .upload-tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 12px;
+            background: var(--teal-xs);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--teal-d);
+        }
+
+        /* Preview image */
+        #photo-preview {
+            display: none;
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin: 12px auto 0;
+            border: 3px solid var(--teal);
+            box-shadow: 0 4px 16px rgba(5,173,152,0.20);
+        }
+
+        /* ─── SUBMIT BUTTON ─── */
+        .submit-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-mid);
+            margin-top: 8px;
+        }
+
+        .btn-cancel {
+            padding: 12px 28px;
+            background: transparent;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-cancel:hover { border-color: var(--charcoal); color: var(--ink); }
+
+        .btn-submit {
+            padding: 13px 36px;
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-d) 100%);
+            border: none;
+            border-radius: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 24px rgba(5,173,152,0.35);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(5,173,152,0.45); }
+        .btn-submit:hover::before { left: 100%; }
+        .btn-submit:active { transform: translateY(0); }
+
+        /* ─── ALERT NOTICE ─── */
+        .case-notice {
+            background: linear-gradient(to right, var(--danger-lt), rgba(224,85,85,0.04));
+            border: 1px solid rgba(224,85,85,0.22);
+            border-left: 3px solid var(--danger);
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 28px;
+            animation: fadeUp 0.5s ease 0.4s both;
+        }
+        .case-notice i { color: var(--danger); margin-top: 2px; flex-shrink: 0; }
+        .case-notice p { font-size: 0.83rem; color: var(--charcoal); margin: 0; line-height: 1.5; }
+        .case-notice strong { color: var(--danger); }
+
+        /* Step indicator */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 28px;
+            animation: fadeUp 0.5s ease 0.3s both;
+        }
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+        .step-num {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: white;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .step-num.inactive {
+            background: var(--mist);
+            color: var(--silver);
+            border: 1.5px solid var(--border);
+        }
+        .step-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--teal-d);
+        }
+        .step-label.inactive { color: var(--silver); }
+        .step-connector {
+            flex: 1;
+            height: 1.5px;
+            background: linear-gradient(to right, var(--teal-sm), var(--border-mid));
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content { padding: 20px; }
+            .form-body { padding: 20px; }
+            .gender-group { flex-direction: column; }
+            .submit-row { flex-direction: column; }
+            .btn-submit, .btn-cancel { width: 100%; justify-content: center; }
+            .banner-warning-ribbon { display: none; }
+            .banner-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+{% include 'police/police_sidebar.html' %}
+
+<main class="main-content">
+
+    <!-- BANNER -->
+    <div class="page-banner">
+        <div class="banner-left-bar"></div>
+        <div class="banner-orb"></div>
+
+        <div class="banner-content">
+            <div class="banner-eyebrow">
+                <div class="line"></div>
+                <span>Case Management</span>
+            </div>
+            <div class="banner-title">Register <span>Missing</span> Person</div>
+            <div class="banner-sub">Missing Persons &nbsp;/&nbsp; New Case File</div>
+        </div>
+
+        <div class="banner-warning-ribbon">
+            <div class="ribbon-icon"><i class="fas fa-person-circle-question"></i></div>
+            <span>New Case</span>
+        </div>
+
+        <div class="banner-shimmer"></div>
+    </div>
+
+    <!-- STEP INDICATOR -->
+    <div class="step-indicator">
+        <div class="step">
+            <div class="step-num">1</div>
+            <span class="step-label">Personal Info</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <span class="step-label">Case Details</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+            <div class="step-num inactive">3</div>
+            <span class="step-label inactive">Photo Upload</span>
+        </div>
+    </div>
+{##}
+{#    <!-- URGENT NOTICE -->#}
+{#    <div class="case-notice">#}
+{#        <i class="fas fa-triangle-exclamation fa-sm"></i>#}
+{#        <p>#}
+{#            <strong>Urgent:</strong> All fields are required to file a complete missing person report.#}
+{#            Ensure the information is accurate — this record will be visible to the public search portal.#}
+{#        </p>#}
+{#    </div>#}
+
+
+    {% if message %}
+<div class="case-notice">
+    <i class="fas fa-circle-info"></i>
+    <p>{{ message }}</p>
+</div>
+{% endif %}
+
+    <!-- FORM CARD -->
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+
+        <div class="form-card">
+
+            <!-- Section Header -->
+            <div class="card-section-header">
+                <div class="section-icon"><i class="fas fa-id-card"></i></div>
+                <div>
+                    <h5>Missing Person Details</h5>
+                    <small>Enter complete and accurate personal information</small>
+                </div>
+            </div>
+
+            <div class="form-body">
+
+                <!-- Personal Information -->
+                <div class="field-group-label">Personal Information</div>
+
+                <!-- Full Name -->
+                <div class="field-wrap">
+                    <div class="field-label">
+                        <i class="fas fa-user"></i> Full Name
+                        <span class="required-dot"></span>
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user input-icon"></i>
+                        <input
+                            type="text"
+                            name="name"
+                            class="field-input"
+                            placeholder="Enter full name of missing person"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Age + Gender row -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="field-label">
+                            <i class="fas fa-cake-candles"></i> Age
+                            <span class="required-dot"></span>
+                        </div>
+                        <div class="input-with-icon">
+                            <i class="fas fa-hashtag input-icon"></i>
+                            <input
+                                type="number"
+                                name="age"
+                                class="field-input"
+                                placeholder="Age in years"
+                                min="0"
+                                max="120"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="field-label">
+                            <i class="fas fa-venus-mars"></i> Gender
+                            <span class="required-dot"></span>
+                        </div>
+                        <div class="gender-group">
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="gender-male" value="Male" required>
+                                <label for="gender-male">
+                                    <i class="fas fa-mars"></i> Male
+                                </label>
+                            </div>
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="gender-female" value="Female">
+                                <label for="gender-female">
+                                    <i class="fas fa-venus"></i> Female
+                                </label>
+                            </div>
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="gender-other" value="Other">
+                                <label for="gender-other">
+                                    <i class="fas fa-genderless"></i> Other
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Details -->
+                <div class="field-group-label">Case Details</div>
+
+                <!-- Details / Description -->
+                <div class="field-wrap">
+                    <div class="field-label">
+                        <i class="fas fa-file-lines"></i> Case Description
+                        <span class="required-dot"></span>
+                    </div>
+                    <textarea
+                        name="details"
+                        class="field-input"
+                        placeholder="Describe physical appearance, last seen location, date missing, clothing worn, and any other relevant details..."
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- Photo Upload -->
+                <div class="field-group-label">Photo Upload</div>
+
+                <div class="field-wrap">
+                    <div class="field-label">
+                        <i class="fas fa-camera"></i> Recent Photograph
+                        <span class="required-dot"></span>
+                    </div>
+                    <div class="photo-upload-zone" id="upload-zone">
+                        <input
+                            type="file"
+                            name="photo"
+                            id="photo-input"
+                            accept="image/*"
+                            required
+                        >
+                        <div class="upload-icon-wrap">
+                            <i class="fas fa-cloud-arrow-up"></i>
+                        </div>
+                        <div class="upload-title">Drop photo here or click to browse</div>
+                        <div class="upload-sub">A clear, recent photo significantly improves identification chances</div>
+                        <div class="upload-tag">JPG, PNG, WEBP &nbsp;·&nbsp; Max 5MB</div>
+                        <img id="photo-preview" alt="Preview">
+                    </div>
+                </div>
+
+                <!-- Submit Row -->
+                <div class="submit-row">
+                    <a href="{% url 'manage_casefile' %}" class="btn-cancel">
+                        <i class="fas fa-xmark"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-file-circle-plus"></i>
+                        File Missing Report
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+
+</main>
+
+<script>
+    // Live photo preview
+    document.getElementById('photo-input').addEventListener('change', function () {
+        const file = this.files[0];
+        const preview = document.getElementById('photo-preview');
+        const icon = document.querySelector('.upload-icon-wrap');
+        const title = document.querySelector('.upload-title');
+        const sub = document.querySelector('.upload-sub');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                icon.style.display = 'none';
+                title.textContent = file.name;
+                sub.textContent = (file.size / 1024).toFixed(1) + ' KB · Click to change';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Drag-over visual feedback
+    const zone = document.getElementById('upload-zone');
+    zone.addEventListener('dragover', e => {
+        e.preventDefault();
+        zone.style.borderColor = 'var(--teal)';
+        zone.style.background = 'var(--teal-xs)';
+    });
+    zone.addEventListener('dragleave', () => {
+        zone.style.borderColor = '';
+        zone.style.background = '';
+    });
+    zone.addEventListener('drop', () => {
+        zone.style.borderColor = '';
+        zone.style.background = '';
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,960 @@
+{#{% include 'admin_sidebar.html' %}#}
+{##}
+{#<div class="body-wrapper">#}
+{##}
+{#<header class="app-header">#}
+{#<nav class="navbar navbar-expand-lg navbar-light">#}
+{#<ul class="navbar-nav">#}
+{##}
+{#<div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">#}
+{#<a href="#" class="text-nowrap logo-img d-flex align-items-center gap-2">#}
+{#<span class="logo-text">#}
+{#<img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png"#}
+{#class="dark-logo ps-2"/>#}
+{#</span>#}
+{#</a>#}
+{#</div>#}
+{##}
+{#</ul>#}
+{#</nav>#}
+{#</header>#}
+{##}
+{##}
+{#<div class="body-wrapper-inner">#}
+{#<div class="container-fluid">#}
+{##}
+{#<!-- PAGE HEADER -->#}
+{##}
+{#<div class="missing-page-header mb-4">#}
+{##}
+{#<div class="d-flex align-items-center justify-content-between flex-wrap gap-3">#}
+{##}
+{#<div>#}
+{#<h2 class="missing-title">#}
+{#<span class="title-dot"></span>#}
+{#Live AI Detections#}
+{#</h2>#}
+{##}
+{#<p class="missing-subtitle">#}
+{#Real-time criminals / missing persons detected by surveillance camera#}
+{#</p>#}
+{#</div>#}
+{##}
+{#<div class="case-count-badge">#}
+{#<span>{{ detections|length }}</span> Records#}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{##}
+{#<!-- CARDS -->#}
+{##}
+{#<div class="row g-4">#}
+{##}
+{#{% for d in detections %}#}
+{##}
+{#<div class="col-xl-4 col-lg-6 col-md-6">#}
+{##}
+{#<div class="detection-card">#}
+{##}
+{#<div class="card-top-bar"></div>#}
+{##}
+{##}
+{#<!-- CARD HEADER -->#}
+{##}
+{#<div class="card-banner">#}
+{##}
+{#<div class="badge-type {% if d.category == 'Criminal' %}criminal{% else %}missing{% endif %}">#}
+{#<span class="pulse-dot"></span>#}
+{#{{ d.category }}#}
+{#</div>#}
+{##}
+{#<div class="case-id">#}
+{##{{ d.id }}#}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{##}
+{#<!-- IMAGE -->#}
+{##}
+{#<div class="image-wrapper">#}
+{##}
+{#{% if d.photo %}#}
+{#<img src="{{ d.photo.url }}" class="profile-image">#}
+{#{% else %}#}
+{#<div class="image-placeholder">#}
+{#<iconify-icon icon="solar:user-bold"></iconify-icon>#}
+{#</div>#}
+{#{% endif %}#}
+{##}
+{#</div>#}
+{##}
+{##}
+{#<!-- CARD CONTENT -->#}
+{##}
+{#<div class="card-body-content">#}
+{##}
+{#<h3 class="person-name">#}
+{#{{ d.name }}#}
+{#</h3>#}
+{##}
+{#<p class="person-sub">#}
+{#AI Camera Detection#}
+{#</p>#}
+{##}
+{##}
+{#<div class="stats-container">#}
+{##}
+{#<div class="stat">#}
+{##}
+{#<iconify-icon icon="solar:shield-warning-linear"></iconify-icon>#}
+{##}
+{#<div>#}
+{#<span class="stat-value">{{ d.category }}</span>#}
+{#<span class="stat-label">Type</span>#}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#<div class="divider"></div>#}
+{##}
+{##}
+{#<div class="stat">#}
+{##}
+{#<iconify-icon icon="solar:calendar-linear"></iconify-icon>#}
+{##}
+{#<div>#}
+{#<span class="stat-value">{{ d.date|slice:":10" }}</span>#}
+{#<span class="stat-label">Date</span>#}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#<div class="divider"></div>#}
+{##}
+{##}
+{#<div class="stat">#}
+{##}
+{#<iconify-icon icon="solar:clock-circle-linear"></iconify-icon>#}
+{##}
+{#<div>#}
+{#<span class="stat-value">{{ d.date|slice:"11:19" }}</span>#}
+{#<span class="stat-label">Time</span>#}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{##}
+{#<a href="{{ d.photo.url }}" target="_blank" class="view-btn">#}
+{##}
+{#<iconify-icon icon="solar:eye-linear"></iconify-icon>#}
+{##}
+{#View Evidence#}
+{##}
+{#</a>#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#{% empty %}#}
+{##}
+{#<div class="col-12">#}
+{##}
+{#<div class="empty-state">#}
+{##}
+{#<iconify-icon icon="solar:ghost-linear"></iconify-icon>#}
+{##}
+{#<h4>No AI detections yet</h4>#}
+{##}
+{#<p>Camera detections will appear here automatically.</p>#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{##}
+{#{% endfor %}#}
+{##}
+{#</div>#}
+{##}
+{#</div>#}
+{#</div>#}
+{#</div>#}
+{##}
+{##}
+{#<style>#}
+{##}
+{#/* HEADER */#}
+{##}
+{#.missing-title{#}
+{#font-size:1.7rem;#}
+{#font-weight:700;#}
+{#color:#2d3748;#}
+{#display:flex;#}
+{#align-items:center;#}
+{#gap:10px;#}
+{#}#}
+{##}
+{#.title-dot{#}
+{#width:12px;#}
+{#height:12px;#}
+{#background:#f56565;#}
+{#border-radius:50%;#}
+{#animation:pulse-dot 1.5s infinite;#}
+{#}#}
+{##}
+{#.missing-subtitle{#}
+{#font-size:.85rem;#}
+{#color:#718096;#}
+{#}#}
+{##}
+{#.case-count-badge{#}
+{#background:linear-gradient(135deg,#5a6fd6,#4a5aaa);#}
+{#color:#fff;#}
+{#padding:8px 16px;#}
+{#border-radius:10px;#}
+{#font-size:.85rem;#}
+{#font-weight:600;#}
+{#}#}
+{##}
+{##}
+{#/* CARD */#}
+{##}
+{#.detection-card{#}
+{#background:#fff;#}
+{#border-radius:16px;#}
+{#overflow:hidden;#}
+{#box-shadow:0 4px 14px rgba(0,0,0,.08);#}
+{#transition:.25s;#}
+{#border:1px solid #edf2f7;#}
+{#}#}
+{##}
+{#.detection-card:hover{#}
+{#transform:translateY(-6px);#}
+{#box-shadow:0 14px 32px rgba(90,111,214,.25);#}
+{#}#}
+{##}
+{#.card-top-bar{#}
+{#height:4px;#}
+{#background:linear-gradient(90deg,#f56565,#ed8936,#5a6fd6);#}
+{#}#}
+{##}
+{#.card-banner{#}
+{#height:90px;#}
+{#background:linear-gradient(135deg,#2c3a8a,#33a8d6);#}
+{#display:flex;#}
+{#justify-content:space-between;#}
+{#padding:10px 14px;#}
+{#}#}
+{##}
+{#.badge-type{#}
+{#font-size:.7rem;#}
+{#padding:5px 12px;#}
+{#border-radius:20px;#}
+{#font-weight:700;#}
+{#display:flex;#}
+{#align-items:center;#}
+{#gap:5px;#}
+{#color:#fff;#}
+{#}#}
+{##}
+{#.badge-type.criminal{#}
+{#background:#e53e3e;#}
+{#}#}
+{##}
+{#.badge-type.missing{#}
+{#background:#ed8936;#}
+{#}#}
+{##}
+{#.case-id{#}
+{#color:#fff;#}
+{#background:rgba(255,255,255,.2);#}
+{#padding:4px 10px;#}
+{#border-radius:10px;#}
+{#font-size:.75rem;#}
+{#}#}
+{##}
+{##}
+{#/* IMAGE */#}
+{##}
+{#.image-wrapper{#}
+{#display:flex;#}
+{#justify-content:center;#}
+{#margin-top:-45px;#}
+{#}#}
+{##}
+{#.profile-image{#}
+{#width:95px;#}
+{#height:95px;#}
+{#border-radius:50%;#}
+{#object-fit:cover;#}
+{#border:4px solid #fff;#}
+{#box-shadow:0 6px 18px rgba(0,0,0,.2);#}
+{#}#}
+{##}
+{#.image-placeholder{#}
+{#width:95px;#}
+{#height:95px;#}
+{#border-radius:50%;#}
+{#background:#edf2f7;#}
+{#display:flex;#}
+{#align-items:center;#}
+{#justify-content:center;#}
+{#font-size:2rem;#}
+{#color:#a0aec0;#}
+{#border:4px solid #fff;#}
+{#}#}
+{##}
+{##}
+{#/* CONTENT */#}
+{##}
+{#.card-body-content{#}
+{#padding:18px 22px 22px;#}
+{#text-align:center;#}
+{#}#}
+{##}
+{#.person-name{#}
+{#font-size:1.2rem;#}
+{#font-weight:700;#}
+{#color:#2d3748;#}
+{#margin-bottom:4px;#}
+{#}#}
+{##}
+{#.person-sub{#}
+{#font-size:.82rem;#}
+{#color:#718096;#}
+{#margin-bottom:16px;#}
+{#}#}
+{##}
+{##}
+{#/* STATS */#}
+{##}
+{#.stats-container{#}
+{#display:flex;#}
+{#background:#f7fafc;#}
+{#border-radius:12px;#}
+{#padding:12px;#}
+{#margin-bottom:16px;#}
+{#}#}
+{##}
+{#.stat{#}
+{#flex:1;#}
+{#display:flex;#}
+{#align-items:center;#}
+{#gap:6px;#}
+{#justify-content:center;#}
+{#}#}
+{##}
+{#.stat iconify-icon{#}
+{#font-size:1.1rem;#}
+{#color:#33a8d6;#}
+{#}#}
+{##}
+{#.stat-value{#}
+{#font-size:.85rem;#}
+{#font-weight:700;#}
+{#color:#2d3748;#}
+{#}#}
+{##}
+{#.stat-label{#}
+{#font-size:.65rem;#}
+{#color:#a0aec0;#}
+{#}#}
+{##}
+{#.divider{#}
+{#width:1px;#}
+{#background:#e2e8f0;#}
+{#}#}
+{##}
+{##}
+{#/* BUTTON */#}
+{##}
+{#.view-btn{#}
+{#display:flex;#}
+{#align-items:center;#}
+{#justify-content:center;#}
+{#gap:8px;#}
+{#background:linear-gradient(135deg,#33a8d6,#4a5aaa);#}
+{#color:#fff;#}
+{#padding:10px;#}
+{#border-radius:10px;#}
+{#font-size:.82rem;#}
+{#font-weight:600;#}
+{#text-decoration:none;#}
+{#}#}
+{##}
+{#.view-btn:hover{#}
+{#background:linear-gradient(135deg,#59bfff,#3a4a8a);#}
+{#}#}
+{##}
+{##}
+{#/* EMPTY */#}
+{##}
+{#.empty-state{#}
+{#text-align:center;#}
+{#padding:60px;#}
+{#color:#718096;#}
+{#}#}
+{##}
+{#.empty-state iconify-icon{#}
+{#font-size:4rem;#}
+{#margin-bottom:10px;#}
+{#}#}
+{##}
+{#</style>#}
+
+
+{% include 'admin_sidebar.html' %}
+
+<div class="body-wrapper">
+
+  <!-- Header -->
+  <header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <ul class="navbar-nav">
+        <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">
+          <a href="#" class="text-nowrap logo-img d-flex align-items-center gap-2">
+            <span class="logo-text">
+              <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" class="dark-logo ps-2"/>
+            </span>
+          </a>
+        </div>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="body-wrapper-inner">
+    <div class="container-fluid">
+
+      <!-- ══ PAGE HEADER ══ -->
+      <div class="ld-page-header mb-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+
+          <div class="d-flex align-items-center gap-4">
+            <div class="ld-header-icon">
+              <iconify-icon icon="solar:camera-minimalistic-bold"></iconify-icon>
+              <span class="live-ring"></span>
+            </div>
+            <div>
+              <div class="live-label">
+                <span class="live-dot"></span> LIVE SURVEILLANCE
+              </div>
+              <h2 class="ld-title">AI Detection Feed</h2>
+              <p class="ld-subtitle">Real-time identification of criminals &amp; missing persons via CCTV</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <!-- Filter tabs -->
+            <div class="filter-tabs">
+              <button class="ftab active" data-filter="all">All</button>
+              <button class="ftab" data-filter="Criminal">Criminal</button>
+              <button class="ftab" data-filter="Missing">Missing</button>
+            </div>
+            <!-- Count -->
+            <div class="ld-count-badge">
+              <iconify-icon icon="solar:database-linear"></iconify-icon>
+              <span id="visibleCount">{{ detections|length }}</span> Records
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══ STATS STRIP ══ -->
+      <div class="ld-stats-strip mb-4">
+
+        <div class="ld-stat-pill">
+          <div class="lsp-icon all-icon">
+            <iconify-icon icon="solar:list-bold"></iconify-icon>
+          </div>
+          <div>
+            <div class="lsp-val">{{ detections|length }}</div>
+            <div class="lsp-lbl">Total Detections</div>
+          </div>
+        </div>
+
+        <div class="ld-stat-pill">
+          <div class="lsp-icon criminal-icon">
+            <iconify-icon icon="solar:danger-triangle-bold"></iconify-icon>
+          </div>
+          <div>
+            <div class="lsp-val" id="criminalCount">—</div>
+            <div class="lsp-lbl">Criminals Detected</div>
+          </div>
+        </div>
+
+        <div class="ld-stat-pill">
+          <div class="lsp-icon missing-icon">
+            <iconify-icon icon="solar:user-circle-bold"></iconify-icon>
+          </div>
+          <div>
+            <div class="lsp-val" id="missingCount">—</div>
+            <div class="lsp-lbl">Missing Persons</div>
+          </div>
+        </div>
+
+        <div class="ld-stat-pill">
+          <div class="lsp-icon cam-icon">
+            <iconify-icon icon="solar:camera-bold"></iconify-icon>
+          </div>
+          <div>
+            <div class="lsp-val" id="latestTime">—</div>
+            <div class="lsp-lbl">Latest Detection</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══ CARDS GRID ══ -->
+      <div class="row g-4" id="cardsGrid">
+
+        {% for d in detections %}
+        <div class="col-xl-4 col-lg-6 col-md-6 det-col"
+             data-category="{{ d.category }}"
+             data-time="{{ d.date }}">
+
+          <div class="det-card {% if d.category == 'Criminal' %}criminal-card{% else %}missing-card{% endif %}">
+
+            <!-- Top accent -->
+            <div class="det-accent {% if d.category == 'Criminal' %}criminal-accent{% else %}missing-accent{% endif %}"></div>
+
+            <!-- Banner -->
+            <div class="det-banner {% if d.category == 'Criminal' %}criminal-banner{% else %}missing-banner{% endif %}">
+              <div class="det-banner-overlay"></div>
+
+              <div class="det-badge {% if d.category == 'Criminal' %}badge-criminal{% else %}badge-missing{% endif %}">
+                <span class="det-pulse {% if d.category == 'Criminal' %}pulse-gold{% else %}pulse-white{% endif %}"></span>
+                {% if d.category == 'Criminal' %}
+                  <iconify-icon icon="solar:danger-triangle-bold"></iconify-icon>
+                {% else %}
+                  <iconify-icon icon="solar:user-circle-bold"></iconify-icon>
+                {% endif %}
+                {{ d.category|upper }}
+              </div>
+
+              <div class="det-id">#{{ d.id }}</div>
+
+              {% if d.confidence %}
+              <div class="conf-pill">
+                <iconify-icon icon="solar:graph-up-bold"></iconify-icon>
+                {{ d.confidence }}%
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- Photo -->
+            <div class="det-photo-wrap">
+              {% if d.photo %}
+              <img src="{{ d.photo.url }}" class="det-photo" alt="{{ d.name }}">
+              {% else %}
+              <div class="det-photo-placeholder {% if d.category == 'Criminal' %}ph-criminal{% else %}ph-missing{% endif %}">
+                <iconify-icon icon="solar:user-bold"></iconify-icon>
+              </div>
+              {% endif %}
+              <div class="cam-badge">
+                <iconify-icon icon="solar:camera-bold"></iconify-icon>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="det-body">
+              <h3 class="det-name">{{ d.name }}</h3>
+              <p class="det-sub">AI Camera Detection</p>
+
+              <div class="det-stats">
+                <div class="ds-item">
+                  <iconify-icon icon="solar:calendar-linear" class="ds-icon"></iconify-icon>
+                  <div>
+                    <span class="ds-val">{{ d.date|slice:":10" }}</span>
+                    <span class="ds-lbl">Date</span>
+                  </div>
+                </div>
+                <div class="ds-div"></div>
+                <div class="ds-item">
+                  <iconify-icon icon="solar:clock-circle-linear" class="ds-icon"></iconify-icon>
+                  <div>
+                    <span class="ds-val">{{ d.date|slice:"11:19"|default:d.date }}</span>
+                    <span class="ds-lbl">Time</span>
+                  </div>
+                </div>
+                <div class="ds-div"></div>
+                <div class="ds-item">
+                  <iconify-icon icon="solar:shield-warning-linear"
+                    class="ds-icon {% if d.category == 'Criminal' %}icon-red{% endif %}"></iconify-icon>
+                  <div>
+                    <span class="ds-val">{{ d.category }}</span>
+                    <span class="ds-lbl">Type</span>
+                  </div>
+                </div>
+              </div>
+
+              {% if d.confidence %}
+              <div class="conf-bar-wrap">
+                <div class="conf-bar-header">
+                  <span>AI Confidence</span>
+                  <span class="conf-pct">{{ d.confidence }}%</span>
+                </div>
+                <div class="conf-bar-bg">
+                  <div class="conf-bar-fill {% if d.category == 'Criminal' %}fill-criminal{% else %}fill-missing{% endif %}"
+                       style="width:{{ d.confidence }}%"></div>
+                </div>
+              </div>
+              {% endif %}
+
+              {% if d.photo %}
+              <a href="{{ d.photo.url }}" target="_blank"
+                 class="det-btn {% if d.category == 'Criminal' %}btn-criminal{% else %}btn-missing{% endif %}">
+                <iconify-icon icon="solar:eye-bold"></iconify-icon>
+                View Evidence Photo
+              </a>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+          <div class="ld-empty">
+            <div class="empty-icon-wrap">
+              <iconify-icon icon="solar:camera-minimalistic-linear"></iconify-icon>
+            </div>
+            <h4>No Detections Yet</h4>
+            <p>Camera detections will appear here automatically when the AI identifies a match.</p>
+            <div class="empty-live-indicator">
+              <span class="live-dot"></span> System is live and monitoring
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --c1:#cfe0e8; --c2:#b7d7e8; --c3:#87bdd8; --c4:#daebe8;
+    --deep:#2b5f75; --darker:#1a3d4f;
+    --teal:#05AD98; --teal-d:#048a78;
+    --teal-xs:rgba(5,173,152,.10); --teal-glow:rgba(5,173,152,.30);
+    --white:#ffffff; --snow:#f5f8f8; --mist:#eaf3f2;
+    --text-muted:#5a8094;
+    --border:rgba(183,215,232,.6); --shadow:rgba(135,189,216,.25);
+    --red:#c53030; --red-lt:rgba(197,48,48,.12);
+    --amber:#d97706; --amber-lt:rgba(217,119,6,.12);
+  }
+
+  /* PAGE HEADER */
+  .ld-page-header { padding: 8px 0 4px; }
+
+  .ld-header-icon {
+    position: relative; width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--deep), var(--teal));
+    border-radius: 18px; display: grid; place-items: center;
+    box-shadow: 0 8px 24px var(--shadow); flex-shrink: 0;
+  }
+  .ld-header-icon iconify-icon { font-size: 1.8rem; color: #fff; }
+
+  .live-ring {
+    position: absolute; inset: -6px; border-radius: 22px;
+    border: 2px solid var(--teal);
+    animation: ringPulse 2s ease-in-out infinite;
+  }
+  @keyframes ringPulse {
+    0%,100% { opacity:.6; transform:scale(1); }
+    50%      { opacity:0; transform:scale(1.15); }
+  }
+
+  .live-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: .7rem; font-weight: 800; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 4px;
+  }
+  .live-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--teal); display: inline-block;
+    animation: liveBlink 1.2s infinite;
+  }
+  @keyframes liveBlink {
+    0%,100% { opacity:1; } 50% { opacity:.15; }
+  }
+
+  .ld-title { font-size: 1.85rem; font-weight: 800; color: var(--darker); margin: 0 0 3px; letter-spacing: -.3px; }
+  .ld-subtitle { font-size: .85rem; color: var(--text-muted); margin: 0; }
+
+  /* filter tabs */
+  .filter-tabs {
+    display: flex; gap: 4px;
+    background: rgba(255,255,255,.7); border: 1px solid var(--border);
+    border-radius: 12px; padding: 4px; backdrop-filter: blur(8px);
+  }
+  .ftab {
+    padding: 6px 16px; border: none; background: transparent;
+    border-radius: 9px; font-size: .82rem; font-weight: 700;
+    color: var(--text-muted); cursor: pointer; transition: all .2s;
+  }
+  .ftab:hover { background: var(--mist); color: var(--darker); }
+  .ftab.active { background: var(--deep); color: #fff; box-shadow: 0 2px 8px var(--shadow); }
+
+  /* count badge */
+  .ld-count-badge {
+    display: flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, var(--deep), var(--teal));
+    color: #fff; padding: 8px 16px; border-radius: 12px;
+    font-size: .82rem; font-weight: 700;
+    box-shadow: 0 4px 14px var(--teal-glow);
+  }
+  .ld-count-badge span { font-size: 1.1rem; font-weight: 800; }
+
+  /* STATS STRIP */
+  .ld-stats-strip { display: flex; gap: 1rem; }
+  .ld-stat-pill {
+    flex: 1; min-width: 0;
+    background: rgba(255,255,255,.72); backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 16px;
+    padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: .85rem;
+    box-shadow: 0 4px 12px var(--shadow); transition: box-shadow .2s;
+  }
+  .ld-stat-pill:hover { box-shadow: 0 8px 24px rgba(135,189,216,.35); }
+  .lsp-icon {
+    width: 44px; height: 44px; border-radius: 13px;
+    display: grid; place-items: center; flex-shrink: 0; font-size: 1.25rem;
+  }
+  .all-icon      { background: var(--c2); color: var(--darker); }
+  .criminal-icon { background: var(--red-lt); color: var(--red); }
+  .missing-icon  { background: var(--amber-lt); color: var(--amber); }
+  .cam-icon      { background: var(--teal-xs); color: var(--teal); }
+  .lsp-val { font-size: 1.5rem; font-weight: 800; color: var(--darker); line-height: 1; }
+  .lsp-lbl { font-size: .74rem; color: var(--text-muted); margin-top: 2px; font-weight: 600; }
+
+  /* CARD */
+  .det-card {
+    background: rgba(255,255,255,.78); backdrop-filter: blur(14px);
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 16px var(--shadow);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .det-card:hover { transform: translateY(-6px); }
+  .criminal-card:hover { box-shadow: 0 16px 40px rgba(197,48,48,.22); }
+  .missing-card:hover  { box-shadow: 0 16px 40px rgba(135,189,216,.4); }
+
+  .det-accent { height: 4px; }
+  .criminal-accent { background: linear-gradient(90deg,#c53030,#e53e3e,#fc8181); }
+  .missing-accent  { background: linear-gradient(90deg,var(--c3),var(--deep),var(--teal)); }
+
+  .det-banner {
+    height: 96px; position: relative;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 10px 12px; gap: 6px;
+  }
+  .criminal-banner { background: linear-gradient(135deg,#742a2a 0%,#9b2335 55%,#c53030 100%); }
+  .missing-banner  { background: linear-gradient(135deg,var(--darker) 0%,var(--deep) 55%,var(--c3) 100%); }
+
+  .det-banner-overlay {
+    position: absolute; inset: 0; pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 20h2v2h-2zM10 10h2v2h-2zM30 10h2v2h-2zM10 30h2v2h-2zM30 30h2v2h-2z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .det-badge {
+    display: flex; align-items: center; gap: 5px;
+    font-size: .68rem; font-weight: 800; letter-spacing: 1.2px;
+    padding: 5px 10px; border-radius: 20px; color: #fff;
+    position: relative; z-index: 1;
+    backdrop-filter: blur(6px);
+  }
+  .badge-criminal { background: rgba(197,48,48,.85); border: 1px solid rgba(255,255,255,.2); }
+  .badge-missing  { background: rgba(43,95,117,.85);  border: 1px solid rgba(255,255,255,.2); }
+
+  .det-pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    display: inline-block; flex-shrink: 0;
+    animation: detPulse 1.4s infinite;
+  }
+  .pulse-gold  { background: #fbd38d; }
+  .pulse-white { background: #fff; }
+  @keyframes detPulse {
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%    { opacity:.3; transform:scale(.65); }
+  }
+
+  .det-id {
+    background: rgba(255,255,255,.18); color: rgba(255,255,255,.92);
+    font-size: .72rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.2); position: relative; z-index: 1;
+  }
+
+  .conf-pill {
+    position: absolute; bottom: 8px; right: 10px;
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(0,0,0,.35); color: #fff;
+    font-size: .68rem; font-weight: 800;
+    padding: 3px 9px; border-radius: 20px;
+    backdrop-filter: blur(4px); z-index: 1;
+  }
+
+  /* photo */
+  .det-photo-wrap {
+    position: relative; display: flex; justify-content: center;
+    margin-top: -48px; z-index: 2;
+  }
+  .det-photo {
+    width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
+    border: 4px solid #fff; box-shadow: 0 6px 20px rgba(0,0,0,.22);
+  }
+  .det-photo-placeholder {
+    width: 96px; height: 96px; border-radius: 50%;
+    border: 4px solid #fff; box-shadow: 0 6px 20px rgba(0,0,0,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem; color: #a0aec0;
+  }
+  .ph-criminal { background: #fff5f5; }
+  .ph-missing  { background: var(--mist); }
+
+  .cam-badge {
+    position: absolute; bottom: 2px; right: calc(50% - 56px);
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--deep); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  }
+
+  /* body */
+  .det-body { padding: 14px 20px 20px; text-align: center; }
+  .det-name { font-size: 1.15rem; font-weight: 800; color: var(--darker); margin-bottom: 3px; }
+  .det-sub  { font-size: .78rem; color: var(--text-muted); margin-bottom: 14px; }
+
+  /* stats */
+  .det-stats {
+    display: flex; align-items: center;
+    background: rgba(207,224,232,.3); border-radius: 12px;
+    padding: 11px 8px; margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+  .ds-item { flex:1; display:flex; align-items:center; gap:6px; justify-content:center; }
+  .ds-icon { font-size: 1.1rem; color: var(--c3); }
+  .icon-red { color: var(--red); }
+  .ds-item div { display:flex; flex-direction:column; text-align:left; }
+  .ds-val { font-size:.8rem; font-weight:700; color:var(--darker); line-height:1.2; }
+  .ds-lbl { font-size:.64rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; line-height:1; }
+  .ds-div { width:1px; height:30px; background:var(--border); flex-shrink:0; }
+
+  /* confidence bar */
+  .conf-bar-wrap { margin-bottom: 14px; text-align: left; }
+  .conf-bar-header {
+    display: flex; justify-content: space-between;
+    font-size: .72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 5px;
+  }
+  .conf-pct { color: var(--darker); font-weight: 800; }
+  .conf-bar-bg { height: 6px; background: rgba(183,215,232,.4); border-radius: 10px; overflow: hidden; }
+  .conf-bar-fill { height: 100%; border-radius: 10px; transition: width .8s ease; }
+  .fill-criminal { background: linear-gradient(90deg,var(--red),#fc8181); }
+  .fill-missing  { background: linear-gradient(90deg,var(--deep),var(--teal)); }
+
+  /* button */
+  .det-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    color: #fff; padding: 10px 16px; border-radius: 12px;
+    font-size: .84rem; font-weight: 700; text-decoration: none; transition: all .22s;
+  }
+  .btn-criminal { background: linear-gradient(135deg,#c53030,#9b2335); box-shadow:0 4px 14px rgba(197,48,48,.3); }
+  .btn-criminal:hover { background:linear-gradient(135deg,#e53e3e,#742a2a); color:#fff; transform:translateY(-2px); box-shadow:0 8px 20px rgba(197,48,48,.4); }
+  .btn-missing { background: linear-gradient(135deg,var(--deep),var(--teal)); box-shadow:0 4px 14px var(--shadow); }
+  .btn-missing:hover { background:linear-gradient(135deg,var(--teal),var(--deep)); color:#fff; transform:translateY(-2px); box-shadow:0 8px 20px var(--teal-glow); }
+
+  /* empty */
+  .ld-empty {
+    text-align: center; padding: 70px 20px;
+    background: rgba(255,255,255,.6); backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 20px;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .empty-icon-wrap {
+    width: 80px; height: 80px; border-radius: 24px;
+    background: rgba(207,224,232,.4);
+    display: grid; place-items: center;
+    margin: 0 auto 1.25rem; font-size: 2.2rem; color: var(--c3);
+  }
+  .ld-empty h4 { font-weight: 800; color: var(--darker); margin-bottom: .5rem; }
+  .ld-empty p  { font-size: .88rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+  .empty-live-indicator {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: .78rem; font-weight: 700; color: var(--teal);
+    background: var(--teal-xs); padding: 6px 16px;
+    border-radius: 20px; border: 1px solid rgba(5,173,152,.25);
+  }
+
+  /* card entrance */
+  @keyframes cardIn {
+    from { opacity:0; transform:translateY(14px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .det-col { animation: cardIn .4s ease both; }
+  .det-col:nth-child(2) { animation-delay:.07s; }
+  .det-col:nth-child(3) { animation-delay:.14s; }
+  .det-col:nth-child(4) { animation-delay:.21s; }
+  .det-col:nth-child(5) { animation-delay:.28s; }
+  .det-col:nth-child(6) { animation-delay:.35s; }
+
+  @media (max-width: 768px) {
+    .ld-stats-strip { flex-wrap: wrap; }
+    .ld-title { font-size: 1.45rem; }
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cols = document.querySelectorAll('.det-col');
+    let criminal = 0, missing = 0;
+
+    cols.forEach(col => {
+      if (col.dataset.category === 'Criminal') criminal++;
+      else missing++;
+    });
+
+    document.getElementById('criminalCount').textContent = criminal;
+    document.getElementById('missingCount').textContent  = missing;
+
+    // Latest time from first card
+    const firstCol = document.querySelector('.det-col');
+    if (firstCol) {
+      const t = firstCol.dataset.time || '';
+      document.getElementById('latestTime').textContent = t.slice(11, 19) || t.slice(0, 10) || '—';
+    }
+  });
+
+  // Filter tabs
+  document.querySelectorAll('.ftab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      const cols   = document.querySelectorAll('.det-col');
+      let visible  = 0;
+
+      cols.forEach(col => {
+        const match = filter === 'all' || col.dataset.category === filter;
+        col.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+
+      document.getElementById('visibleCount').textContent = visible;
+    });
+  });
+</script>

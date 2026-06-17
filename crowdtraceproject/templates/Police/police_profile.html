@@ -1,0 +1,1603 @@
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Officer Profile</title>#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=3.0">#}
+{##}
+{#    <!-- Bootstrap 5 -->#}
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{##}
+{#    <!-- Font Awesome -->#}
+{#    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">#}
+{##}
+{#    <!-- Google Fonts -->#}
+{#    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">#}
+{##}
+{#    <style>#}
+{#        :root {#}
+{#            --theme-dark: #0a111a;#}
+{#            --theme-navy: #16202e;#}
+{#            --theme-gold: #FFB74D;#}
+{#            --theme-gold-dim: #F57C00;#}
+{#            --bg-light: #f1f5f9;#}
+{#            --text-dark: #1e293b;#}
+{#            --text-muted: #64748b;#}
+{#        }#}
+{##}
+{#        body {#}
+{#            background-color: var(--bg-light);#}
+{#            font-family: 'Inter', sans-serif;#}
+{#            margin: 0;#}
+{#            overflow-x: hidden;#}
+{#        }#}
+{##}
+{#        h1, h2, h3, h5 {#}
+{#            font-family: 'Playfair Display', serif;#}
+{#        }#}
+{##}
+{#        .profile-card {#}
+{#            background: white;#}
+{#            border-radius: 4px;#}
+{#            box-shadow: 0 4px 25px rgba(0,0,0,0.05);#}
+{#            border-top: 4px solid var(--theme-gold);#}
+{#            overflow: hidden;#}
+{#        }#}
+{##}
+{#        .profile-header-bg {#}
+{#            height: 160px;#}
+{#            background: linear-gradient(135deg, var(--theme-dark), var(--theme-navy));#}
+{#            position: relative;#}
+{#        }#}
+{##}
+{#        .photo-container {#}
+{#            margin-top: -80px;#}
+{#            margin-left: 40px;#}
+{#        }#}
+{##}
+{#        .officer-photo {#}
+{#            width: 160px;#}
+{#            height: 160px;#}
+{#            object-fit: cover;#}
+{#            border-radius: 4px;#}
+{#            border: 4px solid white;#}
+{#            box-shadow: 0 4px 15px rgba(0,0,0,0.2);#}
+{#        }#}
+{##}
+{#        .badge-icon {#}
+{#            position: absolute;#}
+{#            bottom: -10px;#}
+{#            right: -10px;#}
+{#            background: var(--theme-gold);#}
+{#            width: 40px;#}
+{#            height: 40px;#}
+{#            border-radius: 50%;#}
+{#            display: flex;#}
+{#            justify-content: center;#}
+{#            align-items: center;#}
+{#            border: 3px solid white;#}
+{#        }#}
+{##}
+{#        .label-text {#}
+{#            text-transform: uppercase;#}
+{#            font-size: 0.75rem;#}
+{#            letter-spacing: 1.5px;#}
+{#            color: var(--text-muted);#}
+{#            font-weight: 600;#}
+{#        }#}
+{##}
+{#        .value-text {#}
+{#            font-size: 1.05rem;#}
+{#            font-weight: 500;#}
+{#            border-bottom: 1px solid #e2e8f0;#}
+{#            padding-bottom: 6px;#}
+{#            margin-bottom: 20px;#}
+{#            display: block;#}
+{#        }#}
+{##}
+{#        .station-badge {#}
+{#            background: var(--theme-navy);#}
+{#            color: white;#}
+{#            padding: 8px 16px;#}
+{#            border-radius: 4px;#}
+{#            display: inline-flex;#}
+{#            gap: 10px;#}
+{#            border-left: 3px solid var(--theme-gold);#}
+{#        }#}
+{##}
+{#        .btn-action {#}
+{#            text-transform: uppercase;#}
+{#            font-size: 0.8rem;#}
+{#            letter-spacing: 1px;#}
+{#            padding: 10px;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#{% include 'police/police_sidebar.html' %}#}
+{#    <!-- WRAPPER -->#}
+{#    <main class="main-content">#}
+{#        <div class="container-fluid">#}
+{##}
+{#            <!-- Page Title -->#}
+{#            <div class="mb-4">#}
+{#                <h1 class="fw-bold">Officer Profile</h1>#}
+{#                <small class="text-muted">Personnel / Profile View</small>#}
+{#            </div>#}
+{##}
+{#            <div class="row justify-content-center">#}
+{#                <div class="col-lg-10">#}
+{##}
+{#                    <div class="profile-card">#}
+{#                        <!-- Header -->#}
+{#                        <div class="profile-header-bg"></div>#}
+{##}
+{#                        <div class="row g-0">#}
+{##}
+{#                            <!-- LEFT COLUMN -->#}
+{#                            <div class="col-md-4 border-end position-relative">#}
+{##}
+{#                                <div class="photo-container position-relative">#}
+{#                                    <img src="{{ police.photo.url }}" class="officer-photo" alt="Officer Photo">#}
+{#                                    <div class="badge-icon">#}
+{#                                        <i class="fas fa-check"></i>#}
+{#                                    </div>#}
+{#                                </div>#}
+{##}
+{#                                <div class="px-4 pb-4 mt-3">#}
+{#                                    <span class="label-text">Designation</span>#}
+{#                                    <h5 class="fw-bold text-warning">#}
+{#                                        {{ police.designation }}#}
+{#                                    </h5>#}
+{##}
+{#                                    <div class="d-grid gap-2 mt-4">#}
+{#                                        <a href="#" class="btn btn-dark btn-action">#}
+{#                                            <i class="fas fa-pen me-2"></i> Edit Profile#}
+{#                                        </a>#}
+{#                                        <a href="#" class="btn btn-outline-dark btn-action">#}
+{#                                            <i class="fas fa-print me-2"></i> Print ID#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <!-- RIGHT COLUMN -->#}
+{#                            <div class="col-md-8">#}
+{##}
+{#                                <div class="p-4">#}
+{#                                    <div class="d-flex justify-content-between border-bottom pb-2 mb-4">#}
+{#                                        <h3>{{ police.full_name }}</h3>#}
+{#                                        <span class="badge bg-light text-dark border">#}
+{#                                            ID: {{ police.id }}#}
+{#                                        </span>#}
+{#                                    </div>#}
+{##}
+{#                                    <div class="row g-4">#}
+{##}
+{#                                        <!-- Station -->#}
+{#                                        <div class="col-12">#}
+{#                                            <span class="label-text">Assigned Station</span><br>#}
+{#                                            <div class="station-badge mt-1">#}
+{#                                                <i class="fas fa-building text-warning"></i>#}
+{#                                                <span>#}
+{#                                                    {{ police.policestation.station_name }},#}
+{#                                                    {{ police.policestation.place }}#}
+{#                                                </span>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{##}
+{#                                        <!-- Phone -->#}
+{#                                        <div class="col-md-6">#}
+{#                                            <span class="label-text">Phone</span>#}
+{#                                            <span class="value-text">{{ police.phone }}</span>#}
+{#                                        </div>#}
+{##}
+{#                                        <!-- Username -->#}
+{#                                        <div class="col-md-6">#}
+{#                                            <span class="label-text">Username</span>#}
+{#                                            <span class="value-text">{{ police.USER.username }}</span>#}
+{#                                        </div>#}
+{##}
+{#                                        <!-- Address -->#}
+{#                                        <div class="col-12">#}
+{#                                            <span class="label-text">Address</span>#}
+{#                                            <span class="value-text">{{ police.address }}</span>#}
+{#                                        </div>#}
+{##}
+{#                                        <!-- Status -->#}
+{#                                        <div class="col-md-4">#}
+{#                                            <span class="label-text">Status</span><br>#}
+{#                                            <span class="fw-bold text-success">Active Duty</span>#}
+{#                                        </div>#}
+{##}
+{#                                    </div>#}
+{#                                </div>#}
+{##}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                    </div>#}
+{##}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#        </div>#}
+{#    </main>#}
+{##}
+{#</body>#}
+{#</html>#}
+{##}
+{##}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Officer Profile</title>#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{##}
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">#}
+{#    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">#}
+{##}
+{#    <style>#}
+{#        :root {#}
+{#    --bg-base:       #0f1a1a;#}
+{#    --bg-card:       #132020;#}
+{#    --bg-panel:      #0d1818;#}
+{#    --teal:          #05AD98;#}
+{#    --teal-dim:      #048a78;#}
+{#    --teal-glow:     rgba(5,173,152,0.30);#}
+{#    --teal-subtle:   rgba(5,173,152,0.06);#}
+{#    --teal-sm:       rgba(5,173,152,0.18);#}
+{#    --teal-xs:       rgba(5,173,152,0.10);#}
+{#    --accent-blue:   rgb(22,49,96);#}
+{#    --accent-gold:   #f0a500;#}
+{#    --text-bright:   #f5f8f8;#}
+{#    --text-mid:      #7a9e9c;#}
+{#    --text-dim:      #3d5a58;#}
+{#    --border:        rgba(5,173,152,0.18);#}
+{#    --border-mid:    rgba(255,255,255,0.05);#}
+{#        }#}
+{##}
+{#        * { box-sizing: border-box; margin: 0; padding: 0; }#}
+{##}
+{#        body {#}
+{#            background: var(--bg-base);#}
+{#            font-family: 'Barlow', sans-serif;#}
+{#            color: var(--text-bright);#}
+{#            min-height: 100vh;#}
+{#            overflow-x: hidden;#}
+{#        }#}
+{##}
+{#        /* ─── NOISE TEXTURE OVERLAY ─── */#}
+{#        body::before {#}
+{#            content: '';#}
+{#            position: fixed;#}
+{#            inset: 0;#}
+{#            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");#}
+{#            pointer-events: none;#}
+{#            z-index: 0;#}
+{#            opacity: 0.4;#}
+{#        }#}
+{##}
+{#        .main-content {#}
+{#            position: relative;#}
+{#            z-index: 1;#}
+{#            padding: 40px 24px;#}
+{#            max-width: 1100px;#}
+{#            margin: 0 auto;#}
+{#        }#}
+{##}
+{#        /* ─── PAGE HEADER ─── */#}
+{#        .page-header {#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            gap: 16px;#}
+{#            margin-bottom: 36px;#}
+{#            animation: slideDown 0.6s ease both;#}
+{#        }#}
+{#        .page-header .back-btn {#}
+{#            width: 40px; height: 40px;#}
+{#            border-radius: 50%;#}
+{#            background: var(--teal-subtle);#}
+{#            border: 1px solid var(--border);#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#            color: var(--teal);#}
+{#            cursor: pointer;#}
+{#            transition: all 0.2s;#}
+{#            text-decoration: none;#}
+{#        }#}
+{#        .page-header .back-btn:hover { background: var(--teal-glow); }#}
+{#        .page-header h1 {#}
+{#            font-family: 'Barlow Condensed', sans-serif;#}
+{#            font-size: 1.6rem;#}
+{#            font-weight: 700;#}
+{#            letter-spacing: 2px;#}
+{#            text-transform: uppercase;#}
+{#            color: var(--text-bright);#}
+{#        }#}
+{#        .page-header small {#}
+{#            font-size: 0.78rem;#}
+{#            color: var(--text-dim);#}
+{#            letter-spacing: 1px;#}
+{#            text-transform: uppercase;#}
+{#            display: block;#}
+{#        }#}
+{#        .teal-dot {#}
+{#            width: 8px; height: 8px;#}
+{#            border-radius: 50%;#}
+{#            background: var(--teal);#}
+{#            box-shadow: 0 0 8px var(--teal);#}
+{#            flex-shrink: 0;#}
+{#        }#}
+{##}
+{#        /* ─── PROFILE HERO CARD ─── */#}
+{#        .profile-hero {#}
+{#            background: var(--bg-card);#}
+{#            border-radius: 16px;#}
+{#            border: 1px solid var(--border);#}
+{#            overflow: hidden;#}
+{#            position: relative;#}
+{#            animation: fadeUp 0.7s ease 0.1s both;#}
+{#            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px var(--border);#}
+{#        }#}
+{##}
+{#        /* Top glowing band */#}
+{#        .hero-top-band {#}
+{#            height: 6px;#}
+{#            background: linear-gradient(90deg, var(--teal-dim), var(--teal), #07c9b1, var(--teal-dim));#}
+{#            background-size: 200% 100%;#}
+{#            animation: shimmer 3s linear infinite;#}
+{#        }#}
+{#        @keyframes shimmer {#}
+{#            0% { background-position: 0% 0%; }#}
+{#            100% { background-position: 200% 0%; }#}
+{#        }#}
+{##}
+{#        /* Hero background pattern */#}
+{#        .hero-banner {#}
+{#            height: 200px;#}
+{#            background:#}
+{#                 radial-gradient(ellipse 60% 80% at 80% 50%, rgba(5,173,152,0.10) 0%, transparent 70%),#}
+{#                 radial-gradient(ellipse 40% 60% at 20% 50%, rgba(22,49,96,0.12) 0%, transparent 70%),#}
+{#                 linear-gradient(135deg, #0d1818 0%, #132020 50%, #0f1e1e 100%);#}
+{#            position: relative;#}
+{#            overflow: hidden;#}
+{#        }#}
+{##}
+{#        /* Hexagonal grid pattern */#}
+{#        .hero-banner::before {#}
+{#            content: '';#}
+{#            position: absolute;#}
+{#            inset: 0;#}
+{#            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'%3E%3Cpath d='M30 0 L60 17 L60 35 L30 52 L0 35 L0 17Z' fill='none' stroke='rgba(0,201,167,0.07)' stroke-width='1'/%3E%3C/svg%3E");#}
+{#            background-size: 60px 52px;#}
+{#        }#}
+{##}
+{#        /* Glowing scanner line */#}
+{#        .hero-banner::after {#}
+{#            content: '';#}
+{#            position: absolute;#}
+{#            left: 0; right: 0;#}
+{#            height: 2px;#}
+{#            background: linear-gradient(90deg, transparent, var(--teal), transparent);#}
+{#            animation: scanLine 4s ease-in-out infinite;#}
+{#            opacity: 0.4;#}
+{#        }#}
+{#        @keyframes scanLine {#}
+{#            0%   { top: 0%; opacity: 0; }#}
+{#            10%  { opacity: 0.4; }#}
+{#            90%  { opacity: 0.4; }#}
+{#            100% { top: 100%; opacity: 0; }#}
+{#        }#}
+{##}
+{#        /* Badge / rank emblem in banner */#}
+{#        .banner-emblem {#}
+{#            position: absolute;#}
+{#            right: 40px;#}
+{#            top: 50%;#}
+{#            transform: translateY(-50%);#}
+{#            width: 100px;#}
+{#            height: 100px;#}
+{#            opacity: 0.06;#}
+{#        }#}
+{#        .banner-emblem svg { width: 100%; height: 100%; }#}
+{##}
+{#        /* ─── PROFILE CONTENT AREA ─── */#}
+{#        .profile-content {#}
+{#            display: grid;#}
+{#            grid-template-columns: 280px 1fr;#}
+{#            gap: 0;#}
+{#        }#}
+{##}
+{#        /* LEFT SIDEBAR */#}
+{#        .profile-left {#}
+{#            padding: 0 0 36px 0;#}
+{#            border-right: 1px solid var(--border-mid);#}
+{#            display: flex;#}
+{#            flex-direction: column;#}
+{#            align-items: center;#}
+{#        }#}
+{##}
+{#        .photo-wrapper {#}
+{#            margin-top: -70px;#}
+{#            position: relative;#}
+{#            z-index: 2;#}
+{#            display: flex;#}
+{#            flex-direction: column;#}
+{#            align-items: center;#}
+{#        }#}
+{##}
+{#        .photo-ring {#}
+{#            width: 148px;#}
+{#            height: 148px;#}
+{#            border-radius: 50%;#}
+{#            padding: 4px;#}
+{#            background: conic-gradient(var(--teal), var(--accent-blue), var(--teal));#}
+{#            animation: rotateBorder 6s linear infinite;#}
+{#            box-shadow: 0 0 30px rgba(0,201,167,0.35), 0 0 60px rgba(0,201,167,0.1);#}
+{#        }#}
+{#        @keyframes rotateBorder {#}
+{#            from { transform: rotate(0deg); }#}
+{#            to   { transform: rotate(360deg); }#}
+{#        }#}
+{##}
+{#        .photo-ring-inner {#}
+{#            width: 100%;#}
+{#            height: 100%;#}
+{#            border-radius: 50%;#}
+{#            padding: 3px;#}
+{#            background: var(--bg-card);#}
+{#        }#}
+{##}
+{#        .officer-photo {#}
+{#            width: 100%;#}
+{#            height: 100%;#}
+{#            border-radius: 50%;#}
+{#            object-fit: cover;#}
+{#        }#}
+{##}
+{#        .verified-badge {#}
+{#            position: absolute;#}
+{#            bottom: 4px;#}
+{#            right: 4px;#}
+{#            width: 30px;#}
+{#            height: 30px;#}
+{#            background: var(--teal);#}
+{#            border-radius: 50%;#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#            border: 2px solid var(--bg-card);#}
+{#            font-size: 0.7rem;#}
+{#            color: #000;#}
+{#            font-weight: 700;#}
+{#        }#}
+{##}
+{#        .officer-name {#}
+{#            font-family: 'Rajdhani', sans-serif;#}
+{#            font-size: 1.5rem;#}
+{#            font-weight: 700;#}
+{#            letter-spacing: 1px;#}
+{#            text-align: center;#}
+{#            margin-top: 18px;#}
+{#            color: var(--text-bright);#}
+{#        }#}
+{##}
+{#        .designation-pill {#}
+{#            margin-top: 8px;#}
+{#            padding: 6px 18px;#}
+{#            background: var(--teal-glow);#}
+{#            border: 1px solid var(--teal);#}
+{#            border-radius: 100px;#}
+{#            font-family: 'Barlow Condensed', sans-serif;#}
+{#            font-size: 0.8rem;#}
+{#            font-weight: 700;#}
+{#            letter-spacing: 2px;#}
+{#            text-transform: uppercase;#}
+{#            color: var(--teal);#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            gap: 6px;#}
+{#        }#}
+{#        .designation-pill i { font-size: 0.75rem; }#}
+{##}
+{#        /* Officer ID strip */#}
+{#        .officer-id-strip {#}
+{#            margin-top: 20px;#}
+{#            width: calc(100% - 48px);#}
+{#            background: var(--bg-panel);#}
+{#            border-radius: 8px;#}
+{#            border: 1px solid var(--border-mid);#}
+{#            padding: 12px 16px;#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            justify-content: space-between;#}
+{#        }#}
+{#        .officer-id-strip .id-label {#}
+{#            font-size: 0.68rem;#}
+{#            text-transform: uppercase;#}
+{#            letter-spacing: 1.5px;#}
+{#            color: var(--text-dim);#}
+{#            font-weight: 600;#}
+{#        }#}
+{#        .officer-id-strip .id-value {#}
+{#            font-family: 'Barlow Condensed', sans-serif;#}
+{#            font-size: 1.1rem;#}
+{#            font-weight: 700;#}
+{#            color: var(--teal);#}
+{#            letter-spacing: 1px;#}
+{#        }#}
+{##}
+{#        /* Status indicator */#}
+{#        .status-row {#}
+{#            margin-top: 14px;#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            gap: 8px;#}
+{#        }#}
+{#        .status-dot {#}
+{#            width: 8px; height: 8px;#}
+{#            border-radius: 50%;#}
+{#            background: #2ecc71;#}
+{#            box-shadow: 0 0 6px #2ecc71;#}
+{#            animation: pulse 2s ease-in-out infinite;#}
+{#        }#}
+{#        @keyframes pulse {#}
+{#            0%, 100% { box-shadow: 0 0 6px #2ecc71; }#}
+{#            50%       { box-shadow: 0 0 14px #2ecc71; }#}
+{#        }#}
+{#        .status-text {#}
+{#            font-size: 0.8rem;#}
+{#            color: #2ecc71;#}
+{#            font-weight: 600;#}
+{#            letter-spacing: 0.5px;#}
+{#        }#}
+{##}
+{#        /* Print btn */#}
+{#        .btn-print {#}
+{#            margin-top: 24px;#}
+{#            width: calc(100% - 48px);#}
+{#            padding: 11px;#}
+{#            background: transparent;#}
+{#            border: 1px solid var(--border);#}
+{#            border-radius: 8px;#}
+{#            color: var(--text-mid);#}
+{#            font-family: 'Barlow Condensed', sans-serif;#}
+{#            font-size: 0.85rem;#}
+{#            letter-spacing: 1.5px;#}
+{#            text-transform: uppercase;#}
+{#            cursor: pointer;#}
+{#            display: flex; align-items: center; justify-content: center; gap: 8px;#}
+{#            transition: all 0.25s;#}
+{#            text-decoration: none;#}
+{#        }#}
+{#        .btn-print:hover {#}
+{#            border-color: var(--teal);#}
+{#            color: var(--teal);#}
+{#            background: var(--teal-subtle);#}
+{#        }#}
+{##}
+{#        /* ─── RIGHT CONTENT ─── */#}
+{#        .profile-right {#}
+{#            padding: 36px 40px;#}
+{#        }#}
+{##}
+{#        .section-title {#}
+{#            font-family: 'Barlow Condensed', sans-serif;#}
+{#            font-size: 0.72rem;#}
+{#            font-weight: 700;#}
+{#            text-transform: uppercase;#}
+{#            letter-spacing: 2.5px;#}
+{#            color: var(--teal);#}
+{#            margin-bottom: 20px;#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            gap: 10px;#}
+{#        }#}
+{#        .section-title::after {#}
+{#            content: '';#}
+{#            flex: 1;#}
+{#            height: 1px;#}
+{#            background: linear-gradient(90deg, var(--border), transparent);#}
+{#        }#}
+{##}
+{#        /* Info grid */#}
+{#        .info-grid {#}
+{#            display: grid;#}
+{#            grid-template-columns: 1fr 1fr;#}
+{#            gap: 20px;#}
+{#            margin-bottom: 32px;#}
+{#        }#}
+{#        .info-grid.full { grid-template-columns: 1fr; }#}
+{##}
+{#        .info-block {#}
+{#            background: var(--bg-panel);#}
+{#            border-radius: 10px;#}
+{#            border: 1px solid var(--border-mid);#}
+{#            padding: 16px 20px;#}
+{#            position: relative;#}
+{#            overflow: hidden;#}
+{#            transition: border-color 0.2s, transform 0.2s;#}
+{#        }#}
+{#        .info-block:hover {#}
+{#            border-color: var(--border);#}
+{#            transform: translateY(-2px);#}
+{#        }#}
+{#        .info-block::before {#}
+{#            content: '';#}
+{#            position: absolute;#}
+{#            top: 0; left: 0;#}
+{#            width: 3px;#}
+{#            height: 100%;#}
+{#            background: var(--teal);#}
+{#            opacity: 0;#}
+{#            transition: opacity 0.2s;#}
+{#        }#}
+{#        .info-block:hover::before { opacity: 1; }#}
+{##}
+{#        .info-block .ib-icon {#}
+{#            width: 32px; height: 32px;#}
+{#            border-radius: 8px;#}
+{#            background: var(--teal-subtle);#}
+{#            border: 1px solid var(--border);#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#            color: var(--teal);#}
+{#            font-size: 0.85rem;#}
+{#            margin-bottom: 10px;#}
+{#        }#}
+{##}
+{#        .info-block .ib-label {#}
+{#            font-size: 0.68rem;#}
+{#            text-transform: uppercase;#}
+{#            letter-spacing: 1.5px;#}
+{#            color: var(--text-dim);#}
+{#            font-weight: 600;#}
+{#            margin-bottom: 4px;#}
+{#        }#}
+{##}
+{#        .info-block .ib-value {#}
+{#            font-family: 'Barlow', sans-serif;#}
+{#            font-size: 1rem;#}
+{#            font-weight: 500;#}
+{#            color: var(--text-bright);#}
+{#            word-break: break-word;#}
+{#        }#}
+{##}
+{#        /* Station card — special full-width */#}
+{#        .station-card {#}
+{#            background: linear-gradient(135deg, rgba(0,201,167,0.08), rgba(26,143,227,0.05));#}
+{#            border: 1px solid var(--border);#}
+{#            border-radius: 12px;#}
+{#            padding: 20px 24px;#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            gap: 20px;#}
+{#            margin-bottom: 32px;#}
+{#            position: relative;#}
+{#            overflow: hidden;#}
+{#        }#}
+{#        .station-card::after {#}
+{#            content: '';#}
+{#            position: absolute;#}
+{#            top: -40px; right: -40px;#}
+{#            width: 120px; height: 120px;#}
+{#            border-radius: 50%;#}
+{#            background: radial-gradient(circle, rgba(0,201,167,0.1), transparent);#}
+{#        }#}
+{##}
+{#        .station-icon-wrap {#}
+{#            width: 56px; height: 56px;#}
+{#            border-radius: 12px;#}
+{#            background: var(--teal-glow);#}
+{#            border: 1px solid var(--teal);#}
+{#            display: flex; align-items: center; justify-content: center;#}
+{#            color: var(--teal);#}
+{#            font-size: 1.4rem;#}
+{#            flex-shrink: 0;#}
+{#        }#}
+{##}
+{#        .station-info .s-label {#}
+{#            font-size: 0.68rem;#}
+{#            text-transform: uppercase;#}
+{#            letter-spacing: 1.5px;#}
+{#            color: var(--text-dim);#}
+{#            font-weight: 600;#}
+{#        }#}
+{#        .station-info .s-name {#}
+{#            font-family: 'Rajdhani', sans-serif;#}
+{#            font-size: 1.3rem;#}
+{#            font-weight: 700;#}
+{#            color: var(--text-bright);#}
+{#            margin-top: 2px;#}
+{#        }#}
+{#        .station-info .s-place {#}
+{#            font-size: 0.85rem;#}
+{#            color: var(--text-mid);#}
+{#            margin-top: 2px;#}
+{#        }#}
+{#        .station-info .s-place i { color: var(--teal); margin-right: 4px; }#}
+{##}
+{#        /* ─── ANIMATIONS ─── */#}
+{#        @keyframes fadeUp {#}
+{#            from { opacity: 0; transform: translateY(24px); }#}
+{#            to   { opacity: 1; transform: translateY(0); }#}
+{#        }#}
+{#        @keyframes slideDown {#}
+{#            from { opacity: 0; transform: translateY(-16px); }#}
+{#            to   { opacity: 1; transform: translateY(0); }#}
+{#        }#}
+{##}
+{#        /* Stagger info blocks */#}
+{#        .info-block:nth-child(1) { animation: fadeUp 0.5s ease 0.3s both; }#}
+{#        .info-block:nth-child(2) { animation: fadeUp 0.5s ease 0.4s both; }#}
+{#        .info-block:nth-child(3) { animation: fadeUp 0.5s ease 0.5s both; }#}
+{#        .info-block:nth-child(4) { animation: fadeUp 0.5s ease 0.6s both; }#}
+{##}
+{#        /* ─── RESPONSIVE ─── */#}
+{#        @media (max-width: 768px) {#}
+{#            .profile-content { grid-template-columns: 1fr; }#}
+{#            .profile-left { border-right: none; border-bottom: 1px solid var(--border-mid); }#}
+{#            .profile-right { padding: 24px 20px; }#}
+{#            .info-grid { grid-template-columns: 1fr; }#}
+{#            .banner-emblem { display: none; }#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#{% include 'police/police_sidebar.html' %}#}
+{##}
+{#<main class="main-content">#}
+{##}
+{#    <!-- Page Header -->#}
+{#    <div class="page-header">#}
+{#        <span class="teal-dot"></span>#}
+{#        <div>#}
+{#            <h1>Officer Profile</h1>#}
+{#            <small>Personnel &nbsp;/&nbsp; Profile View</small>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <!-- Main Profile Card -->#}
+{#    <div class="profile-hero">#}
+{#        <div class="hero-top-band"></div>#}
+{##}
+{#        <div class="hero-banner">#}
+{#            <!-- Shield emblem watermark -->#}
+{#            <div class="banner-emblem">#}
+{#                <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">#}
+{#                    <path d="M50 5 L95 22 L95 60 C95 85 72 108 50 115 C28 108 5 85 5 60 L5 22 Z" stroke="white" stroke-width="3" fill="none"/>#}
+{#                    <path d="M50 18 L82 30 L82 60 C82 78 67 96 50 102 C33 96 18 78 18 60 L18 30 Z" stroke="white" stroke-width="1.5" fill="none"/>#}
+{#                    <circle cx="50" cy="58" r="12" stroke="white" stroke-width="1.5" fill="none"/>#}
+{#                    <line x1="50" y1="30" x2="50" y2="42" stroke="white" stroke-width="1.5"/>#}
+{#                    <line x1="50" y1="74" x2="50" y2="86" stroke="white" stroke-width="1.5"/>#}
+{#                    <line x1="22" y1="58" x2="34" y2="58" stroke="white" stroke-width="1.5"/>#}
+{#                    <line x1="66" y1="58" x2="78" y2="58" stroke="white" stroke-width="1.5"/>#}
+{#                </svg>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="profile-content">#}
+{##}
+{#            <!-- ── LEFT COL ── -->#}
+{#            <div class="profile-left">#}
+{#                <div class="photo-wrapper">#}
+{#                    <div class="photo-ring">#}
+{#                        <div class="photo-ring-inner">#}
+{#                            <img src="{{ police.photo.url }}" class="officer-photo" alt="Officer Photo">#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="verified-badge"><i class="fas fa-check"></i></div>#}
+{#                </div>#}
+{##}
+{#                <div class="officer-name">{{ police.full_name }}</div>#}
+{##}
+{#                <div class="designation-pill">#}
+{#                    <i class="fas fa-shield-halved"></i>#}
+{#                    {{ police.designation }}#}
+{#                </div>#}
+{##}
+{#                <div class="officer-id-strip">#}
+{#                    <span class="id-label">Officer ID</span>#}
+{#                    <span class="id-value">#{{ police.id }}</span>#}
+{#                </div>#}
+{##}
+{#                <div class="status-row">#}
+{#                    <span class="status-dot"></span>#}
+{#                    <span class="status-text">Active Duty</span>#}
+{#                </div>#}
+{##}
+{#                <a href="#" class="btn-print" onclick="window.print()">#}
+{#                    <i class="fas fa-print"></i> Print ID Card#}
+{#                </a>#}
+{#            </div>#}
+{##}
+{#            <!-- ── RIGHT COL ── -->#}
+{#            <div class="profile-right">#}
+{##}
+{#                <!-- Assigned Station -->#}
+{#                <div class="section-title">Assigned Station</div>#}
+{##}
+{#                <div class="station-card">#}
+{#                    <div class="station-icon-wrap">#}
+{#                        <i class="fas fa-building-shield"></i>#}
+{#                    </div>#}
+{#                    <div class="station-info">#}
+{#                        <div class="s-label">Police Station</div>#}
+{#                        <div class="s-name">{{ police.policestation.station_name }}</div>#}
+{#                        <div class="s-place">#}
+{#                            <i class="fas fa-location-dot"></i>#}
+{#                            {{ police.policestation.place }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <!-- Personal Information -->#}
+{#                <div class="section-title">Personal Information</div>#}
+{##}
+{#                <div class="info-grid">#}
+{#                    <div class="info-block">#}
+{#                        <div class="ib-icon"><i class="fas fa-phone"></i></div>#}
+{#                        <div class="ib-label">Phone Number</div>#}
+{#                        <div class="ib-value">{{ police.phone }}</div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="info-block">#}
+{#                        <div class="ib-icon"><i class="fas fa-user-circle"></i></div>#}
+{#                        <div class="ib-label">Username</div>#}
+{#                        <div class="ib-value">{{ police.USER.username }}</div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <div class="info-grid full">#}
+{#                    <div class="info-block">#}
+{#                        <div class="ib-icon"><i class="fas fa-map-marker-alt"></i></div>#}
+{#                        <div class="ib-label">Address</div>#}
+{#                        <div class="ib-value">{{ police.address }}</div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#</main>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Officer Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-base:       #f5f8f8;
+            --bg-card:       #ffffff;
+            --bg-panel:      #eaf3f2;
+            --teal:          #05AD98;
+            --teal-dim:      #048a78;
+            --teal-lt:       #07c9b1;
+            --teal-glow:     rgba(5,173,152,0.30);
+            --teal-subtle:   rgba(5,173,152,0.10);
+            --teal-soft:     rgba(5,173,152,0.06);
+            --teal-sm:       rgba(5,173,152,0.18);
+            --accent-blue:   rgb(22,49,96);
+            --text-bright:   #1a2222;
+            --text-mid:      #3d4444;
+            --text-dim:      rgba(32,33,32,0.51);
+            --border:        rgba(5,173,152,0.22);
+            --border-mid:    rgba(5,173,152,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg-base);
+            font-family: 'Barlow', sans-serif;
+            color: var(--text-bright);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ─── NOISE TEXTURE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ─── PAGE HEADER ─── */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 36px;
+            animation: slideDown 0.6s ease both;
+        }
+        .page-header .back-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--teal-subtle);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--teal);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .page-header .back-btn:hover { background: var(--teal-glow); }
+        .page-header h1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a2222;
+        }
+        .page-header small {
+            font-size: 0.78rem;
+            color: rgba(32,33,32,0.51);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: block;
+        }
+        .teal-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 8px var(--teal);
+            flex-shrink: 0;
+        }
+
+        /* ─── PROFILE HERO CARD ─── */
+        .profile-hero {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+            animation: fadeUp 0.7s ease 0.1s both;
+            box-shadow: 0 24px 64px rgba(5,173,152,0.12), 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        /* ─── HERO BANNER ─── */
+        .hero-banner {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(120deg, rgb(22,49,96) 0%, #036b5e 50%, #05AD98 100%);
+        }
+
+        /* Diagonal light sweep */
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg,
+                    rgba(255,255,255,0.07) 0%,
+                    transparent 40%,
+                    rgba(5,173,152,0.15) 70%,
+                    transparent 100%
+                );
+        }
+
+        /* Dot-grid texture */
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px);
+            background-size: 22px 22px;
+            mask-image: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%);
+        }
+
+        /* Large watermark shield — right side */
+        .banner-shield {
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 200px;
+            opacity: 0.07;
+        }
+
+        /* Glowing orb — left accent */
+        .banner-orb {
+            position: absolute;
+            left: -60px;
+            top: -60px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(7,201,177,0.35) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        /* Bottom fade edge blending into card */
+        .banner-fade {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, rgba(5,173,152,0.08));
+        }
+
+        /* ── Banner text block ── */
+        .banner-text-block {
+            position: absolute;
+            bottom: 85px;
+            left: 32px;
+            z-index: 3;
+            animation: slideInLeft 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-28px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .banner-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .banner-eyebrow .eyebrow-line {
+            width: 28px;
+            height: 2px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 2px;
+        }
+        .banner-eyebrow span {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .banner-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.25);
+        }
+
+        .banner-title span {
+            color: #07c9b1;
+        }
+
+        .banner-subtitle {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* Animated accent bar on left edge */
+        .banner-accent-bar {
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #07c9b1, rgba(7,201,177,0));
+        }
+
+        /* Shimmer line at bottom of banner */
+        .banner-shimmer {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(7,201,177,0.8), rgba(255,255,255,0.4), rgba(7,201,177,0.8), transparent);
+            background-size: 200% 100%;
+            animation: shimmerMove 3s linear infinite;
+        }
+        @keyframes shimmerMove {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ─── PROFILE CONTENT AREA ─── */
+        .profile-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 0;
+        }
+
+        /* LEFT SIDEBAR */
+        .profile-left {
+            padding: 0 0 36px 0;
+            border-right: 1px solid var(--border-mid);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .photo-wrapper {
+            margin-top: -70px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .photo-ring {
+            width: 148px;
+            height: 148px;
+            border-radius: 50%;
+            padding: 4px;
+            background: conic-gradient(var(--teal), var(--accent-blue), var(--teal));
+{#            animation: rotateBorder 6s linear infinite;#}
+            box-shadow: 0 0 24px rgba(5,173,152,0.40), 0 0 48px rgba(5,173,152,0.12);
+        }
+        @keyframes rotateBorder {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        .photo-ring-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            padding: 3px;
+            background: var(--bg-card);
+        }
+
+        .officer-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .verified-badge {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 30px;
+            height: 30px;
+            background: var(--teal);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--bg-card);
+            font-size: 0.7rem;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .officer-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-top: 18px;
+            color: var(--text-bright);
+        }
+
+        .designation-pill {
+            margin-top: 8px;
+            padding: 6px 18px;
+            background: var(--teal-glow);
+            border: 1px solid var(--teal);
+            border-radius: 100px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--teal);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .designation-pill i { font-size: 0.75rem; }
+
+        /* Officer ID strip */
+        .officer-id-strip {
+            margin-top: 20px;
+            width: calc(100% - 48px);
+            background: var(--bg-panel);
+            border-radius: 8px;
+            border: 1px solid var(--border-mid);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .officer-id-strip .id-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+        .officer-id-strip .id-value {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: 1px;
+        }
+
+        /* Status indicator */
+        .status-row {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #2ecc71;
+            box-shadow: 0 0 6px #2ecc71;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 6px #2ecc71; }
+            50%       { box-shadow: 0 0 14px #2ecc71; }
+        }
+        .status-text {
+            font-size: 0.8rem;
+            color: #2ecc71;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Print btn */
+        .btn-print {
+            margin-top: 24px;
+            width: calc(100% - 48px);
+            padding: 11px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-mid);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.25s;
+            text-decoration: none;
+        }
+        .btn-print:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            background: var(--teal-subtle);
+        }
+
+        /* ─── RIGHT CONTENT ─── */
+        .profile-right {
+            padding: 36px 40px;
+        }
+
+        .section-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--teal);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+
+        /* Info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .info-grid.full { grid-template-columns: 1fr; }
+
+        .info-block {
+            background: var(--bg-panel);
+            border-radius: 10px;
+            border: 1px solid var(--border-mid);
+            padding: 16px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .info-block:hover {
+            border-color: var(--border);
+            transform: translateY(-2px);
+        }
+        .info-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--teal);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .info-block:hover::before { opacity: 1; }
+
+        .info-block .ib-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: var(--teal-subtle);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--teal);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .info-block .ib-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .info-block .ib-value {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-bright);
+            word-break: break-word;
+        }
+
+        /* Station card — special full-width */
+        .station-card {
+            background: linear-gradient(135deg, rgba(0,201,167,0.08), rgba(26,143,227,0.05));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .station-card::after {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,201,167,0.1), transparent);
+        }
+
+        .station-icon-wrap {
+            width: 56px; height: 56px;
+            border-radius: 12px;
+            background: var(--teal-glow);
+            border: 1px solid var(--teal);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--teal);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .station-info .s-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+        .station-info .s-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-top: 2px;
+        }
+        .station-info .s-place {
+            font-size: 0.85rem;
+            color: var(--text-mid);
+            margin-top: 2px;
+        }
+        .station-info .s-place i { color: var(--teal); margin-right: 4px; }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stagger info blocks */
+        .info-block:nth-child(1) { animation: fadeUp 0.5s ease 0.3s both; }
+        .info-block:nth-child(2) { animation: fadeUp 0.5s ease 0.4s both; }
+        .info-block:nth-child(3) { animation: fadeUp 0.5s ease 0.5s both; }
+        .info-block:nth-child(4) { animation: fadeUp 0.5s ease 0.6s both; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .profile-content { grid-template-columns: 1fr; }
+            .profile-left { border-right: none; border-bottom: 1px solid var(--border-mid); }
+            .profile-right { padding: 24px 20px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .banner-shield { display: none; }
+            .banner-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+{% include 'police/police_sidebar.html' %}
+
+<main class="main-content">
+
+    <!-- Main Profile Card -->
+    <div class="profile-hero">
+
+        <div class="hero-banner">
+            <div class="banner-accent-bar"></div>
+            <div class="banner-orb"></div>
+
+            <!-- Dot grid via ::after pseudo -->
+
+            <!-- Large shield watermark -->
+            <div class="banner-shield">
+                <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 5 L95 22 L95 60 C95 85 72 108 50 115 C28 108 5 85 5 60 L5 22 Z" stroke="white" stroke-width="2.5" fill="white"/>
+                    <path d="M50 18 L82 30 L82 60 C82 78 67 96 50 102 C33 96 18 78 18 60 L18 30 Z" stroke="rgba(0,0,0,0.2)" stroke-width="1" fill="none"/>
+                    <circle cx="50" cy="58" r="14" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" fill="none"/>
+                    <line x1="50" y1="28" x2="50" y2="42" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+                    <line x1="50" y1="74" x2="50" y2="88" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+                    <line x1="20" y1="58" x2="34" y2="58" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+                    <line x1="66" y1="58" x2="80" y2="58" stroke="rgba(0,0,0,0.2)" stroke-width="1.5"/>
+                </svg>
+            </div>
+
+            <!-- Title text in banner -->
+            <div class="banner-text-block">
+                <div class="banner-eyebrow">
+                    <div class="eyebrow-line"></div>
+                    <span>CrowdTrace Police Portal</span>
+                </div>
+                <div class="banner-title">Officer <span>Profile</span></div>
+                <div class="banner-subtitle">Personnel &nbsp;/&nbsp; Profile View</div>
+            </div>
+
+            <div class="banner-fade"></div>
+            <div class="banner-shimmer"></div>
+        </div>
+
+        <div class="profile-content">
+
+            <!-- ── LEFT COL ── -->
+            <div class="profile-left">
+                <div class="photo-wrapper">
+                    <div class="photo-ring">
+                        <div class="photo-ring-inner">
+                            <img src="{{ police.photo.url }}" class="officer-photo" alt="Officer Photo">
+                        </div>
+                    </div>
+                    <div class="verified-badge"><i class="fas fa-check"></i></div>
+                </div>
+
+                <div class="officer-name">{{ police.full_name }}</div>
+
+                <div class="designation-pill">
+                    <i class="fas fa-shield-halved"></i>
+                    {{ police.designation }}
+                </div>
+
+                <div class="officer-id-strip">
+                    <span class="id-label">Officer ID</span>
+                    <span class="id-value">#{{ police.id }}</span>
+                </div>
+
+                <div class="status-row">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Active Duty</span>
+                </div>
+
+                <a href="#" class="btn-print" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print ID Card
+                </a>
+            </div>
+
+            <!-- ── RIGHT COL ── -->
+            <div class="profile-right">
+
+                <!-- Assigned Station -->
+                <div class="section-title">Assigned Station</div>
+
+                <div class="station-card">
+                    <div class="station-icon-wrap">
+                        <i class="fas fa-building-shield"></i>
+                    </div>
+                    <div class="station-info">
+                        <div class="s-label">Police Station</div>
+                        <div class="s-name">{{ police.policestation.station_name }}</div>
+                        <div class="s-place">
+                            <i class="fas fa-location-dot"></i>
+                            {{ police.policestation.place }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Information -->
+                <div class="section-title">Personal Information</div>
+
+                <div class="info-grid">
+                    <div class="info-block">
+                        <div class="ib-icon"><i class="fas fa-phone"></i></div>
+                        <div class="ib-label">Phone Number</div>
+                        <div class="ib-value">{{ police.phone }}</div>
+                    </div>
+
+                    <div class="info-block">
+                        <div class="ib-icon"><i class="fas fa-user-circle"></i></div>
+                        <div class="ib-label">Username</div>
+                        <div class="ib-value">{{ police.USER.username }}</div>
+                    </div>
+                </div>
+
+                <div class="info-grid full">
+                    <div class="info-block">
+                        <div class="ib-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="ib-label">Address</div>
+                        <div class="ib-value">{{ police.address }}</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

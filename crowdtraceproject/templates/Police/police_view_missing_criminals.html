@@ -1,0 +1,774 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criminal Case Files</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg:             #f0f0f2;
+            --surface:        #ffffff;
+            --surface-2:      #f7f3f3;
+            --border-soft:    rgba(180,30,50,0.12);
+            --border-mid:     rgba(180,30,50,0.22);
+            --crimson:        #b41e32;
+            --crimson-d:      #8c1626;
+            --crimson-lt:     #d4253d;
+            --crimson-xs:     rgba(180,30,50,0.07);
+            --crimson-sm:     rgba(180,30,50,0.15);
+            --crimson-glow:   rgba(180,30,50,0.28);
+            --slate-dark:     #1a1f2e;
+            --gold:           #c8922a;
+            --gold-lt:        #e0a93a;
+            --ink:            #1a1a1f;
+            --charcoal:       #3a3a42;
+            --muted:          rgba(50,50,65,0.52);
+            --danger-lt:      rgba(180,30,50,0.08);
+            --ct-theft:       #b41e32;
+            --ct-assault:     #6a3fa0;
+            --ct-fraud:       #c8922a;
+            --ct-drugs:       #1a7a50;
+            --ct-cyber:       rgb(22,49,96);
+            --ct-murder:      #5c0010;
+            --ct-robbery:     #964f00;
+            --ct-other:       #3c3c50;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            font-family: 'Barlow', sans-serif;
+            color: var(--ink); min-height: 100vh;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(180,30,50,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(180,30,50,0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .main-content { position: relative; z-index: 1; padding: 36px 40px 70px; }
+
+        /* ── BANNER ── */
+        .page-banner {
+            border-radius: 18px; overflow: hidden; margin-bottom: 28px;
+            position: relative; height: 170px;
+            background: linear-gradient(125deg, var(--slate-dark) 0%, #3a0a12 45%, var(--crimson-d) 100%);
+            box-shadow: 0 20px 56px rgba(180,30,50,0.22), 0 4px 16px rgba(0,0,0,0.25);
+            animation: fadeDown 0.65s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        @keyframes fadeDown { from { opacity:0;transform:translateY(-22px); } to { opacity:1;transform:translateY(0); } }
+        .page-banner::before {
+            content:'';position:absolute;inset:0;
+            background-image:repeating-linear-gradient(-55deg,rgba(255,255,255,0.025) 0px,rgba(255,255,255,0.025) 1px,transparent 1px,transparent 28px);
+        }
+        .page-banner::after {
+            content:'';position:absolute;inset:0;
+            background:radial-gradient(ellipse 50% 70% at 85% 30%,rgba(200,146,42,0.18) 0%,transparent 65%);
+        }
+        .banner-left-bar {
+            position:absolute;left:0;top:0;bottom:0;width:5px;
+            background:linear-gradient(to bottom,var(--crimson-lt),var(--gold),rgba(180,30,50,0));
+        }
+        .banner-shimmer {
+            position:absolute;bottom:0;left:0;right:0;height:2px;
+            background:linear-gradient(90deg,transparent,var(--crimson-lt),var(--gold-lt),var(--crimson-lt),transparent);
+            background-size:200% 100%; animation:shimSlide 3.5s linear infinite;
+        }
+        @keyframes shimSlide { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+
+        .banner-watermark {
+            position:absolute;right:24px;top:50%;transform:translateY(-50%);
+            width:150px;height:150px;opacity:0.055;z-index:1;
+        }
+        .banner-content {
+            position:absolute;bottom:24px;left:32px;z-index:2;
+            animation:slideInLeft 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+        }
+        @keyframes slideInLeft { from{opacity:0;transform:translateX(-26px);} to{opacity:1;transform:translateX(0);} }
+        .banner-eyebrow { display:flex;align-items:center;gap:8px;margin-bottom:6px; }
+        .banner-eyebrow .eline { width:24px;height:2px;background:rgba(255,255,255,0.4);border-radius:2px; }
+        .banner-eyebrow span {
+            font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;font-weight:600;
+            letter-spacing:3.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);
+        }
+        .banner-title { font-family:'Rajdhani',sans-serif;font-size:2.4rem;font-weight:700;color:#fff;line-height:1; }
+        .banner-title .accent { color:var(--gold-lt); }
+        .banner-sub { margin-top:8px;font-size:0.76rem;color:rgba(255,255,255,0.42);letter-spacing:2px;text-transform:uppercase; }
+
+        .banner-stats {
+            position:absolute;right:32px;top:50%;transform:translateY(-50%);
+            display:flex;gap:12px;z-index:3;
+            animation:fadeInR 0.7s ease 0.35s both;
+        }
+        @keyframes fadeInR { from{opacity:0;transform:translateY(-50%) translateX(18px);} to{opacity:1;transform:translateY(-50%) translateX(0);} }
+        .bstat {
+            display:flex;flex-direction:column;align-items:center;
+            background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16);
+            border-radius:12px;padding:10px 18px;backdrop-filter:blur(4px);min-width:76px;
+        }
+        .bstat-num { font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;color:#fff;line-height:1; }
+        .bstat-num.gold { color:var(--gold-lt); }
+        .bstat-label { font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.5);font-weight:600;margin-top:3px; }
+
+        /* ── TOOLBAR ── */
+        .toolbar {
+            display:flex;align-items:center;justify-content:space-between;
+            gap:16px;margin-bottom:22px;flex-wrap:wrap;
+            animation:fadeUp 0.5s ease 0.2s both;
+        }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
+        .toolbar-left  { display:flex;align-items:center;gap:10px;flex-wrap:wrap; }
+        .toolbar-right { display:flex;align-items:center;gap:10px; }
+
+        .search-box {
+            display:flex;align-items:center;gap:10px;background:var(--surface);
+            border:1.5px solid var(--border-soft);border-radius:10px;padding:9px 14px;
+            min-width:260px;transition:all 0.2s;
+        }
+        .search-box:focus-within { border-color:var(--crimson);box-shadow:0 0 0 4px rgba(180,30,50,0.08); }
+        .search-box i { color:var(--crimson);font-size:0.85rem;flex-shrink:0; }
+        .search-box input { border:none;outline:none;background:transparent;font-family:'Barlow',sans-serif;font-size:0.92rem;color:var(--ink);width:100%; }
+        .search-box input::placeholder { color:var(--muted); }
+
+        .filter-pill {
+            padding:8px 16px;border-radius:20px;border:1.5px solid var(--border-soft);
+            background:var(--surface);font-family:'Rajdhani',sans-serif;
+            font-size:0.88rem;font-weight:700;text-transform:uppercase;
+            color:var(--charcoal);cursor:pointer;transition:all 0.2s;
+        }
+        .filter-pill:hover,.filter-pill.active { background:var(--crimson-xs);border-color:var(--crimson);color:var(--crimson-d); }
+        .filter-pill.active { box-shadow:0 0 0 3px rgba(180,30,50,0.08); }
+
+        .view-toggle { display:flex;background:var(--surface);border:1.5px solid var(--border-soft);border-radius:10px;overflow:hidden; }
+        .view-btn { padding:8px 14px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-size:0.9rem;transition:all 0.2s; }
+        .view-btn.active { background:var(--crimson-xs);color:var(--crimson); }
+        .view-btn:hover:not(.active) { background:var(--surface-2);color:var(--charcoal); }
+
+        .btn-add {
+            display:inline-flex;align-items:center;gap:8px;padding:10px 20px;
+            background:linear-gradient(135deg,var(--crimson) 0%,var(--crimson-d) 100%);
+            border:none;border-radius:10px;font-family:'Rajdhani',sans-serif;
+            font-size:0.95rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+            color:#fff;cursor:pointer;text-decoration:none;
+            box-shadow:0 4px 16px var(--crimson-glow);transition:all 0.25s;
+        }
+        .btn-add:hover { transform:translateY(-2px);box-shadow:0 8px 24px var(--crimson-glow);color:#fff; }
+
+        .result-info { font-size:0.82rem;color:var(--muted);margin-bottom:16px;font-weight:500; }
+        .result-info strong { color:var(--crimson-d); }
+
+        /* ── GRID ── */
+        #grid-view {
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(272px,1fr));
+            gap:20px;animation:fadeUp 0.5s ease 0.3s both;
+        }
+
+        .criminal-card {
+            background:var(--surface);border-radius:16px;border:1px solid var(--border-soft);
+            overflow:hidden;transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;
+            position:relative;cursor:pointer;
+        }
+        .criminal-card:hover {
+            transform:translateY(-5px);
+            box-shadow:0 20px 48px rgba(180,30,50,0.16),0 4px 14px rgba(0,0,0,0.08);
+            border-color:var(--border-mid);
+        }
+        .criminal-card::before {
+            content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+            background:var(--crimson);opacity:0.8;transition:opacity 0.25s;
+        }
+        .criminal-card:hover::before { opacity:1; }
+        .criminal-card[data-crime="Theft"]::before       { background:var(--ct-theft); }
+        .criminal-card[data-crime="Assault"]::before     { background:var(--ct-assault); }
+        .criminal-card[data-crime="Fraud"]::before       { background:var(--ct-fraud); }
+        .criminal-card[data-crime="Drug Offence"]::before{ background:var(--ct-drugs); }
+        .criminal-card[data-crime="Cybercrime"]::before  { background:var(--ct-cyber); }
+        .criminal-card[data-crime="Murder"]::before      { background:var(--ct-murder); }
+        .criminal-card[data-crime="Robbery"]::before     { background:var(--ct-robbery); }
+
+        .card-photo-wrap { position:relative;height:200px;overflow:hidden;background:#1a1a22; }
+        .card-photo { width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s;filter:contrast(1.05) saturate(0.9); }
+        .criminal-card:hover .card-photo { transform:scale(1.04); }
+        .card-photo-overlay {
+            position:absolute;inset:0;
+            background:linear-gradient(to bottom,rgba(20,5,10,0.15) 0%,rgba(20,5,10,0.72) 100%);
+        }
+        .mugshot-lines {
+            position:absolute;inset:0;pointer-events:none;
+            background-image:
+                linear-gradient(transparent calc(33% - 0.5px),rgba(255,255,255,0.06) calc(33%),transparent calc(33% + 0.5px)),
+                linear-gradient(transparent calc(66% - 0.5px),rgba(255,255,255,0.06) calc(66%),transparent calc(66% + 0.5px)),
+                linear-gradient(90deg,transparent calc(50% - 0.5px),rgba(255,255,255,0.04) calc(50%),transparent calc(50% + 0.5px));
+        }
+        .card-case-id {
+            position:absolute;top:11px;left:14px;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);
+            border:1px solid rgba(255,255,255,0.12);border-radius:7px;padding:3px 10px;
+            font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.8);
+        }
+        .card-crime-badge {
+            position:absolute;top:11px;right:11px;border-radius:7px;padding:4px 10px;
+            font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:700;
+            letter-spacing:0.5px;text-transform:uppercase;
+            backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.18);
+            display:flex;align-items:center;gap:5px;
+        }
+        .badge-theft   { background:rgba(180,30,50,0.75);color:#ffc0c8; }
+        .badge-assault { background:rgba(106,63,160,0.75);color:#dac8ff; }
+        .badge-fraud   { background:rgba(200,146,42,0.75);color:#fff0c0; }
+        .badge-drug    { background:rgba(26,122,80,0.75);color:#b8ffda; }
+        .badge-cyber   { background:rgba(22,49,96,0.82);color:#b0ccff; }
+        .badge-murder  { background:rgba(92,0,16,0.82);color:#ffb0b8; }
+        .badge-robbery { background:rgba(150,79,0,0.78);color:#ffe0b0; }
+        .badge-other   { background:rgba(60,60,80,0.75);color:#d8d8e8; }
+
+        .card-gender-badge {
+            position:absolute;bottom:12px;right:12px;border-radius:7px;padding:3px 10px;
+            font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;
+            letter-spacing:1px;text-transform:uppercase;backdrop-filter:blur(6px);
+        }
+        .gender-male   { background:rgba(22,49,96,0.75);color:#a8c4ff;border:1px solid rgba(100,150,255,0.3); }
+        .gender-female { background:rgba(176,92,160,0.75);color:#f4c8ee;border:1px solid rgba(220,130,210,0.3); }
+        .gender-other  { background:rgba(124,111,205,0.75);color:#d4cfff;border:1px solid rgba(160,150,230,0.3); }
+
+        .card-body-inner { padding:16px 16px 16px 20px; }
+        .card-name { font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .card-meta-row { display:flex;align-items:center;gap:12px;font-size:0.8rem;color:var(--muted);margin-bottom:10px; }
+        .card-meta-row span { display:flex;align-items:center;gap:5px; }
+        .card-meta-row i { color:var(--crimson);font-size:0.7rem; }
+        .card-details { font-size:0.85rem;color:var(--charcoal);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:14px;min-height:42px; }
+        .card-footer-strip { display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border-soft); }
+
+        .btn-view-detail {
+            display:inline-flex;align-items:center;gap:6px;padding:7px 14px;
+            background:var(--crimson-xs);border:1px solid var(--border-soft);border-radius:8px;
+            font-family:'Rajdhani',sans-serif;font-size:0.88rem;font-weight:700;
+            text-transform:uppercase;color:var(--crimson-d);cursor:pointer;transition:all 0.2s;text-decoration:none;
+        }
+        .btn-view-detail:hover { background:var(--crimson-sm);color:var(--crimson-d);box-shadow:0 2px 10px var(--crimson-glow); }
+        .btn-delete-card {
+            width:32px;height:32px;border-radius:8px;border:1px solid rgba(180,30,50,0.18);
+            background:var(--danger-lt);color:var(--crimson);font-size:0.8rem;
+            display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;
+        }
+        .btn-delete-card:hover { background:var(--crimson);color:white;box-shadow:0 4px 12px var(--crimson-glow); }
+
+        /* ── LIST VIEW ── */
+        #list-view { display:none;animation:fadeUp 0.4s ease both; }
+        .list-table-wrap { background:var(--surface);border-radius:16px;border:1px solid var(--border-soft);overflow:hidden;box-shadow:0 4px 24px rgba(180,30,50,0.06); }
+        .list-table { width:100%;border-collapse:collapse; }
+        .list-table thead tr { background:linear-gradient(to right,rgba(180,30,50,0.06),transparent);border-bottom:1.5px solid var(--border-mid); }
+        .list-table thead th { padding:14px 18px;font-family:'Rajdhani',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--crimson-d);white-space:nowrap; }
+        .list-table tbody tr { border-bottom:1px solid var(--border-soft);transition:background 0.18s; }
+        .list-table tbody tr:last-child { border-bottom:none; }
+        .list-table tbody tr:hover { background:rgba(180,30,50,0.03); }
+        .list-table tbody td { padding:13px 18px;vertical-align:middle;font-size:0.9rem;color:var(--charcoal); }
+        .table-photo { width:46px;height:52px;border-radius:8px;object-fit:cover;object-position:top;border:2px solid var(--border-soft);filter:contrast(1.05) saturate(0.9); }
+        .table-name { font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:700;color:var(--ink); }
+        .table-id-badge { display:inline-block;background:var(--crimson-xs);border:1px solid var(--border-soft);border-radius:6px;padding:2px 8px;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:1px;color:var(--crimson-d); }
+        .crime-chip { display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-family:'Rajdhani',sans-serif;font-size:0.82rem;font-weight:700; }
+        .crime-chip-default { background:var(--crimson-xs);color:var(--crimson-d); }
+        .gender-chip { display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700; }
+        .gc-male   { background:rgba(22,49,96,0.08);color:rgb(22,49,96); }
+        .gc-female { background:rgba(176,92,160,0.08);color:#8a3d80; }
+        .gc-other  { background:rgba(124,111,205,0.08);color:#5a4fb5; }
+        .table-details-cell { max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:0.83rem;color:var(--muted); }
+        .table-actions { display:flex;gap:8px; }
+        .btn-tbl-view { display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--crimson-xs);border:1px solid var(--border-soft);border-radius:7px;font-family:'Rajdhani',sans-serif;font-size:0.85rem;font-weight:700;color:var(--crimson-d);cursor:pointer;transition:all 0.18s;text-decoration:none; }
+        .btn-tbl-view:hover { background:var(--crimson-sm); }
+        .btn-tbl-del { padding:6px 10px;background:var(--danger-lt);border:1px solid rgba(180,30,50,0.18);border-radius:7px;color:var(--crimson);font-size:0.78rem;cursor:pointer;transition:all 0.18s; }
+        .btn-tbl-del:hover { background:var(--crimson);color:white; }
+
+        /* ── EMPTY STATE ── */
+        .empty-state { text-align:center;padding:80px 20px;background:var(--surface);border-radius:16px;border:1px dashed var(--border-mid); }
+        .empty-icon { width:80px;height:80px;border-radius:50%;background:var(--crimson-xs);border:2px solid var(--border-soft);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--crimson);margin:0 auto 20px; }
+        .empty-state h4 { font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:8px; }
+        .empty-state p { font-size:0.88rem;color:var(--muted);margin-bottom:24px; }
+
+        /* ── DETAIL MODAL ── */
+        .detail-modal-backdrop { position:fixed;inset:0;background:rgba(10,5,10,0.65);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px; }
+        .detail-modal-backdrop.open { display:flex; }
+        .detail-modal { background:var(--surface);border-radius:20px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,0.35),0 0 0 1px var(--border-mid);animation:modalIn 0.35s cubic-bezier(0.22,1,0.36,1) both; }
+        @keyframes modalIn { from{opacity:0;transform:scale(0.9) translateY(24px);} to{opacity:1;transform:scale(1) translateY(0);} }
+        .modal-top-band { height:5px;background:linear-gradient(90deg,var(--crimson),var(--gold),var(--crimson-lt));background-size:200%;animation:shimSlide 4s linear infinite; }
+        .modal-header-inner { padding:20px 24px 16px;border-bottom:1px solid var(--border-soft);display:flex;align-items:center;justify-content:space-between; }
+        .modal-title-wrap h5 { font-family:'Rajdhani',sans-serif;font-size:1.15rem;font-weight:700;color:var(--ink);margin:0; }
+        .modal-title-wrap small { font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px; }
+        .modal-close { width:34px;height:34px;border-radius:50%;background:var(--surface-2);border:none;color:var(--charcoal);font-size:0.85rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s; }
+        .modal-close:hover { background:var(--danger-lt);color:var(--crimson); }
+        .modal-body-inner { padding:24px; }
+
+        .modal-photo-section { display:flex;gap:22px;margin-bottom:22px; }
+        .modal-photo-frame { flex-shrink:0;position:relative; }
+        .modal-photo { width:120px;height:148px;border-radius:10px;object-fit:cover;object-position:top;border:3px solid var(--border-mid);box-shadow:0 8px 28px rgba(180,30,50,0.18);filter:contrast(1.05) saturate(0.92);cursor:zoom-in;transition:transform 0.2s,box-shadow 0.2s;display:block; }
+        .modal-photo:hover { transform:scale(1.03);box-shadow:0 14px 36px rgba(180,30,50,0.28); }
+        .photo-ruler { position:absolute;right:-20px;top:0;bottom:0;width:16px;display:flex;flex-direction:column;justify-content:space-between;padding:4px 0; }
+        .ruler-mark { display:flex;align-items:center;gap:2px; }
+        .ruler-line { width:8px;height:1px;background:var(--border-mid); }
+        .ruler-num { font-family:'Barlow Condensed',sans-serif;font-size:0.55rem;color:var(--muted);font-weight:600; }
+
+        .modal-basic-info { flex:1; }
+        .modal-name { font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;color:var(--ink);margin-bottom:8px; }
+        .modal-crime-badge { display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:0.92rem;font-weight:700;margin-bottom:14px;border:1.5px solid; }
+        .modal-info-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+        .modal-info-block { background:var(--surface-2);border-radius:10px;padding:12px 14px;border:1px solid var(--border-soft); }
+        .mib-label { font-size:0.67rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-weight:700;margin-bottom:3px; }
+        .mib-value { font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;color:var(--ink); }
+        .modal-details-section { margin-top:18px; }
+        .detail-section-label { font-family:'Rajdhani',sans-serif;font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--crimson);margin-bottom:8px;display:flex;align-items:center;gap:8px; }
+        .detail-section-label::after { content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border-mid),transparent); }
+        .modal-details-text { background:var(--surface-2);border-radius:10px;padding:14px 16px;border:1px solid var(--border-soft);font-size:0.9rem;color:var(--charcoal);line-height:1.65; }
+        .modal-footer-inner { padding:16px 24px 20px;border-top:1px solid var(--border-soft);display:flex;gap:10px;justify-content:flex-end; }
+        .modal-btn-close { padding:10px 22px;background:var(--surface-2);border:1.5px solid var(--border-soft);border-radius:9px;font-family:'Barlow',sans-serif;font-size:0.88rem;font-weight:600;color:var(--charcoal);cursor:pointer;transition:all 0.2s; }
+        .modal-btn-close:hover { background:var(--surface); }
+        .modal-btn-print { padding:10px 22px;background:linear-gradient(135deg,var(--crimson),var(--crimson-d));border:none;border-radius:9px;font-family:'Barlow',sans-serif;font-size:0.88rem;font-weight:600;color:#fff;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:7px;box-shadow:0 4px 14px var(--crimson-glow); }
+        .modal-btn-print:hover { transform:translateY(-1px);box-shadow:0 6px 20px var(--crimson-glow); }
+
+        /* ── FULLSCREEN ── */
+        .img-fs-backdrop { position:fixed;inset:0;background:rgba(5,0,5,0.94);backdrop-filter:blur(10px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out; }
+        .img-fs-backdrop.open { display:flex; }
+        .img-fs-wrap { position:relative;max-width:90vw;max-height:90vh;animation:imgZoomIn 0.32s cubic-bezier(0.22,1,0.36,1) both; }
+        @keyframes imgZoomIn { from{opacity:0;transform:scale(0.84);} to{opacity:1;transform:scale(1);} }
+        .img-fs { max-width:90vw;max-height:82vh;border-radius:14px;object-fit:contain;box-shadow:0 32px 80px rgba(0,0,0,0.7);border:2px solid rgba(180,30,50,0.35);display:block;filter:contrast(1.06) saturate(0.9); }
+        .img-fs-close { position:absolute;top:-16px;right:-16px;width:38px;height:38px;border-radius:50%;background:var(--crimson);border:2px solid white;color:white;font-size:0.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.4);transition:all 0.2s;z-index:10; }
+        .img-fs-close:hover { transform:scale(1.1);background:var(--crimson-d); }
+        .img-fs-name { text-align:center;margin-top:12px;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px; }
+        .img-fs-id { text-align:center;margin-top:4px;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:2px;color:rgba(180,30,50,0.7);text-transform:uppercase; }
+
+        /* ── DELETE CONFIRM ── */
+        .delete-confirm-backdrop { position:fixed;inset:0;background:rgba(10,5,10,0.65);backdrop-filter:blur(5px);z-index:3000;display:none;align-items:center;justify-content:center; }
+        .delete-confirm-backdrop.open { display:flex; }
+        .delete-confirm-box { background:var(--surface);border-radius:16px;padding:32px;max-width:380px;width:90%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.3);animation:modalIn 0.3s ease both;border:1px solid rgba(180,30,50,0.2); }
+        .delete-icon-wrap { width:60px;height:60px;border-radius:50%;background:var(--danger-lt);border:2px solid rgba(180,30,50,0.22);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--crimson);margin:0 auto 16px; }
+        .delete-confirm-box h5 { font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:8px; }
+        .delete-confirm-box p { font-size:0.85rem;color:var(--muted);margin-bottom:22px; }
+        .delete-btn-row { display:flex;gap:10px;justify-content:center; }
+        .btn-cancel-del { padding:10px 24px;background:var(--surface-2);border:1.5px solid var(--border-soft);border-radius:9px;font-size:0.88rem;font-weight:600;color:var(--charcoal);cursor:pointer;transition:all 0.2s; }
+        .btn-confirm-del { padding:10px 24px;background:linear-gradient(135deg,var(--crimson),var(--crimson-d));border:none;border-radius:9px;font-size:0.88rem;font-weight:700;color:white;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px var(--crimson-glow); }
+        .btn-confirm-del:hover { transform:translateY(-1px);box-shadow:0 6px 20px var(--crimson-glow); }
+
+        @media (max-width:768px) {
+            .main-content { padding:20px; }
+            .banner-stats { display:none; }
+            .banner-title { font-size:1.8rem; }
+            #grid-view { grid-template-columns:1fr 1fr; }
+            .toolbar { flex-direction:column;align-items:stretch; }
+            .search-box { min-width:unset; }
+            .photo-ruler { display:none; }
+        }
+        @media (max-width:480px) { #grid-view { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+
+{% include 'police/police_sidebar.html' %}
+
+<main class="main-content">
+
+    <!-- BANNER -->
+    <div class="page-banner">
+        <div class="banner-left-bar"></div>
+        <div class="banner-watermark">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="6"  stroke="white" stroke-width="2"/>
+                <circle cx="50" cy="50" r="13" stroke="white" stroke-width="1.5"/>
+                <circle cx="50" cy="50" r="21" stroke="white" stroke-width="1.5"/>
+                <circle cx="50" cy="50" r="30" stroke="white" stroke-width="1.2"/>
+                <circle cx="50" cy="50" r="40" stroke="white" stroke-width="1.2"/>
+                <path d="M50 10 Q65 30 50 50 Q35 70 50 90" stroke="white" stroke-width="1" fill="none"/>
+                <path d="M50 10 Q70 28 62 50 Q55 72 50 90" stroke="white" stroke-width="0.8" fill="none"/>
+                <path d="M50 10 Q75 26 74 50 Q73 74 50 90" stroke="white" stroke-width="0.6" fill="none"/>
+                <path d="M50 10 Q30 28 38 50 Q45 72 50 90" stroke="white" stroke-width="0.8" fill="none"/>
+                <path d="M50 10 Q25 26 26 50 Q27 74 50 90" stroke="white" stroke-width="0.6" fill="none"/>
+            </svg>
+        </div>
+        <div class="banner-content">
+            <div class="banner-eyebrow">
+                <div class="eline"></div>
+                <span>Criminal Case Management</span>
+            </div>
+            <div class="banner-title">Criminal <span class="accent">Records</span></div>
+            <div class="banner-sub">Active Case Files &nbsp;/&nbsp; All Criminals</div>
+        </div>
+        <div class="banner-stats">
+            <div class="bstat">
+                <span class="bstat-num" id="total-count">{{ person|length }}</span>
+                <span class="bstat-label">Total</span>
+            </div>
+            <div class="bstat">
+                <span class="bstat-num gold" id="male-count">0</span>
+                <span class="bstat-label">Male</span>
+            </div>
+            <div class="bstat">
+                <span class="bstat-num gold" id="female-count">0</span>
+                <span class="bstat-label">Female</span>
+            </div>
+        </div>
+        <div class="banner-shimmer"></div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by name, details…">
+            </div>
+            <button class="filter-pill active" onclick="setFilter(this,'all')">All</button>
+            <button class="filter-pill" onclick="setFilter(this,'male')">Male</button>
+            <button class="filter-pill" onclick="setFilter(this,'female')">Female</button>
+        </div>
+        <div class="toolbar-right">
+            <div class="view-toggle">
+                <button class="view-btn active" id="gridViewBtn" onclick="switchView('grid')" title="Grid"><i class="fas fa-grip"></i></button>
+                <button class="view-btn" id="listViewBtn" onclick="switchView('list')" title="List"><i class="fas fa-list"></i></button>
+            </div>
+            <a href="{% url 'police_addCriminalCase' %}" class="btn-add">
+                <i class="fas fa-plus"></i> Add Criminal
+            </a>
+        </div>
+    </div>
+
+    <div class="result-info">
+        Showing <strong id="visibleCount">{{ person|length }}</strong> of <strong>{{ person|length }}</strong> records
+    </div>
+
+    <!-- GRID VIEW -->
+    <div id="grid-view">
+        {% for p in person %}
+        <div class="criminal-card"
+             data-name="{{ p.name|lower }}"
+             data-gender="{{ p.gender|lower }}"
+             data-age="{{ p.age }}"
+             data-details="{{ p.details|lower }}"
+             data-id="{{ p.id }}"
+             onclick="openDetail({{ p.id }})">
+
+            <div class="card-photo-wrap">
+                {% if p.photo %}
+                <img src="{{ p.photo.url }}" class="card-photo" alt="{{ p.name }}">
+                {% else %}
+                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a22;">
+                    <i class="fas fa-user-secret" style="font-size:2.8rem;color:rgba(180,30,50,0.4);"></i>
+                </div>
+                {% endif %}
+                <div class="card-photo-overlay"></div>
+                <div class="mugshot-lines"></div>
+                <div class="card-case-id">CASE #{{ p.id }}</div>
+                <div class="card-crime-badge badge-other" id="crime-badge-{{ p.id }}">
+                    <i class="fas fa-gavel"></i> Criminal
+                </div>
+                <div class="card-gender-badge gender-{{ p.gender|lower }}">
+                    <i class="fas fa-{% if p.gender|lower == 'male' %}mars{% elif p.gender|lower == 'female' %}venus{% else %}genderless{% endif %}"></i>
+                    {{ p.gender }}
+                </div>
+            </div>
+
+            <div class="card-body-inner">
+                <div class="card-name">{{ p.name }}</div>
+                <div class="card-meta-row">
+                    <span><i class="fas fa-cake-candles"></i> Age {{ p.age }}</span>
+                    <span><i class="fas fa-id-card"></i> #{{ p.id }}</span>
+                </div>
+                <div class="card-details">{{ p.details }}</div>
+                <div class="card-footer-strip">
+                    <button class="btn-view-detail" onclick="event.stopPropagation();openDetail({{ p.id }})">
+                        <i class="fas fa-folder-open"></i> View File
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column:1/-1;">
+            <div class="empty-state">
+                <div class="empty-icon"><i class="fas fa-user-secret"></i></div>
+                <h4>No Criminal Records Found</h4>
+                <p>No criminal case files have been created yet. File your first criminal case to get started.</p>
+                <a href="{% url 'police_addCriminalCase' %}" class="btn-add" style="display:inline-flex;margin-top:4px;">
+                    <i class="fas fa-plus"></i> File First Case
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- LIST VIEW -->
+    <div id="list-view">
+        <div class="list-table-wrap">
+            <table class="list-table">
+                <thead>
+                    <tr>
+                        <th>Photo</th><th>Case ID</th><th>Full Name</th>
+                        <th>Age</th><th>Gender</th><th>Details</th><th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in person %}
+                    <tr class="list-row"
+                        data-name="{{ p.name|lower }}"
+                        data-gender="{{ p.gender|lower }}"
+                        data-age="{{ p.age }}"
+                        data-details="{{ p.details|lower }}"
+                        data-id="{{ p.id }}">
+                        <td>
+                            {% if p.photo %}
+                            <img src="{{ p.photo.url }}" class="table-photo" alt="{{ p.name }}">
+                            {% else %}
+                            <div style="width:46px;height:52px;border-radius:8px;background:#1a1a22;display:flex;align-items:center;justify-content:center;">
+                                <i class="fas fa-user-secret" style="color:rgba(180,30,50,0.5);font-size:1rem;"></i>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td><span class="table-id-badge">#{{ p.id }}</span></td>
+                        <td><div class="table-name">{{ p.name }}</div></td>
+                        <td>{{ p.age }} yrs</td>
+                        <td>
+                            <span class="gender-chip gc-{{ p.gender|lower }}">
+                                <i class="fas fa-{% if p.gender|lower == 'male' %}mars{% elif p.gender|lower == 'female' %}venus{% else %}genderless{% endif %}"></i>
+                                {{ p.gender }}
+                            </span>
+                        </td>
+                        <td><div class="table-details-cell">{{ p.details }}</div></td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn-tbl-view" onclick="openDetail({{ p.id }})"><i class="fas fa-folder-open"></i> View</button>
+                               
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted);">No criminal records found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+
+<!-- DETAIL MODAL -->
+<div class="detail-modal-backdrop" id="detailModalBackdrop" onclick="closeDetail(event)">
+    <div class="detail-modal" onclick="event.stopPropagation()">
+        <div class="modal-top-band"></div>
+        <div class="modal-header-inner">
+            <div class="modal-title-wrap">
+                <h5 id="modal-case-title">Criminal Case File</h5>
+                <small id="modal-case-id">Criminal Record —</small>
+            </div>
+            <button class="modal-close" onclick="closeDetailModal()"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div class="modal-body-inner">
+            <div class="modal-photo-section">
+                <div class="modal-photo-frame">
+                    <img id="modal-photo" class="modal-photo" src="" alt="Suspect Photo"
+                         onclick="openFullscreen()" title="Click to view full image">
+                    <div class="photo-ruler">
+                        <div class="ruler-mark"><div class="ruler-line"></div><span class="ruler-num">6'</span></div>
+                        <div class="ruler-mark"><div class="ruler-line"></div><span class="ruler-num">5'</span></div>
+                        <div class="ruler-mark"><div class="ruler-line"></div><span class="ruler-num">4'</span></div>
+                    </div>
+                </div>
+                <div class="modal-basic-info">
+                    <div class="modal-name" id="modal-name">—</div>
+                    <div class="modal-crime-badge badge-other" id="modal-crime-badge">
+                        <i class="fas fa-gavel"></i>
+                        <span id="modal-crime-type">Criminal Record</span>
+                    </div>
+                    <div class="modal-info-grid">
+                        <div class="modal-info-block"><div class="mib-label">Age</div><div class="mib-value" id="modal-age">—</div></div>
+                        <div class="modal-info-block"><div class="mib-label">Gender</div><div class="mib-value" id="modal-gender">—</div></div>
+                        <div class="modal-info-block"><div class="mib-label">Case ID</div><div class="mib-value" id="modal-id-display">—</div></div>
+                        <div class="modal-info-block"><div class="mib-label">Status</div><div class="mib-value" style="color:var(--crimson);">Active</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-details-section">
+                <div class="detail-section-label">Case Description & Details</div>
+                <div class="modal-details-text" id="modal-details">—</div>
+            </div>
+        </div>
+        <div class="modal-footer-inner">
+            <button class="modal-btn-close" onclick="closeDetailModal()">Close</button>
+            <button class="modal-btn-print" onclick="window.print()"><i class="fas fa-print"></i> Print Record</button>
+        </div>
+    </div>
+</div>
+
+<!-- FULLSCREEN -->
+<div class="img-fs-backdrop" id="imgFsBackdrop" onclick="closeFullscreen()">
+    <div class="img-fs-wrap" onclick="event.stopPropagation()">
+        <button class="img-fs-close" onclick="closeFullscreen()"><i class="fas fa-xmark"></i></button>
+        <img id="imgFs" class="img-fs" src="" alt="Full Image">
+        <div class="img-fs-name" id="imgFsName"></div>
+        <div class="img-fs-id" id="imgFsId"></div>
+    </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+{#<div class="delete-confirm-backdrop" id="deleteConfirmBackdrop">#}
+{#    <div class="delete-confirm-box">#}
+{#        <div class="delete-icon-wrap"><i class="fas fa-triangle-exclamation"></i></div>#}
+{#        <h5>Delete Criminal Record?</h5>#}
+{#        <p id="deleteConfirmText">This action is permanent and cannot be undone.</p>#}
+{#        <div class="delete-btn-row">#}
+{#            <button class="btn-cancel-del" onclick="closeDeleteConfirm()">Cancel</button>#}
+{#            <form id="deleteForm" method="POST" style="display:inline;">#}
+{#                {% csrf_token %}#}
+{#                <button type="submit" class="btn-confirm-del"><i class="fas fa-trash-can"></i> Delete</button>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+
+<script>
+    const caseData = {
+        {% for p in person %}
+        {{ p.id }}: {
+            id: {{ p.id }},
+            name: "{{ p.name|escapejs }}",
+            age: "{{ p.age }}",
+            gender: "{{ p.gender|escapejs }}",
+            details: "{{ p.details|escapejs }}",
+            photo: "{% if p.photo %}{{ p.photo.url }}{% endif %}"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    };
+
+    const crimeTypes = [
+        { keys:['murder','kill','homicide'],           label:'Murder',       icon:'fa-skull',             cls:'badge-murder',  color:'rgba(92,0,16,0.12)',  border:'rgba(92,0,16,0.35)',  text:'#5c0010' },
+        { keys:['rape','sexual','assault','attack'],    label:'Assault',      icon:'fa-hand-fist',         cls:'badge-assault', color:'rgba(106,63,160,0.1)',border:'rgba(106,63,160,0.4)',text:'#5a2d8a' },
+        { keys:['robbery','armed','gun','weapon'],      label:'Robbery',      icon:'fa-gun',               cls:'badge-robbery', color:'rgba(150,79,0,0.10)', border:'rgba(150,79,0,0.38)', text:'#7a4000' },
+        { keys:['theft','steal','stolen','burglary'],   label:'Theft',        icon:'fa-mask',              cls:'badge-theft',   color:'rgba(180,30,50,0.10)',border:'rgba(180,30,50,0.38)',text:'#8c1626' },
+        { keys:['fraud','scam','cheat','forgery'],      label:'Fraud',        icon:'fa-file-circle-xmark', cls:'badge-fraud',   color:'rgba(200,146,42,0.1)',border:'rgba(200,146,42,0.4)',text:'#7a5000' },
+        { keys:['drug','narcotic','substance'],         label:'Drug Offence', icon:'fa-capsules',          cls:'badge-drug',    color:'rgba(26,122,80,0.10)',border:'rgba(26,122,80,0.38)',text:'#0a5a30' },
+        { keys:['cyber','hack','phish','online'],       label:'Cybercrime',   icon:'fa-laptop-code',       cls:'badge-cyber',   color:'rgba(22,49,96,0.10)', border:'rgba(22,49,96,0.38)', text:'#162e60' },
+    ];
+    const defaultCT = { label:'Criminal', icon:'fa-gavel', cls:'badge-other', color:'rgba(60,60,80,0.09)', border:'rgba(60,60,80,0.3)', text:'#3c3c50' };
+
+    function detectCrimeType(details) {
+        const d = details.toLowerCase();
+        for (const ct of crimeTypes) { if (ct.keys.some(k => d.includes(k))) return ct; }
+        return defaultCT;
+    }
+
+    // Apply crime badges to all cards
+    document.querySelectorAll('.criminal-card').forEach(card => {
+        const ct = detectCrimeType(card.dataset.details || '');
+        const badge = document.getElementById('crime-badge-' + card.dataset.id);
+        if (badge) {
+            badge.className = 'card-crime-badge ' + ct.cls;
+            badge.innerHTML = `<i class="fas ${ct.icon}"></i> ${ct.label}`;
+        }
+        card.setAttribute('data-crime', ct.label);
+    });
+
+    function updateStats(cards) {
+        let m = 0, f = 0;
+        cards.forEach(c => { if(c.dataset.gender==='male') m++; if(c.dataset.gender==='female') f++; });
+        document.getElementById('male-count').textContent   = m;
+        document.getElementById('female-count').textContent = f;
+    }
+    updateStats(document.querySelectorAll('.criminal-card'));
+
+    function switchView(v) {
+        const gv = document.getElementById('grid-view');
+        const lv = document.getElementById('list-view');
+        document.getElementById('gridViewBtn').classList.toggle('active', v==='grid');
+        document.getElementById('listViewBtn').classList.toggle('active', v==='list');
+        gv.style.display = v==='grid' ? 'grid' : 'none';
+        lv.style.display = v==='list' ? 'block' : 'none';
+    }
+
+    let currentFilter = 'all';
+    function setFilter(btn, filter) {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = filter;
+        applyFilters();
+    }
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+    function applyFilters() {
+        const q = document.getElementById('searchInput').value.toLowerCase().trim();
+        let visible = 0;
+        document.querySelectorAll('.criminal-card').forEach(card => {
+            const mF = currentFilter==='all' || card.dataset.gender===currentFilter;
+            const mS = !q || card.dataset.name.includes(q) || card.dataset.details.includes(q) || card.dataset.age.includes(q);
+            const show = mF && mS;
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        document.querySelectorAll('.list-row').forEach(row => {
+            const mF = currentFilter==='all' || row.dataset.gender===currentFilter;
+            const mS = !q || row.dataset.name.includes(q) || row.dataset.details.includes(q) || row.dataset.age.includes(q);
+            row.style.display = mF && mS ? '' : 'none';
+        });
+        document.getElementById('visibleCount').textContent = visible;
+        updateStats(Array.from(document.querySelectorAll('.criminal-card')).filter(c => c.style.display!=='none'));
+    }
+
+    function openDetail(id) {
+        const d = caseData[id];
+        if (!d) return;
+        const ct = detectCrimeType(d.details);
+        document.getElementById('modal-case-title').textContent = d.name + ' — Case File';
+        document.getElementById('modal-case-id').textContent    = 'Criminal Record  #' + d.id;
+        document.getElementById('modal-name').textContent       = d.name;
+        document.getElementById('modal-age').textContent        = d.age + ' years';
+        document.getElementById('modal-gender').textContent     = d.gender;
+        document.getElementById('modal-id-display').textContent = '#' + d.id;
+        document.getElementById('modal-details').textContent    = d.details;
+        document.getElementById('modal-crime-type').textContent = ct.label;
+        const badge = document.getElementById('modal-crime-badge');
+        badge.className = 'modal-crime-badge';
+        badge.style.background   = ct.color;
+        badge.style.borderColor  = ct.border;
+        badge.style.color        = ct.text;
+        badge.innerHTML = `<i class="fas ${ct.icon}"></i> <span>${ct.label}</span>`;
+        const photoEl = document.getElementById('modal-photo');
+        if (d.photo) { photoEl.src = d.photo; photoEl.style.display = 'block'; }
+        else           { photoEl.style.display = 'none'; }
+        document.getElementById('detailModalBackdrop').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeDetail(e) { if(e.target===document.getElementById('detailModalBackdrop')) closeDetailModal(); }
+    function closeDetailModal() { document.getElementById('detailModalBackdrop').classList.remove('open'); document.body.style.overflow=''; }
+
+    function openFullscreen() {
+        const src  = document.getElementById('modal-photo').src;
+        const name = document.getElementById('modal-name').textContent;
+        const id   = document.getElementById('modal-id-display').textContent;
+        document.getElementById('imgFs').src           = src;
+        document.getElementById('imgFsName').textContent = name;
+        document.getElementById('imgFsId').textContent   = 'CRIMINAL RECORD ' + id;
+        document.getElementById('imgFsBackdrop').classList.add('open');
+    }
+    function closeFullscreen() { document.getElementById('imgFsBackdrop').classList.remove('open'); }
+
+    function confirmDelete(id, name) {
+        document.getElementById('deleteConfirmText').textContent = `You are about to permanently delete the criminal record for "${name}". This cannot be undone.`;
+        document.getElementById('deleteForm').action = `/delete-criminal/${id}/`;
+        document.getElementById('deleteConfirmBackdrop').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeDeleteConfirm() { document.getElementById('deleteConfirmBackdrop').classList.remove('open'); document.body.style.overflow=''; }
+
+    document.addEventListener('keydown', e => {
+        if (e.key==='Escape') { closeDetailModal(); closeDeleteConfirm(); closeFullscreen(); }
+    });
+</script>
+
+</body>
+</html>

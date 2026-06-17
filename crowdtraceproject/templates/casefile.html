@@ -1,0 +1,277 @@
+{% include 'admin_sidebar.html' %}
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+
+            <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">
+              <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">
+{#                <b class="logo-icon">#}
+{#                  <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->#}
+{#                  <!-- Dark Logo icon -->#}
+{#                  <img src="../static/admin/assets/images/logos/logo-light-icon.svg" alt="homepage" class="dark-logo" />#}
+{#                </b>#}
+{#                <!--End Logo icon -->#}
+                <!-- Logo text -->
+                <span class="logo-text">
+                  <!-- dark Logo text -->
+                  <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />
+                </span>
+              </a>
+            </div>
+
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler " id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link " href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">
+                <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">
+                <div class="message-body">
+                  <a href="javascript:void(0)" class="dropdown-item">
+                    Item 1
+                  </a>
+                  <a href="javascript:void(0)" class="dropdown-item">
+                    Item 2
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <a href="{% url 'casefile' %}" class="btn btn-success">UPLOAD CASE FILE</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="../static/admin/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-mail fs-6"></i>
+                      <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+{#        html page#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing Person Case File Upload</title>
+    <!-- Load Tailwind CSS via CDN for rapid styling and responsiveness -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font import for a professional look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        :root {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-0 sm:p-8">
+
+    <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-2xl p-6 md:p-10">
+<br><br>
+<br>
+        <br>
+<br><br>
+        <!-- Header Section -->
+       <center> <header class="mb-8 border-b pb-4">
+            <h1 class="text-3xl font-extrabold text-indigo-700 tracking-tight">
+                New Missing Person Case File
+            </h1>
+            <p class="mt-2 text-gray-500">
+                Please enter all details accurately and attach relevant media files for the official record.
+            </p>
+        </header></center>
+
+        <!-- Main Form -->
+        <!-- Note: action attribute is placeholder. This must point to your server endpoint -->
+        <form id="caseFileUploadForm" action="/api/upload-case" method="POST" enctype="multipart/form-data">
+
+            <!-- 1. PERSONAL DETAILS SECTION (Two-Column Layout) -->
+            <section class="mb-8 p-6 bg-indigo-50 rounded-lg border-l-4 border-indigo-600">
+                <h3 class="text-xl font-semibold mb-4 text-indigo-800">1. Personal Information</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Case ID (Read-only/Internal Ref) -->
+                    <div>
+                        <label for="case_id" class="block text-sm font-medium text-gray-700">Case ID / FIR No.</label>
+                        <input type="text" id="case_id" name="case_id" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                               placeholder="e.g., FIR/001/2025/XYZ">
+                    </div>
+
+                    <!-- Full Name -->
+                    <div>
+                        <label for="full_name" class="block text-sm font-medium text-gray-700">Full Name of Missing Person</label>
+                        <input type="text" id="full_name" name="full_name" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+
+                    <!-- Age -->
+                    <div>
+                        <label for="age" class="block text-sm font-medium text-gray-700">Age (Approx.)</label>
+                        <input type="number" id="age" name="age" min="0" max="120" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+
+                    <!-- Gender -->
+                    <div>
+                        <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                        <select id="gender" name="gender" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border bg-white focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Height -->
+                    <div>
+                        <label for="height" class="block text-sm font-medium text-gray-700">Height (e.g., 5 ft 10 in)</label>
+                        <input type="text" id="height" name="height"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+
+                    <!-- Distinctive Marks -->
+                    <div>
+                        <label for="marks" class="block text-sm font-medium text-gray-700">Distinctive Marks / Tattoos</label>
+                        <input type="text" id="marks" name="marks"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                               placeholder="Scar on left cheek, etc.">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. CIRCUMSTANCE & CONTACT SECTION (Full-Width Fields) -->
+            <section class="mb-8 p-6 bg-yellow-50 rounded-lg border-l-4 border-yellow-600">
+                <h3 class="text-xl font-semibold mb-4 text-yellow-800">2. Circumstances & Contact</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Date Missing -->
+                    <div>
+                        <label for="date_missing" class="block text-sm font-medium text-gray-700">Date Missing</label>
+                        <input type="date" id="date_missing" name="date_missing" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                    </div>
+
+                    <!-- Last Seen Location -->
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-gray-700">Last Seen Location</label>
+                        <input type="text" id="location" name="location" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                               placeholder="Street address, City, State/Province">
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <label for="details" class="block text-sm font-medium text-gray-700">Circumstantial Details of Disappearance</label>
+                    <textarea id="details" name="details" rows="4" required
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                              placeholder="Describe the circumstances, last clothing worn, or any relevant factors."></textarea>
+                </div>
+
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Reporting Person Contact -->
+                    <div>
+                        <label for="contact_name" class="block text-sm font-medium text-gray-700">Reporting Person Name</label>
+                        <input type="text" id="contact_name" name="contact_name" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
+                    </div>
+
+                    <!-- Contact Number -->
+                    <div>
+                        <label for="contact_phone" class="block text-sm font-medium text-gray-700">Reporting Contact Number</label>
+                        <input type="tel" id="contact_phone" name="contact_phone" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                               placeholder="(+XX) XXXXXXXXXX">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. MEDIA UPLOAD SECTION -->
+            <section class="mb-8 p-6 bg-green-50 rounded-lg border-l-4 border-green-600">
+                <h3 class="text-xl font-semibold mb-4 text-green-800">3. Media Evidence</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Photos Upload -->
+                    <div>
+                        <label for="photos" class="block text-sm font-medium text-gray-700 mb-2">
+                            <span class="font-bold">Photos</span> (Current, recent images)
+                        </label>
+                        <input type="file" id="photo" name="photo" accept="image/*"
+                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-100 file:text-green-700 hover:file:bg-green-200">
+                        <p class="mt-1 text-xs text-gray-500">Maximum 5 images, JPG/PNG format.</p>
+                    </div>
+
+                    <!-- Videos Upload -->
+                    <div>
+                        <label for="videos" class="block text-sm font-medium text-gray-700 mb-2">
+                            <span class="font-bold">Videos</span> (CCTV footage, last moments)
+                        </label>
+                        <input type="file" id="videos" name="videos[]" multiple accept="video/*"
+                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-100 file:text-green-700 hover:file:bg-green-200">
+                        <p class="mt-1 text-xs text-gray-500">Maximum 2 videos, MP4 format recommended.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Submit Button -->
+            <div class="pt-6 border-t mt-8">
+                <button type="submit"
+                        class="w-full py-3 px-4 bg-red-600 hover:bg-red-700 rounded-lg text-white font-semibold shadow-lg transition duration-150 ease-in-out focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Create Case File & Notify
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+<div>
+  <script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/admin/assets/js/sidebarmenu.js"></script>
+  <script src="../static/admin/assets/js/app.min.js"></script>
+  <script src="../static/admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../static/admin/assets/js/dashboard.js"></script>
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</div>
+{##}
+</html>

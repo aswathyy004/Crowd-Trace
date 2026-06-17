@@ -1,0 +1,2455 @@
+{##}
+{##}
+{#{% include 'admin_sidebar.html' %}#}
+{##}
+{#<!-- Main wrapper -->#}
+{#<div class="body-wrapper">#}
+{##}
+{#  <!-- Header Start -->#}
+{#  <header class="app-header">#}
+{#    <nav class="navbar navbar-expand-lg navbar-light">#}
+{#      <ul class="navbar-nav">#}
+{#        <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">#}
+{#          <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">#}
+{#            <span class="logo-text">#}
+{#              <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />#}
+{#            </span>#}
+{#          </a>#}
+{#        </div>#}
+{#        <li class="nav-item d-block d-xl-none">#}
+{#          <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">#}
+{#            <i class="ti ti-menu-2"></i>#}
+{#          </a>#}
+{#        </li>#}
+{#        <li class="nav-item dropdown">#}
+{#          <a class="nav-link" href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#            <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>#}
+{#            <div class="notification bg-primary rounded-circle"></div>#}
+{#          </a>#}
+{#          <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">#}
+{#            <div class="message-body">#}
+{#              <a href="javascript:void(0)" class="dropdown-item">Item 1</a>#}
+{#              <a href="javascript:void(0)" class="dropdown-item">Item 2</a>#}
+{#            </div>#}
+{#          </div>#}
+{#        </li>#}
+{#      </ul>#}
+{#      <div class="navbar-collapse justify-content-end px-0" id="navbarNav">#}
+{#        <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">#}
+{#          <a href="{% url 'casefile' %}" class="btn btn-success">UPLOAD CASE FILE</a>#}
+{#          <li class="nav-item dropdown">#}
+{#            <a class="nav-link" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#              <img src="../static/admin/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">#}
+{#            </a>#}
+{#            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">#}
+{#              <div class="message-body">#}
+{#                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                  <i class="ti ti-user fs-6"></i>#}
+{#                  <p class="mb-0 fs-3">My Profile</p>#}
+{#                </a>#}
+{#                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                  <i class="ti ti-mail fs-6"></i>#}
+{#                  <p class="mb-0 fs-3">My Account</p>#}
+{#                </a>#}
+{#                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                  <i class="ti ti-list-check fs-6"></i>#}
+{#                  <p class="mb-0 fs-3">My Task</p>#}
+{#                </a>#}
+{#                <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>#}
+{#              </div>#}
+{#            </div>#}
+{#          </li>#}
+{#        </ul>#}
+{#      </div>#}
+{#    </nav>#}
+{#  </header>#}
+{#  <!-- Header End -->#}
+{##}
+{#  <div class="body-wrapper-inner">#}
+{#    <div class="container-fluid">#}
+{##}
+{#      <!-- ══ PAGE HEADER ══ -->#}
+{#      <div class="pc-page-header mb-4">#}
+{#        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">#}
+{#          <div>#}
+{#            <h2 class="pc-main-title">#}
+{#              <span class="title-dot-missing" id="activeDot"></span>#}
+{#              <span id="pageTitle">Case Records</span>#}
+{#            </h2>#}
+{#            <p class="pc-subtitle" id="pageSubtitle">Active cases requiring public assistance</p>#}
+{#          </div>#}
+{#          <div class="d-flex align-items-center gap-3 flex-wrap">#}
+{#            <!-- Search -->#}
+{#            <div class="search-box">#}
+{#              <iconify-icon icon="solar:magnifer-linear" class="search-icon"></iconify-icon>#}
+{#              <input type="text" id="searchInput" placeholder="Search by name, details..." class="search-input" />#}
+{#            </div>#}
+{#            <!-- Count badge -->#}
+{#            <div class="count-badge" id="countBadge">#}
+{#              <span id="caseCount">{{ missing_persons|length }}</span> Active Cases#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <!-- ══ TABS ══ -->#}
+{#        <div class="pc-tabs mt-4">#}
+{#          <button class="pc-tab active" id="tabMissing" onclick="switchTab('missing')">#}
+{#            <iconify-icon icon="solar:user-circle-linear"></iconify-icon>#}
+{#            Missing Persons#}
+{#            <span class="tab-count">{{ missing_persons|length }}</span>#}
+{#          </button>#}
+{#          <button class="pc-tab" id="tabCriminal" onclick="switchTab('criminal')">#}
+{#            <iconify-icon icon="solar:danger-triangle-linear"></iconify-icon>#}
+{#            Criminal Records#}
+{#            <span class="tab-count criminal-count">{{ criminals|length }}</span>#}
+{#          </button>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <!-- ══ MISSING PERSONS GRID ══ -->#}
+{#      <div id="missingSection">#}
+{#        <div class="row g-4" id="missingContainer">#}
+{#          {% for person in missing_persons %}#}
+{#          <div class="col-xl-4 col-lg-6 col-md-6 card-col"#}
+{#               data-section="missing"#}
+{#               data-name="{{ person.name|lower }}"#}
+{#               data-details="{{ person.details|lower }}">#}
+{#            <div class="pc-card">#}
+{#              <div class="card-accent-bar missing-bar"></div>#}
+{#              <div class="card-banner missing-banner">#}
+{#                <div class="banner-overlay"></div>#}
+{#                <div class="record-badge missing-badge-color">#}
+{#                  <span class="pulse-dot"></span> MISSING#}
+{#                </div>#}
+{#                <div class="case-id-tag">#{{ person.id }}</div>#}
+{#              </div>#}
+{#              <div class="card-photo-wrap">#}
+{#                {% if person.photo %}#}
+{#                <img src="{{ person.photo.url }}" alt="{{ person.name }}" class="card-photo" />#}
+{#                {% else %}#}
+{#                <div class="card-photo-placeholder">#}
+{#                  <iconify-icon icon="solar:user-bold" style="font-size:2.5rem;color:#a0aec0;"></iconify-icon>#}
+{#                </div>#}
+{#                {% endif %}#}
+{#                <div class="gender-tag {{ person.gender|lower }}">#}
+{#                  {% if person.gender|lower == 'male' %}#}
+{#                    <iconify-icon icon="solar:men-bold"></iconify-icon>#}
+{#                  {% else %}#}
+{#                    <iconify-icon icon="solar:women-bold"></iconify-icon>#}
+{#                  {% endif %}#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="card-content">#}
+{#                <h3 class="person-name">{{ person.name }}</h3>#}
+{#                <p class="person-details-preview">{{ person.details|truncatechars:80 }}</p>#}
+{#                <div class="stats-row-card">#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:user-id-linear" class="stat-icon"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.age }} yrs</span>#}
+{#                      <span class="stat-label">Age</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="stat-divider"></div>#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:men-bold" class="stat-icon {% if person.gender|lower == 'female' %}d-none{% endif %}"></iconify-icon>#}
+{#                    <iconify-icon icon="solar:women-bold" class="stat-icon {% if person.gender|lower == 'male' %}d-none{% endif %}"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.gender }}</span>#}
+{#                      <span class="stat-label">Gender</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="stat-divider"></div>#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:hashtag-circle-linear" class="stat-icon"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.id }}</span>#}
+{#                      <span class="stat-label">Case ID</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#                <a href="javascript:void(0)" class="view-btn missing-btn"#}
+{#                   onclick="openModal('missing', {{ person.id }}, '{{ person.name }}', '{{ person.age }}', '{{ person.gender }}', '{{ person.details|escapejs }}', '{% if person.photo %}{{ person.photo.url }}{% endif %}')">#}
+{#                  <iconify-icon icon="solar:eye-linear"></iconify-icon>#}
+{#                  View Full Details#}
+{#                </a>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          {% empty %}#}
+{#          <div class="col-12">#}
+{#            <div class="empty-state">#}
+{#              <iconify-icon icon="solar:ghost-linear" style="font-size:4rem;color:#4a5568;"></iconify-icon>#}
+{#              <h4>No Missing Persons Records Found</h4>#}
+{#              <p>All records will appear here once added by officers.</p>#}
+{#            </div>#}
+{#          </div>#}
+{#          {% endfor %}#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <!-- ══ CRIMINAL RECORDS GRID ══ -->#}
+{#      <div id="criminalSection" style="display:none;">#}
+{#        <div class="row g-4" id="criminalContainer">#}
+{#          {% for person in criminals %}#}
+{#          <div class="col-xl-4 col-lg-6 col-md-6 card-col"#}
+{#               data-section="criminal"#}
+{#               data-name="{{ person.name|lower }}"#}
+{#               data-details="{{ person.details|lower }}">#}
+{#            <div class="pc-card">#}
+{#              <div class="card-accent-bar criminal-bar"></div>#}
+{#              <div class="card-banner criminal-banner">#}
+{#                <div class="banner-overlay"></div>#}
+{#                <div class="record-badge criminal-badge-color">#}
+{#                  <span class="pulse-dot criminal-dot"></span> CRIMINAL#}
+{#                </div>#}
+{#                <div class="case-id-tag">#{{ person.id }}</div>#}
+{#              </div>#}
+{#              <div class="card-photo-wrap">#}
+{#                {% if person.photo %}#}
+{#                <img src="{{ person.photo.url }}" alt="{{ person.name }}" class="card-photo" />#}
+{#                {% else %}#}
+{#                <div class="card-photo-placeholder criminal-placeholder">#}
+{#                  <iconify-icon icon="solar:user-bold" style="font-size:2.5rem;color:#a0aec0;"></iconify-icon>#}
+{#                </div>#}
+{#                {% endif %}#}
+{#                <div class="gender-tag {{ person.gender|lower }}">#}
+{#                  {% if person.gender|lower == 'male' %}#}
+{#                    <iconify-icon icon="solar:men-bold"></iconify-icon>#}
+{#                  {% else %}#}
+{#                    <iconify-icon icon="solar:women-bold"></iconify-icon>#}
+{#                  {% endif %}#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="card-content">#}
+{#                <h3 class="person-name">{{ person.name }}</h3>#}
+{#                <p class="person-details-preview">{{ person.details|truncatechars:80 }}</p>#}
+{#                <div class="stats-row-card">#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:user-id-linear" class="stat-icon criminal-icon"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.age }} yrs</span>#}
+{#                      <span class="stat-label">Age</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="stat-divider"></div>#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:men-bold" class="stat-icon criminal-icon {% if person.gender|lower == 'female' %}d-none{% endif %}"></iconify-icon>#}
+{#                    <iconify-icon icon="solar:women-bold" class="stat-icon criminal-icon {% if person.gender|lower == 'male' %}d-none{% endif %}"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.gender }}</span>#}
+{#                      <span class="stat-label">Gender</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="stat-divider"></div>#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:hashtag-circle-linear" class="stat-icon criminal-icon"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.id }}</span>#}
+{#                      <span class="stat-label">Case ID</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#                <a href="javascript:void(0)" class="view-btn criminal-btn"#}
+{#                   onclick="openModal('criminal', {{ person.id }}, '{{ person.name }}', '{{ person.age }}', '{{ person.gender }}', '{{ person.details|escapejs }}', '{% if person.photo %}{{ person.photo.url }}{% endif %}')">#}
+{#                  <iconify-icon icon="solar:eye-linear"></iconify-icon>#}
+{#                  View Full Details#}
+{#                </a>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          {% empty %}#}
+{#          <div class="col-12">#}
+{#            <div class="empty-state">#}
+{#              <iconify-icon icon="solar:ghost-linear" style="font-size:4rem;color:#4a5568;"></iconify-icon>#}
+{#              <h4>No Criminal Records Found</h4>#}
+{#              <p>All records will appear here once added by officers.</p>#}
+{#            </div>#}
+{#          </div>#}
+{#          {% endfor %}#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{##}
+{#<!-- ══ DETAIL MODAL ══ -->#}
+{#<div class="modal fade" id="personModal" tabindex="-1" aria-hidden="true">#}
+{#  <div class="modal-dialog modal-dialog-centered modal-lg">#}
+{#    <div class="modal-content pc-modal">#}
+{#      <div class="modal-header pc-modal-header" id="modalHeader">#}
+{#        <div class="modal-badge" id="modalBadge">#}
+{#          <span class="pulse-dot"></span> MISSING PERSON#}
+{#        </div>#}
+{#        <button type="button" class="modal-close-btn" data-bs-dismiss="modal">#}
+{#          <iconify-icon icon="solar:close-circle-linear"></iconify-icon>#}
+{#        </button>#}
+{#      </div>#}
+{#      <div class="modal-body p-0">#}
+{#        <div class="modal-profile-section">#}
+{#          <div class="modal-photo-wrap">#}
+{#            <img id="modalPhoto" src="" alt="" class="modal-photo" />#}
+{#            <div id="modalPhotoPlaceholder" class="modal-photo-placeholder d-none">#}
+{#              <iconify-icon icon="solar:user-bold" style="font-size:3rem;color:#a0aec0;"></iconify-icon>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="modal-info">#}
+{#            <h2 id="modalName" class="modal-name"></h2>#}
+{#            <div class="modal-stats-grid">#}
+{#              <div class="modal-stat">#}
+{#                <span class="modal-stat-label">Age</span>#}
+{#                <span id="modalAge" class="modal-stat-value"></span>#}
+{#              </div>#}
+{#              <div class="modal-stat">#}
+{#                <span class="modal-stat-label">Gender</span>#}
+{#                <span id="modalGender" class="modal-stat-value"></span>#}
+{#              </div>#}
+{#              <div class="modal-stat">#}
+{#                <span class="modal-stat-label">Case ID</span>#}
+{#                <span id="modalCaseId" class="modal-stat-value"></span>#}
+{#              </div>#}
+{#              <div class="modal-stat" id="modalTypeStat">#}
+{#                <span class="modal-stat-label">Record Type</span>#}
+{#                <span id="modalType" class="modal-stat-value"></span>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="modal-details-section">#}
+{#          <h5 class="modal-section-title">#}
+{#            <iconify-icon icon="solar:document-text-linear"></iconify-icon>#}
+{#            Case Details#}
+{#          </h5>#}
+{#          <p id="modalDetails" class="modal-details-text"></p>#}
+{#        </div>#}
+{#        <div class="modal-alert-section" id="modalAlert">#}
+{#          <iconify-icon icon="solar:info-circle-linear"></iconify-icon>#}
+{#          If you have any information about this person, please contact your nearest police station immediately.#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{##}
+{#<style>#}
+{#  /* ══════════════════════════════════════════════════#}
+{#     PAGE HEADER#}
+{#  ══════════════════════════════════════════════════ */#}
+{#  .pc-page-header { padding: 8px 0 4px; }#}
+{##}
+{#  .pc-main-title {#}
+{#    font-size: 1.7rem; font-weight: 700; color: #2d3748;#}
+{#    letter-spacing: -.3px;#}
+{#    display: flex; align-items: center; gap: 10px;#}
+{#    margin-bottom: 4px;#}
+{#  }#}
+{##}
+{#  .title-dot-missing {#}
+{#    width: 12px; height: 12px; border-radius: 50%;#}
+{#    background: #f56565;#}
+{#    animation: pulse-dot 1.5s infinite;#}
+{#    flex-shrink: 0;#}
+{#    transition: background .3s;#}
+{#  }#}
+{#  .title-dot-missing.criminal-mode { background: #e53e3e; }#}
+{##}
+{#  .pc-subtitle { color: #718096; font-size: .875rem; margin: 0; padding-left: 22px; }#}
+{##}
+{#  /* Search */#}
+{#  .search-box { position: relative; display: flex; align-items: center; }#}
+{#  .search-icon { position: absolute; left: 12px; color: #a0aec0; font-size: 1rem; pointer-events: none; }#}
+{#  .search-input {#}
+{#    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 10px;#}
+{#    padding: 9px 16px 9px 36px; font-size: .85rem; color: #2d3748;#}
+{#    width: 260px; outline: none;#}
+{#    transition: border-color .2s, box-shadow .2s;#}
+{#  }#}
+{#  .search-input:focus { border-color: #5a6fd6; box-shadow: 0 0 0 3px rgba(90,111,214,.12); }#}
+{#  .search-input::placeholder { color: #a0aec0; }#}
+{##}
+{#  /* Count badge */#}
+{#  .count-badge {#}
+{#    background: linear-gradient(135deg, #5a6fd6, #4a5aaa);#}
+{#    color: #fff; padding: 8px 16px; border-radius: 10px;#}
+{#    font-size: .82rem; font-weight: 600; white-space: nowrap;#}
+{#    transition: background .3s;#}
+{#  }#}
+{#  .count-badge.criminal-mode { background: linear-gradient(135deg, #c53030, #9b2335); }#}
+{#  .count-badge span { font-size: 1.1rem; font-weight: 800; margin-right: 4px; }#}
+{##}
+{#  /* ══ TABS ══ */#}
+{#  .pc-tabs {#}
+{#    display: flex; gap: .75rem;#}
+{#    border-bottom: 2px solid #e2e8f0;#}
+{#    padding-bottom: 0;#}
+{#  }#}
+{#  .pc-tab {#}
+{#    display: flex; align-items: center; gap: 7px;#}
+{#    padding: 10px 20px; border: none; background: transparent;#}
+{#    font-size: .88rem; font-weight: 600; color: #718096;#}
+{#    border-bottom: 3px solid transparent;#}
+{#    margin-bottom: -2px; cursor: pointer;#}
+{#    border-radius: 8px 8px 0 0;#}
+{#    transition: all .2s;#}
+{#  }#}
+{#  .pc-tab:hover { color: #4a5568; background: #f7fafc; }#}
+{#  .pc-tab.active {#}
+{#    color: #5a6fd6; border-bottom-color: #5a6fd6;#}
+{#    background: #f0f4ff;#}
+{#  }#}
+{#  .pc-tab.active.criminal-active {#}
+{#    color: #c53030; border-bottom-color: #c53030;#}
+{#    background: #fff5f5;#}
+{#  }#}
+{#  .tab-count {#}
+{#    background: #e2e8f0; color: #4a5568;#}
+{#    font-size: .72rem; font-weight: 800;#}
+{#    padding: 2px 8px; border-radius: 20px;#}
+{#    transition: background .2s, color .2s;#}
+{#  }#}
+{#  .pc-tab.active .tab-count { background: #5a6fd6; color: #fff; }#}
+{#  .pc-tab.active.criminal-active .tab-count { background: #c53030; color: #fff; }#}
+{#  .criminal-count { }#}
+{##}
+{#  /* ══ CARD ══ */#}
+{#  .pc-card {#}
+{#    background: #fff; border-radius: 16px; overflow: hidden;#}
+{#    box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.05);#}
+{#    border: 1px solid #f0f0f0; position: relative;#}
+{#    transition: transform .25s, box-shadow .25s;#}
+{#  }#}
+{#  .pc-card:hover {#}
+{#    transform: translateY(-5px);#}
+{#    box-shadow: 0 12px 32px rgba(90,111,214,.15), 0 4px 12px rgba(0,0,0,.08);#}
+{#  }#}
+{##}
+{#  /* accent bars */#}
+{#  .card-accent-bar { height: 4px; }#}
+{#  .missing-bar { background: linear-gradient(90deg, #f56565, #ed8936, #5a6fd6); }#}
+{#  .criminal-bar { background: linear-gradient(90deg, #c53030, #e53e3e, #fc8181); }#}
+{##}
+{#  /* banners */#}
+{#  .card-banner {#}
+{#    height: 90px; position: relative;#}
+{#    display: flex; align-items: flex-start;#}
+{#    justify-content: space-between; padding: 10px 14px;#}
+{#  }#}
+{#  .missing-banner { background: linear-gradient(135deg, #2c3a8a 0%, #325c8a 50%, #33a8d6 100%); }#}
+{#  .criminal-banner { background: linear-gradient(135deg, #742a2a 0%, #9b2335 50%, #c53030 100%); }#}
+{##}
+{#  .banner-overlay {#}
+{#    position: absolute; inset: 0; pointer-events: none;#}
+{#    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#  }#}
+{##}
+{#  /* badges */#}
+{#  .record-badge {#}
+{#    font-size: .68rem; font-weight: 700; letter-spacing: 1.5px;#}
+{#    padding: 4px 10px; border-radius: 20px;#}
+{#    display: flex; align-items: center; gap: 5px;#}
+{#    position: relative; z-index: 1; color: #fff;#}
+{#  }#}
+{#  .missing-badge-color { background: rgba(245,101,101,.9); }#}
+{#  .criminal-badge-color { background: rgba(197,48,48,.85); }#}
+{##}
+{#  .pulse-dot {#}
+{#    width: 7px; height: 7px; border-radius: 50%; background: #fff;#}
+{#    animation: pulse-dot 1.5s infinite;#}
+{#    display: inline-block; flex-shrink: 0;#}
+{#  }#}
+{#  .criminal-dot { background: #fbd38d; }#}
+{##}
+{#  @keyframes pulse-dot {#}
+{#    0%,100% { opacity:1; transform:scale(1); }#}
+{#    50%      { opacity:.4; transform:scale(.7); }#}
+{#  }#}
+{##}
+{#  .case-id-tag {#}
+{#    background: rgba(255,255,255,.15); color: rgba(255,255,255,.9);#}
+{#    font-size: .72rem; font-weight: 600; padding: 4px 10px;#}
+{#    border-radius: 20px; border: 1px solid rgba(255,255,255,.2);#}
+{#    position: relative; z-index: 1;#}
+{#  }#}
+{##}
+{#  /* Photo */#}
+{#  .card-photo-wrap {#}
+{#    position: relative; display: flex; justify-content: center;#}
+{#    margin-top: -44px; z-index: 2;#}
+{#  }#}
+{#  .card-photo {#}
+{#    width: 90px; height: 90px; border-radius: 50%;#}
+{#    object-fit: cover; border: 4px solid #fff;#}
+{#    box-shadow: 0 4px 14px rgba(0,0,0,.18);#}
+{#  }#}
+{#  .card-photo-placeholder {#}
+{#    width: 90px; height: 90px; border-radius: 50%;#}
+{#    background: #edf2f7; border: 4px solid #fff;#}
+{#    box-shadow: 0 4px 14px rgba(0,0,0,.12);#}
+{#    display: flex; align-items: center; justify-content: center;#}
+{#  }#}
+{#  .criminal-placeholder { background: #fff5f5; }#}
+{##}
+{#  .gender-tag {#}
+{#    position: absolute; bottom: 2px; right: calc(50% - 52px);#}
+{#    width: 24px; height: 24px; border-radius: 50%;#}
+{#    display: flex; align-items: center; justify-content: center;#}
+{#    font-size: .75rem; border: 2px solid #fff;#}
+{#  }#}
+{#  .gender-tag.male  { background: #4299e1; color: #fff; }#}
+{#  .gender-tag.female { background: #ed64a6; color: #fff; }#}
+{##}
+{#  /* Card Content */#}
+{#  .card-content { padding: 14px 20px 20px; text-align: center; }#}
+{#  .person-name { font-size: 1.15rem; font-weight: 700; color: #2d3748; margin-bottom: 6px; letter-spacing: -.2px; }#}
+{#  .person-details-preview { font-size: .8rem; color: #718096; line-height: 1.5; margin-bottom: 16px; min-height: 36px; }#}
+{##}
+{#  /* Stats row inside card */#}
+{#  .stats-row-card {#}
+{#    display: flex; align-items: center; justify-content: center;#}
+{#    background: #f7fafc; border-radius: 12px;#}
+{#    padding: 12px 8px; margin-bottom: 16px;#}
+{#  }#}
+{#  .stat-item { display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; }#}
+{#  .stat-icon { font-size: 1.1rem; color: #59bfff; }#}
+{#  .criminal-icon { color: #fc8181; }#}
+{#  .stat-item div { display: flex; flex-direction: column; text-align: left; }#}
+{#  .stat-value { font-size: .82rem; font-weight: 700; color: #2d3748; line-height: 1.2; }#}
+{#  .stat-label { font-size: .68rem; color: #a0aec0; text-transform: uppercase; letter-spacing: .5px; line-height: 1; }#}
+{#  .stat-divider { width: 1px; height: 32px; background: #e2e8f0; flex-shrink: 0; }#}
+{##}
+{#  /* Buttons */#}
+{#  .view-btn {#}
+{#    display: flex; align-items: center; justify-content: center; gap: 8px;#}
+{#    color: #fff; padding: 10px 20px; border-radius: 10px;#}
+{#    font-size: .82rem; font-weight: 600; letter-spacing: .3px;#}
+{#    text-decoration: none; cursor: pointer;#}
+{#    transition: all .2s;#}
+{#  }#}
+{#  .missing-btn { background: linear-gradient(135deg, #33a8d6, #4a5aaa); }#}
+{#  .missing-btn:hover { background: linear-gradient(135deg, #59bfff, #3a4a8a); color:#fff; transform:translateY(-1px); box-shadow:0 4px 14px rgba(90,111,214,.35); }#}
+{#  .criminal-btn { background: linear-gradient(135deg, #c53030, #9b2335); }#}
+{#  .criminal-btn:hover { background: linear-gradient(135deg, #e53e3e, #742a2a); color:#fff; transform:translateY(-1px); box-shadow:0 4px 14px rgba(197,48,48,.35); }#}
+{##}
+{#  /* Empty state */#}
+{#  .empty-state { text-align: center; padding: 60px 20px; color: #718096; }#}
+{#  .empty-state h4 { margin-top: 16px; color: #4a5568; font-weight: 600; }#}
+{##}
+{#  /* ══ MODAL ══ */#}
+{#  .pc-modal { border-radius: 16px; overflow: hidden; border: none; box-shadow: 0 20px 60px rgba(0,0,0,.2); }#}
+{##}
+{#  .pc-modal-header {#}
+{#    padding: 16px 20px;#}
+{#    display: flex; align-items: center; justify-content: space-between;#}
+{#    border: none; transition: background .3s;#}
+{#  }#}
+{#  .pc-modal-header.missing-header { background: linear-gradient(135deg, #59bfff, #5a6fd6); }#}
+{#  .pc-modal-header.criminal-header { background: linear-gradient(135deg, #e53e3e, #9b2335); }#}
+{##}
+{#  .modal-badge { color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: 1.5px; display: flex; align-items: center; gap: 6px; }#}
+{#  .modal-close-btn {#}
+{#    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2);#}
+{#    color: #fff; width: 32px; height: 32px; border-radius: 8px;#}
+{#    display: flex; align-items: center; justify-content: center;#}
+{#    font-size: 1.2rem; cursor: pointer; transition: background .2s;#}
+{#  }#}
+{#  .modal-close-btn:hover { background: rgba(255,255,255,.25); }#}
+{##}
+{#  .modal-profile-section { display: flex; gap: 24px; padding: 24px; align-items: flex-start; border-bottom: 1px solid #f0f0f0; }#}
+{#  .modal-photo-wrap { flex-shrink: 0; }#}
+{#  .modal-photo { width: 110px; height: 110px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 16px rgba(0,0,0,.12); border: 3px solid #f0f0f0; }#}
+{#  .modal-photo-placeholder { width:110px; height:110px; border-radius:12px; background:#edf2f7; display:flex; align-items:center; justify-content:center; border:3px solid #f0f0f0; }#}
+{#  .modal-info { flex: 1; }#}
+{#  .modal-name { font-size: 1.5rem; font-weight: 800; color: #2d3748; margin-bottom: 16px; letter-spacing: -.3px; }#}
+{#  .modal-stats-grid { display: flex; gap: 12px; flex-wrap: wrap; }#}
+{#  .modal-stat { display: flex; flex-direction: column; gap: 2px; background: #f7fafc; padding: 10px 16px; border-radius: 10px; min-width: 80px; }#}
+{#  .modal-stat-label { font-size: .68rem; color: #a0aec0; text-transform: uppercase; letter-spacing: .7px; font-weight: 600; }#}
+{#  .modal-stat-value { font-size: .95rem; font-weight: 700; color: #2d3748; }#}
+{##}
+{#  .modal-details-section { padding: 20px 24px; }#}
+{#  .modal-section-title { font-size: .85rem; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: .8px; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }#}
+{#  .modal-details-text { font-size: .9rem; color: #4a5568; line-height: 1.7; margin: 0; }#}
+{##}
+{#  .modal-alert-section {#}
+{#    border-left: 4px solid #ed8936;#}
+{#    padding: 12px 20px; margin: 0 24px 24px;#}
+{#    border-radius: 0 8px 8px 0;#}
+{#    font-size: .82rem; display: flex; align-items: center; gap: 8px;#}
+{#    transition: background .3s, color .3s, border-color .3s;#}
+{#  }#}
+{#  .modal-alert-section.missing-alert { background: #fffaf0; color: #744210; border-left-color: #ed8936; }#}
+{#  .modal-alert-section.criminal-alert { background: #fff5f5; color: #742a2a; border-left-color: #c53030; }#}
+{##}
+{#  @media (max-width: 576px) {#}
+{#    .search-input { width: 180px; }#}
+{#    .modal-profile-section { flex-direction: column; align-items: center; text-align: center; }#}
+{#    .modal-stats-grid { justify-content: center; }#}
+{#    .pc-tabs { gap: .4rem; }#}
+{#    .pc-tab { padding: 8px 12px; font-size: .8rem; }#}
+{#  }#}
+{#</style>#}
+{##}
+{#<script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>#}
+{#<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>#}
+{#<script src="../static/admin/assets/js/sidebarmenu.js"></script>#}
+{#<script src="../static/admin/assets/js/app.min.js"></script>#}
+{#<script src="../static/admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>#}
+{#<script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>#}
+{#<script src="../static/admin/assets/js/dashboard.js"></script>#}
+{#<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>#}
+{##}
+{#<script>#}
+{#  let currentTab = 'missing';#}
+{##}
+{#  // ── TAB SWITCH ──────────────────────────────────────#}
+{#  function switchTab(tab) {#}
+{#    currentTab = tab;#}
+{#    const isCriminal = tab === 'criminal';#}
+{##}
+{#    // Show/hide sections#}
+{#    document.getElementById('missingSection').style.display  = isCriminal ? 'none' : '';#}
+{#    document.getElementById('criminalSection').style.display = isCriminal ? '' : 'none';#}
+{##}
+{#    // Tab styles#}
+{#    const tabM = document.getElementById('tabMissing');#}
+{#    const tabC = document.getElementById('tabCriminal');#}
+{#    tabM.classList.toggle('active', !isCriminal);#}
+{#    tabM.classList.remove('criminal-active');#}
+{#    tabC.classList.toggle('active', isCriminal);#}
+{#    tabC.classList.toggle('criminal-active', isCriminal);#}
+{##}
+{#    // Header dot & subtitle#}
+{#    const dot = document.getElementById('activeDot');#}
+{#    dot.classList.toggle('criminal-mode', isCriminal);#}
+{##}
+{#    document.getElementById('pageTitle').textContent     = isCriminal ? 'Criminal Records' : 'Missing Persons';#}
+{#    document.getElementById('pageSubtitle').textContent  = isCriminal#}
+{#      ? 'Registered criminal case records'#}
+{#      : 'Active cases requiring public assistance';#}
+{##}
+{#    // Count badge#}
+{#    const badge = document.getElementById('countBadge');#}
+{#    badge.classList.toggle('criminal-mode', isCriminal);#}
+{##}
+{#    // Reset search & recount#}
+{#    document.getElementById('searchInput').value = '';#}
+{#    updateCount();#}
+{#  }#}
+{##}
+{#  // ── SEARCH ──────────────────────────────────────────#}
+{#  document.getElementById('searchInput').addEventListener('input', function () {#}
+{#    const query = this.value.toLowerCase().trim();#}
+{#    const section = currentTab === 'criminal' ? 'criminal' : 'missing';#}
+{#    const cols = document.querySelectorAll(`.card-col[data-section="${section}"]`);#}
+{#    let visible = 0;#}
+{#    cols.forEach(col => {#}
+{#      const match = (col.dataset.name + col.dataset.details).includes(query);#}
+{#      col.style.display = match ? '' : 'none';#}
+{#      if (match) visible++;#}
+{#    });#}
+{#    document.getElementById('caseCount').textContent = visible;#}
+{#  });#}
+{##}
+{#  function updateCount() {#}
+{#    const section = currentTab === 'criminal' ? 'criminal' : 'missing';#}
+{#    const total = document.querySelectorAll(`.card-col[data-section="${section}"]`).length;#}
+{#    document.getElementById('caseCount').textContent = total;#}
+{#    document.getElementById('countBadge').childNodes[0].textContent = '';#}
+{#    document.querySelector('#countBadge span').textContent = total;#}
+{#    document.getElementById('countBadge').lastChild.textContent = currentTab === 'criminal' ? ' Criminal Records' : ' Active Cases';#}
+{#  }#}
+{##}
+{#  // ── MODAL ───────────────────────────────────────────#}
+{#  function openModal(type, id, name, age, gender, details, photoUrl) {#}
+{#    const isCriminal = type === 'criminal';#}
+{##}
+{#    document.getElementById('modalName').textContent    = name;#}
+{#    document.getElementById('modalAge').textContent     = age + ' years';#}
+{#    document.getElementById('modalGender').textContent  = gender;#}
+{#    document.getElementById('modalCaseId').textContent  = '#' + id;#}
+{#    document.getElementById('modalType').textContent    = isCriminal ? 'Criminal Record' : 'Missing Person';#}
+{#    document.getElementById('modalDetails').textContent = details || 'No additional details available.';#}
+{##}
+{#    // Header colour#}
+{#    const header = document.getElementById('modalHeader');#}
+{#    header.className = 'modal-header pc-modal-header ' + (isCriminal ? 'criminal-header' : 'missing-header');#}
+{##}
+{#    // Badge text#}
+{#    document.getElementById('modalBadge').innerHTML =#}
+{#      `<span class="pulse-dot ${isCriminal ? 'criminal-dot' : ''}"></span> ${isCriminal ? 'CRIMINAL RECORD' : 'MISSING PERSON'}`;#}
+{##}
+{#    // Alert bar#}
+{#    const alert = document.getElementById('modalAlert');#}
+{#    alert.className = 'modal-alert-section ' + (isCriminal ? 'criminal-alert' : 'missing-alert');#}
+{#    alert.innerHTML = isCriminal#}
+{#      ? `<iconify-icon icon="solar:danger-triangle-linear"></iconify-icon> This person has an active criminal record. Contact the nearest police station for more information.`#}
+{#      : `<iconify-icon icon="solar:info-circle-linear"></iconify-icon> If you have any information about this person, please contact your nearest police station immediately.`;#}
+{##}
+{#    // Photo#}
+{#    const photo = document.getElementById('modalPhoto');#}
+{#    const placeholder = document.getElementById('modalPhotoPlaceholder');#}
+{#    if (photoUrl) {#}
+{#      photo.src = photoUrl; photo.alt = name;#}
+{#      photo.classList.remove('d-none');#}
+{#      placeholder.classList.add('d-none');#}
+{#    } else {#}
+{#      photo.classList.add('d-none');#}
+{#      placeholder.classList.remove('d-none');#}
+{#    }#}
+{##}
+{#    new bootstrap.Modal(document.getElementById('personModal')).show();#}
+{#  }#}
+{##}
+{#  // initialise count badge correctly on load#}
+{#  document.addEventListener('DOMContentLoaded', () => {#}
+{#    const span = document.querySelector('#countBadge span');#}
+{#    // already set by Django template {{ missing_persons|length }}#}
+{#  });#}
+{#</script>#}
+
+
+
+{##}
+{##}
+{#{% include 'admin_sidebar.html' %}#}
+{##}
+{#<!-- Main wrapper -->#}
+{#<div class="body-wrapper">#}
+{##}
+{#  <!-- Header Start -->#}
+{#  <header class="app-header">#}
+{#    <nav class="navbar navbar-expand-lg navbar-light">#}
+{#      <ul class="navbar-nav">#}
+{#        <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">#}
+{#          <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">#}
+{#            <span class="logo-text">#}
+{#              <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />#}
+{#            </span>#}
+{#          </a>#}
+{#        </div>#}
+{#        <li class="nav-item d-block d-xl-none">#}
+{#          <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">#}
+{#            <i class="ti ti-menu-2"></i>#}
+{#          </a>#}
+{#        </li>#}
+{#        <li class="nav-item dropdown">#}
+{#          <a class="nav-link" href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#            <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>#}
+{#            <div class="notification bg-primary rounded-circle"></div>#}
+{#          </a>#}
+{#          <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">#}
+{#            <div class="message-body">#}
+{#              <a href="javascript:void(0)" class="dropdown-item">Item 1</a>#}
+{#              <a href="javascript:void(0)" class="dropdown-item">Item 2</a>#}
+{#            </div>#}
+{#          </div>#}
+{#        </li>#}
+{#      </ul>#}
+{#      <div class="navbar-collapse justify-content-end px-0" id="navbarNav">#}
+{#        <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">#}
+{#          <a href="{% url 'casefile' %}" class="btn btn-success">UPLOAD CASE FILE</a>#}
+{#          <li class="nav-item dropdown">#}
+{#            <a class="nav-link" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#              <img src="../static/admin/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">#}
+{#            </a>#}
+{#            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">#}
+{#              <div class="message-body">#}
+{#                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                  <i class="ti ti-user fs-6"></i>#}
+{#                  <p class="mb-0 fs-3">My Profile</p>#}
+{#                </a>#}
+{#                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                  <i class="ti ti-mail fs-6"></i>#}
+{#                  <p class="mb-0 fs-3">My Account</p>#}
+{#                </a>#}
+{#                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">#}
+{#                  <i class="ti ti-list-check fs-6"></i>#}
+{#                  <p class="mb-0 fs-3">My Task</p>#}
+{#                </a>#}
+{#                <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>#}
+{#              </div>#}
+{#            </div>#}
+{#          </li>#}
+{#        </ul>#}
+{#      </div>#}
+{#    </nav>#}
+{#  </header>#}
+{#  <!-- Header End -->#}
+{##}
+{#  <div class="body-wrapper-inner">#}
+{#    <div class="container-fluid">#}
+{##}
+{#      <!-- ══ PAGE HEADER ══ -->#}
+{#      <div class="pc-page-header mb-4">#}
+{#        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">#}
+{#          <div>#}
+{#            <h2 class="pc-main-title">#}
+{#              <span class="title-dot-missing" id="activeDot"></span>#}
+{#              <span id="pageTitle">Case Records</span>#}
+{#            </h2>#}
+{#            <p class="pc-subtitle" id="pageSubtitle">Active cases requiring public assistance</p>#}
+{#          </div>#}
+{#          <div class="d-flex align-items-center gap-3 flex-wrap">#}
+{#            <!-- Search -->#}
+{#            <div class="search-box">#}
+{#              <iconify-icon icon="solar:magnifer-linear" class="search-icon"></iconify-icon>#}
+{#              <input type="text" id="searchInput" placeholder="Search by name, details..." class="search-input" />#}
+{#            </div>#}
+{#            <!-- Count badge -->#}
+{#            <div class="count-badge" id="countBadge">#}
+{#              <span id="caseCount">{{ missing_persons|length }}</span> Active Cases#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <!-- ══ TABS ══ -->#}
+{#        <div class="pc-tabs mt-4">#}
+{#          <button class="pc-tab active" id="tabMissing" onclick="switchTab('missing')">#}
+{#            <iconify-icon icon="solar:user-circle-linear"></iconify-icon>#}
+{#            Missing Persons#}
+{#            <span class="tab-count">{{ missing_persons|length }}</span>#}
+{#          </button>#}
+{#          <button class="pc-tab" id="tabCriminal" onclick="switchTab('criminal')">#}
+{#            <iconify-icon icon="solar:danger-triangle-linear"></iconify-icon>#}
+{#            Criminal Records#}
+{#            <span class="tab-count criminal-count">{{ criminals|length }}</span>#}
+{#          </button>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <!-- ══ MISSING PERSONS GRID ══ -->#}
+{#      <div id="missingSection">#}
+{#        <div class="row g-4" id="missingContainer">#}
+{#          {% for person in missing_persons %}#}
+{#          <div class="col-xl-4 col-lg-6 col-md-6 card-col"#}
+{#               data-section="missing"#}
+{#               data-name="{{ person.name|lower }}"#}
+{#               data-details="{{ person.details|lower }}">#}
+{#            <div class="pc-card">#}
+{#              <div class="card-accent-bar missing-bar"></div>#}
+{#              <div class="card-banner missing-banner">#}
+{#                <div class="banner-overlay"></div>#}
+{#                <div class="record-badge missing-badge-color">#}
+{#                  <span class="pulse-dot"></span> MISSING#}
+{#                </div>#}
+{#                <div class="case-id-tag">#{{ person.id }}</div>#}
+{#              </div>#}
+{#              <div class="card-photo-wrap">#}
+{#                {% if person.photo %}#}
+{#                <img src="{{ person.photo.url }}" alt="{{ person.name }}" class="card-photo" />#}
+{#                {% else %}#}
+{#                <div class="card-photo-placeholder">#}
+{#                  <iconify-icon icon="solar:user-bold" style="font-size:2.5rem;color:#a0aec0;"></iconify-icon>#}
+{#                </div>#}
+{#                {% endif %}#}
+{#                <div class="gender-tag {{ person.gender|lower }}">#}
+{#                  {% if person.gender|lower == 'male' %}#}
+{#                    <iconify-icon icon="solar:men-bold"></iconify-icon>#}
+{#                  {% else %}#}
+{#                    <iconify-icon icon="solar:women-bold"></iconify-icon>#}
+{#                  {% endif %}#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="card-content">#}
+{#                <h3 class="person-name">{{ person.name }}</h3>#}
+{#                <p class="person-details-preview">{{ person.details|truncatechars:80 }}</p>#}
+{#                <div class="stats-row-card">#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:user-id-linear" class="stat-icon"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.age }} yrs</span>#}
+{#                      <span class="stat-label">Age</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="stat-divider"></div>#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:men-bold" class="stat-icon {% if person.gender|lower == 'female' %}d-none{% endif %}"></iconify-icon>#}
+{#                    <iconify-icon icon="solar:women-bold" class="stat-icon {% if person.gender|lower == 'male' %}d-none{% endif %}"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.gender }}</span>#}
+{#                      <span class="stat-label">Gender</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="stat-divider"></div>#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:hashtag-circle-linear" class="stat-icon"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.id }}</span>#}
+{#                      <span class="stat-label">Case ID</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#                <a href="javascript:void(0)" class="view-btn missing-btn"#}
+{#                   onclick="openModal('missing', {{ person.id }}, '{{ person.name }}', '{{ person.age }}', '{{ person.gender }}', '{{ person.details|escapejs }}', '{% if person.photo %}{{ person.photo.url }}{% endif %}')">#}
+{#                  <iconify-icon icon="solar:eye-linear"></iconify-icon>#}
+{#                  View Full Details#}
+{#                </a>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          {% empty %}#}
+{#          <div class="col-12">#}
+{#            <div class="empty-state">#}
+{#              <iconify-icon icon="solar:ghost-linear" style="font-size:4rem;color:#4a5568;"></iconify-icon>#}
+{#              <h4>No Missing Persons Records Found</h4>#}
+{#              <p>All records will appear here once added by officers.</p>#}
+{#            </div>#}
+{#          </div>#}
+{#          {% endfor %}#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <!-- ══ CRIMINAL RECORDS GRID ══ -->#}
+{#      <div id="criminalSection" style="display:none;">#}
+{#        <div class="row g-4" id="criminalContainer">#}
+{#          {% for person in criminals %}#}
+{#          <div class="col-xl-4 col-lg-6 col-md-6 card-col"#}
+{#               data-section="criminal"#}
+{#               data-name="{{ person.name|lower }}"#}
+{#               data-details="{{ person.details|lower }}">#}
+{#            <div class="pc-card">#}
+{#              <div class="card-accent-bar criminal-bar"></div>#}
+{#              <div class="card-banner criminal-banner">#}
+{#                <div class="banner-overlay"></div>#}
+{#                <div class="record-badge criminal-badge-color">#}
+{#                  <span class="pulse-dot criminal-dot"></span> CRIMINAL#}
+{#                </div>#}
+{#                <div class="case-id-tag">#{{ person.id }}</div>#}
+{#              </div>#}
+{#              <div class="card-photo-wrap">#}
+{#                {% if person.photo %}#}
+{#                <img src="{{ person.photo.url }}" alt="{{ person.name }}" class="card-photo" />#}
+{#                {% else %}#}
+{#                <div class="card-photo-placeholder criminal-placeholder">#}
+{#                  <iconify-icon icon="solar:user-bold" style="font-size:2.5rem;color:#a0aec0;"></iconify-icon>#}
+{#                </div>#}
+{#                {% endif %}#}
+{#                <div class="gender-tag {{ person.gender|lower }}">#}
+{#                  {% if person.gender|lower == 'male' %}#}
+{#                    <iconify-icon icon="solar:men-bold"></iconify-icon>#}
+{#                  {% else %}#}
+{#                    <iconify-icon icon="solar:women-bold"></iconify-icon>#}
+{#                  {% endif %}#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="card-content">#}
+{#                <h3 class="person-name">{{ person.name }}</h3>#}
+{#                <p class="person-details-preview">{{ person.details|truncatechars:80 }}</p>#}
+{#                <div class="stats-row-card">#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:user-id-linear" class="stat-icon criminal-icon"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.age }} yrs</span>#}
+{#                      <span class="stat-label">Age</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="stat-divider"></div>#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:men-bold" class="stat-icon criminal-icon {% if person.gender|lower == 'female' %}d-none{% endif %}"></iconify-icon>#}
+{#                    <iconify-icon icon="solar:women-bold" class="stat-icon criminal-icon {% if person.gender|lower == 'male' %}d-none{% endif %}"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.gender }}</span>#}
+{#                      <span class="stat-label">Gender</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                  <div class="stat-divider"></div>#}
+{#                  <div class="stat-item">#}
+{#                    <iconify-icon icon="solar:hashtag-circle-linear" class="stat-icon criminal-icon"></iconify-icon>#}
+{#                    <div>#}
+{#                      <span class="stat-value">{{ person.id }}</span>#}
+{#                      <span class="stat-label">Case ID</span>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#                <a href="javascript:void(0)" class="view-btn criminal-btn"#}
+{#                   onclick="openModal('criminal', {{ person.id }}, '{{ person.name }}', '{{ person.age }}', '{{ person.gender }}', '{{ person.details|escapejs }}', '{% if person.photo %}{{ person.photo.url }}{% endif %}')">#}
+{#                  <iconify-icon icon="solar:eye-linear"></iconify-icon>#}
+{#                  View Full Details#}
+{#                </a>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          {% empty %}#}
+{#          <div class="col-12">#}
+{#            <div class="empty-state">#}
+{#              <iconify-icon icon="solar:ghost-linear" style="font-size:4rem;color:#4a5568;"></iconify-icon>#}
+{#              <h4>No Criminal Records Found</h4>#}
+{#              <p>All records will appear here once added by officers.</p>#}
+{#            </div>#}
+{#          </div>#}
+{#          {% endfor %}#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{##}
+{#<!-- ══ DETAIL MODAL ══ -->#}
+{#<div class="modal fade" id="personModal" tabindex="-1" aria-hidden="true">#}
+{#  <div class="modal-dialog modal-dialog-centered modal-lg">#}
+{#    <div class="modal-content pc-modal">#}
+{#      <div class="modal-header pc-modal-header" id="modalHeader">#}
+{#        <div class="modal-badge" id="modalBadge">#}
+{#          <span class="pulse-dot"></span> MISSING PERSON#}
+{#        </div>#}
+{#        <button type="button" class="modal-close-btn" data-bs-dismiss="modal">#}
+{#          <iconify-icon icon="solar:close-circle-linear"></iconify-icon>#}
+{#        </button>#}
+{#      </div>#}
+{#      <div class="modal-body p-0">#}
+{#        <div class="modal-profile-section">#}
+{#          <div class="modal-photo-wrap">#}
+{#            <img id="modalPhoto" src="" alt="" class="modal-photo" />#}
+{#            <div id="modalPhotoPlaceholder" class="modal-photo-placeholder d-none">#}
+{#              <iconify-icon icon="solar:user-bold" style="font-size:3rem;color:#a0aec0;"></iconify-icon>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="modal-info">#}
+{#            <h2 id="modalName" class="modal-name"></h2>#}
+{#            <div class="modal-stats-grid">#}
+{#              <div class="modal-stat">#}
+{#                <span class="modal-stat-label">Age</span>#}
+{#                <span id="modalAge" class="modal-stat-value"></span>#}
+{#              </div>#}
+{#              <div class="modal-stat">#}
+{#                <span class="modal-stat-label">Gender</span>#}
+{#                <span id="modalGender" class="modal-stat-value"></span>#}
+{#              </div>#}
+{#              <div class="modal-stat">#}
+{#                <span class="modal-stat-label">Case ID</span>#}
+{#                <span id="modalCaseId" class="modal-stat-value"></span>#}
+{#              </div>#}
+{#              <div class="modal-stat" id="modalTypeStat">#}
+{#                <span class="modal-stat-label">Record Type</span>#}
+{#                <span id="modalType" class="modal-stat-value"></span>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#        <div class="modal-details-section">#}
+{#          <h5 class="modal-section-title">#}
+{#            <iconify-icon icon="solar:document-text-linear"></iconify-icon>#}
+{#            Case Details#}
+{#          </h5>#}
+{#          <p id="modalDetails" class="modal-details-text"></p>#}
+{#        </div>#}
+{#        <div class="modal-alert-section" id="modalAlert">#}
+{#          <iconify-icon icon="solar:info-circle-linear"></iconify-icon>#}
+{#          If you have any information about this person, please contact your nearest police station immediately.#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{##}
+{#<style>#}
+{#  /* ══════════════════════════════════════════════════#}
+{#     PAGE HEADER#}
+{#  ══════════════════════════════════════════════════ */#}
+{#  .pc-page-header { padding: 8px 0 4px; }#}
+{##}
+{#  .pc-main-title {#}
+{#    font-size: 1.7rem; font-weight: 700; color: #2d3748;#}
+{#    letter-spacing: -.3px;#}
+{#    display: flex; align-items: center; gap: 10px;#}
+{#    margin-bottom: 4px;#}
+{#  }#}
+{##}
+{#  .title-dot-missing {#}
+{#    width: 12px; height: 12px; border-radius: 50%;#}
+{#    background: #f56565;#}
+{#    animation: pulse-dot 1.5s infinite;#}
+{#    flex-shrink: 0;#}
+{#    transition: background .3s;#}
+{#  }#}
+{#  .title-dot-missing.criminal-mode { background: #e53e3e; }#}
+{##}
+{#  .pc-subtitle { color: #718096; font-size: .875rem; margin: 0; padding-left: 22px; }#}
+{##}
+{#  /* Search */#}
+{#  .search-box { position: relative; display: flex; align-items: center; }#}
+{#  .search-icon { position: absolute; left: 12px; color: #a0aec0; font-size: 1rem; pointer-events: none; }#}
+{#  .search-input {#}
+{#    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 10px;#}
+{#    padding: 9px 16px 9px 36px; font-size: .85rem; color: #2d3748;#}
+{#    width: 260px; outline: none;#}
+{#    transition: border-color .2s, box-shadow .2s;#}
+{#  }#}
+{#  .search-input:focus { border-color: #5a6fd6; box-shadow: 0 0 0 3px rgba(90,111,214,.12); }#}
+{#  .search-input::placeholder { color: #a0aec0; }#}
+{##}
+{#  /* Count badge */#}
+{#  .count-badge {#}
+{#    background: linear-gradient(135deg, #5a6fd6, #4a5aaa);#}
+{#    color: #fff; padding: 8px 16px; border-radius: 10px;#}
+{#    font-size: .82rem; font-weight: 600; white-space: nowrap;#}
+{#    transition: background .3s;#}
+{#  }#}
+{#  .count-badge.criminal-mode { background: linear-gradient(135deg, #c53030, #9b2335); }#}
+{#  .count-badge span { font-size: 1.1rem; font-weight: 800; margin-right: 4px; }#}
+{##}
+{#  /* ══ TABS ══ */#}
+{#  .pc-tabs {#}
+{#    display: flex; gap: .75rem;#}
+{#    border-bottom: 2px solid #e2e8f0;#}
+{#    padding-bottom: 0;#}
+{#  }#}
+{#  .pc-tab {#}
+{#    display: flex; align-items: center; gap: 7px;#}
+{#    padding: 10px 20px; border: none; background: transparent;#}
+{#    font-size: .88rem; font-weight: 600; color: #718096;#}
+{#    border-bottom: 3px solid transparent;#}
+{#    margin-bottom: -2px; cursor: pointer;#}
+{#    border-radius: 8px 8px 0 0;#}
+{#    transition: all .2s;#}
+{#  }#}
+{#  .pc-tab:hover { color: #4a5568; background: #f7fafc; }#}
+{#  .pc-tab.active {#}
+{#    color: #5a6fd6; border-bottom-color: #5a6fd6;#}
+{#    background: #f0f4ff;#}
+{#  }#}
+{#  .pc-tab.active.criminal-active {#}
+{#    color: #c53030; border-bottom-color: #c53030;#}
+{#    background: #fff5f5;#}
+{#  }#}
+{#  .tab-count {#}
+{#    background: #e2e8f0; color: #4a5568;#}
+{#    font-size: .72rem; font-weight: 800;#}
+{#    padding: 2px 8px; border-radius: 20px;#}
+{#    transition: background .2s, color .2s;#}
+{#  }#}
+{#  .pc-tab.active .tab-count { background: #5a6fd6; color: #fff; }#}
+{#  .pc-tab.active.criminal-active .tab-count { background: #c53030; color: #fff; }#}
+{#  .criminal-count { }#}
+{##}
+{#  /* ══ CARD ══ */#}
+{#  .pc-card {#}
+{#    background: #fff; border-radius: 16px; overflow: hidden;#}
+{#    box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.05);#}
+{#    border: 1px solid #f0f0f0; position: relative;#}
+{#    transition: transform .25s, box-shadow .25s;#}
+{#  }#}
+{#  .pc-card:hover {#}
+{#    transform: translateY(-5px);#}
+{#    box-shadow: 0 12px 32px rgba(90,111,214,.15), 0 4px 12px rgba(0,0,0,.08);#}
+{#  }#}
+{##}
+{#  /* accent bars */#}
+{#  .card-accent-bar { height: 4px; }#}
+{#  .missing-bar { background: linear-gradient(90deg, #f56565, #ed8936, #5a6fd6); }#}
+{#  .criminal-bar { background: linear-gradient(90deg, #c53030, #e53e3e, #fc8181); }#}
+{##}
+{#  /* banners */#}
+{#  .card-banner {#}
+{#    height: 90px; position: relative;#}
+{#    display: flex; align-items: flex-start;#}
+{#    justify-content: space-between; padding: 10px 14px;#}
+{#  }#}
+{#  .missing-banner { background: linear-gradient(135deg, #2c3a8a 0%, #325c8a 50%, #33a8d6 100%); }#}
+{#  .criminal-banner { background: linear-gradient(135deg, #742a2a 0%, #9b2335 50%, #c53030 100%); }#}
+{##}
+{#  .banner-overlay {#}
+{#    position: absolute; inset: 0; pointer-events: none;#}
+{#    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#  }#}
+{##}
+{#  /* badges */#}
+{#  .record-badge {#}
+{#    font-size: .68rem; font-weight: 700; letter-spacing: 1.5px;#}
+{#    padding: 4px 10px; border-radius: 20px;#}
+{#    display: flex; align-items: center; gap: 5px;#}
+{#    position: relative; z-index: 1; color: #fff;#}
+{#  }#}
+{#  .missing-badge-color { background: rgba(245,101,101,.9); }#}
+{#  .criminal-badge-color { background: rgba(197,48,48,.85); }#}
+{##}
+{#  .pulse-dot {#}
+{#    width: 7px; height: 7px; border-radius: 50%; background: #fff;#}
+{#    animation: pulse-dot 1.5s infinite;#}
+{#    display: inline-block; flex-shrink: 0;#}
+{#  }#}
+{#  .criminal-dot { background: #fbd38d; }#}
+{##}
+{#  @keyframes pulse-dot {#}
+{#    0%,100% { opacity:1; transform:scale(1); }#}
+{#    50%      { opacity:.4; transform:scale(.7); }#}
+{#  }#}
+{##}
+{#  .case-id-tag {#}
+{#    background: rgba(255,255,255,.15); color: rgba(255,255,255,.9);#}
+{#    font-size: .72rem; font-weight: 600; padding: 4px 10px;#}
+{#    border-radius: 20px; border: 1px solid rgba(255,255,255,.2);#}
+{#    position: relative; z-index: 1;#}
+{#  }#}
+{##}
+{#  /* Photo */#}
+{#  .card-photo-wrap {#}
+{#    position: relative; display: flex; justify-content: center;#}
+{#    margin-top: -44px; z-index: 2;#}
+{#  }#}
+{#  .card-photo {#}
+{#    width: 90px; height: 90px; border-radius: 50%;#}
+{#    object-fit: cover; border: 4px solid #fff;#}
+{#    box-shadow: 0 4px 14px rgba(0,0,0,.18);#}
+{#  }#}
+{#  .card-photo-placeholder {#}
+{#    width: 90px; height: 90px; border-radius: 50%;#}
+{#    background: #edf2f7; border: 4px solid #fff;#}
+{#    box-shadow: 0 4px 14px rgba(0,0,0,.12);#}
+{#    display: flex; align-items: center; justify-content: center;#}
+{#  }#}
+{#  .criminal-placeholder { background: #fff5f5; }#}
+{##}
+{#  .gender-tag {#}
+{#    position: absolute; bottom: 2px; right: calc(50% - 52px);#}
+{#    width: 24px; height: 24px; border-radius: 50%;#}
+{#    display: flex; align-items: center; justify-content: center;#}
+{#    font-size: .75rem; border: 2px solid #fff;#}
+{#  }#}
+{#  .gender-tag.male  { background: #4299e1; color: #fff; }#}
+{#  .gender-tag.female { background: #ed64a6; color: #fff; }#}
+{##}
+{#  /* Card Content */#}
+{#  .card-content { padding: 14px 20px 20px; text-align: center; }#}
+{#  .person-name { font-size: 1.15rem; font-weight: 700; color: #2d3748; margin-bottom: 6px; letter-spacing: -.2px; }#}
+{#  .person-details-preview { font-size: .8rem; color: #718096; line-height: 1.5; margin-bottom: 16px; min-height: 36px; }#}
+{##}
+{#  /* Stats row inside card */#}
+{#  .stats-row-card {#}
+{#    display: flex; align-items: center; justify-content: center;#}
+{#    background: #f7fafc; border-radius: 12px;#}
+{#    padding: 12px 8px; margin-bottom: 16px;#}
+{#  }#}
+{#  .stat-item { display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; }#}
+{#  .stat-icon { font-size: 1.1rem; color: #59bfff; }#}
+{#  .criminal-icon { color: #fc8181; }#}
+{#  .stat-item div { display: flex; flex-direction: column; text-align: left; }#}
+{#  .stat-value { font-size: .82rem; font-weight: 700; color: #2d3748; line-height: 1.2; }#}
+{#  .stat-label { font-size: .68rem; color: #a0aec0; text-transform: uppercase; letter-spacing: .5px; line-height: 1; }#}
+{#  .stat-divider { width: 1px; height: 32px; background: #e2e8f0; flex-shrink: 0; }#}
+{##}
+{#  /* Buttons */#}
+{#  .view-btn {#}
+{#    display: flex; align-items: center; justify-content: center; gap: 8px;#}
+{#    color: #fff; padding: 10px 20px; border-radius: 10px;#}
+{#    font-size: .82rem; font-weight: 600; letter-spacing: .3px;#}
+{#    text-decoration: none; cursor: pointer;#}
+{#    transition: all .2s;#}
+{#  }#}
+{#  .missing-btn { background: linear-gradient(135deg, #33a8d6, #4a5aaa); }#}
+{#  .missing-btn:hover { background: linear-gradient(135deg, #59bfff, #3a4a8a); color:#fff; transform:translateY(-1px); box-shadow:0 4px 14px rgba(90,111,214,.35); }#}
+{#  .criminal-btn { background: linear-gradient(135deg, #c53030, #9b2335); }#}
+{#  .criminal-btn:hover { background: linear-gradient(135deg, #e53e3e, #742a2a); color:#fff; transform:translateY(-1px); box-shadow:0 4px 14px rgba(197,48,48,.35); }#}
+{##}
+{#  /* Empty state */#}
+{#  .empty-state { text-align: center; padding: 60px 20px; color: #718096; }#}
+{#  .empty-state h4 { margin-top: 16px; color: #4a5568; font-weight: 600; }#}
+{##}
+{#  /* ══ MODAL ══ */#}
+{#  .pc-modal { border-radius: 16px; overflow: hidden; border: none; box-shadow: 0 20px 60px rgba(0,0,0,.2); }#}
+{##}
+{#  .pc-modal-header {#}
+{#    padding: 16px 20px;#}
+{#    display: flex; align-items: center; justify-content: space-between;#}
+{#    border: none; transition: background .3s;#}
+{#  }#}
+{#  .pc-modal-header.missing-header { background: linear-gradient(135deg, #59bfff, #5a6fd6); }#}
+{#  .pc-modal-header.criminal-header { background: linear-gradient(135deg, #e53e3e, #9b2335); }#}
+{##}
+{#  .modal-badge { color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: 1.5px; display: flex; align-items: center; gap: 6px; }#}
+{#  .modal-close-btn {#}
+{#    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2);#}
+{#    color: #fff; width: 32px; height: 32px; border-radius: 8px;#}
+{#    display: flex; align-items: center; justify-content: center;#}
+{#    font-size: 1.2rem; cursor: pointer; transition: background .2s;#}
+{#  }#}
+{#  .modal-close-btn:hover { background: rgba(255,255,255,.25); }#}
+{##}
+{#  .modal-profile-section { display: flex; gap: 24px; padding: 24px; align-items: flex-start; border-bottom: 1px solid #f0f0f0; }#}
+{#  .modal-photo-wrap { flex-shrink: 0; }#}
+{#  .modal-photo { width: 110px; height: 110px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 16px rgba(0,0,0,.12); border: 3px solid #f0f0f0; }#}
+{#  .modal-photo-placeholder { width:110px; height:110px; border-radius:12px; background:#edf2f7; display:flex; align-items:center; justify-content:center; border:3px solid #f0f0f0; }#}
+{#  .modal-info { flex: 1; }#}
+{#  .modal-name { font-size: 1.5rem; font-weight: 800; color: #2d3748; margin-bottom: 16px; letter-spacing: -.3px; }#}
+{#  .modal-stats-grid { display: flex; gap: 12px; flex-wrap: wrap; }#}
+{#  .modal-stat { display: flex; flex-direction: column; gap: 2px; background: #f7fafc; padding: 10px 16px; border-radius: 10px; min-width: 80px; }#}
+{#  .modal-stat-label { font-size: .68rem; color: #a0aec0; text-transform: uppercase; letter-spacing: .7px; font-weight: 600; }#}
+{#  .modal-stat-value { font-size: .95rem; font-weight: 700; color: #2d3748; }#}
+{##}
+{#  .modal-details-section { padding: 20px 24px; }#}
+{#  .modal-section-title { font-size: .85rem; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: .8px; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }#}
+{#  .modal-details-text { font-size: .9rem; color: #4a5568; line-height: 1.7; margin: 0; }#}
+{##}
+{#  .modal-alert-section {#}
+{#    border-left: 4px solid #ed8936;#}
+{#    padding: 12px 20px; margin: 0 24px 24px;#}
+{#    border-radius: 0 8px 8px 0;#}
+{#    font-size: .82rem; display: flex; align-items: center; gap: 8px;#}
+{#    transition: background .3s, color .3s, border-color .3s;#}
+{#  }#}
+{#  .modal-alert-section.missing-alert { background: #fffaf0; color: #744210; border-left-color: #ed8936; }#}
+{#  .modal-alert-section.criminal-alert { background: #fff5f5; color: #742a2a; border-left-color: #c53030; }#}
+{##}
+{#  @media (max-width: 576px) {#}
+{#    .search-input { width: 180px; }#}
+{#    .modal-profile-section { flex-direction: column; align-items: center; text-align: center; }#}
+{#    .modal-stats-grid { justify-content: center; }#}
+{#    .pc-tabs { gap: .4rem; }#}
+{#    .pc-tab { padding: 8px 12px; font-size: .8rem; }#}
+{#  }#}
+{#</style>#}
+{##}
+{#<script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>#}
+{#<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>#}
+{#<script src="../static/admin/assets/js/sidebarmenu.js"></script>#}
+{#<script src="../static/admin/assets/js/app.min.js"></script>#}
+{#<script src="../static/admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>#}
+{#<script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>#}
+{#<script src="../static/admin/assets/js/dashboard.js"></script>#}
+{#<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>#}
+{##}
+{#<script>#}
+{#  let currentTab = 'missing';#}
+{##}
+{#  // ── TAB SWITCH ──────────────────────────────────────#}
+{#  function switchTab(tab) {#}
+{#    currentTab = tab;#}
+{#    const isCriminal = tab === 'criminal';#}
+{##}
+{#    // Show/hide sections#}
+{#    document.getElementById('missingSection').style.display  = isCriminal ? 'none' : '';#}
+{#    document.getElementById('criminalSection').style.display = isCriminal ? '' : 'none';#}
+{##}
+{#    // Tab styles#}
+{#    const tabM = document.getElementById('tabMissing');#}
+{#    const tabC = document.getElementById('tabCriminal');#}
+{#    tabM.classList.toggle('active', !isCriminal);#}
+{#    tabM.classList.remove('criminal-active');#}
+{#    tabC.classList.toggle('active', isCriminal);#}
+{#    tabC.classList.toggle('criminal-active', isCriminal);#}
+{##}
+{#    // Header dot & subtitle#}
+{#    const dot = document.getElementById('activeDot');#}
+{#    dot.classList.toggle('criminal-mode', isCriminal);#}
+{##}
+{#    document.getElementById('pageTitle').textContent     = isCriminal ? 'Criminal Records' : 'Missing Persons';#}
+{#    document.getElementById('pageSubtitle').textContent  = isCriminal#}
+{#      ? 'Registered criminal case records'#}
+{#      : 'Active cases requiring public assistance';#}
+{##}
+{#    // Count badge#}
+{#    const badge = document.getElementById('countBadge');#}
+{#    badge.classList.toggle('criminal-mode', isCriminal);#}
+{##}
+{#    // Reset search & recount#}
+{#    document.getElementById('searchInput').value = '';#}
+{#    updateCount();#}
+{#  }#}
+{##}
+{#  // ── SEARCH ──────────────────────────────────────────#}
+{#  document.getElementById('searchInput').addEventListener('input', function () {#}
+{#    const query = this.value.toLowerCase().trim();#}
+{#    const section = currentTab === 'criminal' ? 'criminal' : 'missing';#}
+{#    const cols = document.querySelectorAll(`.card-col[data-section="${section}"]`);#}
+{#    let visible = 0;#}
+{#    cols.forEach(col => {#}
+{#      const match = (col.dataset.name + col.dataset.details).includes(query);#}
+{#      col.style.display = match ? '' : 'none';#}
+{#      if (match) visible++;#}
+{#    });#}
+{#    document.getElementById('caseCount').textContent = visible;#}
+{#  });#}
+{##}
+{#  function updateCount() {#}
+{#    const section = currentTab === 'criminal' ? 'criminal' : 'missing';#}
+{#    const total = document.querySelectorAll(`.card-col[data-section="${section}"]`).length;#}
+{#    document.getElementById('caseCount').textContent = total;#}
+{#    document.getElementById('countBadge').childNodes[0].textContent = '';#}
+{#    document.querySelector('#countBadge span').textContent = total;#}
+{#    document.getElementById('countBadge').lastChild.textContent = currentTab === 'criminal' ? ' Criminal Records' : ' Active Cases';#}
+{#  }#}
+{##}
+{#  // ── MODAL ───────────────────────────────────────────#}
+{#  function openModal(type, id, name, age, gender, details, photoUrl) {#}
+{#    const isCriminal = type === 'criminal';#}
+{##}
+{#    document.getElementById('modalName').textContent    = name;#}
+{#    document.getElementById('modalAge').textContent     = age + ' years';#}
+{#    document.getElementById('modalGender').textContent  = gender;#}
+{#    document.getElementById('modalCaseId').textContent  = '#' + id;#}
+{#    document.getElementById('modalType').textContent    = isCriminal ? 'Criminal Record' : 'Missing Person';#}
+{#    document.getElementById('modalDetails').textContent = details || 'No additional details available.';#}
+{##}
+{#    // Header colour#}
+{#    const header = document.getElementById('modalHeader');#}
+{#    header.className = 'modal-header pc-modal-header ' + (isCriminal ? 'criminal-header' : 'missing-header');#}
+{##}
+{#    // Badge text#}
+{#    document.getElementById('modalBadge').innerHTML =#}
+{#      `<span class="pulse-dot ${isCriminal ? 'criminal-dot' : ''}"></span> ${isCriminal ? 'CRIMINAL RECORD' : 'MISSING PERSON'}`;#}
+{##}
+{#    // Alert bar#}
+{#    const alert = document.getElementById('modalAlert');#}
+{#    alert.className = 'modal-alert-section ' + (isCriminal ? 'criminal-alert' : 'missing-alert');#}
+{#    alert.innerHTML = isCriminal#}
+{#      ? `<iconify-icon icon="solar:danger-triangle-linear"></iconify-icon> This person has an active criminal record. Contact the nearest police station for more information.`#}
+{#      : `<iconify-icon icon="solar:info-circle-linear"></iconify-icon> If you have any information about this person, please contact your nearest police station immediately.`;#}
+{##}
+{#    // Photo#}
+{#    const photo = document.getElementById('modalPhoto');#}
+{#    const placeholder = document.getElementById('modalPhotoPlaceholder');#}
+{#    if (photoUrl) {#}
+{#      photo.src = photoUrl; photo.alt = name;#}
+{#      photo.classList.remove('d-none');#}
+{#      placeholder.classList.add('d-none');#}
+{#    } else {#}
+{#      photo.classList.add('d-none');#}
+{#      placeholder.classList.remove('d-none');#}
+{#    }#}
+{##}
+{#    new bootstrap.Modal(document.getElementById('personModal')).show();#}
+{#  }#}
+{##}
+{#  // initialise count badge correctly on load#}
+{#  document.addEventListener('DOMContentLoaded', () => {#}
+{#    const span = document.querySelector('#countBadge span');#}
+{#    // already set by Django template {{ missing_persons|length }}#}
+{#  });#}
+{#</script>#}
+
+
+
+
+{% include 'admin_sidebar.html' %}
+
+<!-- Main wrapper -->
+<div class="body-wrapper">
+
+  <!-- Header Start -->
+  <header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <ul class="navbar-nav">
+        <div class="brand-logo d-none d-xl-flex align-items-center justify-content-between">
+          <a href="index.html" class="text-nowrap logo-img d-flex align-items-center gap-2">
+            <span class="logo-text">
+              <img src="../static/admin/assets/images/logos/Picsart_25-10-20_10-13-36-120[1]ww.png" alt="homepage" class="dark-logo ps-2" />
+            </span>
+          </a>
+        </div>
+        <li class="nav-item d-block d-xl-none">
+          <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
+            <i class="ti ti-menu-2"></i>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">
+            <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>
+            <div class="notification bg-primary rounded-circle"></div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">
+            <div class="message-body">
+              <a href="javascript:void(0)" class="dropdown-item">Item 1</a>
+              <a href="javascript:void(0)" class="dropdown-item">Item 2</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+        <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+          <a href="{% url 'casefile' %}" class="btn btn-success">UPLOAD CASE FILE</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="../static/admin/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+              <div class="message-body">
+                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                  <i class="ti ti-user fs-6"></i>
+                  <p class="mb-0 fs-3">My Profile</p>
+                </a>
+                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                  <i class="ti ti-mail fs-6"></i>
+                  <p class="mb-0 fs-3">My Account</p>
+                </a>
+                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                  <i class="ti ti-list-check fs-6"></i>
+                  <p class="mb-0 fs-3">My Task</p>
+                </a>
+                <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Header End -->
+
+  <div class="body-wrapper-inner">
+    <div class="container-fluid">
+
+      <!-- ══ PAGE HEADER ══ -->
+      <div class="pc-page-header mb-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+          <div>
+            <h2 class="pc-main-title">
+              <span class="title-dot-missing" id="activeDot"></span>
+              <span id="pageTitle">Case Records</span>
+            </h2>
+            <p class="pc-subtitle" id="pageSubtitle">Active cases requiring public assistance</p>
+          </div>
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <!-- Search -->
+            <div class="search-box">
+              <iconify-icon icon="solar:magnifer-linear" class="search-icon"></iconify-icon>
+              <input type="text" id="searchInput" placeholder="Search by name, details..." class="search-input" />
+            </div>
+            <!-- Count badge -->
+            <div class="count-badge" id="countBadge">
+              <span id="caseCount">{{ missing_persons|length }}</span> Active Cases
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ TABS ══ -->
+        <div class="pc-tabs mt-4">
+          <button class="pc-tab active" id="tabMissing" onclick="switchTab('missing')">
+            <iconify-icon icon="solar:user-circle-linear"></iconify-icon>
+            Missing Persons
+            <span class="tab-count">{{ missing_persons|length }}</span>
+          </button>
+          <button class="pc-tab" id="tabCriminal" onclick="switchTab('criminal')">
+            <iconify-icon icon="solar:danger-triangle-linear"></iconify-icon>
+            Criminal Records
+            <span class="tab-count criminal-count">{{ criminals|length }}</span>
+          </button>
+          <button class="pc-tab" id="tabResolved" onclick="switchTab('resolved')">
+            <iconify-icon icon="solar:check-circle-linear"></iconify-icon>
+            Resolved Cases
+            <span class="tab-count resolved-count">{{ resolved_persons|length }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ MISSING PERSONS GRID ══ -->
+      <div id="missingSection">
+        <div class="row g-4" id="missingContainer">
+          {% for person in missing_persons %}
+          <div class="col-xl-4 col-lg-6 col-md-6 card-col"
+               data-section="missing"
+               data-name="{{ person.name|lower }}"
+               data-details="{{ person.details|lower }}">
+            <div class="pc-card">
+              <div class="card-accent-bar missing-bar"></div>
+              <div class="card-banner missing-banner">
+                <div class="banner-overlay"></div>
+                <div class="record-badge missing-badge-color">
+                  <span class="pulse-dot"></span> MISSING
+                </div>
+                <div class="case-id-tag">#{{ person.id }}</div>
+              </div>
+              <div class="card-photo-wrap">
+                {% if person.photo %}
+                <img src="{{ person.photo.url }}" alt="{{ person.name }}" class="card-photo" />
+                {% else %}
+                <div class="card-photo-placeholder">
+                  <iconify-icon icon="solar:user-bold" style="font-size:2.5rem;color:#a0aec0;"></iconify-icon>
+                </div>
+                {% endif %}
+                <div class="gender-tag {{ person.gender|lower }}">
+                  {% if person.gender|lower == 'male' %}
+                    <iconify-icon icon="solar:men-bold"></iconify-icon>
+                  {% else %}
+                    <iconify-icon icon="solar:women-bold"></iconify-icon>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="card-content">
+                <h3 class="person-name">{{ person.name }}</h3>
+                <p class="person-details-preview">{{ person.details|truncatechars:80 }}</p>
+                <div class="stats-row-card">
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:user-id-linear" class="stat-icon"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.age }} yrs</span>
+                      <span class="stat-label">Age</span>
+                    </div>
+                  </div>
+                  <div class="stat-divider"></div>
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:men-bold" class="stat-icon {% if person.gender|lower == 'female' %}d-none{% endif %}"></iconify-icon>
+                    <iconify-icon icon="solar:women-bold" class="stat-icon {% if person.gender|lower == 'male' %}d-none{% endif %}"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.gender }}</span>
+                      <span class="stat-label">Gender</span>
+                    </div>
+                  </div>
+                  <div class="stat-divider"></div>
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:hashtag-circle-linear" class="stat-icon"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.id }}</span>
+                      <span class="stat-label">Case ID</span>
+                    </div>
+                  </div>
+                </div>
+                <a href="javascript:void(0)" class="view-btn missing-btn"
+                   onclick="openModal('missing',
+                     {{ person.id }},
+                     '{{ person.name|escapejs }}',
+                     '{% if person.case_data %}{{ person.case_data.age|default:person.age|escapejs }}{% else %}{{ person.age|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.Gender|default:person.gender|escapejs }}{% else %}{{ person.gender|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.description|default:person.details|escapejs }}{% else %}{{ person.details|escapejs }}{% endif %}',
+                     '{% if person.photo %}{{ person.photo.url }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.phone|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.email|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.address|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.Missing_place|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.date_of_birth|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.parent_name|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.Height|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.identification_marks|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.clothes_ornaments|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.items_carried|default:''|escapejs }}{% endif %}',
+                     '{% if person.POLICE %}{{ person.POLICE.policestation.station_name|escapejs }}{% endif %}',
+                     '', '',
+                     '{% if person.case_data %}{{ person.case_data.progress|default:''|escapejs }}{% endif %}')"
+                  <iconify-icon icon="solar:eye-linear"></iconify-icon>
+                  View Full Details
+                </a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-12">
+            <div class="empty-state">
+              <iconify-icon icon="solar:ghost-linear" style="font-size:4rem;color:#4a5568;"></iconify-icon>
+              <h4>No Missing Persons Records Found</h4>
+              <p>All records will appear here once added by officers.</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- ══ CRIMINAL RECORDS GRID ══ -->
+      <div id="criminalSection" style="display:none;">
+        <div class="row g-4" id="criminalContainer">
+          {% for person in criminals %}
+          <div class="col-xl-4 col-lg-6 col-md-6 card-col"
+               data-section="criminal"
+               data-name="{{ person.name|lower }}"
+               data-details="{{ person.details|lower }}">
+            <div class="pc-card">
+              <div class="card-accent-bar criminal-bar"></div>
+              <div class="card-banner criminal-banner">
+                <div class="banner-overlay"></div>
+                <div class="record-badge criminal-badge-color">
+                  <span class="pulse-dot criminal-dot"></span> CRIMINAL
+                </div>
+                <div class="case-id-tag">#{{ person.id }}</div>
+              </div>
+              <div class="card-photo-wrap">
+                {% if person.photo %}
+                <img src="{{ person.photo.url }}" alt="{{ person.name }}" class="card-photo" />
+                {% else %}
+                <div class="card-photo-placeholder criminal-placeholder">
+                  <iconify-icon icon="solar:user-bold" style="font-size:2.5rem;color:#a0aec0;"></iconify-icon>
+                </div>
+                {% endif %}
+                <div class="gender-tag {{ person.gender|lower }}">
+                  {% if person.gender|lower == 'male' %}
+                    <iconify-icon icon="solar:men-bold"></iconify-icon>
+                  {% else %}
+                    <iconify-icon icon="solar:women-bold"></iconify-icon>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="card-content">
+                <h3 class="person-name">{{ person.name }}</h3>
+                <p class="person-details-preview">{{ person.details|truncatechars:80 }}</p>
+                <div class="stats-row-card">
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:user-id-linear" class="stat-icon criminal-icon"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.age }} yrs</span>
+                      <span class="stat-label">Age</span>
+                    </div>
+                  </div>
+                  <div class="stat-divider"></div>
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:men-bold" class="stat-icon criminal-icon {% if person.gender|lower == 'female' %}d-none{% endif %}"></iconify-icon>
+                    <iconify-icon icon="solar:women-bold" class="stat-icon criminal-icon {% if person.gender|lower == 'male' %}d-none{% endif %}"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.gender }}</span>
+                      <span class="stat-label">Gender</span>
+                    </div>
+                  </div>
+                  <div class="stat-divider"></div>
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:hashtag-circle-linear" class="stat-icon criminal-icon"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.id }}</span>
+                      <span class="stat-label">Case ID</span>
+                    </div>
+                  </div>
+                </div>
+                <a href="javascript:void(0)" class="view-btn criminal-btn"
+                   onclick="openModal('criminal', {{ person.id }}, '{{ person.name|escapejs }}', '{{ person.age|escapejs }}', '{{ person.gender|escapejs }}', '{{ person.details|escapejs }}', '{% if person.photo %}{{ person.photo.url }}{% endif %}', '{{ person.phone|default:''|escapejs }}', '{{ person.address|default:''|escapejs }}', '{{ person.last_seen_location|default:''|escapejs }}', '{% if person.POLICE %}{{ person.POLICE.policestation.station_name|escapejs }}{% endif %}', '{{ person.crime_type|default:''|escapejs }}', '{{ person.severity|default:''|escapejs }}', '', '')">
+                  <iconify-icon icon="solar:eye-linear"></iconify-icon>
+                  View Full Details
+                </a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-12">
+            <div class="empty-state">
+              <iconify-icon icon="solar:ghost-linear" style="font-size:4rem;color:#4a5568;"></iconify-icon>
+              <h4>No Criminal Records Found</h4>
+              <p>All records will appear here once added by officers.</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- ══ RESOLVED CASES GRID ══ -->
+      <div id="resolvedSection" style="display:none;">
+        <div class="row g-4" id="resolvedContainer">
+          {% for person in resolved_persons %}
+          <div class="col-xl-4 col-lg-6 col-md-6 card-col"
+               data-section="resolved"
+               data-name="{{ person.name|lower }}"
+               data-details="{{ person.details|lower }}">
+            <div class="pc-card">
+              <div class="card-accent-bar resolved-bar"></div>
+              <div class="card-banner resolved-banner">
+                <div class="banner-overlay"></div>
+                <div class="record-badge resolved-badge-color">
+                  <span class="pulse-dot resolved-dot"></span> FOUND
+                </div>
+                <div class="case-id-tag">#{{ person.id }}</div>
+              </div>
+              <div class="card-photo-wrap">
+                {% if person.photo %}
+                <img src="{{ person.photo.url }}" alt="{{ person.name }}" class="card-photo resolved-photo-border" />
+                {% else %}
+                <div class="card-photo-placeholder resolved-placeholder">
+                  <iconify-icon icon="solar:user-bold" style="font-size:2.5rem;color:#68d391;"></iconify-icon>
+                </div>
+                {% endif %}
+                <div class="gender-tag {{ person.gender|lower }}">
+                  {% if person.gender|lower == 'male' %}
+                    <iconify-icon icon="solar:men-bold"></iconify-icon>
+                  {% else %}
+                    <iconify-icon icon="solar:women-bold"></iconify-icon>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="card-content">
+                <h3 class="person-name">{{ person.name }}</h3>
+                <p class="person-details-preview">{{ person.details|truncatechars:80 }}</p>
+                <div class="stats-row-card resolved-stats-bg">
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:user-id-linear" class="stat-icon resolved-icon"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.age }} yrs</span>
+                      <span class="stat-label">Age</span>
+                    </div>
+                  </div>
+                  <div class="stat-divider"></div>
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:men-bold" class="stat-icon resolved-icon {% if person.gender|lower == 'female' %}d-none{% endif %}"></iconify-icon>
+                    <iconify-icon icon="solar:women-bold" class="stat-icon resolved-icon {% if person.gender|lower == 'male' %}d-none{% endif %}"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.gender }}</span>
+                      <span class="stat-label">Gender</span>
+                    </div>
+                  </div>
+                  <div class="stat-divider"></div>
+                  <div class="stat-item">
+                    <iconify-icon icon="solar:hashtag-circle-linear" class="stat-icon resolved-icon"></iconify-icon>
+                    <div>
+                      <span class="stat-value">{{ person.id }}</span>
+                      <span class="stat-label">Case ID</span>
+                    </div>
+                  </div>
+                </div>
+                <a href="javascript:void(0)" class="view-btn resolved-btn"
+                   onclick="openModal('resolved',
+                     {{ person.id }},
+                     '{{ person.name|escapejs }}',
+                     '{% if person.case_data %}{{ person.case_data.age|default:person.age|escapejs }}{% else %}{{ person.age|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.Gender|default:person.gender|escapejs }}{% else %}{{ person.gender|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.description|default:person.details|escapejs }}{% else %}{{ person.details|escapejs }}{% endif %}',
+                     '{% if person.photo %}{{ person.photo.url }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.phone|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.email|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.address|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.Missing_place|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.date_of_birth|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.parent_name|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.Height|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.identification_marks|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.clothes_ornaments|default:''|escapejs }}{% endif %}',
+                     '{% if person.case_data %}{{ person.case_data.items_carried|default:''|escapejs }}{% endif %}',
+                     '{% if person.POLICE %}{{ person.POLICE.policestation.station_name|escapejs }}{% endif %}',
+                     '', '',
+                     'Found')">
+                  <iconify-icon icon="solar:eye-linear"></iconify-icon>
+                  View Full Details
+                </a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-12">
+            <div class="empty-state">
+              <iconify-icon icon="solar:check-circle-linear" style="font-size:4rem;color:#68d391;"></iconify-icon>
+              <h4>No Resolved Cases Yet</h4>
+              <p>Cases marked as "Found" in the case file will appear here.</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ DETAIL MODAL ══ -->
+<div class="modal fade" id="personModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content pc-modal">
+      <div class="modal-header pc-modal-header" id="modalHeader">
+        <div class="modal-badge" id="modalBadge">
+          <span class="pulse-dot"></span> MISSING PERSON
+        </div>
+        <button type="button" class="modal-close-btn" data-bs-dismiss="modal">
+          <iconify-icon icon="solar:close-circle-linear"></iconify-icon>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="modal-profile-section">
+          <div class="modal-photo-wrap">
+            <img id="modalPhoto" src="" alt="" class="modal-photo" />
+            <div id="modalPhotoPlaceholder" class="modal-photo-placeholder d-none">
+              <iconify-icon icon="solar:user-bold" style="font-size:3rem;color:#a0aec0;"></iconify-icon>
+            </div>
+          </div>
+          <div class="modal-info">
+            <h2 id="modalName" class="modal-name"></h2>
+            <div class="modal-stats-grid">
+              <div class="modal-stat">
+                <span class="modal-stat-label">Age</span>
+                <span id="modalAge" class="modal-stat-value"></span>
+              </div>
+              <div class="modal-stat">
+                <span class="modal-stat-label">Gender</span>
+                <span id="modalGender" class="modal-stat-value"></span>
+              </div>
+              <div class="modal-stat">
+                <span class="modal-stat-label">Case ID</span>
+                <span id="modalCaseId" class="modal-stat-value"></span>
+              </div>
+              <div class="modal-stat" id="modalTypeStat">
+                <span class="modal-stat-label">Record Type</span>
+                <span id="modalType" class="modal-stat-value"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ EXTRA INFO ROWS ══ -->
+        <div class="modal-extra-info">
+          <div class="modal-info-row" id="rowPhone">
+            <iconify-icon icon="solar:phone-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Contact Number</span>
+            <span id="modalPhone" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowEmail">
+            <iconify-icon icon="solar:letter-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Email</span>
+            <span id="modalEmail" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowAddress">
+            <iconify-icon icon="solar:home-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Address</span>
+            <span id="modalAddress" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowLastSeen">
+            <iconify-icon icon="solar:map-point-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Last Seen / Missing Place</span>
+            <span id="modalLastSeen" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowDOB">
+            <iconify-icon icon="solar:calendar-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Date of Birth</span>
+            <span id="modalDOB" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowParent">
+            <iconify-icon icon="solar:users-group-two-rounded-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Parent / Guardian</span>
+            <span id="modalParent" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowHeight">
+            <iconify-icon icon="solar:ruler-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Height</span>
+            <span id="modalHeight" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowMarks">
+            <iconify-icon icon="solar:star-ring-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Identification Marks</span>
+            <span id="modalMarks" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowClothes">
+            <iconify-icon icon="solar:t-shirt-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Clothes / Ornaments</span>
+            <span id="modalClothes" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowItems">
+            <iconify-icon icon="solar:bag-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Items Carried</span>
+            <span id="modalItems" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row" id="rowProgress">
+            <iconify-icon icon="solar:chart-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Case Progress</span>
+            <span id="modalProgress" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row d-none" id="rowCrimeType">
+            <iconify-icon icon="solar:danger-triangle-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Crime Type</span>
+            <span id="modalCrimeType" class="modal-info-value"></span>
+          </div>
+          <div class="modal-info-row d-none" id="rowSeverity">
+            <iconify-icon icon="solar:shield-warning-linear" class="modal-info-icon"></iconify-icon>
+            <span class="modal-info-label">Severity</span>
+            <span id="modalSeverity" class="modal-info-value"></span>
+          </div>
+        </div>
+
+        <div class="modal-details-section">
+          <h5 class="modal-section-title">
+            <iconify-icon icon="solar:document-text-linear"></iconify-icon>
+            Case Details
+          </h5>
+          <p id="modalDetails" class="modal-details-text"></p>
+        </div>
+        <div class="modal-alert-section" id="modalAlert">
+          <iconify-icon icon="solar:info-circle-linear"></iconify-icon>
+          If you have any information about this person, please contact your nearest police station immediately.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ══════════════════════════════════════════════════
+     PAGE HEADER
+  ══════════════════════════════════════════════════ */
+  .pc-page-header { padding: 8px 0 4px; }
+
+  .pc-main-title {
+    font-size: 1.7rem; font-weight: 700; color: #2d3748;
+    letter-spacing: -.3px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .title-dot-missing {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #f56565;
+    animation: pulse-dot 1.5s infinite;
+    flex-shrink: 0;
+    transition: background .3s;
+  }
+  .title-dot-missing.criminal-mode { background: #e53e3e; }
+
+  .pc-subtitle { color: #718096; font-size: .875rem; margin: 0; padding-left: 22px; }
+
+  /* Search */
+  .search-box { position: relative; display: flex; align-items: center; }
+  .search-icon { position: absolute; left: 12px; color: #a0aec0; font-size: 1rem; pointer-events: none; }
+  .search-input {
+    background: #fff; border: 1.5px solid #e2e8f0; border-radius: 10px;
+    padding: 9px 16px 9px 36px; font-size: .85rem; color: #2d3748;
+    width: 260px; outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .search-input:focus { border-color: #5a6fd6; box-shadow: 0 0 0 3px rgba(90,111,214,.12); }
+  .search-input::placeholder { color: #a0aec0; }
+
+  /* Count badge */
+  .count-badge {
+    background: linear-gradient(135deg, #5a6fd6, #4a5aaa);
+    color: #fff; padding: 8px 16px; border-radius: 10px;
+    font-size: .82rem; font-weight: 600; white-space: nowrap;
+    transition: background .3s;
+  }
+  .count-badge.criminal-mode { background: linear-gradient(135deg, #c53030, #9b2335); }
+  .count-badge span { font-size: 1.1rem; font-weight: 800; margin-right: 4px; }
+
+  /* ══ TABS ══ */
+  .pc-tabs {
+    display: flex; gap: .75rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0;
+  }
+  .pc-tab {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 20px; border: none; background: transparent;
+    font-size: .88rem; font-weight: 600; color: #718096;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px; cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    transition: all .2s;
+  }
+  .pc-tab:hover { color: #4a5568; background: #f7fafc; }
+  .pc-tab.active {
+    color: #5a6fd6; border-bottom-color: #5a6fd6;
+    background: #f0f4ff;
+  }
+  .pc-tab.active.criminal-active {
+    color: #c53030; border-bottom-color: #c53030;
+    background: #fff5f5;
+  }
+  .tab-count {
+    background: #e2e8f0; color: #4a5568;
+    font-size: .72rem; font-weight: 800;
+    padding: 2px 8px; border-radius: 20px;
+    transition: background .2s, color .2s;
+  }
+  .pc-tab.active .tab-count { background: #5a6fd6; color: #fff; }
+  .pc-tab.active.criminal-active .tab-count { background: #c53030; color: #fff; }
+  .criminal-count { }
+
+  /* ══ CARD ══ */
+  .pc-card {
+    background: #fff; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.05);
+    border: 1px solid #f0f0f0; position: relative;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .pc-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(90,111,214,.15), 0 4px 12px rgba(0,0,0,.08);
+  }
+
+  /* accent bars */
+  .card-accent-bar { height: 4px; }
+  .missing-bar { background: linear-gradient(90deg, #f56565, #ed8936, #5a6fd6); }
+  .criminal-bar { background: linear-gradient(90deg, #c53030, #e53e3e, #fc8181); }
+
+  /* banners */
+  .card-banner {
+    height: 90px; position: relative;
+    display: flex; align-items: flex-start;
+    justify-content: space-between; padding: 10px 14px;
+  }
+  .missing-banner { background: linear-gradient(135deg, #2c3a8a 0%, #325c8a 50%, #33a8d6 100%); }
+  .criminal-banner { background: linear-gradient(135deg, #742a2a 0%, #9b2335 50%, #c53030 100%); }
+
+  .banner-overlay {
+    position: absolute; inset: 0; pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* badges */
+  .record-badge {
+    font-size: .68rem; font-weight: 700; letter-spacing: 1.5px;
+    padding: 4px 10px; border-radius: 20px;
+    display: flex; align-items: center; gap: 5px;
+    position: relative; z-index: 1; color: #fff;
+  }
+  .missing-badge-color { background: rgba(245,101,101,.9); }
+  .criminal-badge-color { background: rgba(197,48,48,.85); }
+
+  .pulse-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #fff;
+    animation: pulse-dot 1.5s infinite;
+    display: inline-block; flex-shrink: 0;
+  }
+  .criminal-dot { background: #fbd38d; }
+
+  @keyframes pulse-dot {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:.4; transform:scale(.7); }
+  }
+
+  .case-id-tag {
+    background: rgba(255,255,255,.15); color: rgba(255,255,255,.9);
+    font-size: .72rem; font-weight: 600; padding: 4px 10px;
+    border-radius: 20px; border: 1px solid rgba(255,255,255,.2);
+    position: relative; z-index: 1;
+  }
+
+  /* Photo */
+  .card-photo-wrap {
+    position: relative; display: flex; justify-content: center;
+    margin-top: -44px; z-index: 2;
+  }
+  .card-photo {
+    width: 90px; height: 90px; border-radius: 50%;
+    object-fit: cover; border: 4px solid #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  }
+  .card-photo-placeholder {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: #edf2f7; border: 4px solid #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,.12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .criminal-placeholder { background: #fff5f5; }
+
+  .gender-tag {
+    position: absolute; bottom: 2px; right: calc(50% - 52px);
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; border: 2px solid #fff;
+  }
+  .gender-tag.male  { background: #4299e1; color: #fff; }
+  .gender-tag.female { background: #ed64a6; color: #fff; }
+
+  /* Card Content */
+  .card-content { padding: 14px 20px 20px; text-align: center; }
+  .person-name { font-size: 1.15rem; font-weight: 700; color: #2d3748; margin-bottom: 6px; letter-spacing: -.2px; }
+  .person-details-preview { font-size: .8rem; color: #718096; line-height: 1.5; margin-bottom: 16px; min-height: 36px; }
+
+  /* Stats row inside card */
+  .stats-row-card {
+    display: flex; align-items: center; justify-content: center;
+    background: #f7fafc; border-radius: 12px;
+    padding: 12px 8px; margin-bottom: 16px;
+  }
+  .stat-item { display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; }
+  .stat-icon { font-size: 1.1rem; color: #59bfff; }
+  .criminal-icon { color: #fc8181; }
+  .stat-item div { display: flex; flex-direction: column; text-align: left; }
+  .stat-value { font-size: .82rem; font-weight: 700; color: #2d3748; line-height: 1.2; }
+  .stat-label { font-size: .68rem; color: #a0aec0; text-transform: uppercase; letter-spacing: .5px; line-height: 1; }
+  .stat-divider { width: 1px; height: 32px; background: #e2e8f0; flex-shrink: 0; }
+
+  /* Buttons */
+  .view-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    color: #fff; padding: 10px 20px; border-radius: 10px;
+    font-size: .82rem; font-weight: 600; letter-spacing: .3px;
+    text-decoration: none; cursor: pointer;
+    transition: all .2s;
+  }
+  .missing-btn { background: linear-gradient(135deg, #33a8d6, #4a5aaa); }
+  .missing-btn:hover { background: linear-gradient(135deg, #59bfff, #3a4a8a); color:#fff; transform:translateY(-1px); box-shadow:0 4px 14px rgba(90,111,214,.35); }
+  .criminal-btn { background: linear-gradient(135deg, #c53030, #9b2335); }
+  .criminal-btn:hover { background: linear-gradient(135deg, #e53e3e, #742a2a); color:#fff; transform:translateY(-1px); box-shadow:0 4px 14px rgba(197,48,48,.35); }
+
+  /* Empty state */
+  .empty-state { text-align: center; padding: 60px 20px; color: #718096; }
+  .empty-state h4 { margin-top: 16px; color: #4a5568; font-weight: 600; }
+
+  /* ══ MODAL ══ */
+  .pc-modal { border-radius: 16px; overflow: hidden; border: none; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+
+  .pc-modal-header {
+    padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    border: none; transition: background .3s;
+  }
+  .pc-modal-header.missing-header { background: linear-gradient(135deg, #59bfff, #5a6fd6); }
+  .pc-modal-header.criminal-header { background: linear-gradient(135deg, #e53e3e, #9b2335); }
+
+  .modal-badge { color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: 1.5px; display: flex; align-items: center; gap: 6px; }
+  .modal-close-btn {
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2);
+    color: #fff; width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; cursor: pointer; transition: background .2s;
+  }
+  .modal-close-btn:hover { background: rgba(255,255,255,.25); }
+
+  .modal-profile-section { display: flex; gap: 24px; padding: 24px; align-items: flex-start; border-bottom: 1px solid #f0f0f0; }
+  .modal-photo-wrap { flex-shrink: 0; }
+  .modal-photo { width: 110px; height: 110px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 16px rgba(0,0,0,.12); border: 3px solid #f0f0f0; }
+  .modal-photo-placeholder { width:110px; height:110px; border-radius:12px; background:#edf2f7; display:flex; align-items:center; justify-content:center; border:3px solid #f0f0f0; }
+  .modal-info { flex: 1; }
+  .modal-name { font-size: 1.5rem; font-weight: 800; color: #2d3748; margin-bottom: 16px; letter-spacing: -.3px; }
+  .modal-stats-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+  .modal-stat { display: flex; flex-direction: column; gap: 2px; background: #f7fafc; padding: 10px 16px; border-radius: 10px; min-width: 80px; }
+  .modal-stat-label { font-size: .68rem; color: #a0aec0; text-transform: uppercase; letter-spacing: .7px; font-weight: 600; }
+  .modal-stat-value { font-size: .95rem; font-weight: 700; color: #2d3748; }
+
+  /* ── Extra Info Rows ── */
+  .modal-extra-info {
+    padding: 0 24px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .modal-info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f7fafc;
+    font-size: .875rem;
+  }
+  .modal-info-row:last-child { border-bottom: none; }
+  .modal-info-icon {
+    font-size: 1rem;
+    color: #a0aec0;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .modal-info-label {
+    font-weight: 600;
+    color: #718096;
+    min-width: 148px;
+    flex-shrink: 0;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-top: 1px;
+  }
+  .modal-info-value {
+    color: #2d3748;
+    font-weight: 500;
+    word-break: break-word;
+  }
+
+  .modal-details-section { padding: 20px 24px; }
+  .modal-section-title { font-size: .85rem; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: .8px; display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .modal-details-text { font-size: .9rem; color: #4a5568; line-height: 1.7; margin: 0; }
+
+  .modal-alert-section {
+    border-left: 4px solid #ed8936;
+    padding: 12px 20px; margin: 0 24px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: .82rem; display: flex; align-items: center; gap: 8px;
+    transition: background .3s, color .3s, border-color .3s;
+  }
+  .modal-alert-section.missing-alert { background: #fffaf0; color: #744210; border-left-color: #ed8936; }
+  .modal-alert-section.criminal-alert { background: #fff5f5; color: #742a2a; border-left-color: #c53030; }
+  .modal-alert-section.resolved-alert { background: #f0fff4; color: #1a5c35; border-left-color: #38a169; }
+
+  /* ══ RESOLVED TAB ══ */
+  .pc-tab.active.resolved-active {
+    color: #276749; border-bottom-color: #38a169;
+    background: #f0fff4;
+  }
+  .pc-tab.active.resolved-active .tab-count { background: #38a169; color: #fff; }
+
+  /* ══ RESOLVED CARD STYLES ══ */
+  .resolved-bar  { background: linear-gradient(90deg, #38a169, #68d391, #276749); }
+  .resolved-banner { background: linear-gradient(135deg, #1a5c35 0%, #276749 50%, #38a169 100%); }
+  .resolved-badge-color { background: rgba(56,161,105,.9); }
+  .resolved-dot  { background: #c6f6d5; }
+  .resolved-icon { color: #68d391; }
+  .resolved-stats-bg { background: #f0fff4; }
+  .resolved-placeholder { background: #f0fff4; }
+  .resolved-photo-border { border-color: #9ae6b4 !important; }
+
+  .pc-card:hover .resolved-photo-border { box-shadow: 0 0 0 3px rgba(56,161,105,.25); }
+
+  .resolved-btn { background: linear-gradient(135deg, #38a169, #276749); }
+  .resolved-btn:hover { background: linear-gradient(135deg, #48bb78, #1a5c35); color:#fff; transform:translateY(-1px); box-shadow:0 4px 14px rgba(56,161,105,.4); }
+
+  .count-badge.resolved-mode { background: linear-gradient(135deg, #38a169, #276749); }
+
+  .title-dot-missing.resolved-mode { background: #38a169; }
+
+  .pc-modal-header.resolved-header { background: linear-gradient(135deg, #48bb78, #276749); }
+
+  @media (max-width: 576px) {
+    .search-input { width: 180px; }
+    .modal-profile-section { flex-direction: column; align-items: center; text-align: center; }
+    .modal-stats-grid { justify-content: center; }
+    .pc-tabs { gap: .4rem; }
+    .pc-tab { padding: 8px 12px; font-size: .8rem; }
+  }
+</style>
+
+<script src="../static/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../static/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../static/admin/assets/js/sidebarmenu.js"></script>
+<script src="../static/admin/assets/js/app.min.js"></script>
+<script src="../static/admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="../static/admin/assets/libs/simplebar/dist/simplebar.js"></script>
+<script src="../static/admin/assets/js/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+<script>
+  let currentTab = 'missing';
+
+  // ── TAB SWITCH ──────────────────────────────────────
+  function switchTab(tab) {
+    currentTab = tab;
+    const isCriminal = tab === 'criminal';
+    const isResolved = tab === 'resolved';
+
+    // Show/hide sections
+    document.getElementById('missingSection').style.display  = tab === 'missing'  ? '' : 'none';
+    document.getElementById('criminalSection').style.display = tab === 'criminal' ? '' : 'none';
+    document.getElementById('resolvedSection').style.display = tab === 'resolved' ? '' : 'none';
+
+    // Tab styles
+    const tabM = document.getElementById('tabMissing');
+    const tabC = document.getElementById('tabCriminal');
+    const tabR = document.getElementById('tabResolved');
+    tabM.classList.toggle('active', tab === 'missing');
+    tabM.classList.remove('criminal-active', 'resolved-active');
+    tabC.classList.toggle('active', isCriminal);
+    tabC.classList.toggle('criminal-active', isCriminal);
+    tabC.classList.remove('resolved-active');
+    tabR.classList.toggle('active', isResolved);
+    tabR.classList.toggle('resolved-active', isResolved);
+    tabR.classList.remove('criminal-active');
+
+    // Header dot & subtitle
+    const dot = document.getElementById('activeDot');
+    dot.classList.toggle('criminal-mode', isCriminal);
+    dot.classList.toggle('resolved-mode', isResolved);
+
+    const titles = {
+      missing:  'Missing Persons',
+      criminal: 'Criminal Records',
+      resolved: 'Resolved Cases',
+    };
+    const subtitles = {
+      missing:  'Active cases requiring public assistance',
+      criminal: 'Registered criminal case records',
+      resolved: 'Missing persons successfully found and cases closed',
+    };
+    document.getElementById('pageTitle').textContent    = titles[tab];
+    document.getElementById('pageSubtitle').textContent = subtitles[tab];
+
+    // Count badge
+    const badge = document.getElementById('countBadge');
+    badge.classList.toggle('criminal-mode', isCriminal);
+    badge.classList.toggle('resolved-mode', isResolved);
+
+    // Reset search & recount
+    document.getElementById('searchInput').value = '';
+    updateCount();
+  }
+
+  // ── SEARCH ──────────────────────────────────────────
+  document.getElementById('searchInput').addEventListener('input', function () {
+    const query = this.value.toLowerCase().trim();
+    const cols = document.querySelectorAll(`.card-col[data-section="${currentTab}"]`);
+    let visible = 0;
+    cols.forEach(col => {
+      const match = (col.dataset.name + col.dataset.details).includes(query);
+      col.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    document.getElementById('caseCount').textContent = visible;
+  });
+
+  function updateCount() {
+    const total = document.querySelectorAll(`.card-col[data-section="${currentTab}"]`).length;
+    document.querySelector('#countBadge span').textContent = total;
+    const labels = { missing: ' Active Cases', criminal: ' Criminal Records', resolved: ' Resolved Cases' };
+    document.getElementById('countBadge').lastChild.textContent = labels[currentTab] || ' Cases';
+  }
+
+  // ── MODAL ───────────────────────────────────────────
+  function openModal(type, id, name, age, gender, details, photoUrl,
+                     phone, email, address, missingPlace, dob,
+                     parentName, height, idMarks, clothes, items,
+                     station, crimeType, severity, progress) {
+    const isCriminal = type === 'criminal';
+    const isResolved = type === 'resolved';
+
+    document.getElementById('modalName').textContent    = name;
+    document.getElementById('modalAge').textContent     = age + ' years';
+    document.getElementById('modalGender').textContent  = gender;
+    document.getElementById('modalCaseId').textContent  = '#' + id;
+    document.getElementById('modalType').textContent    = isCriminal ? 'Criminal Record' : isResolved ? 'Resolved / Found' : 'Missing Person';
+    document.getElementById('modalDetails').textContent = details || 'No additional details available.';
+
+    // ── Populate all extra info rows ──
+    setInfoRow('rowPhone',    'modalPhone',    phone,       'Not provided');
+    setInfoRow('rowEmail',    'modalEmail',    email,       'Not provided');
+    setInfoRow('rowAddress',  'modalAddress',  address,     'Not provided');
+    setInfoRow('rowLastSeen', 'modalLastSeen', missingPlace,'Not recorded');
+    setInfoRow('rowDOB',      'modalDOB',      dob,         'Not provided');
+    setInfoRow('rowParent',   'modalParent',   parentName,  'Not provided');
+    setInfoRow('rowHeight',   'modalHeight',   height,      'Not provided');
+    setInfoRow('rowMarks',    'modalMarks',    idMarks,     'Not provided');
+    setInfoRow('rowClothes',  'modalClothes',  clothes,     'Not provided');
+    setInfoRow('rowItems',    'modalItems',    items,       'Not provided');
+    setInfoRow('rowProgress', 'modalProgress', progress,    'Pending');
+
+    // Criminal-only rows
+    const rowCrimeType = document.getElementById('rowCrimeType');
+    const rowSeverity  = document.getElementById('rowSeverity');
+    if (isCriminal) {
+      setInfoRow('rowCrimeType', 'modalCrimeType', crimeType, 'N/A');
+      setInfoRow('rowSeverity',  'modalSeverity',  severity,  'N/A');
+      rowCrimeType.classList.remove('d-none');
+      rowSeverity.classList.remove('d-none');
+    } else {
+      rowCrimeType.classList.add('d-none');
+      rowSeverity.classList.add('d-none');
+    }
+
+    // Header colour
+    const header = document.getElementById('modalHeader');
+    if (isCriminal)      header.className = 'modal-header pc-modal-header criminal-header';
+    else if (isResolved) header.className = 'modal-header pc-modal-header resolved-header';
+    else                 header.className = 'modal-header pc-modal-header missing-header';
+
+    // Badge text
+    const dotCls = isCriminal ? 'criminal-dot' : isResolved ? 'resolved-dot' : '';
+    const badgeLabel = isCriminal ? 'CRIMINAL RECORD' : isResolved ? 'CASE RESOLVED — FOUND' : 'MISSING PERSON';
+    document.getElementById('modalBadge').innerHTML = `<span class="pulse-dot ${dotCls}"></span> ${badgeLabel}`;
+
+    // Alert bar
+    const alert = document.getElementById('modalAlert');
+    if (isCriminal) {
+      alert.className = 'modal-alert-section criminal-alert';
+      alert.innerHTML = `<iconify-icon icon="solar:danger-triangle-linear"></iconify-icon> This person has an active criminal record. Contact the nearest police station for more information.`;
+    } else if (isResolved) {
+      alert.className = 'modal-alert-section resolved-alert';
+      alert.innerHTML = `<iconify-icon icon="solar:check-circle-linear"></iconify-icon> This person has been found and the case is now closed. Thank you to all who assisted.`;
+    } else {
+      alert.className = 'modal-alert-section missing-alert';
+      alert.innerHTML = `<iconify-icon icon="solar:info-circle-linear"></iconify-icon> If you have any information about this person, please contact your nearest police station immediately.`;
+    }
+
+    // Photo
+    const photo = document.getElementById('modalPhoto');
+    const placeholder = document.getElementById('modalPhotoPlaceholder');
+    if (photoUrl) {
+      photo.src = photoUrl; photo.alt = name;
+      photo.classList.remove('d-none');
+      placeholder.classList.add('d-none');
+    } else {
+      photo.classList.add('d-none');
+      placeholder.classList.remove('d-none');
+    }
+
+    new bootstrap.Modal(document.getElementById('personModal')).show();
+  }
+
+  function setInfoRow(rowId, valueId, value, fallback) {
+    const row = document.getElementById(rowId);
+    const el  = document.getElementById(valueId);
+    if (value && value.trim() !== '') {
+      el.textContent = value;
+    } else {
+      el.textContent = fallback || 'N/A';
+    }
+    row.classList.remove('d-none');
+  }
+
+  // initialise count badge correctly on load
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCount();
+  });
+</script>
