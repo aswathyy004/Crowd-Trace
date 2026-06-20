@@ -3,8 +3,11 @@
 __pycache__/
 *.pyc
 
+crowdtraceproject/templates/admin_add_station.html
+
 # Flutter build artifacts
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 build/
+crowdtraceproject/templates/admin_add_station.html
